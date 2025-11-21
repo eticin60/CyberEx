@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>CyberEx – Next-Gen Crypto Exchange</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --bg: #020617;
+      --bg-soft: #02091d;
+      --panel: rgba(15, 23, 42, 0.86);
+      --panel-soft: rgba(15, 23, 42, 0.6);
+      --border: rgba(148, 163, 184, 0.5);
+      --accent: #22d3ee;
+      --accent-strong: #0ea5e9;
+      --accent-soft: rgba(56, 189, 248, 0.3);
+      --danger: #fb7185;
+      --success: #4ade80;
+      --muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden; /* TEK EKRAN */
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background:
+        radial-gradient(circle at top left, #0b1120 0, #000 55%),
+        radial-gradient(circle at bottom right, #020617 0, #000 60%);
+      color: #e5e7eb;
+      position: relative;
+    }
+
+    /* === ARKA PLAN EFEKTLERİ === */
+    .grid-overlay {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(15,23,42,0.9) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15,23,42,0.9) 1px, transparent 1px);
+      background-size: 80px 80px;
+      opacity: 0.35;
+      pointer-events: none;
+      mix-blend-mode: soft-light;
+      z-index: 1;
+    }
+
+    .glow-orb {
+      position: fixed;
+      border-radius: 999px;
+      filter: blur(28px);
+      opacity: 0.75;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glow-orb.orb-1 {
+      width: 360px;
+      height: 360px;
+      background: radial-gradient(circle, rgba(56,189,248,0.9), transparent 60%);
+      top: -60px;
+      left: -40px;
+      animation: floatOrb 18s ease-in-out infinite alternate;
+    }
+
+    .glow-orb.orb-2 {
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle, rgba(34,211,238,0.95), transparent 65%);
+      bottom: -120px;
+      right: -40px;
+      animation: floatOrb 22s ease-in-out infinite alternate-reverse;
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translate3d(0,0,0) scale(1); }
+      100% { transform: translate3d(40px,-30px,0) scale(1.08); }
+    }
+
+    .circuit-lines {
+      position: fixed;
+      right: 4%;
+      top: 18%;
+      width: 260px;
+      height: 260px;
+      border-radius: 999px;
+      border: 1px solid rgba(56,189,248,0.35);
+      box-shadow: 0 0 35px rgba(56,189,248,0.35);
+      opacity: 0.4;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .circuit-lines::before,
+    .circuit-lines::after {
+      content: '';
+      position: absolute;
+      inset: 20%;
+      border-radius: inherit;
+      border: 1px dashed rgba(56,189,248,0.55);
+      animation: spin 26s linear infinite;
+    }
+
+    .circuit-lines::after {
+      inset: 34%;
+      border-style: solid;
+      border-color: rgba(34,211,238,0.7);
+      animation-direction: reverse;
+      animation-duration: 22s;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* === ANA LAYOUT === */
+    .shell {
+      position: relative;
+      z-index: 2;
+      height: 100vh;
+      width: 100vw;
+      padding: clamp(16px, 2.5vw, 32px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* NAVBAR */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 6px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo-wrap {
+      width: 46px;
+      height: 46px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(15,23,42,1), rgba(8,47,73,0.7));
+      border: 1px solid rgba(56,189,248,0.6);
+      box-shadow:
+        0 0 18px rgba(56,189,248,0.85),
+        0 0 40px rgba(8,47,73,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .brand-logo-wrap img {
+      width: 80%;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 10px rgba(56,189,248,0.9));
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.05;
+    }
+
+    .brand-text span:first-child {
+      font-size: 1.22rem;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .brand-text span:last-child {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 0.86rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      position: relative;
+      padding-bottom: 4px;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(to right, var(--accent), var(--accent-strong));
+      transition: width 0.22s ease;
+    }
+
+    .nav-links a:hover {
+      color: #e5f3ff;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-status-pill {
+      font-size: 0.7rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(52,211,153,0.5);
+      background: radial-gradient(circle at left, rgba(16,185,129,0.4), rgba(15,23,42,0.9));
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #bbf7d0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 10px #22c55e;
+      animation: ping 1.6s infinite;
+    }
+
+    @keyframes ping {
+      0% { transform: scale(1); opacity: 1; }
+      70% { transform: scale(2); opacity: 0; }
+      100% { opacity: 0; }
+    }
+
+    .btn-outline {
+      font-size: 0.8rem;
+      padding: 8px 15px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.7);
+      background: radial-gradient(circle at top, rgba(15,23,42,0.9), rgba(15,23,42,0.6));
+      color: #e5e7eb;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-outline span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(56,189,248,0.9);
+      box-shadow: 0 0 8px rgba(56,189,248,0.9);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 16px rgba(56,189,248,0.75);
+      transform: translateY(-1px);
+    }
+
+    /* === ORTA KISIM === */
+    .main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.1fr);
+      gap: 26px;
+      align-items: center;
+      padding: 10px 0 6px;
+    }
+
+    /* SOL BLOK */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+    }
+
+    .eyebrow-pill {
+      padding: 2px 10px;
+      border-radius: 999px;
+      background: radial-gradient(circle at left, rgba(34,211,238,0.3), rgba(15,23,42,0.9));
+      border: 1px solid rgba(56,189,248,0.7);
+      color: #e0f2fe;
+    }
+
+    .hero-title {
+      font-size: clamp(2.1rem, 2.5vw + 1rem, 2.9rem);
+      font-weight: 700;
+      line-height: 1.05;
+    }
+
+    .hero-title span.accent {
+      background: linear-gradient(90deg, #22d3ee, #38bdf8, #0ea5e9);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 16px rgba(56,189,248,0.9);
+    }
+
+    .hero-subtitle {
+      font-size: 0.96rem;
+      max-width: 480px;
+      color: var(--muted);
+    }
+
+    .hero-subtitle strong {
+      color: #e5f3ff;
+      font-weight: 500;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      position: relative;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      font-size: 0.86rem;
+      font-weight: 500;
+      padding: 11px 26px;
+      border-radius: 999px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #e0f2fe;
+      background: radial-gradient(circle at top left, #38bdf8, #0ea5e9);
+      box-shadow:
+        0 0 25px rgba(56,189,248,0.75),
+        0 0 60px rgba(8,47,73,0.9);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      overflow: hidden;
+    }
+
+    .btn-primary::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(248,250,252,0.0), rgba(248,250,252,0.5), rgba(248,250,252,0.0));
+      transform: translateX(-100%);
+      animation: shine 2.3s ease-in-out infinite;
+    }
+
+    @keyframes shine {
+      0% { transform: translateX(-120%); }
+      60% { transform: translateX(140%); }
+      100% { transform: translateX(140%); }
+    }
+
+    .btn-primary-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(248,250,252,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+    }
+
+    .hint-text {
+      font-size: 0.75rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hint-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      box-shadow: 0 0 10px rgba(56,189,248,0.7);
+    }
+
+    .hero-metrics {
+      display: flex;
+      gap: 16px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .metric {
+      min-width: 120px;
+      padding: 10px 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(148,163,184,0.6);
+      background: radial-gradient(circle at top, rgba(15,23,42,0.9), rgba(15,23,42,0.72));
+      box-shadow: 0 0 20px rgba(15,23,42,0.9);
+    }
+
+    .metric-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+
+    .metric-value {
+      font-size: 1.02rem;
+      font-weight: 600;
+    }
+
+    .metric-value span.small {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-left: 4px;
+    }
+
+    .metric-pill {
+      margin-top: 4px;
+      font-size: 0.7rem;
+      color: #bbf7d0;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .metric-pill .arrow {
+      font-size: 0.9rem;
+    }
+
+    /* SAĞ BLOK */
+    .panel {
+      position: relative;
+      border-radius: 26px;
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at top left, rgba(15,23,42,0.95), rgba(15,23,42,0.82));
+      box-shadow:
+        0 0 40px rgba(15,23,42,1),
+        0 0 90px rgba(15,118,110,0.4);
+      padding: 16px 16px 14px;
+      overflow: hidden;
+    }
+
+    .panel-blur {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top, rgba(34,211,238,0.12), transparent 55%),
+        radial-gradient(circle at bottom, rgba(16,185,129,0.18), transparent 60%);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .panel-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .panel-title-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-eyebrow {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+    }
+
+    .panel-title {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #e5f3ff;
+    }
+
+    .panel-badge {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(248,250,252,0.7);
+      background: radial-gradient(circle at left, rgba(248,250,252,0.06), rgba(15,23,42,0.9));
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .panel-badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(56,189,248,0.9);
+      box-shadow: 0 0 10px rgba(56,189,248,0.9);
+    }
+
+    .panel-grid {
+      margin-top: 4px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .panel-main-card {
+      border-radius: 18px;
+      padding: 10px 12px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.7);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel-main-card::before {
+      content: '';
+      position: absolute;
+      width: 280%;
+      height: 120%;
+      left: -90%;
+      top: 50%;
+      transform: translateY(-50%);
+      background: radial-gradient(circle, rgba(56,189,248,0.16), transparent 60%);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .pair-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pair-name {
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+
+    .pair-sub {
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .pair-price {
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+
+    .pair-change {
+      font-size: 0.78rem;
+      color: #bbf7d0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .mini-chart {
+      margin-top: 6px;
+      height: 60px;
+      border-radius: 16px;
+      background:
+        linear-gradient(to top, rgba(15,23,42,1), rgba(15,23,42,0.4)),
+        linear-gradient(120deg, rgba(34,211,238,0.5), rgba(45,212,191,0.0));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mini-chart-line {
+      position: absolute;
+      inset: 18% 6%;
+      border-radius: 18px;
+      border: 1px solid rgba(34,211,238,0.9);
+      box-shadow: 0 0 14px rgba(56,189,248,0.7);
+      transform-origin: left;
+      transform: scaleX(0.98) skewX(-12deg);
+      opacity: 0.9;
+    }
+
+    .mini-chart-dot {
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: #22d3ee;
+      box-shadow: 0 0 12px rgba(34,211,238,0.95);
+      right: 12%;
+      top: 26%;
+      animation: pulseDot 2.1s ease-out infinite;
+    }
+
+    @keyframes pulseDot {
+      0% { transform: scale(1); opacity: 1; }
+      60% { transform: scale(1.7); opacity: 0; }
+      100% { opacity: 0; }
+    }
+
+    .order-row {
+      margin-top: 6px;
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .order-stat {
+      flex: 1;
+      border-radius: 12px;
+      padding: 6px 8px;
+      background: rgba(15,23,42,0.96);
+      border: 1px solid rgba(148,163,184,0.5);
+      font-size: 0.72rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .order-stat span.label {
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .order-stat span.value {
+      font-weight: 500;
+      font-size: 0.82rem;
+    }
+
+    .order-stat span.value.green {
+      color: var(--success);
+    }
+
+    .order-stat span.value.red {
+      color: var(--danger);
+    }
+
+    .side-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .side-card {
+      border-radius: 16px;
+      padding: 8px 10px;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid rgba(148,163,184,0.65);
+      font-size: 0.76rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .side-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .side-card-title {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+    }
+
+    .side-card-pill {
+      font-size: 0.7rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(56,189,248,0.7);
+      color: #e0f2fe;
+    }
+
+    .side-card-body {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .side-card-body strong {
+      font-size: 0.9rem;
+    }
+
+    .side-card-body small {
+      color: var(--muted);
+      font-size: 0.7rem;
+    }
+
+    .side-card-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chip {
+      font-size: 0.7rem;
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      color: #e5f3ff;
+      background: rgba(15,23,42,0.86);
+    }
+
+    .panel-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 6px;
+      gap: 10px;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .panel-footer span strong {
+      color: #e5f3ff;
+    }
+
+    .panel-footer-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .panel-footer-links a {
+      text-decoration: none;
+      color: var(--muted);
+      padding-bottom: 2px;
+      border-bottom: 1px dashed rgba(148,163,184,0.5);
+    }
+
+    .panel-footer-links a:hover {
+      color: #e5f3ff;
+    }
+
+    /* ALT BAR */
+    .bottom-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      color: var(--muted);
+      border-top: 1px solid rgba(15,23,42,0.9);
+      padding-top: 6px;
+      margin-top: 2px;
+    }
+
+    .bottom-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .bottom-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(56,189,248,0.9);
+      box-shadow: 0 0 10px rgba(56,189,248,0.9);
+    }
+
+    .bottom-links {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .bottom-links a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .bottom-links a:hover {
+      color: #e5f3ff;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      .main {
+        grid-template-columns: 1.1fr;
+        grid-auto-rows: auto;
+      }
+
+      .panel {
+        max-width: 520px;
+        margin: 0 auto;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-height: 720px) {
+      .hero-title {
+        font-size: 1.9rem;
+      }
+      .hero-subtitle {
+        font-size: 0.86rem;
+      }
+      .hero-metrics {
+        display: none; /* çok küçük ekranlarda sıkıştırma için */
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        padding: 12px 12px 10px;
+      }
+
+      .hero-subtitle {
+        max-width: 100%;
+      }
+
+      .panel-footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .bottom-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background elements -->
+  <div class="grid-overlay"></div>
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="circuit-lines"></div>
+
+  <div class="shell">
+    <!-- NAVBAR -->
+    <header class="nav">
+      <div class="brand">
+        <div class="brand-logo-wrap">
+          <!-- LOGO: kendi yolunu buraya koy -->
+          <img src="cyberex-logo.png" alt="CyberEx Logo">
+        </div>
+        <div class="brand-text">
+          <span>CYBEREX</span>
+          <span>CRYPTO EXCHANGE</span>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#markets">Markets</a>
+        <a href="#derivatives">Derivatives</a>
+        <a href="#earn">Earn</a>
+        <a href="#web3">Web3 Wallet</a>
+      </nav>
+
+      <div class="nav-cta">
+        <div class="nav-status-pill">
+          <span class="nav-status-dot"></span>
+          LIVE · v1.0 BETA
+        </div>
+        <button class="btn-outline">
+          <span class="dot"></span>
+          <span>Sign In</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+      <!-- SOL: HERO -->
+      <section class="hero">
+        <div class="eyebrow">
+          <span class="eyebrow-pill">New</span>
+          <span>Multi-Chain · Non-Custodial · Web3 Native</span>
+        </div>
+
+        <h1 class="hero-title">
+          Trade crypto at<br>
+          <span class="accent">exchange-grade speed</span><br>
+          with wallet-level control.
+        </h1>
+
+        <p class="hero-subtitle">
+          CyberEx, <strong>order-book gücünü</strong> ve <strong>Web3 özgürlüğünü</strong> birleştiren
+          yeni nesil kripto borsasıdır. Spot, futures ve on-chain cüzdanını tek ekrandan yönet.
+        </p>
+
+        <div class="hero-cta-row">
+          <button class="btn-primary">
+            <span>LAUNCH EXCHANGE</span>
+            <span class="btn-primary-icon">⟶</span>
+          </button>
+
+          <button class="btn-outline">
+            <span class="dot"></span>
+            <span>Connect Web3 Wallet</span>
+          </button>
+        </div>
+
+        <div class="hint-text">
+          <span class="hint-dot"></span>
+          <span>Simulation mode by default – connect mainnet to trade live.</span>
+        </div>
+
+        <div class="hero-metrics">
+          <div class="metric">
+            <div class="metric-label">24H VOLUME</div>
+            <div class="metric-value">$1.82B <span class="small">USD</span></div>
+            <div class="metric-pill">
+              <span class="arrow">▲</span>
+              <span>+18.4% vs yesterday</span>
+            </div>
+          </div>
+
+          <div class="metric">
+            <div class="metric-label">LISTED PAIRS</div>
+            <div class="metric-value">164 <span class="small">SPOT · 46 PERP</span></div>
+            <div class="metric-pill">Top DeFi · AI · L2</div>
+          </div>
+
+          <div class="metric">
+            <div class="metric-label">ENGINE LATENCY</div>
+            <div class="metric-value">3.2ms <span class="small">avg</span></div>
+            <div class="metric-pill">
+              <span class="arrow">●</span>
+              <span>Matching engine online</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SAĞ: GLASS PANEL -->
+      <section class="panel">
+        <div class="panel-blur"></div>
+        <div class="panel-inner">
+          <div class="panel-header">
+            <div class="panel-title-wrap">
+              <span class="panel-eyebrow">LIVE ORDERBOOK SNAPSHOT</span>
+              <span class="panel-title">BTC / USDT · CyberEx Core Engine</span>
+            </div>
+            <div class="panel-badge">
+              <span class="panel-badge-dot"></span>
+              LOW LATENCY ROUTING
+            </div>
+          </div>
+
+          <div class="panel-grid">
+            <div class="panel-main-card">
+              <div class="pair-row">
+                <div>
+                  <div class="pair-name">BTC / USDT</div>
+                  <div class="pair-sub">Multi-chain liquidity · Cross-margin</div>
+                </div>
+                <div style="text-align:right;">
+                  <div class="pair-price">$ 63,842.19</div>
+                  <div class="pair-change">
+                    <span>▲ +3.84%</span>
+                    <span style="font-size:0.7rem; color:var(--muted);">24h</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mini-chart">
+                <div class="mini-chart-line"></div>
+                <div class="mini-chart-dot"></div>
+              </div>
+
+              <div class="order-row">
+                <div class="order-stat">
+                  <span class="label">Best Bid</span>
+                  <span class="value green">$ 63,840.12</span>
+                </div>
+                <div class="order-stat">
+                  <span class="label">Best Ask</span>
+                  <span class="value red">$ 63,843.90</span>
+                </div>
+                <div class="order-stat">
+                  <span class="label">Spread</span>
+                  <span class="value">0.005%</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="side-cards">
+              <div class="side-card">
+                <div class="side-card-header">
+                  <span class="side-card-title">Top Movers</span>
+                  <span class="side-card-pill">Last 1h</span>
+                </div>
+                <div class="side-card-body">
+                  <div>
+                    <strong>OP / USDT</strong>
+                    <br>
+                    <small>Optimism · L2</small>
+                  </div>
+                  <div style="text-align:right;">
+                    <div style="color:#4ade80; font-weight:600;">+12.3%</div>
+                    <small>Volume $84M</small>
+                  </div>
+                </div>
+                <div class="side-card-chip-row">
+                  <span class="chip">AI: FET +9.4%</span>
+                  <span class="chip">DeFi: AAVE +7.1%</span>
+                  <span class="chip">GameFi: IMX +5.3%</span>
+                </div>
+              </div>
+
+              <div class="side-card">
+                <div class="side-card-header">
+                  <span class="side-card-title">Account Snapshot</span>
+                  <span class="side-card-pill">Demo Wallet</span>
+                </div>
+                <div class="side-card-body">
+                  <div>
+                    <strong>3.42 BTC</strong>
+                    <br>
+                    <small>Total equity</small>
+                  </div>
+                  <div style="text-align:right;">
+                    <div style="font-weight:500;">$ 218,930</div>
+                    <small>Margin ratio 14%</small>
+                  </div>
+                </div>
+                <div class="side-card-chip-row">
+                  <span class="chip">Isolated / Cross</span>
+                  <span class="chip">Risk engine v2</span>
+                  <span class="chip">On-chain proof-of-reserves</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-footer">
+            <span>Next: <strong>CyberEx Web3 Wallet</strong> ile aynı arayüzden <strong>on-chain swap</strong> başlat.</span>
+            <div class="panel-footer-links">
+              <a href="#wallet">Open wallet preview</a>
+              <a href="#docs">API docs</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ALT ÇUBUK -->
+    <footer class="bottom-bar">
+      <div class="bottom-left">
+        <span class="bottom-dot"></span>
+        <span>CyberEx Core matching engine is synced with multi-region nodes · SLA 99.99%</span>
+      </div>
+      <div class="bottom-links">
+        <a href="#status">Status</a>
+        <a href="#security">Security</a>
+        <a href="#terms">Terms</a>
+        <a href="#privacy">Privacy</a>
+      </div>
+    </footer>
+  </div>
+
+</body>
+</html>
