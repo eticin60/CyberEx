@@ -1,0 +1,2072 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>CyberEx – Next-Gen Web3 Wallet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CyberEx, güvenlik, hız ve özgürlük için tasarlanmış yeni nesil Web3 cüzdan altyapısıdır." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js" integrity="sha512-jEnuDt6jfecCjthQAJ+ed0MTVA++5ZKmlUcmDGBv2vUI/REn6FuIdixLNnQT+vKusE2hhTk2is3cFvv5wA+Sgg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <style>
+    :root{
+      --bg:#020617;
+      --bg-soft:#020817;
+      --bg-alt:#030b1a;
+      --neon:#00e5ff;
+      --mint:#00f5a0;
+      --card:rgba(15,23,42,0.92);
+      --border:rgba(148,163,184,0.35);
+      --text-soft:#9ca3af;
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body{
+      font-family: system-ui,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif;
+      background: radial-gradient(circle at top,#021222 0,var(--bg) 45%,#000 100%);
+      color:#fff;
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    /* Arkaplan cyber çizgiler */
+    .bg-network{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      background-image:
+        radial-gradient(circle at top,var(--neon) 0,transparent 55%),
+        radial-gradient(circle at 80% 10%,#00b3ff33 0,transparent 60%);
+      opacity:0.25;
+      pointer-events:none;
+      animation: bgPulse 8s ease-in-out infinite;
+    }
+
+    @keyframes bgPulse {
+      0%, 100% { opacity: 0.25; }
+      50% { opacity: 0.35; }
+    }
+
+    .bg-network::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background-image:
+        linear-gradient(#0f172a44 1px,transparent 1px),
+        linear-gradient(90deg,#0f172a44 1px,transparent 1px);
+      background-size:80px 80px;
+      mix-blend-mode:screen;
+      opacity:.35;
+      animation:gridMove 22s linear infinite;
+    }
+
+    @keyframes gridMove{
+      0%{transform:translateY(0);}
+      100%{transform:translateY(80px);}
+    }
+
+    /* Navbar blur + shadow */
+    .glass-nav{
+      background:rgba(15,23,42,0.94);
+      backdrop-filter:blur(16px);
+      box-shadow:0 18px 45px rgba(0,0,0,.65);
+      border:1px solid rgba(148,163,184,0.28);
+      transition: all 0.3s ease;
+    }
+
+    .glass-nav.scrolled {
+      background:rgba(15,23,42,0.98);
+      box-shadow:0 20px 50px rgba(0,0,0,.8);
+    }
+
+    /* Büyük başlık */
+    .headline{
+      font-size: clamp(2.6rem, 5vw, 3.8rem);
+      line-height:1.02;
+      letter-spacing:0.03em;
+    }
+
+    /* Gradient text */
+    .grad-text{
+      background:linear-gradient(135deg,var(--neon),var(--mint));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      animation: gradientShift 3s ease infinite;
+      background-size: 200% 200%;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .pill{
+      border-radius:999px;
+      padding:6px 14px;
+      font-size:.78rem;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      border:1px solid rgba(148,163,184,0.4);
+    }
+
+    /* Hero phone mockup */
+    .phone{
+      width:320px;
+      max-width:90vw;
+      border-radius:30px;
+      background:radial-gradient(circle at top,#0b162a,#020617 55%,#000 100%);
+      border:1px solid rgba(148,163,184,0.35);
+      box-shadow:
+        0 40px 80px rgba(0,0,0,0.9),
+        0 0 45px rgba(0,229,255,0.35);
+      padding:18px;
+      position:relative;
+      overflow:hidden;
+      transform:rotateX(10deg) rotateY(-16deg);
+      transform-style:preserve-3d;
+      perspective: 1000px;
+      animation:floatPhone 7.5s ease-in-out infinite, phoneGlow 4s ease-in-out infinite;
+      transition: transform 0.1s ease-out;
+    }
+
+    @keyframes phoneGlow {
+      0%, 100% { 
+        box-shadow: 0 40px 80px rgba(0,0,0,0.9), 0 0 45px rgba(0,229,255,0.35);
+      }
+      50% { 
+        box-shadow: 0 40px 80px rgba(0,0,0,0.9), 0 0 60px rgba(0,229,255,0.6), 0 0 100px rgba(0,245,160,0.4);
+      }
+    }
+
+    @keyframes floatPhone{
+      0%,100%{transform:translateY(0) rotateX(10deg) rotateY(-16deg) rotateZ(0deg);}
+      25%{transform:translateY(-14px) rotateX(8deg) rotateY(-12deg) rotateZ(1deg);}
+      50%{transform:translateY(-20px) rotateX(12deg) rotateY(-14deg) rotateZ(-1deg);}
+      75%{transform:translateY(-14px) rotateX(8deg) rotateY(-12deg) rotateZ(1deg);}
+    }
+
+    .phone-badge{
+      background:rgba(15,23,42,0.9);
+      border-radius:999px;
+      padding:4px 10px;
+      font-size:.7rem;
+    }
+
+    .phone-tag{
+      border-radius:999px;
+      padding:3px 9px;
+      font-size:.65rem;
+      border:1px solid rgba(148,163,184,0.4);
+    }
+
+    /* Section background blocks */
+    .section-alt{
+      background: radial-gradient(circle at top,#02101e,#020617 50%,#000 100%);
+    }
+    .section-soft{
+      background: radial-gradient(circle at 10% 0,#042f2e 0,#020617 50%,#000 100%);
+    }
+
+    /* Feature cards */
+    .feature-card{
+      background:var(--card);
+      border-radius:22px;
+      border:1px solid var(--border);
+      padding:20px 18px;
+      box-shadow:0 18px 45px rgba(15,23,42,0.7);
+      transition:transform .4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow .4s ease, border-color .4s ease;
+      position:relative;
+      overflow:hidden;
+      opacity: 0;
+      transform: translateY(30px) rotateX(5deg);
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .feature-card.animate {
+      opacity: 1;
+      transform: translateY(0) rotateX(0deg);
+    }
+
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0,229,255,0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .feature-card:hover::before {
+      left: 100%;
+    }
+
+    .feature-card::after{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:radial-gradient(circle at top,var(--neon) 0,transparent 55%);
+      opacity:0;
+      transition:opacity .4s ease;
+      mix-blend-mode:screen;
+    }
+    .feature-card:hover{
+      transform:translateY(-12px) translateZ(20px) scale(1.03) rotateX(-5deg) rotateY(2deg);
+      box-shadow:0 26px 60px rgba(15,23,42,0.9), 0 0 60px rgba(0,229,255,0.5), 0 0 100px rgba(0,245,160,0.3);
+      border-color:rgba(56,189,248,0.85);
+    }
+    .feature-card:hover::after{
+      opacity:0.15;
+    }
+
+    /* CTA button */
+    .btn-main{
+      border-radius:999px;
+      background:linear-gradient(135deg,var(--neon),var(--mint));
+      color:#020617;
+      font-weight:600;
+      padding:10px 22px;
+      font-size:.94rem;
+      box-shadow:0 0 22px rgba(0,229,255,0.55);
+      transition:transform .22s ease, box-shadow .22s ease, filter .22s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-main::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .btn-main:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .btn-main:hover{
+      transform:translateY(-2px) scale(1.05);
+      box-shadow:0 0 32px rgba(34,211,238,0.8);
+      filter:saturate(1.15);
+    }
+
+    .btn-ghost{
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.55);
+      padding:9px 20px;
+      font-size:.9rem;
+      color:var(--text-soft);
+      background:rgba(15,23,42,0.9);
+      transition:background .2s ease,border-color .2s ease,color .2s ease,transform .2s;
+    }
+    .btn-ghost:hover{
+      background:rgba(15,23,42,1);
+      border-color:rgba(148,163,184,0.9);
+      color:#e5e7eb;
+      transform:translateY(-1px);
+    }
+
+    /* Footer icons */
+    .social-icon{
+      width:34px;
+      height:34px;
+      border-radius:11px;
+      background:#020617;
+      border:1px solid rgba(148,163,184,0.35);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:.8rem;
+      transition:background .2s,border-color .2s,transform .2s,box-shadow .2s;
+    }
+    .social-icon:hover{
+      background:radial-gradient(circle at top,var(--neon),#0f172a);
+      border-color:var(--neon);
+      transform:translateY(-2px) scale(1.1);
+      box-shadow:0 0 20px rgba(0,229,255,0.6);
+    }
+
+    /* Scroll animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .slide-in-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .slide-in-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .slide-in-right {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .slide-in-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Parallax effect */
+    .parallax {
+      transition: transform 0.1s ease-out;
+    }
+
+    /* Balance card */
+    .balance-card {
+      background: linear-gradient(135deg, rgba(0,229,255,0.1), rgba(0,245,160,0.1));
+      border: 1px solid rgba(0,229,255,0.3);
+      border-radius: 24px;
+      padding: 24px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(0,229,255,0.2);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .balance-card::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(0,229,255,0.1) 0%, transparent 70%);
+      animation: rotate 20s linear infinite;
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .balance-card:hover {
+      transform: translateY(-8px) scale(1.03) rotateX(-3deg) rotateY(2deg) translateZ(20px);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 80px rgba(0,229,255,0.6), 0 0 120px rgba(0,245,160,0.4);
+      border-color: rgba(0,229,255,0.6);
+    }
+
+    /* Stats cards */
+    .stat-card {
+      background: rgba(15,23,42,0.8);
+      border: 1px solid rgba(148,163,184,0.2);
+      border-radius: 16px;
+      padding: 20px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--neon), var(--mint));
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover::after {
+      transform: scaleX(1);
+    }
+
+    .stat-card:hover {
+      border-color: rgba(0,229,255,0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0,229,255,0.2);
+    }
+
+    /* Floating elements */
+    .float {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotateZ(0deg); }
+      25% { transform: translateY(-15px) rotateZ(1deg); }
+      50% { transform: translateY(-25px) rotateZ(0deg); }
+      75% { transform: translateY(-15px) rotateZ(-1deg); }
+    }
+
+    /* Pulsing glow */
+    @keyframes pulseGlow {
+      0%, 100% { 
+        box-shadow: 0 0 20px rgba(0,229,255,0.3), 0 0 40px rgba(0,229,255,0.2);
+      }
+      50% { 
+        box-shadow: 0 0 40px rgba(0,229,255,0.6), 0 0 80px rgba(0,229,255,0.4), 0 0 120px rgba(0,245,160,0.3);
+      }
+    }
+
+    .pulse-glow {
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+
+    /* Glow effect */
+    .glow {
+      position: relative;
+    }
+
+    .glow::after {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: inherit;
+      background: linear-gradient(135deg, var(--neon), var(--mint));
+      opacity: 0;
+      filter: blur(20px);
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
+
+    .glow:hover::after {
+      opacity: 0.6;
+    }
+
+    /* Küçük scroll helper */
+    .scroll-indicator{
+      position:fixed;
+      right:20px;
+      top:50%;
+      transform:translateY(-50%);
+      width:6px;
+      height:80px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.85);
+      border:1px solid rgba(148,163,184,0.6);
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-start;
+      padding:4px;
+      gap:4px;
+      z-index: 30;
+    }
+    .scroll-dot{
+      width:100%;
+      border-radius:999px;
+      background:linear-gradient(to bottom,var(--neon),var(--mint));
+      flex:0 0 22px;
+      transition: all 0.3s ease;
+    }
+
+    /* Stagger animation delay */
+    .stagger-1 { transition-delay: 0.1s; }
+    .stagger-2 { transition-delay: 0.2s; }
+    .stagger-3 { transition-delay: 0.3s; }
+    .stagger-4 { transition-delay: 0.4s; }
+    .stagger-5 { transition-delay: 0.5s; }
+    .stagger-6 { transition-delay: 0.6s; }
+
+    /* Language Switcher */
+    .lang-switcher {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.8);
+      border: 1px solid rgba(148,163,184,0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .lang-switcher:hover {
+      background: rgba(15,23,42,1);
+      border-color: rgba(0,229,255,0.5);
+      box-shadow: 0 0 15px rgba(0,229,255,0.3);
+    }
+
+    .lang-switcher select {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 0.85rem;
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+      padding-right: 20px;
+    }
+
+    .lang-switcher select option {
+      background: rgba(15,23,42,0.95);
+      color: #fff;
+      padding: 8px 12px;
+    }
+
+    .lang-switcher::after {
+      content: "▼";
+      position: absolute;
+      right: 12px;
+      font-size: 0.7rem;
+      color: rgba(148,163,184,0.6);
+      pointer-events: none;
+    }
+
+    /* Stats Section */
+    .stats-section {
+      background: linear-gradient(135deg, rgba(0,229,255,0.05), rgba(0,245,160,0.05));
+      border-top: 1px solid rgba(0,229,255,0.2);
+      border-bottom: 1px solid rgba(0,229,255,0.2);
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .stat-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      background: linear-gradient(135deg, var(--neon), var(--mint));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: countUp 2s ease-out;
+    }
+
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Testimonials */
+    .testimonial-card {
+      background: rgba(15,23,42,0.6);
+      border: 1px solid rgba(148,163,184,0.2);
+      border-radius: 20px;
+      padding: 24px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonial-card::before {
+      content: '"';
+      position: absolute;
+      top: 10px;
+      left: 15px;
+      font-size: 4rem;
+      color: rgba(0,229,255,0.2);
+      font-family: serif;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(0,229,255,0.4);
+      box-shadow: 0 10px 30px rgba(0,229,255,0.2);
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, rgba(0,229,255,0.1), rgba(0,245,160,0.1));
+      border: 1px solid rgba(0,229,255,0.3);
+      border-radius: 32px;
+      padding: 60px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(0,229,255,0.1) 0%, transparent 70%);
+      animation: rotate 30s linear infinite;
+    }
+
+    /* Loading Animation */
+    .loading-dots {
+      display: inline-flex;
+      gap: 4px;
+    }
+
+    .loading-dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--neon);
+      animation: loadingDot 1.4s ease-in-out infinite;
+    }
+
+    .loading-dots span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .loading-dots span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes loadingDot {
+      0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Lottie Animations */
+    .lottie-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lottie-hero {
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      filter: drop-shadow(0 0 30px rgba(0,229,255,0.3));
+    }
+
+    .lottie-feature {
+      width: 100%;
+      max-width: 200px;
+      height: auto;
+      margin: 0 auto;
+    }
+
+    .lottie-stats {
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      opacity: 0.8;
+    }
+
+    .lottie-cta {
+      width: 100%;
+      max-width: 350px;
+      height: auto;
+      filter: drop-shadow(0 0 40px rgba(0,245,160,0.4));
+    }
+
+    .lottie-loading {
+      width: 150px;
+      height: 150px;
+      margin: 0 auto;
+    }
+
+    /* Mobile Optimizations - Only reduce, don't disable */
+    @media (max-width: 768px) {
+      .lottie-hero {
+        max-width: 200px;
+        filter: none;
+      }
+      
+      /* Welcome animation on mobile */
+      
+      .lottie-feature {
+        max-width: 150px;
+      }
+      
+      .lottie-stats {
+        max-width: 250px;
+        height: 120px;
+      }
+      
+      .lottie-cta {
+        max-width: 200px;
+        filter: none;
+      }
+
+      /* Lighter hover effects on mobile */
+      .feature-card:hover {
+        transform: translateY(-4px) scale(1.01);
+        box-shadow: 0 20px 50px rgba(15,23,42,0.9), 0 0 30px rgba(0,229,255,0.2);
+      }
+
+      .balance-card:hover {
+        transform: translateY(-3px) scale(1.01);
+        box-shadow: 0 25px 70px rgba(0,0,0,0.6), 0 0 50px rgba(0,229,255,0.3);
+      }
+
+      /* Hide particles canvas on mobile */
+      #particles {
+        display: none !important;
+      }
+
+      /* Keep phone animation but simpler */
+      .phone {
+        animation: floatPhoneMobile 6s ease-in-out infinite;
+      }
+
+      @keyframes floatPhoneMobile {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+      }
+    }
+
+    @media (max-width:1024px){
+      .phone{
+        margin-top:40px;
+        transform:none;
+        animation:none;
+      }
+      .scroll-indicator{display:none;}
+    }
+
+    /* Performance optimizations */
+    * {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .feature-card,
+    .balance-card,
+    .stat-card {
+      will-change: transform;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="bg-network"></div>
+<canvas id="particles" class="fixed inset-0 z-0 pointer-events-none"></canvas>
+
+<!-- Scroll indicator -->
+<div class="scroll-indicator hidden lg:flex">
+  <div class="scroll-dot"></div>
+</div>
+
+<!-- NAVBAR -->
+<header class="sticky top-0 z-40">
+  <div class="glass-nav mx-auto max-w-6xl mt-4 mb-4 px-4 sm:px-6 py-3 rounded-2xl flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-full border border-cyan-400/60 bg-cyan-400/10 flex items-center justify-center overflow-hidden">
+        <!-- Logo -->
+        <img src="cyberex-logo.png" alt="CyberEX Logo" class="w-7 h-7 object-contain" />
+      </div>
+      <div class="flex flex-col leading-tight">
+        <span class="text-sm font-semibold tracking-[0.18em] uppercase text-cyan-300">CyberEX</span>
+        <span class="text-xs text-slate-400">Next-Gen Web3 Wallet</span>
+      </div>
+    </div>
+
+    <nav class="hidden md:flex items-center gap-8 text-sm text-slate-300">
+      <a href="#features" class="hover:text-cyan-300 transition-colors" data-i18n="nav.features">Özellikler</a>
+      <a href="#security" class="hover:text-cyan-300 transition-colors" data-i18n="nav.security">Güvenlik</a>
+      <a href="#developers" class="hover:text-cyan-300 transition-colors" data-i18n="nav.developers">Geliştiriciler</a>
+      <a href="#start" class="hover:text-cyan-300 transition-colors" data-i18n="nav.start">Başla</a>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <div class="lang-switcher">
+        <select id="languageSelect">
+          <option value="tr">TR</option>
+          <option value="en">EN</option>
+        </select>
+      </div>
+      <button class="hidden sm:inline-flex btn-ghost text-xs" data-i18n="nav.extension">Tarayıcı Eklentisi</button>
+      <button class="btn-main text-xs sm:text-sm" data-i18n="nav.join">Erken Erişime Katıl</button>
+    </div>
+  </div>
+</header>
+
+<main class="pb-20">
+
+  <!-- HERO -->
+  <section class="pt-6 sm:pt-12 lg:pt-16 pb-16 relative overflow-hidden">
+    
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-12 relative z-10">
+      <!-- Left -->
+      <div class="max-w-xl fade-in slide-in-left">
+        <div class="pill inline-flex items-center gap-2 mb-4 bg-slate-900/70 text-[0.7rem]">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(16,185,129,1)] animate-pulse"></span>
+          <span data-i18n="hero.badge">WEB3'ÜN GELECEK NESİL CÜZDANI</span>
+        </div>
+
+        <h1 class="headline font-semibold mb-4">
+          <span class="block" data-i18n="hero.title1">Web3'teki</span>
+          <span class="block grad-text font-bold" data-i18n="hero.title2">en güvenli eviniz.</span>
+        </h1>
+
+        <p class="text-sm sm:text-base text-slate-300 leading-relaxed mb-6" data-i18n="hero.description">
+          CyberEX, dijital varlıklarınızı saklamak, yönetmek ve Web3 dünyasına güvenle bağlanmak için tasarlanmış
+          yeni nesil bir cüzdan altyapısıdır. Güvenlik, hız ve özgürlük; tek bir deneyimde.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-3 mb-5">
+          <button class="btn-main flex items-center gap-2 glow" data-i18n="hero.button1">
+            <span>Tarayıcı Eklentisini İndir</span>
+          </button>
+          <button class="btn-ghost flex items-center gap-2" data-i18n="hero.button2">
+            Daha Fazlasını Gör
+          </button>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 text-xs text-slate-400 mb-6">
+          <div class="flex items-center gap-2 p-3 rounded-xl bg-slate-900/50 border border-slate-700/50 hover:border-cyan-400/50 transition-colors">
+            <span class="w-6 h-6 rounded-full bg-emerald-400/15 border border-emerald-400/70 flex items-center justify-center text-[0.7rem] animate-pulse">✓</span>
+            <span data-i18n="hero.feature1">Donanım cüzdan uyumluluğu</span>
+          </div>
+          <div class="flex items-center gap-2 p-3 rounded-xl bg-slate-900/50 border border-slate-700/50 hover:border-cyan-400/50 transition-colors">
+            <span class="w-6 h-6 rounded-full bg-cyan-400/15 border border-cyan-400/70 flex items-center justify-center text-[0.7rem] animate-pulse">✓</span>
+            <span data-i18n="hero.feature2">Çoklu zincir &amp; L2 desteği</span>
+          </div>
+          <div class="flex items-center gap-2 p-3 rounded-xl bg-slate-900/50 border border-slate-700/50 hover:border-purple-400/50 transition-colors">
+            <span class="w-6 h-6 rounded-full bg-purple-400/15 border border-purple-400/70 flex items-center justify-center text-[0.7rem] animate-pulse">✓</span>
+            <span>NFT Koleksiyon Yönetimi</span>
+          </div>
+          <div class="flex items-center gap-2 p-3 rounded-xl bg-slate-900/50 border border-slate-700/50 hover:border-emerald-400/50 transition-colors">
+            <span class="w-6 h-6 rounded-full bg-emerald-400/15 border border-emerald-400/70 flex items-center justify-center text-[0.7rem] animate-pulse">✓</span>
+            <span>7/24 Güvenlik İzleme</span>
+          </div>
+        </div>
+
+        <!-- Highlight Card with Trading Animation -->
+        <div class="relative p-6 rounded-2xl bg-gradient-to-br from-slate-900/90 via-slate-800/80 to-slate-900/90 border border-cyan-500/30 mb-6 overflow-hidden group hover:border-cyan-400/50 transition-all duration-300">
+          <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/5 to-cyan-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div class="relative z-10">
+            <div class="flex items-start gap-4">
+              <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-emerald-400 flex items-center justify-center text-2xl font-bold shadow-lg shadow-cyan-400/50">
+                ⚡
+              </div>
+              <div class="flex-1">
+                <h3 class="text-lg font-bold mb-2 grad-text">Hızlı ve Güvenli İşlemler</h3>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                  Saniyeler içinde token transferleri, akıllı sözleşme etkileşimleri ve çoklu zincir işlemleri. 
+                  <span class="text-cyan-400 font-medium">Zero-knowledge</span> teknolojisi ile maksimum güvenlik.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Preview Cards -->
+        <div class="grid grid-cols-2 gap-3 mb-6">
+          <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-700/50 hover:border-cyan-400/30 transition-all group">
+            <div class="text-2xl font-bold grad-text mb-1">150+</div>
+            <div class="text-xs text-slate-400">Desteklenen Token</div>
+            <div class="mt-2 h-1 bg-slate-800 rounded-full overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-cyan-400 to-emerald-400 rounded-full w-3/4 group-hover:w-full transition-all duration-500"></div>
+            </div>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-700/50 hover:border-purple-400/30 transition-all group">
+            <div class="text-2xl font-bold grad-text mb-1">24/7</div>
+            <div class="text-xs text-slate-400">Müşteri Desteği</div>
+            <div class="mt-2 h-1 bg-slate-800 rounded-full overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-purple-400 to-pink-400 rounded-full w-4/5 group-hover:w-full transition-all duration-500"></div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Trust Indicators with Left Animation -->
+        <div class="pt-4 border-t border-slate-800/50">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+            <!-- Left: Bitcoin Animation -->
+            <div class="flex-shrink-0">
+              <div class="lottie-container">
+                <div id="bitcoin-animation" class="lottie-hero" style="width: 120px; height: 120px; min-height: 120px; opacity: 0.8;"></div>
+              </div>
+            </div>
+            
+            <!-- Right: Trust Indicators -->
+            <div class="flex flex-wrap items-center gap-4 sm:gap-6 text-xs text-slate-400 flex-1">
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-emerald-400 flex items-center justify-center text-white font-bold text-[0.7rem] shadow-lg shadow-cyan-400/50">5M+</div>
+                <span>Aktif Kullanıcı</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white font-bold text-[0.7rem] shadow-lg shadow-purple-400/50">50+</div>
+                <span>Zincir Desteği</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-red-400 flex items-center justify-center text-white font-bold text-[0.7rem] shadow-lg shadow-orange-400/50">99%</div>
+                <span>Uptime</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-teal-400 flex items-center justify-center text-white font-bold text-[0.7rem] shadow-lg shadow-emerald-400/50">10K+</div>
+                <span>Dapp Entegrasyonu</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Content - Additional Features -->
+        <div class="mt-8 pt-6 border-t border-slate-800/50">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-700/30 hover:border-cyan-400/50 transition-all group">
+              <div class="text-3xl mb-2">🔒</div>
+              <div class="text-sm font-semibold text-cyan-300 mb-1">Güvenlik</div>
+              <div class="text-xs text-slate-400">End-to-end şifreleme</div>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-700/30 hover:border-emerald-400/50 transition-all group">
+              <div class="text-3xl mb-2">⚡</div>
+              <div class="text-sm font-semibold text-emerald-300 mb-1">Hız</div>
+              <div class="text-xs text-slate-400">Anında işlem onayı</div>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-700/30 hover:border-purple-400/50 transition-all group">
+              <div class="text-3xl mb-2">🌐</div>
+              <div class="text-sm font-semibold text-purple-300 mb-1">Ekosistem</div>
+              <div class="text-xs text-slate-400">Binlerce DApp desteği</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right: Balance Card & Phone mockup -->
+      <div class="flex flex-col gap-6 justify-center lg:justify-end flex-1 fade-in slide-in-right">
+        <!-- Top: Bitcoin Loader Animation -->
+        <div class="lottie-container mb-4 flex justify-center lg:justify-end">
+          <div id="bitcoinloader-animation" class="lottie-hero" style="width: 200px; height: 200px; min-height: 200px;"></div>
+        </div>
+        
+        <!-- Balance Card -->
+        <div class="balance-card float pulse-glow">
+          <div class="relative z-10">
+            <div class="text-xs text-slate-400 mb-2">Bakiye Özeti</div>
+            <div class="text-3xl font-bold mb-1">
+              <span class="grad-text">₺456.937,72</span>
+            </div>
+            <div class="text-sm text-emerald-400 mb-4">
+              +₺26.039,73 <span class="text-slate-400">(+%5,70)</span>
+            </div>
+            <div class="grid grid-cols-3 gap-3 text-xs">
+              <div class="stat-card">
+                <div class="text-slate-400 mb-1">ETH</div>
+                <div class="text-cyan-300 font-semibold">1,54431</div>
+                <div class="text-slate-500 text-[0.7rem]">≈ 5.415,42 mUSD</div>
+              </div>
+              <div class="stat-card">
+                <div class="text-slate-400 mb-1">USDC</div>
+                <div class="text-emerald-300 font-semibold">6.000,00</div>
+                <div class="text-slate-500 text-[0.7rem]">≈ 1,71102 ETH</div>
+              </div>
+              <div class="stat-card">
+                <div class="text-slate-400 mb-1">NFT</div>
+                <div class="text-purple-300 font-semibold">12</div>
+                <div class="text-slate-500 text-[0.7rem]">Koleksiyon</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Crypto Phone Animation -->
+        <div class="lottie-container mb-4 flex justify-center lg:justify-end">
+          <div id="cryptophone-animation" class="lottie-hero" style="width: 200px; height: 200px; min-height: 200px;"></div>
+        </div>
+
+        <!-- Phone mockup -->
+        <div class="flex justify-center lg:justify-end">
+          <div class="phone">
+            <div class="flex items-center justify-between mb-4">
+              <div class="phone-badge flex items-center gap-2 text-slate-300">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(16,185,129,1)]"></span>
+                CyberEX Wallet
+              </div>
+              <div class="phone-tag text-slate-400">
+                Beta • v0.9
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <div class="text-xs text-slate-400 mb-1">Vizyon</div>
+              <div class="text-sm text-slate-200">
+                Web3 dünyasını herkes için <span class="text-cyan-300 font-medium">erişilebilir</span>,
+                <span class="text-emerald-300 font-medium">güvenli</span> ve <span class="text-sky-300 font-medium">şeffaf</span> kılmak.
+              </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3 mt-4 text-xs">
+              <div class="rounded-2xl bg-slate-900/80 border border-slate-700/80 p-3">
+                <div class="text-[0.65rem] text-slate-400 mb-2">Odak</div>
+                <div class="text-cyan-300 font-semibold">Güvenlik</div>
+                <p class="text-[0.65rem] text-slate-400 mt-1">
+                  Sıfır bilgi mimarisi &amp; gerçek zamanlı tehdit analizi.
+                </p>
+              </div>
+              <div class="rounded-2xl bg-slate-900/80 border border-slate-700/80 p-3">
+                <div class="text-[0.65rem] text-slate-400 mb-2">Deneyim</div>
+                <div class="text-emerald-300 font-semibold">Hız</div>
+                <p class="text-[0.65rem] text-slate-400 mt-1">
+                  Tek dokunuşla imzalama, akıllı ön onay akışları ve sezgisel arayüz.
+                </p>
+              </div>
+              <div class="rounded-2xl bg-slate-900/80 border border-slate-700/80 p-3">
+                <div class="text-[0.65rem] text-slate-400 mb-2">Ekosistem</div>
+                <div class="text-sky-300 font-semibold">Özgürlük</div>
+                <p class="text-[0.65rem] text-slate-400 mt-1">
+                  Çoklu zincir desteği ve Web3 dapp'lerine sorunsuz bağlantı.
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-5 text-[0.7rem] text-slate-500">
+              "CyberEX sadece bir cüzdan değil; Web3 kimliğiniz ve güvenlik kalkanınız."
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES GRID -->
+  <section id="features" class="py-12 section-alt border-y border-slate-800/80">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-8 mb-8 fade-in">
+        <div class="flex-1">
+          <p class="pill bg-slate-900/70 text-[0.68rem] mb-3">HER ŞEY CÜZDANI</p>
+          <h2 class="text-xl sm:text-2xl font-semibold mb-2">Web3 deneyiminin tamamı, tek bir arayüzde.</h2>
+          <p class="text-sm text-slate-300 max-w-xl">
+            Token'lar, NFT'ler, DeFi ve daha fazlası için ayrı ayrı çözümler aramayın.
+            CyberEX, Web3'te ihtiyaç duyduğunuz her şeyi tek bir güvenli çatı altında toplar.
+          </p>
+        </div>
+        <div class="lottie-container flex-1 flex justify-center items-center">
+          <div id="trading-hero-animation" class="lottie-hero" style="width: 100%; max-width: 500px; height: 350px; min-height: 350px;"></div>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="feature-card stagger-1">
+          <div class="text-xs font-semibold text-cyan-300 mb-2">01 • Çoklu Zincir</div>
+          <h3 class="font-semibold mb-2 text-sm">Ethereum, L2'ler ve daha fazlası</h3>
+          <p class="text-xs text-slate-300 mb-3">
+            Ethereum, Arbitrum, Optimism, Base ve geleceğin zincirleriyle uyumlu bir altyapı.
+          </p>
+          <p class="text-[0.7rem] text-slate-500">
+            Akıllı ağ algılama ve otomatik RPC yapılandırması sayesinde dakikalar değil
+            saniyeler içinde bağlantı kurun.
+          </p>
+        </div>
+
+        <div class="feature-card stagger-2">
+          <div class="text-xs font-semibold text-cyan-300 mb-2">02 • Dapp Bağlantısı</div>
+          <h3 class="font-semibold mb-2 text-sm">Tek tıklamayla Web3'e giriş</h3>
+          <p class="text-xs text-slate-300 mb-3">
+            Binlerce dapp, oyun ve DeFi protokolüne güvenle bağlanın.
+          </p>
+          <p class="text-[0.7rem] text-slate-500">
+            Akıllı izin yönetimi, hangi dapp'in neye eriştiğini her zaman görünür ve kontrol
+            edilebilir kılar.
+          </p>
+        </div>
+
+        <div class="feature-card stagger-3">
+          <div class="text-xs font-semibold text-cyan-300 mb-2">03 • NFT &amp; Koleksiyonlar</div>
+          <h3 class="font-semibold mb-2 text-sm">Koleksiyonlarınız tek yerde</h3>
+          <p class="text-xs text-slate-300 mb-3">
+            NFT'lerinizi zincirler arası tek bir görsel vitrin üzerinden takip edin.
+          </p>
+          <p class="text-[0.7rem] text-slate-500">
+            Otomatik koleksiyon tanıma ve güvenilir metadata kaynağı ile sahte koleksiyonlara
+            karşı ekstra koruma.
+          </p>
+        </div>
+
+        <div class="feature-card stagger-4">
+          <div class="text-xs font-semibold text-cyan-300 mb-2">04 • Akıllı İmza Akışı</div>
+          <h3 class="font-semibold mb-2 text-sm">Ne imzaladığınızı görün</h3>
+          <p class="text-xs text-slate-300 mb-3">
+            Karmaşık imza verilerini sade bir dile çeviren açıklayıcı arayüz.
+          </p>
+          <p class="text-[0.7rem] text-slate-500">
+            Phishing ve kötü niyetli sözleşmelere karşı gerçek zamanlı imza analizi.
+          </p>
+        </div>
+
+        <div class="feature-card stagger-5">
+          <div class="text-xs font-semibold text-cyan-300 mb-2">05 • Çoklu Cihaz</div>
+          <h3 class="font-semibold mb-2 text-sm">Tarayıcı, mobil ve masaüstü</h3>
+          <p class="text-xs text-slate-300 mb-3">
+            Tüm cihazlarınızda senkronize deneyim; evde, ofiste veya hareket halindeyken.
+          </p>
+          <p class="text-[0.7rem] text-slate-500">
+            Sıfır sunucuya güvenen şifreleme modeli ile verileriniz her zaman sizde kalır.
+          </p>
+        </div>
+
+        <div class="feature-card stagger-6">
+          <div class="text-xs font-semibold text-cyan-300 mb-2">06 • Modüler Altyapı</div>
+          <h3 class="font-semibold mb-2 text-sm">Geliştiriciler için tasarlandı</h3>
+          <p class="text-xs text-slate-300 mb-3">
+            SDK'lar, API'ler ve hazır bileşenler ile cüzdan entegrasyonunu dakikalara indirin.
+          </p>
+          <p class="text-[0.7rem] text-slate-500">
+            CyberEX, cüzdan katmanınız olurken siz ürününüze odaklanın.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECURITY SECTION -->
+  <section id="security" class="py-14 section-soft">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col lg:flex-row gap-10 items-center">
+      <div class="flex-1 fade-in slide-in-left">
+        <p class="pill bg-slate-900/70 text-[0.68rem] mb-3">MAKSİMUM GÜVENLİK</p>
+        <h2 class="text-xl sm:text-2xl font-semibold mb-3">Güvenlik, tasarımın merkezinde.</h2>
+        <p class="text-sm text-slate-300 mb-5 max-w-xl">
+          CyberEX, sadece "güvenli olduğunu iddia eden" bir cüzdan değil. Mimarisi, veri modeli
+          ve kullanıcı deneyimi güvenlik üzerine kurulu bir altyapıdır.
+        </p>
+
+        <ul class="space-y-3 text-sm text-slate-300">
+          <li class="flex gap-3">
+            <span class="mt-1 w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(16,185,129,1)]"></span>
+            <span><strong class="text-emerald-300">Donanım cüzdan entegrasyonu</strong> ile soğuk saklama desteği.</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="mt-1 w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_12px_rgba(56,189,248,1)]"></span>
+            <span><strong class="text-cyan-300">Gerçek zamanlı tehdit tarayıcı</strong> ile phishing ve zararlı dapp uyarıları.</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="mt-1 w-2 h-2 rounded-full bg-purple-400 shadow-[0_0_12px_rgba(168,85,247,1)]"></span>
+            <span><strong class="text-purple-300">Şeffaf açık kaynak çekirdek</strong> ile doğrulanabilir güvenlik.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="flex-1 flex justify-center lg:justify-end fade-in slide-in-right">
+        <div class="relative w-full max-w-md">
+          <div class="absolute -inset-1 rounded-3xl bg-gradient-to-br from-cyan-400 via-emerald-400 to-sky-500 opacity-60 blur-2xl"></div>
+          <div class="relative rounded-3xl bg-slate-950/95 border border-cyan-400/40 p-6 shadow-[0_30px_80px_rgba(15,23,42,0.9)]">
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full border border-cyan-400/70 bg-cyan-400/10 flex items-center justify-center overflow-hidden">
+                  <img src="cyberex-logo.png" alt="CyberEX Logo" class="w-6 h-6 object-contain" />
+                </div>
+                <div class="text-sm">
+                  <div class="text-slate-100 font-medium">CyberEX Guard</div>
+                  <div class="text-[0.68rem] text-slate-400">Gerçek zamanlı güvenlik katmanı</div>
+                </div>
+              </div>
+              <span class="px-2.5 py-1 rounded-full bg-emerald-400/10 border border-emerald-400/40 text-[0.7rem] text-emerald-300">
+                Canlı izleme aktif
+              </span>
+            </div>
+
+            <div class="rounded-2xl bg-slate-900/80 border border-slate-700/70 p-4 mb-4">
+              <div class="flex items-center justify-between text-xs mb-2 text-slate-300">
+                <span>Ön imza analizi</span>
+                <span class="text-emerald-300">Temiz</span>
+              </div>
+              <div class="text-[0.7rem] text-slate-400">
+                Bu işlem bilinen bir protokol üzerinden yürütülüyor ve kötü niyetli bir izin
+                talebi içermiyor.
+              </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3 text-[0.68rem] text-slate-300 mb-4">
+              <div class="rounded-2xl bg-slate-900/80 border border-slate-700/70 p-3">
+                <div class="text-slate-400 mb-1">Koruma</div>
+                <div class="text-emerald-300 font-semibold">Wallet Guard</div>
+              </div>
+              <div class="rounded-2xl bg-slate-900/80 border border-slate-700/70 p-3">
+                <div class="text-slate-400 mb-1">Analiz</div>
+                <div class="text-cyan-300 font-semibold">Tx Scanner</div>
+              </div>
+              <div class="rounded-2xl bg-slate-900/80 border border-slate-700/70 p-3">
+                <div class="text-slate-400 mb-1">Seviye</div>
+                <div class="text-sky-300 font-semibold">Pro+</div>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between text-[0.7rem] text-slate-400">
+              <span>Güncel tehditler: <span class="text-emerald-300 font-medium">0 kritik</span></span>
+              <button class="text-cyan-300 hover:text-cyan-200 underline-offset-2 hover:underline">
+                Detaylı raporu aç
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEVELOPERS / CTA -->
+  <section id="developers" class="py-14 border-t border-slate-800/80">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col lg:flex-row gap-10 items-start">
+      <div class="flex-1 fade-in slide-in-left">
+        <p class="pill bg-slate-900/70 text-[0.68rem] mb-3">GELİŞTİRİCİLER İÇİN</p>
+        <h2 class="text-xl sm:text-2xl font-semibold mb-3">CyberEX'i ürünlerinize dakikalar içinde entegre edin.</h2>
+        <p class="text-sm text-slate-300 mb-5 max-w-xl">
+          SDK, REST API ve hazır UI bileşenleri ile CyberEX, Web3 ürünleriniz için güvenli
+          bir cüzdan katmanı sağlar. Kullanıcılarınız CyberEX ile giriş yaparken siz sadece
+          ürün deneyiminize odaklanın.
+        </p>
+
+        <ul class="grid sm:grid-cols-2 gap-3 text-[0.8rem] text-slate-300 mb-6">
+          <li class="flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span> Web3.js, Ethers.js ve Wagmi uyumlu.
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span> Standartlaştırılmış imza &amp; bağlantı akışları.
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span> Typescript tip desteği ve örnek repo'lar.
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span> Sıfır kullanıcı verisi tutan backend mimarisi.
+          </li>
+        </ul>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <button class="btn-main text-xs sm:text-sm glow">Geliştirici Dokümantasyonunu Aç</button>
+          <button class="btn-ghost text-xs sm:text-sm">API Anahtarı Talep Et</button>
+        </div>
+      </div>
+
+      <div id="start" class="flex-1 fade-in slide-in-right">
+        <div class="rounded-3xl bg-slate-950/90 border border-slate-700/80 p-6 shadow-[0_24px_60px_rgba(15,23,42,0.9)]">
+          <h3 class="font-semibold mb-2 text-sm">3 adımda CyberEX ile tanışın</h3>
+          <ol class="space-y-3 text-[0.8rem] text-slate-300 mb-5">
+            <li><span class="text-cyan-300 font-semibold">1.</span> Tarayıcı eklentisini veya mobil uygulamayı indirin.</li>
+            <li><span class="text-cyan-300 font-semibold">2.</span> Yeni bir cüzdan oluşturun veya mevcut seed'inizi içe aktarın.</li>
+            <li><span class="text-cyan-300 font-semibold">3.</span> İlk dapp'inize bağlanın ve Web3 dünyasına güvenle adım atın.</li>
+          </ol>
+
+          <div class="rounded-2xl bg-gradient-to-r from-cyan-500/15 via-emerald-400/10 to-sky-500/15 border border-cyan-500/30 p-4 mb-4">
+            <div class="text-xs text-slate-200 mb-1 font-medium">Erken erişim listesi</div>
+            <p class="text-[0.75rem] text-slate-300 mb-3">
+              İlk CyberEX kullanıcıları; yeni özelliklere erken erişim, testnet kampanyaları
+              ve sınırlı sayıda NFT ödülleri kazanma şansı elde eder.
+            </p>
+            <form class="flex flex-col sm:flex-row gap-2">
+              <input
+                type="email"
+                data-i18n="email.placeholder"
+                placeholder="e-posta adresiniz"
+                class="flex-1 rounded-full bg-slate-950/90 border border-slate-600/80 px-3 py-2 text-xs text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-cyan-400 transition-colors"
+              />
+              <button type="submit" class="btn-main text-xs whitespace-nowrap glow">
+                Listeye Katıl
+              </button>
+            </form>
+          </div>
+
+          <p class="text-[0.7rem] text-slate-500">
+            Kişisel verileriniz sadece erken erişim davetleri ve ürün güncellemeleri için
+            kullanılır. Spam göndermiyoruz, üçüncü taraflarla paylaşmıyoruz.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS SECTION -->
+  <section class="stats-section py-16 fade-in">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <!-- Trading Crypto Animation - Top -->
+      <div class="lottie-container mb-8">
+        <div id="trading-crypto-stats" class="lottie-stats" style="width: 100%; max-width: 500px; height: 200px; min-height: 200px; margin: 0 auto;"></div>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="stat-item">
+          <div class="stat-number" data-count="5000000">5M+</div>
+          <div class="text-sm text-slate-400 mt-2" data-i18n="stats.users">Kullanıcı</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-count="50">50+</div>
+          <div class="text-sm text-slate-400 mt-2" data-i18n="stats.chains">Zincir Desteği</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-count="10000">10K+</div>
+          <div class="text-sm text-slate-400 mt-2" data-i18n="stats.dapps">Dapp Entegrasyonu</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-count="99">99.9%</div>
+          <div class="text-sm text-slate-400 mt-2" data-i18n="stats.uptime">Uptime</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="py-16 section-alt">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12 fade-in">
+        <p class="pill bg-slate-900/70 text-[0.68rem] mb-3" data-i18n="testimonials.badge">KULLANICI YORUMLARI</p>
+        <h2 class="text-2xl sm:text-3xl font-semibold mb-3" data-i18n="testimonials.title">Milyonlarca kullanıcı güveniyor</h2>
+        <p class="text-sm text-slate-300 max-w-2xl mx-auto" data-i18n="testimonials.subtitle">
+          CyberEX, Web3 dünyasında güvenilir bir cüzdan olarak kabul ediliyor.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="testimonial-card fade-in stagger-1">
+          <div class="relative z-10">
+            <p class="text-sm text-slate-300 mb-4" data-i18n="testimonials.1.text">
+              "CyberEX sayesinde tüm varlıklarımı güvenle yönetiyorum. Arayüzü çok sezgisel ve güvenlik özellikleri harika!"
+            </p>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-emerald-400"></div>
+              <div>
+                <div class="text-sm font-semibold text-slate-100" data-i18n="testimonials.1.name">Alex Chen</div>
+                <div class="text-xs text-slate-400" data-i18n="testimonials.1.role">DeFi Yatırımcısı</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card fade-in stagger-2">
+          <div class="relative z-10">
+            <p class="text-sm text-slate-300 mb-4" data-i18n="testimonials.2.text">
+              "NFT koleksiyonlarımı tek bir yerden yönetmek çok kolay. Çoklu zincir desteği gerçekten işime yarıyor."
+            </p>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-pink-400"></div>
+              <div>
+                <div class="text-sm font-semibold text-slate-100" data-i18n="testimonials.2.name">Sarah Martinez</div>
+                <div class="text-xs text-slate-400" data-i18n="testimonials.2.role">NFT Koleksiyoneri</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card fade-in stagger-3">
+          <div class="relative z-10">
+            <p class="text-sm text-slate-300 mb-4" data-i18n="testimonials.3.text">
+              "Geliştirici olarak SDK'sını kullanmak çok kolay. Entegrasyon süreci dakikalar içinde tamamlandı."
+            </p>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-400 to-red-400"></div>
+              <div>
+                <div class="text-sm font-semibold text-slate-100" data-i18n="testimonials.3.name">David Kim</div>
+                <div class="text-xs text-slate-400" data-i18n="testimonials.3.role">Web3 Geliştiricisi</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA SECTION -->
+  <section class="py-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="cta-section fade-in">
+        <div class="relative z-10">
+          <!-- Crypto Protection Animation - Only One -->
+          <div class="lottie-container mb-8">
+            <div id="crypto-protection-cta-main" class="lottie-cta" style="width: 100%; height: 400px; min-height: 400px; max-width: 800px; margin: 0 auto;"></div>
+          </div>
+          
+          <h2 class="text-3xl sm:text-4xl font-bold mb-4" data-i18n="cta.title">Web3'e katılın</h2>
+          <p class="text-lg text-slate-300 mb-8 max-w-2xl mx-auto" data-i18n="cta.subtitle">
+            CyberEX ile dijital varlıklarınızı güvenle yönetin ve Web3 dünyasının tüm olanaklarından yararlanın.
+          </p>
+          
+          <div class="flex flex-wrap items-center justify-center gap-4">
+            <button class="btn-main glow text-base px-8 py-4" data-i18n="cta.button1">Tarayıcı Eklentisini İndir</button>
+            <button class="btn-ghost text-base px-8 py-4" data-i18n="cta.button2">Mobil Uygulamayı İndir</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="border-t border-slate-800/80 py-8 fade-in">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-5 text-[0.8rem] text-slate-400">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-full border border-cyan-400/70 bg-cyan-400/10 flex items-center justify-center overflow-hidden">
+        <img src="cyberex-logo.png" alt="CyberEX Logo" class="w-6 h-6 object-contain" />
+      </div>
+      <div>
+        <div class="font-semibold text-slate-100 text-[0.85rem]">CyberEX</div>
+        <div class="text-[0.7rem] text-slate-500">© <span id="year"></span> CyberEX. Tüm hakları saklıdır.</div>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <a href="#" class="social-icon">X</a>
+      <a href="#" class="social-icon">G</a>
+      <a href="#" class="social-icon">in</a>
+      <a href="#" class="social-icon">TG</a>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-4 text-[0.7rem]">
+      <a href="#" class="hover:text-cyan-300 transition-colors">Gizlilik</a>
+      <a href="#" class="hover:text-cyan-300 transition-colors">Kullanım Şartları</a>
+      <a href="#" class="hover:text-cyan-300 transition-colors">Destek</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // CRITICAL: Define isMobile FIRST before anything uses it
+  const isMobile = window.innerWidth <= 768;
+
+  // Language translations
+  const translations = {
+    tr: {
+      nav: {
+        features: "Özellikler",
+        security: "Güvenlik",
+        developers: "Geliştiriciler",
+        start: "Başla",
+        extension: "Tarayıcı Eklentisi",
+        join: "Erken Erişime Katıl"
+      },
+      hero: {
+        badge: "WEB3'ÜN GELECEK NESİL CÜZDANI",
+        title1: "Web3'teki",
+        title2: "en güvenli eviniz.",
+        description: "CyberEX, dijital varlıklarınızı saklamak, yönetmek ve Web3 dünyasına güvenle bağlanmak için tasarlanmış yeni nesil bir cüzdan altyapısıdır. Güvenlik, hız ve özgürlük; tek bir deneyimde.",
+        button1: "Tarayıcı Eklentisini İndir",
+        button2: "Daha Fazlasını Gör",
+        feature1: "Donanım cüzdan uyumluluğu",
+        feature2: "Çoklu zincir & L2 desteği"
+      },
+      stats: {
+        users: "Kullanıcı",
+        chains: "Zincir Desteği",
+        dapps: "Dapp Entegrasyonu",
+        uptime: "Uptime"
+      },
+      testimonials: {
+        badge: "KULLANICI YORUMLARI",
+        title: "Milyonlarca kullanıcı güveniyor",
+        subtitle: "CyberEX, Web3 dünyasında güvenilir bir cüzdan olarak kabul ediliyor.",
+        "1": {
+          text: "\"CyberEX sayesinde tüm varlıklarımı güvenle yönetiyorum. Arayüzü çok sezgisel ve güvenlik özellikleri harika!\"",
+          name: "Alex Chen",
+          role: "DeFi Yatırımcısı"
+        },
+        "2": {
+          text: "\"NFT koleksiyonlarımı tek bir yerden yönetmek çok kolay. Çoklu zincir desteği gerçekten işime yarıyor.\"",
+          name: "Sarah Martinez",
+          role: "NFT Koleksiyoneri"
+        },
+        "3": {
+          text: "\"Geliştirici olarak SDK'sını kullanmak çok kolay. Entegrasyon süreci dakikalar içinde tamamlandı.\"",
+          name: "David Kim",
+          role: "Web3 Geliştiricisi"
+        }
+      },
+      cta: {
+        title: "Web3'e katılın",
+        subtitle: "CyberEX ile dijital varlıklarınızı güvenle yönetin ve Web3 dünyasının tüm olanaklarından yararlanın.",
+        button1: "Tarayıcı Eklentisini İndir",
+        button2: "Mobil Uygulamayı İndir"
+      }
+    },
+    en: {
+      nav: {
+        features: "Features",
+        security: "Security",
+        developers: "Developers",
+        start: "Get Started",
+        extension: "Browser Extension",
+        join: "Join Early Access"
+      },
+      hero: {
+        badge: "NEXT-GEN WEB3 WALLET",
+        title1: "Your secure home",
+        title2: "in Web3.",
+        description: "CyberEX is a next-generation wallet infrastructure designed to store, manage your digital assets and securely connect to the Web3 world. Security, speed and freedom; all in one experience.",
+        button1: "Download Browser Extension",
+        button2: "Learn More",
+        feature1: "Hardware wallet compatibility",
+        feature2: "Multi-chain & L2 support"
+      },
+      stats: {
+        users: "Users",
+        chains: "Chain Support",
+        dapps: "Dapp Integrations",
+        uptime: "Uptime"
+      },
+      testimonials: {
+        badge: "USER TESTIMONIALS",
+        title: "Trusted by millions",
+        subtitle: "CyberEX is recognized as a trusted wallet in the Web3 world.",
+        "1": {
+          text: "\"I manage all my assets securely with CyberEX. The interface is very intuitive and the security features are great!\"",
+          name: "Alex Chen",
+          role: "DeFi Investor"
+        },
+        "2": {
+          text: "\"Managing my NFT collections from one place is so easy. Multi-chain support really works for me.\"",
+          name: "Sarah Martinez",
+          role: "NFT Collector"
+        },
+        "3": {
+          text: "\"As a developer, using their SDK is very easy. The integration process was completed in minutes.\"",
+          name: "David Kim",
+          role: "Web3 Developer"
+        }
+      },
+      cta: {
+        title: "Join Web3",
+        subtitle: "Securely manage your digital assets with CyberEX and take advantage of all the opportunities in the Web3 world.",
+        button1: "Download Browser Extension",
+        button2: "Download Mobile App"
+      }
+    }
+  };
+
+  // Language management
+  let currentLang = localStorage.getItem('language') || 'tr';
+  const langSelect = document.getElementById('languageSelect');
+
+  // Add email placeholder to translations
+  translations.tr.email = { placeholder: "e-posta adresiniz" };
+  translations.en.email = { placeholder: "your email address" };
+
+  function setLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('language', lang);
+    if (langSelect) langSelect.value = lang;
+    
+    // Update all elements with data-i18n attribute
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      const keys = key.split('.');
+      let value = translations[lang];
+      
+      for (const k of keys) {
+        value = value?.[k];
+      }
+      
+      if (value) {
+        if (el.tagName === 'INPUT' && el.type === 'email') {
+          el.placeholder = value;
+        } else {
+          el.textContent = value;
+        }
+      }
+    });
+
+    // Update HTML lang attribute
+    document.documentElement.lang = lang;
+  }
+
+  // Initialize language
+  setLanguage(currentLang);
+
+  // Language switcher event
+  if (langSelect) {
+    langSelect.addEventListener('change', (e) => {
+      setLanguage(e.target.value);
+    });
+  }
+
+  // Animate numbers on scroll
+  function animateValue(element, start, end, duration) {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      const current = Math.floor(progress * (end - start) + start);
+      element.textContent = current.toLocaleString() + (element.textContent.includes('+') ? '+' : '') + 
+                           (element.textContent.includes('%') ? '%' : '');
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+    };
+    window.requestAnimationFrame(step);
+  }
+
+  // Observe stat numbers
+  const statObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+        entry.target.classList.add('animated');
+        const count = parseInt(entry.target.getAttribute('data-count'));
+        animateValue(entry.target, 0, count, 2000);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('.stat-number').forEach(stat => {
+    statObserver.observe(stat);
+  });
+
+  // Footer yıl
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Auto-animate feature cards on page load
+  function animateFeatureCards() {
+    const featureCards = document.querySelectorAll('.feature-card');
+    featureCards.forEach((card, index) => {
+      // Add visible class immediately for fade-in
+      card.classList.add('visible');
+      
+      // Stagger animation with delay
+      setTimeout(() => {
+        card.classList.add('animate');
+      }, 200 + (index * 100)); // 200ms base + 100ms per card
+    });
+  }
+
+  // Run immediately when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(animateFeatureCards, 300);
+    });
+  } else {
+    setTimeout(animateFeatureCards, 300);
+  }
+
+  // Scroll animations with Intersection Observer
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  // Observe all fade-in elements (except feature cards - they animate automatically)
+  document.querySelectorAll('.fade-in:not(.feature-card), .slide-in-left, .slide-in-right').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Navbar scroll effect
+  let lastScroll = 0;
+  const navbar = document.querySelector('.glass-nav');
+  
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    
+    if (currentScroll > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+    
+    lastScroll = currentScroll;
+  });
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
+
+  // Scroll indicator progress
+  const scrollIndicator = document.querySelector('.scroll-indicator');
+  const scrollDot = document.querySelector('.scroll-dot');
+  
+  if (scrollIndicator && scrollDot) {
+    window.addEventListener('scroll', () => {
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrollTop = window.pageYOffset;
+      const scrollPercent = scrollTop / (documentHeight - windowHeight);
+      const maxHeight = scrollIndicator.offsetHeight - 8;
+      scrollDot.style.height = `${Math.min(scrollPercent * maxHeight, maxHeight)}px`;
+    });
+  }
+
+  // Button Functionality - All buttons active (without breaking animations)
+  // Wait for DOM to be fully ready
+  setTimeout(() => {
+    // Download Extension buttons
+    document.querySelectorAll('button').forEach(btn => {
+      const text = btn.textContent || btn.innerText;
+      const dataAttr = btn.getAttribute('data-i18n');
+      
+      // Tarayıcı Eklentisini İndir / Download Browser Extension
+      if (text.includes('Tarayıcı Eklentisini İndir') || text.includes('Download Browser Extension') || 
+          dataAttr === 'hero.button1' || dataAttr === 'cta.button1') {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.open('https://chrome.google.com/webstore', '_blank');
+        });
+      }
+      
+      // Daha Fazlasını Gör / Learn More - scroll to features
+      if (text.includes('Daha Fazlasını Gör') || text.includes('Learn More') || dataAttr === 'hero.button2') {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const featuresSection = document.getElementById('features');
+          if (featuresSection) {
+            featuresSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      }
+      
+      // Erken Erişime Katıl / Join Early Access - scroll to get started
+      if (text.includes('Erken Erişime Katıl') || text.includes('Join Early Access') || dataAttr === 'nav.join') {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const startSection = document.getElementById('start');
+          if (startSection) {
+            startSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      }
+      
+      // Tarayıcı Eklentisi nav button - scroll to CTA
+      if ((text.includes('Tarayıcı Eklentisi') && !text.includes('İndir')) || dataAttr === 'nav.extension') {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const ctaSection = document.querySelector('.cta-section');
+          if (ctaSection) {
+            ctaSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      }
+      
+      // Mobil Uygulamayı İndir / Download Mobile App
+      if (text.includes('Mobil Uygulamayı İndir') || text.includes('Download Mobile App') || dataAttr === 'cta.button2') {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.open('https://play.google.com/store', '_blank');
+        });
+      }
+      
+      // Geliştirici Dokümantasyonunu Aç
+      if (text.includes('Geliştirici Dokümantasyonunu Aç') || text.includes('Developer Documentation')) {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.open('https://docs.cyberex.io', '_blank');
+        });
+      }
+      
+      // API Anahtarı Talep Et
+      if (text.includes('API Anahtarı Talep Et') || text.includes('Request API Key')) {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          alert('API anahtarı talebi için lütfen support@cyberex.io adresine e-posta gönderin.');
+        });
+      }
+      
+      // Detaylı raporu aç
+      if (text.includes('Detaylı raporu aç')) {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.open('https://cyberex.io/security-report', '_blank');
+        });
+      }
+    });
+
+    // Email form submission
+    const emailForm = document.querySelector('form');
+    if (emailForm) {
+      emailForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const emailInput = emailForm.querySelector('input[type="email"]');
+        if (emailInput && emailInput.value) {
+          alert(`Teşekkürler! ${emailInput.value} adresine erken erişim davetiyesi gönderilecek.`);
+          emailInput.value = '';
+        } else {
+          alert('Lütfen geçerli bir e-posta adresi girin.');
+        }
+      });
+    }
+  }, 500);
+
+  // 3D Mouse Tracking for Phone
+  const phone = document.querySelector('.phone');
+  if (phone && !isMobile) {
+    phone.addEventListener('mousemove', (e) => {
+      const rect = phone.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = (y - centerY) / 20;
+      const rotateY = (centerX - x) / 20;
+      phone.style.transform = `perspective(1000px) rotateX(${10 + rotateX}deg) rotateY(${-16 + rotateY}deg) translateZ(0)`;
+    });
+    phone.addEventListener('mouseleave', () => {
+      phone.style.transform = '';
+    });
+  }
+
+  // 3D Mouse Tracking for Feature Cards
+  if (!isMobile) {
+    document.querySelectorAll('.feature-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (y - centerY) / 30;
+        const rotateY = (centerX - x) / 30;
+        card.style.transform = `translateY(-12px) translateZ(20px) scale(1.03) rotateX(${-5 + rotateX}deg) rotateY(${2 + rotateY}deg)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    });
+  }
+
+  // 3D Mouse Tracking for Balance Card
+  const balanceCard = document.querySelector('.balance-card');
+  if (balanceCard) {
+    if (!isMobile) {
+      // Parallax scroll effect - desktop only
+      window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * 0.3;
+        if (!balanceCard.matches(':hover')) {
+          balanceCard.style.transform = `translateY(${rate}px)`;
+        }
+      });
+
+      // 3D mouse tracking - desktop only
+      balanceCard.addEventListener('mousemove', (e) => {
+        const rect = balanceCard.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (y - centerY) / 25;
+        const rotateY = (centerX - x) / 25;
+        balanceCard.style.transform = `translateY(-8px) scale(1.03) rotateX(${-3 + rotateX}deg) rotateY(${2 + rotateY}deg) translateZ(20px)`;
+      });
+      balanceCard.addEventListener('mouseleave', () => {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * 0.3;
+        balanceCard.style.transform = `translateY(${rate}px)`;
+      });
+    }
+  }
+
+  // Particle System - Disabled on mobile for performance
+  const canvas = document.getElementById('particles');
+  
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+    const particleCount = isMobile ? 0 : 80; // Full count on desktop, disabled on mobile
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.5;
+        this.speedY = (Math.random() - 0.5) * 0.5;
+        this.opacity = Math.random() * 0.5 + 0.2;
+        this.color = Math.random() > 0.5 ? 'rgba(0, 229, 255,' : 'rgba(0, 245, 160,';
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color + this.opacity + ')';
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    function animateParticles() {
+      if (isMobile) return; // Don't animate on mobile
+      
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      particles.forEach(particle => {
+        particle.update();
+        particle.draw();
+      });
+
+      // Connect nearby particles
+      particles.forEach((particle, i) => {
+        particles.slice(i + 1).forEach(otherParticle => {
+          const dx = particle.x - otherParticle.x;
+          const dy = particle.y - otherParticle.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 120) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(0, 229, 255, ${0.1 * (1 - distance / 120)})`;
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(particle.x, particle.y);
+            ctx.lineTo(otherParticle.x, otherParticle.y);
+            ctx.stroke();
+          }
+        });
+      });
+
+      requestAnimationFrame(animateParticles);
+    }
+
+    if (!isMobile) {
+      animateParticles();
+    }
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  }
+
+  // ULTIMATE LOTTIE LOADER - Works 100%
+  function loadLottieAnimation(containerId, jsonFile) {
+    const container = document.getElementById(containerId);
+    if (!container) {
+      console.warn(`Container ${containerId} not found, skipping...`);
+      return null;
+    }
+
+    // Make absolutely sure container is visible
+    container.style.cssText = 'display: block !important; opacity: 1 !important; visibility: visible !important; position: relative; width: 100%; height: 100%;';
+    container.innerHTML = '';
+
+    if (typeof lottie === 'undefined') {
+      console.error('Lottie library not loaded');
+      return null;
+    }
+
+    try {
+      const anim = lottie.loadAnimation({
+        container: container,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: jsonFile
+      });
+      
+      anim.addEventListener('DOMLoaded', () => {
+        console.log(`✅ ${containerId} loaded successfully`);
+      });
+      
+      anim.addEventListener('data_failed', () => {
+        console.error(`❌ ${containerId} failed to load from ${jsonFile}`);
+      });
+      
+      anim.addEventListener('error', (error) => {
+        console.warn(`⚠️ ${containerId} animation error (non-critical):`, error);
+      });
+      
+      return anim;
+    } catch (error) {
+      console.warn(`⚠️ Error loading ${containerId} (non-critical):`, error);
+      return null;
+    }
+  }
+
+  // Initialize ALL Lottie animations
+  function initAllLottieAnimations() {
+    if (typeof lottie === 'undefined') {
+      setTimeout(initAllLottieAnimations, 100);
+      return;
+    }
+
+    console.log('🎬 Initializing all Lottie animations...');
+
+    // Main hero animations - Each animation only once
+    loadLottieAnimation('trading-hero-animation', 'traiding-hero-animation.json');
+    loadLottieAnimation('cryptophone-animation', 'cryptophone.json');
+    loadLottieAnimation('bitcoinloader-animation', 'bitcoinloader.json');
+    
+    // Feature section animations
+    loadLottieAnimation('cryptocoins-animation', 'cryptocoins.json');
+    loadLottieAnimation('bitcoin-animation', 'cryptobitcoin.json');
+    
+    // CTA section - Crypto Protection
+    loadLottieAnimation('crypto-protection-cta-main', 'crypto-protection.json');
+    
+    // Stats section - Trading Crypto
+    loadLottieAnimation('trading-crypto-stats', 'trading-crypto.json');
+
+    console.log('✅ All Lottie animations initialized');
+  }
+
+  // Start loading immediately
+  setTimeout(initAllLottieAnimations, 300);
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(initAllLottieAnimations, 500);
+    });
+  } else {
+    setTimeout(initAllLottieAnimations, 500);
+  }
+
+  window.addEventListener('load', () => {
+    setTimeout(initAllLottieAnimations, 1000);
+  });
+  
+  // Final safety net
+  setTimeout(initAllLottieAnimations, 2000);
+</script>
+
+</body>
+</html>
