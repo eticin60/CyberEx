@@ -96,6 +96,11 @@ lint/outputs/
 lint/tmp/
 lint-results*.xml
 
+# FTP credentials
+.ftp_creds.txt
+*_creds.*
+*credentials*
+
 # iOS
 ios/Pods/
 ios/.symlinks/
