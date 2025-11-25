@@ -1,0 +1,40 @@
+========================================
+CYBEREX WEB3 WALLET - GITHUB'A YÜKLEME
+========================================
+
+ADIM 1: GitHub'da Repository Oluştur
+------------------------------------
+1. https://github.com/new adresine git
+2. Repository adı: web3app
+3. Owner: CyberEx (veya kendi organizasyonun)
+4. Public veya Private seç
+5. "Create repository" butonuna tıkla
+
+ADIM 2: Terminal'de Çalıştır
+-----------------------------
+Aşağıdaki komutları sırayla çalıştır:
+
+git remote add origin https://github.com/CyberEx/web3app.git
+git branch -M main
+git push -u origin main
+
+NOT: URL'yi kendi repository'n ile değiştir!
+
+ADIM 3: Web Sayfasını Yükle
+----------------------------
+1. web/ klasöründeki TÜM dosyaları seç:
+   - index.html
+   - style.css
+   - script.js
+   - README.md
+   - .htaccess (varsa)
+
+2. FTP ile cyberex.com.tr/public_html/web3app/ klasörüne yükle
+
+3. Test et: cyberex.com.tr/web3app
+
+========================================
+WEB SAYFASI HAZIR!
+cyberex.com.tr/web3app adresinde açılacak
+========================================
+
