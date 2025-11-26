@@ -21,3 +21,4 @@ data class Token(
         get() = priceChange24h >= 0
 }
 
+

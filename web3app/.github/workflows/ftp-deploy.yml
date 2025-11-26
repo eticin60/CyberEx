@@ -32,3 +32,4 @@ jobs:
           local-dir: ./web/
           server-dir: /public_html/web3app/
 
+

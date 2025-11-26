@@ -47,3 +47,4 @@ python deploy.py
 **NOT:** web3wallet ve web3extension aynı şekilde yüklenmiş. 
 Bu script de aynı yöntemi kullanıyor!
 
+

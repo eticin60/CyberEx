@@ -35,3 +35,4 @@ Sonra `app/build.gradle.kts` dosyasına signing config ekleyin.
 
 APK'yı `cyberex.com.tr/web3app` adresine yükleyebilirsiniz.
 
+

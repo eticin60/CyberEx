@@ -29,3 +29,4 @@ echo "2. FTP ile cyberex.com.tr/public_html/web3app/ klasörüne yükle"
 echo "3. Test et: cyberex.com.tr/web3app"
 echo ""
 
+

@@ -9,3 +9,4 @@ class CyberExWeb3Application : MultiDexApplication() {
     }
 }
 
+

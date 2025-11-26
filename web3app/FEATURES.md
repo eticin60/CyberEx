@@ -100,3 +100,4 @@
 - **Pozitif**: Yeşil (#4CAF50)
 - **Negatif**: Kırmızı (#F44336)
 
+

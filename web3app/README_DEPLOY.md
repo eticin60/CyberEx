@@ -52,3 +52,4 @@ Yükleme sonrası:
 
 **HIZLI:** `python deploy.py` çalıştır ve FTP bilgilerini gir!
 
+

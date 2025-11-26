@@ -8,6 +8,16 @@ Güvenli ve modern Web3 kripto para cüzdanı. Android ve iOS desteği ile çokl
 
 Modern ve şık landing page ile APK ve iOS indirme linkleri.
 
+### 🚀 Hızlı Deployment
+
+**GitHub Pages (Önerilen - Otomatik):**
+1. Repository > Settings > Pages
+2. Source: `main` branch, `/web` folder
+3. Save - 2 dakikada hazır!
+
+**Manuel FTP:**
+- `web/` klasöründeki dosyaları `public_html/web3app/` klasörüne yükle
+
 ## 📱 Platformlar
 
 ### Android

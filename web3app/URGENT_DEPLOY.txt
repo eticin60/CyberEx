@@ -1,65 +1,67 @@
 ═══════════════════════════════════════════════════════════
-  GITHUB SECRETS KURULUMU - OTOMATIK DEPLOYMENT
+  ACİL: WEB SAYFASI YÜKLEME TALİMATLARI
 ═══════════════════════════════════════════════════════════
 
-Ben otomatik deployment sistemini hazırladım!
-Şimdi sadece GitHub'da secrets eklemen gerekiyor.
+SORUN: cyberex.com.tr/web3app 404 veriyor
+ÇÖZÜM: Dosyaları sunucuya yükle!
 
 ═══════════════════════════════════════════════════════════
-ADIM 1: GitHub Repository'ye Git
+ADIM 1: DOSYALARI HAZIRLA
 ═══════════════════════════════════════════════════════════
 
-https://github.com/CyberEx/web3app
-(veya kendi repository URL'in)
+web/ klasöründeki TÜM dosyalar:
+  ✓ index.html
+  ✓ style.css
+  ✓ script.js
+  ✓ .htaccess
+  ✓ README.md
 
 ═══════════════════════════════════════════════════════════
-ADIM 2: Settings > Secrets
+ADIM 2: FTP İLE YÜKLE
 ═══════════════════════════════════════════════════════════
 
-1. Repository sayfasında üstteki "Settings" sekmesine tıkla
-2. Sol menüden "Secrets and variables" > "Actions" seç
-3. "New repository secret" butonuna tıkla
+1. FileZilla veya cPanel File Manager kullan
+
+2. Sunucuya bağlan:
+   Host: cyberex.com.tr
+   Kullanıcı: FTP kullanıcı adın
+   Şifre: FTP şifren
+
+3. public_html/web3app/ klasörüne git
+   (Yoksa oluştur!)
+
+4. web/ klasöründeki TÜM dosyaları yükle
 
 ═══════════════════════════════════════════════════════════
-ADIM 3: Secrets Ekle
+ADIM 3: TEST ET
 ═══════════════════════════════════════════════════════════
 
-SECRET 1:
-  Name: FTP_USERNAME
-  Value: (FTP kullanıcı adın)
-  → "Add secret" tıkla
-
-SECRET 2:
-  Name: FTP_PASSWORD
-  Value: (FTP şifren)
-  → "Add secret" tıkla
+Tarayıcıda aç: https://cyberex.com.tr/web3app
 
 ═══════════════════════════════════════════════════════════
-ADIM 4: Otomatik Deployment Aktif!
+ÖNEMLİ NOTLAR
 ═══════════════════════════════════════════════════════════
 
-Artık her git push yaptığında:
-  ✅ GitHub Actions otomatik çalışacak
-  ✅ web/ klasöründeki dosyalar otomatik yüklenecek
-  ✅ cyberex.com.tr/web3app otomatik güncellenecek!
+⚠️ .htaccess dosyası MUTLAKA yüklensin!
+⚠️ Tüm dosyalar aynı klasörde olmalı (web3app/)
+⚠️ Dosya izinleri: 644
+⚠️ Cache temizle: Ctrl+F5
 
 ═══════════════════════════════════════════════════════════
-MANUEL TETİKLEME
+SORUN GİDERME
 ═══════════════════════════════════════════════════════════
 
-GitHub'da:
-  1. "Actions" sekmesine git
-  2. "Auto Deploy to cyberex.com.tr/web3app" workflow'unu seç
-  3. "Run workflow" butonuna tıkla
-  4. Branch seç: master veya main
-  5. "Run workflow" tıkla
+Hala 404 veriyorsa:
 
-═══════════════════════════════════════════════════════════
-NOT: Eğer web3wallet veya web3extension'da secrets varsa
-═══════════════════════════════════════════════════════════
+1. cyberex.com.tr/web3app/index.html açılıyor mu?
+   → Açılıyorsa: .htaccess çalışmıyor
+   → Açılmıyorsa: Dosyalar yüklenmemiş
 
-Aynı FTP bilgilerini kullanabilirsin!
-Sadece secrets'ları ekle, workflow otomatik çalışacak.
+2. cPanel > File Manager ile kontrol et
+   Dosyalar orada mı?
+
+3. Apache mod_rewrite aktif mi?
+   cPanel > Apache Modules kontrol et
 
 ═══════════════════════════════════════════════════════════
 

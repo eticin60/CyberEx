@@ -38,3 +38,4 @@ GitHub Pages'de yayınlanacak:
 
 **ARTIK OTOMATIK! Her push'ta güncellenecek!** 🎉
 
+

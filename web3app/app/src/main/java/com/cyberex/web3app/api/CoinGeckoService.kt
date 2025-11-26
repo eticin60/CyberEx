@@ -38,3 +38,4 @@ data class CoinGeckoPrice(
     val usd_24h_change: Double?
 )
 
+

@@ -190,3 +190,4 @@ Border:             #373E47  ████████
 - ✅ Smooth animations
 - ✅ Biometric authentication
 
+

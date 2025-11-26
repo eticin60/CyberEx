@@ -115,3 +115,4 @@ Web sayfasını güncellemek için:
 2. FTP/SSH ile yükle
 3. Cache'i temizle
 
+

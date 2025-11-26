@@ -1,65 +1,56 @@
 ═══════════════════════════════════════════════════════════
-  GITHUB SECRETS KURULUMU - OTOMATIK DEPLOYMENT
+  GITHUB PAGES İLE OTOMATİK YAYINLAMA (2 DAKİKA)
 ═══════════════════════════════════════════════════════════
 
-Ben otomatik deployment sistemini hazırladım!
-Şimdi sadece GitHub'da secrets eklemen gerekiyor.
+Ben otomatik deployment sistemlerini hazırladım!
+Şimdi sen sadece GitHub'da birkaç tıklama yapacaksın.
 
 ═══════════════════════════════════════════════════════════
 ADIM 1: GitHub Repository'ye Git
 ═══════════════════════════════════════════════════════════
 
 https://github.com/CyberEx/web3app
-(veya kendi repository URL'in)
 
 ═══════════════════════════════════════════════════════════
-ADIM 2: Settings > Secrets
+ADIM 2: Settings > Pages
 ═══════════════════════════════════════════════════════════
 
 1. Repository sayfasında üstteki "Settings" sekmesine tıkla
-2. Sol menüden "Secrets and variables" > "Actions" seç
-3. "New repository secret" butonuna tıkla
+2. Sol menüden "Pages" seçeneğine tıkla
 
 ═══════════════════════════════════════════════════════════
-ADIM 3: Secrets Ekle
+ADIM 3: Ayarları Yap
 ═══════════════════════════════════════════════════════════
 
-SECRET 1:
-  Name: FTP_USERNAME
-  Value: (FTP kullanıcı adın)
-  → "Add secret" tıkla
-
-SECRET 2:
-  Name: FTP_PASSWORD
-  Value: (FTP şifren)
-  → "Add secret" tıkla
+"Source" kısmında:
+  ✓ Branch: "main" seç
+  ✓ Folder: "/web" seç
+  ✓ "Save" butonuna tıkla
 
 ═══════════════════════════════════════════════════════════
-ADIM 4: Otomatik Deployment Aktif!
+ADIM 4: Bekle (2-3 Dakika)
 ═══════════════════════════════════════════════════════════
 
-Artık her git push yaptığında:
-  ✅ GitHub Actions otomatik çalışacak
-  ✅ web/ klasöründeki dosyalar otomatik yüklenecek
-  ✅ cyberex.com.tr/web3app otomatik güncellenecek!
+GitHub Pages otomatik olarak build edecek.
+Sayfa şu adreste yayınlanacak:
+
+  → https://cyberex.github.io/web3app
 
 ═══════════════════════════════════════════════════════════
-MANUEL TETİKLEME
+ADIM 5: cyberex.com.tr Bağlama (Opsiyonel)
 ═══════════════════════════════════════════════════════════
 
-GitHub'da:
-  1. "Actions" sekmesine git
-  2. "Auto Deploy to cyberex.com.tr/web3app" workflow'unu seç
-  3. "Run workflow" butonuna tıkla
-  4. Branch seç: master veya main
-  5. "Run workflow" tıkla
+GitHub Pages ayarlarında:
+  → "Custom domain" kısmına: web3app.cyberex.com.tr yaz
+  → DNS'te CNAME kaydı ekle:
+     Name: web3app
+     Value: cyberex.github.io
 
 ═══════════════════════════════════════════════════════════
-NOT: Eğer web3wallet veya web3extension'da secrets varsa
+✅ TAMAMLANDI!
 ═══════════════════════════════════════════════════════════
 
-Aynı FTP bilgilerini kullanabilirsin!
-Sadece secrets'ları ekle, workflow otomatik çalışacak.
+Artık her git push yaptığında sayfa otomatik güncellenecek!
 
 ═══════════════════════════════════════════════════════════
 

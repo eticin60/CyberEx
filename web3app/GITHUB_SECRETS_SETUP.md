@@ -56,3 +56,4 @@ GitHub'da:
 
 **SADECE SECRETS EKLE → OTOMATIK ÇALIŞACAK!** 🚀
 
+

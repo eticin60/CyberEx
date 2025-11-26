@@ -40,3 +40,4 @@ web3wallet ve web3extension gibi aynı yerde!
 
 **EN HIZLI:** GitHub Secrets ekle → Otomatik çalışır! 🚀
 
+

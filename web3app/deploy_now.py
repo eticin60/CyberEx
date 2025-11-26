@@ -102,3 +102,4 @@ if __name__ == "__main__":
         ftp_pass = input("FTP Şifre: ")
         upload_files(ftp_user, ftp_pass)
 
+
