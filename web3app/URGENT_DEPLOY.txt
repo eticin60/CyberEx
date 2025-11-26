@@ -1,0 +1,68 @@
+═══════════════════════════════════════════════════════════
+  ACİL: WEB SAYFASI YÜKLEME TALİMATLARI
+═══════════════════════════════════════════════════════════
+
+SORUN: cyberex.com.tr/web3app 404 veriyor
+ÇÖZÜM: Dosyaları sunucuya yükle!
+
+═══════════════════════════════════════════════════════════
+ADIM 1: DOSYALARI HAZIRLA
+═══════════════════════════════════════════════════════════
+
+web/ klasöründeki TÜM dosyalar:
+  ✓ index.html
+  ✓ style.css
+  ✓ script.js
+  ✓ .htaccess
+  ✓ README.md
+
+═══════════════════════════════════════════════════════════
+ADIM 2: FTP İLE YÜKLE
+═══════════════════════════════════════════════════════════
+
+1. FileZilla veya cPanel File Manager kullan
+
+2. Sunucuya bağlan:
+   Host: cyberex.com.tr
+   Kullanıcı: FTP kullanıcı adın
+   Şifre: FTP şifren
+
+3. public_html/web3app/ klasörüne git
+   (Yoksa oluştur!)
+
+4. web/ klasöründeki TÜM dosyaları yükle
+
+═══════════════════════════════════════════════════════════
+ADIM 3: TEST ET
+═══════════════════════════════════════════════════════════
+
+Tarayıcıda aç: https://cyberex.com.tr/web3app
+
+═══════════════════════════════════════════════════════════
+ÖNEMLİ NOTLAR
+═══════════════════════════════════════════════════════════
+
+⚠️ .htaccess dosyası MUTLAKA yüklensin!
+⚠️ Tüm dosyalar aynı klasörde olmalı (web3app/)
+⚠️ Dosya izinleri: 644
+⚠️ Cache temizle: Ctrl+F5
+
+═══════════════════════════════════════════════════════════
+SORUN GİDERME
+═══════════════════════════════════════════════════════════
+
+Hala 404 veriyorsa:
+
+1. cyberex.com.tr/web3app/index.html açılıyor mu?
+   → Açılıyorsa: .htaccess çalışmıyor
+   → Açılmıyorsa: Dosyalar yüklenmemiş
+
+2. cPanel > File Manager ile kontrol et
+   Dosyalar orada mı?
+
+3. Apache mod_rewrite aktif mi?
+   cPanel > Apache Modules kontrol et
+
+═══════════════════════════════════════════════════════════
+
+

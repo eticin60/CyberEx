@@ -1,0 +1,57 @@
+═══════════════════════════════════════════════════════════
+  GITHUB PAGES İLE OTOMATİK YAYINLAMA (2 DAKİKA)
+═══════════════════════════════════════════════════════════
+
+Ben otomatik deployment sistemlerini hazırladım!
+Şimdi sen sadece GitHub'da birkaç tıklama yapacaksın.
+
+═══════════════════════════════════════════════════════════
+ADIM 1: GitHub Repository'ye Git
+═══════════════════════════════════════════════════════════
+
+https://github.com/CyberEx/web3app
+
+═══════════════════════════════════════════════════════════
+ADIM 2: Settings > Pages
+═══════════════════════════════════════════════════════════
+
+1. Repository sayfasında üstteki "Settings" sekmesine tıkla
+2. Sol menüden "Pages" seçeneğine tıkla
+
+═══════════════════════════════════════════════════════════
+ADIM 3: Ayarları Yap
+═══════════════════════════════════════════════════════════
+
+"Source" kısmında:
+  ✓ Branch: "main" seç
+  ✓ Folder: "/web" seç
+  ✓ "Save" butonuna tıkla
+
+═══════════════════════════════════════════════════════════
+ADIM 4: Bekle (2-3 Dakika)
+═══════════════════════════════════════════════════════════
+
+GitHub Pages otomatik olarak build edecek.
+Sayfa şu adreste yayınlanacak:
+
+  → https://cyberex.github.io/web3app
+
+═══════════════════════════════════════════════════════════
+ADIM 5: cyberex.com.tr Bağlama (Opsiyonel)
+═══════════════════════════════════════════════════════════
+
+GitHub Pages ayarlarında:
+  → "Custom domain" kısmına: web3app.cyberex.com.tr yaz
+  → DNS'te CNAME kaydı ekle:
+     Name: web3app
+     Value: cyberex.github.io
+
+═══════════════════════════════════════════════════════════
+✅ TAMAMLANDI!
+═══════════════════════════════════════════════════════════
+
+Artık her git push yaptığında sayfa otomatik güncellenecek!
+
+═══════════════════════════════════════════════════════════
+
+
