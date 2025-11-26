@@ -19,8 +19,45 @@ jobs:
           server: cyberex.com.tr
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./web/
+          local-dir: ./
           server-dir: /public_html/web3app/
           dangerous-clean-slate: false
+          exclude: |
+            **/.git*
+            **/.github*
+            **/app/**
+            **/ios/**
+            **/extension/**
+            **/gradle/**
+            **/*.gradle*
+            **/*.md
+            **/*.bat
+            **/*.sh
+            **/*.ps1
+            **/*.py
+            **/build/**
+            **/.gradle/**
+            **/settings.gradle.kts
+            **/build.gradle.kts
+            **/gradle.properties
+            **/deploy*
+            **/AUTO_*
+            **/DEPLOY_*
+            **/GITHUB_*
+            **/PUSH_*
+            **/QUICK_*
+            **/README_*
+            **/SETUP_*
+            **/CHECKLIST*
+            **/URGENT_*
+            **/HEMEN_*
+            **/SORUN_*
+            **/PROJECT_*
+            **/FINAL_*
+            **/FEATURES*
+            **/BUILD*
+            **/UI_*
+            **/OTOMATIK_*
+            **/.ftp_creds.txt
 
 
