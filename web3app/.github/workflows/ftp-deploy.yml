@@ -1,0 +1,76 @@
+name: FTP Deploy to cyberex.com.tr
+
+on:
+  workflow_dispatch:
+    inputs:
+      ftp_server:
+        description: 'FTP Server'
+        required: true
+        default: 'cyberex.com.tr'
+      ftp_username:
+        description: 'FTP Username'
+        required: true
+      ftp_password:
+        description: 'FTP Password'
+        required: true
+        type: password
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Deploy to FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: ${{ inputs.ftp_server }}
+          username: ${{ inputs.ftp_username }}
+          password: ${{ inputs.ftp_password }}
+          local-dir: ./
+          server-dir: /public_html/web3app/
+          dangerous-clean-slate: false
+          exclude: |
+            **/.git*
+            **/.github*
+            **/app/**
+            **/ios/**
+            **/extension/**
+            **/gradle/**
+            **/*.gradle*
+            **/*.md
+            **/*.bat
+            **/*.sh
+            **/*.ps1
+            **/*.py
+            **/build/**
+            **/.gradle/**
+            **/settings.gradle.kts
+            **/build.gradle.kts
+            **/gradle.properties
+            **/deploy*
+            **/AUTO_*
+            **/DEPLOY_*
+            **/GITHUB_*
+            **/PUSH_*
+            **/QUICK_*
+            **/README_*
+            **/SETUP_*
+            **/CHECKLIST*
+            **/URGENT_*
+            **/HEMEN_*
+            **/SORUN_*
+            **/PROJECT_*
+            **/FINAL_*
+            **/FEATURES*
+            **/BUILD*
+            **/UI_*
+            **/OTOMATIK_*
+            **/.ftp_creds.txt
+            **/LICENSE
+            **/CNAME
+            **/nginx.conf
+
+

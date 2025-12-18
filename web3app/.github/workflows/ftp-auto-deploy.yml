@@ -1,0 +1,66 @@
+name: Auto Deploy to cyberex.com.tr/web3app
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Deploy to FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: cyberex.com.tr
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./
+          server-dir: /public_html/web3app/
+          dangerous-clean-slate: false
+          exclude: |
+            **/.git*
+            **/.github*
+            **/app/**
+            **/ios/**
+            **/extension/**
+            **/gradle/**
+            **/*.gradle*
+            **/*.md
+            **/*.bat
+            **/*.sh
+            **/*.ps1
+            **/*.py
+            **/build/**
+            **/.gradle/**
+            **/settings.gradle.kts
+            **/build.gradle.kts
+            **/gradle.properties
+            **/deploy*
+            **/AUTO_*
+            **/DEPLOY_*
+            **/GITHUB_*
+            **/PUSH_*
+            **/QUICK_*
+            **/README_*
+            **/SETUP_*
+            **/CHECKLIST*
+            **/URGENT_*
+            **/HEMEN_*
+            **/SORUN_*
+            **/PROJECT_*
+            **/FINAL_*
+            **/FEATURES*
+            **/BUILD*
+            **/UI_*
+            **/OTOMATIK_*
+            **/.ftp_creds.txt
+            **/LICENSE
+            **/CNAME
+            **/nginx.conf
+
+

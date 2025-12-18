@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kullanım Şartları - CyberEx Web3 App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{
+      --bg:#020617;
+      --neon:#00e5ff;
+      --mint:#00f5a0;
+      --card:rgba(15,23,42,0.92);
+      --border:rgba(148,163,184,0.35);
+    }
+    body{
+      font-family: system-ui,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif;
+      background: radial-gradient(circle at top,#021222 0,var(--bg) 45%,#000 100%);
+      color:#fff;
+      min-height:100vh;
+    }
+    .bg-network{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      background-image:
+        radial-gradient(circle at top,var(--neon) 0,transparent 55%),
+        radial-gradient(circle at 80% 10%,#00b3ff33 0,transparent 60%);
+      opacity:0.25;
+      pointer-events:none;
+      animation: bgPulse 8s ease-in-out infinite;
+    }
+    @keyframes bgPulse {
+      0%, 100% { opacity: 0.25; }
+      50% { opacity: 0.35; }
+    }
+    .glass-nav{
+      background:rgba(15,23,42,0.94);
+      backdrop-filter:blur(16px);
+      box-shadow:0 18px 45px rgba(0,0,0,.65);
+      border:1px solid rgba(148,163,184,0.28);
+      transition: all 0.3s ease;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--card);
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      padding: 3rem;
+      box-shadow: 0 18px 45px rgba(15,23,42,0.7);
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+    h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(135deg,var(--neon),var(--mint));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 1rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      color: var(--neon);
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+    p, li {
+      line-height: 1.8;
+      color: #cbd5e1;
+      margin-bottom: 1rem;
+    }
+    a {
+      color: var(--neon);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .btn-ghost{
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.55);
+      padding:9px 20px;
+      font-size:.9rem;
+      color:#9ca3af;
+      background:rgba(15,23,42,0.9);
+      transition:background .2s ease,border-color .2s ease,color .2s ease,transform .2s;
+    }
+    .btn-ghost:hover{
+      background:rgba(15,23,42,1);
+      border-color:rgba(148,163,184,0.9);
+      color:#e5e7eb;
+      transform:translateY(-1px);
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-network"></div>
+
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-40">
+    <div class="glass-nav mx-auto max-w-6xl mt-4 mb-4 px-4 sm:px-6 py-3 rounded-2xl flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full border border-cyan-400/60 bg-cyan-400/10 flex items-center justify-center overflow-hidden">
+            <img src="cyberex-logo.png" alt="CyberEX Logo" class="w-7 h-7 object-contain" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-cyan-300 font-bold text-sm\'>CE</span>';" />
+          </div>
+          <div class="flex flex-col leading-tight">
+            <span class="text-sm font-semibold tracking-[0.18em] uppercase text-cyan-300">CyberEX</span>
+            <span class="text-xs text-slate-400">Web3 App</span>
+          </div>
+        </a>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-8 text-sm text-slate-300">
+        <a href="index.html#features" class="hover:text-cyan-300 transition-colors">Özellikler</a>
+        <a href="index.html#download" class="hover:text-cyan-300 transition-colors">İndir</a>
+        <a href="index.html#guide" class="hover:text-cyan-300 transition-colors">Kılavuz</a>
+        <a href="index.html#faq" class="hover:text-cyan-300 transition-colors">SSS</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="btn-ghost text-xs sm:text-sm">Ana Sayfa</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <h1>Kullanım Şartları</h1>
+    <p><strong>Son Güncelleme:</strong> 2025</p>
+    <p class="text-sm text-slate-400 mb-4">
+      <strong class="text-cyan-300">CyberEx Web3 App</strong>, <strong class="text-cyan-300">CyberEx</strong> ekosisteminin bir parçasıdır. 
+      <a href="https://cyberex.com.tr/web3wallet" class="text-cyan-300 hover:underline" target="_blank">CyberEx Wallet</a>, 
+      <a href="https://cyberex.com.tr/web3extension" class="text-cyan-300 hover:underline" target="_blank">CyberEx Extension</a> ve 
+      <a href="https://cyberex.com.tr/web3app" class="text-cyan-300 hover:underline">CyberEx App</a> birbirleriyle entegre çalışan ürünlerdir.
+    </p>
+
+    <h2>1. Kabul ve Onay</h2>
+    <p>CyberEx Web3 App'i ("Uygulama") kullanarak, bu Kullanım Şartları'nı kabul etmiş sayılırsınız. Uygulamayı kullanmaya devam ederseniz, bu şartlara bağlı kalmayı kabul edersiniz.</p>
+
+    <h2>2. Hizmet Açıklaması</h2>
+    <p>CyberEx Web3 App, kullanıcıların kripto para cüzdanlarını yönetmelerine, token transferleri yapmalarına ve blockchain işlemlerini gerçekleştirmelerine olanak tanıyan bir mobil uygulamadır. Uygulama, Ethereum, BSC, Polygon, Avalanche ve diğer blockchain ağlarını desteklemektedir.</p>
+    <p><strong>CyberEx Ekosistemi:</strong> Bu uygulama, CyberEx Wallet (tarayıcı eklentisi) ve CyberEx Extension ile birlikte çalışarak kullanıcılara kapsamlı bir Web3 deneyimi sunar.</p>
+
+    <h2>3. Kullanıcı Sorumlulukları</h2>
+    <ul>
+      <li>Private key'lerinizi güvenli bir şekilde saklamak sizin sorumluluğunuzdadır.</li>
+      <li>Uygulamayı yalnızca yasal amaçlarla kullanmalısınız.</li>
+      <li>Yasadışı faaliyetlerde bulunmamalısınız.</li>
+      <li>Hesap bilgilerinizi ve private key'lerinizi üçüncü taraflarla paylaşmamalısınız.</li>
+      <li>Uygulamayı kötüye kullanmamalısınız.</li>
+    </ul>
+
+    <h2>4. Güvenlik</h2>
+    <p>Uygulama, private key'lerinizi cihazınızda şifrelenmiş olarak saklar ve hiçbir zaman sunuculara gönderilmez. Ancak, cihazınızın güvenliğini sağlamak sizin sorumluluğunuzdadır. Cihazınızı kaybederseniz veya güvenlik ihlali yaşarsanız, derhal önlem almalısınız.</p>
+
+    <h2>5. Yatırım Tavsiyesi Değildir</h2>
+    <p>Uygulama, yatırım tavsiyesi, finansal danışmanlık veya yatırım hizmeti sunmamaktadır. Uygulamada görüntülenen fiyatlar ve bilgiler yalnızca bilgilendirme amaçlıdır. Kripto para yatırımları yüksek risk içerir ve kayıplara neden olabilir.</p>
+
+    <h2>6. Hizmet Kesintileri</h2>
+    <p>CyberEx, uygulamanın kesintisiz çalışmasını garanti etmez. Teknik sorunlar, bakım çalışmaları veya diğer nedenlerle hizmet kesintileri yaşanabilir. Bu durumlardan kaynaklanan kayıplardan CyberEx sorumlu tutulamaz.</p>
+
+    <h2>7. Üçüncü Taraf Hizmetleri</h2>
+    <p>Uygulama, CoinGecko gibi üçüncü taraf hizmetlerini kullanabilir. Bu hizmetlerin kullanımı, ilgili üçüncü tarafın kendi kullanım şartlarına tabidir.</p>
+
+    <h2>8. Fikri Mülkiyet</h2>
+    <p>Uygulama ve tüm içeriği, CyberEx'in fikri mülkiyetidir. Uygulamayı kopyalama, değiştirme, dağıtma veya ticari amaçlarla kullanma hakkınız yoktur.</p>
+
+    <h2>9. Sorumluluk Reddi</h2>
+    <p>Uygulama "olduğu gibi" sunulmaktadır. CyberEx, uygulamanın hatasız, kesintisiz veya güvenli olduğunu garanti etmez. Uygulamanın kullanımından kaynaklanan herhangi bir zarardan CyberEx sorumlu tutulamaz.</p>
+
+    <h2>10. Değişiklikler</h2>
+    <p>CyberEx, bu Kullanım Şartları'nı istediği zaman değiştirme hakkını saklı tutar. Değişiklikler, uygulama içinde veya web sitesinde yayınlandığında yürürlüğe girer.</p>
+
+    <h2>11. Fesih</h2>
+    <p>CyberEx, herhangi bir zamanda, herhangi bir nedenle, önceden haber vermeksizin uygulama erişiminizi sonlandırma hakkını saklı tutar.</p>
+
+    <h2>12. Uygulanabilir Hukuk</h2>
+    <p>Bu Kullanım Şartları, Türkiye Cumhuriyeti yasalarına tabidir. Herhangi bir anlaşmazlık durumunda, Türkiye Cumhuriyeti mahkemeleri yetkilidir.</p>
+
+    <h2>13. İletişim</h2>
+    <p>Kullanım Şartları ile ilgili sorularınız için: <a href="mailto:support@cyberex.com.tr">support@cyberex.com.tr</a></p>
+
+    <p style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(148,163,184,0.3);">
+      <strong>Önemli:</strong> Bu Kullanım Şartları'nı dikkatle okuyun. Uygulamayı kullanarak, bu şartları kabul etmiş sayılırsınız.
+    </p>
+  </div>
+
+  <footer class="border-t border-slate-800/80 py-8 mt-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 text-center text-[0.7rem] text-slate-400">
+      <p>© <span id="year"></span> <strong class="text-cyan-300">CyberEx</strong>. Tüm hakları saklıdır.</p>
+      <p class="mt-2">
+        <strong class="text-cyan-300">CyberEx</strong> ürünü • 
+        <a href="https://cyberex.com.tr/web3wallet" class="text-cyan-300 hover:underline" target="_blank">CyberEx Wallet</a> • 
+        <a href="https://cyberex.com.tr/web3extension" class="text-cyan-300 hover:underline" target="_blank">CyberEx Extension</a> • 
+        <a href="https://cyberex.com.tr/web3app" class="text-cyan-300 hover:underline">CyberEx App</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

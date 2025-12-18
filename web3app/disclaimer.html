@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sorumluluk Reddi - CyberEx Web3 App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{
+      --bg:#020617;
+      --neon:#00e5ff;
+      --mint:#00f5a0;
+      --card:rgba(15,23,42,0.92);
+      --border:rgba(148,163,184,0.35);
+    }
+    body{
+      font-family: system-ui,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif;
+      background: radial-gradient(circle at top,#021222 0,var(--bg) 45%,#000 100%);
+      color:#fff;
+      min-height:100vh;
+    }
+    .bg-network{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      background-image:
+        radial-gradient(circle at top,var(--neon) 0,transparent 55%),
+        radial-gradient(circle at 80% 10%,#00b3ff33 0,transparent 60%);
+      opacity:0.25;
+      pointer-events:none;
+      animation: bgPulse 8s ease-in-out infinite;
+    }
+    @keyframes bgPulse {
+      0%, 100% { opacity: 0.25; }
+      50% { opacity: 0.35; }
+    }
+    .glass-nav{
+      background:rgba(15,23,42,0.94);
+      backdrop-filter:blur(16px);
+      box-shadow:0 18px 45px rgba(0,0,0,.65);
+      border:1px solid rgba(148,163,184,0.28);
+      transition: all 0.3s ease;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--card);
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      padding: 3rem;
+      box-shadow: 0 18px 45px rgba(15,23,42,0.7);
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+    h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(135deg,var(--neon),var(--mint));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 1rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      color: var(--neon);
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+    p, li {
+      line-height: 1.8;
+      color: #cbd5e1;
+      margin-bottom: 1rem;
+    }
+    a {
+      color: var(--neon);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .btn-ghost{
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.55);
+      padding:9px 20px;
+      font-size:.9rem;
+      color:#9ca3af;
+      background:rgba(15,23,42,0.9);
+      transition:background .2s ease,border-color .2s ease,color .2s ease,transform .2s;
+    }
+    .btn-ghost:hover{
+      background:rgba(15,23,42,1);
+      border-color:rgba(148,163,184,0.9);
+      color:#e5e7eb;
+      transform:translateY(-1px);
+    }
+    .warning {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-network"></div>
+
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-40">
+    <div class="glass-nav mx-auto max-w-6xl mt-4 mb-4 px-4 sm:px-6 py-3 rounded-2xl flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full border border-cyan-400/60 bg-cyan-400/10 flex items-center justify-center overflow-hidden">
+            <img src="cyberex-logo.png" alt="CyberEX Logo" class="w-7 h-7 object-contain" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-cyan-300 font-bold text-sm\'>CE</span>';" />
+          </div>
+          <div class="flex flex-col leading-tight">
+            <span class="text-sm font-semibold tracking-[0.18em] uppercase text-cyan-300">CyberEX</span>
+            <span class="text-xs text-slate-400">Web3 App</span>
+          </div>
+        </a>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-8 text-sm text-slate-300">
+        <a href="index.html#features" class="hover:text-cyan-300 transition-colors">Özellikler</a>
+        <a href="index.html#download" class="hover:text-cyan-300 transition-colors">İndir</a>
+        <a href="index.html#guide" class="hover:text-cyan-300 transition-colors">Kılavuz</a>
+        <a href="index.html#faq" class="hover:text-cyan-300 transition-colors">SSS</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="btn-ghost text-xs sm:text-sm">Ana Sayfa</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <h1>Sorumluluk Reddi</h1>
+    <p><strong>Son Güncelleme:</strong> 2025</p>
+    <p class="text-sm text-slate-400 mb-4">
+      <strong class="text-cyan-300">CyberEx Web3 App</strong>, <strong class="text-cyan-300">CyberEx</strong> ekosisteminin bir parçasıdır. 
+      <a href="https://cyberex.com.tr/web3wallet" class="text-cyan-300 hover:underline" target="_blank">CyberEx Wallet</a>, 
+      <a href="https://cyberex.com.tr/web3extension" class="text-cyan-300 hover:underline" target="_blank">CyberEx Extension</a> ve 
+      <a href="https://cyberex.com.tr/web3app" class="text-cyan-300 hover:underline">CyberEx App</a> birbirleriyle entegre çalışan ürünlerdir.
+    </p>
+
+    <div class="warning">
+      <h2 style="color: #ef4444; margin-top: 0;">⚠️ ÖNEMLİ UYARI</h2>
+      <p><strong>Kripto para yatırımları yüksek risk içerir ve tüm yatırımlarınızı kaybetmenize neden olabilir. Yatırım yapmadan önce lütfen dikkatli olun.</strong></p>
+    </div>
+
+    <h2>1. Genel Sorumluluk Reddi</h2>
+    <p>CyberEx Web3 App ("Uygulama"), kullanıcılarına kripto para cüzdanı yönetimi hizmeti sunar. Ancak, uygulama:</p>
+    <ul>
+      <li>Yatırım tavsiyesi sunmaz</li>
+      <li>Finansal danışmanlık hizmeti vermez</li>
+      <li>Yatırım garantisi vermez</li>
+      <li>Kripto para fiyatlarını kontrol etmez</li>
+      <li>Blockchain ağlarının çalışmasını garanti etmez</li>
+    </ul>
+
+    <h2>2. Yatırım Riski</h2>
+    <p>Kripto para yatırımları son derece risklidir ve aşağıdaki riskleri içerir:</p>
+    <ul>
+      <li><strong>Tam Kayıp Riski:</strong> Tüm yatırımlarınızı kaybedebilirsiniz</li>
+      <li><strong>Volatilite Riski:</strong> Fiyatlar aniden ve önemli ölçüde değişebilir</li>
+      <li><strong>Likidite Riski:</strong> Varlıklarınızı istediğiniz zaman satamayabilirsiniz</li>
+      <li><strong>Teknoloji Riski:</strong> Blockchain ağları çökebilir veya hacklenebilir</li>
+      <li><strong>Düzenleyici Risk:</strong> Yasal düzenlemeler değişebilir</li>
+    </ul>
+
+    <h2>3. Uygulama Sorumluluğu</h2>
+    <p>CyberEx, aşağıdaki durumlardan sorumlu tutulamaz:</p>
+    <ul>
+      <li>Kripto para fiyat değişikliklerinden kaynaklanan kayıplar</li>
+      <li>Blockchain ağ sorunlarından kaynaklanan kayıplar</li>
+      <li>Kullanıcı hatalarından kaynaklanan kayıplar</li>
+      <li>Private key kaybından kaynaklanan kayıplar</li>
+      <li>Phishing veya dolandırıcılıktan kaynaklanan kayıplar</li>
+      <li>Üçüncü taraf hizmetlerinden kaynaklanan sorunlar</li>
+      <li>Teknik hatalardan kaynaklanan kayıplar</li>
+    </ul>
+
+    <h2>4. Hizmet Garantisi</h2>
+    <p>Uygulama "olduğu gibi" sunulmaktadır. CyberEx, uygulamanın:</p>
+    <ul>
+      <li>Kesintisiz çalışacağını garanti etmez</li>
+      <li>Hatadan arınmış olduğunu garanti etmez</li>
+      <li>Belirli bir amaca uygun olduğunu garanti etmez</li>
+      <li>Güvenlik açığı içermediğini garanti etmez</li>
+    </ul>
+
+    <h2>5. Üçüncü Taraf Hizmetleri</h2>
+    <p>Uygulama, CoinGecko, blockchain RPC sağlayıcıları ve diğer üçüncü taraf hizmetlerini kullanır. CyberEx, bu hizmetlerin:</p>
+    <ul>
+      <li>Doğruluğunu garanti etmez</li>
+      <li>Kesintisiz çalışacağını garanti etmez</li>
+      <li>Güvenliğini garanti etmez</li>
+    </ul>
+
+    <h2>6. Private Key Güvenliği</h2>
+    <p>Private key'lerinizin güvenliği tamamen sizin sorumluluğunuzdadır. CyberEx:</p>
+    <ul>
+      <li>Private key'lerinizi saklamaz</li>
+      <li>Private key'lerinizi geri getiremez</li>
+      <li>Kayıp private key'lerden sorumlu değildir</li>
+    </ul>
+    <p><strong>ÖNEMLİ:</strong> Private key'inizi kaybederseniz, cüzdanınıza erişemezsiniz. Lütfen private key'inizi güvenli bir yerde saklayın.</p>
+
+    <h2>7. Yasal Uyumluluk</h2>
+    <p>Kullanıcılar, kendi yargı bölgelerindeki yasalara uymakla yükümlüdür. CyberEx, yasal uyumluluk konusunda sorumluluk kabul etmez.</p>
+
+    <h2>8. Vergi Sorumluluğu</h2>
+    <p>Kripto para işlemlerinizden kaynaklanan vergi yükümlülükleri tamamen sizin sorumluluğunuzdadır. CyberEx, vergi danışmanlığı hizmeti vermez.</p>
+
+    <h2>9. Zarar Sınırlaması</h2>
+    <p>Yasaların izin verdiği ölçüde, CyberEx, uygulamanın kullanımından kaynaklanan doğrudan, dolaylı, özel, arızi veya sonuç zararlarından sorumlu tutulamaz.</p>
+
+    <h2>10. Yatırım Kararı</h2>
+    <p>Tüm yatırım kararlarınız kendi sorumluluğunuzdadır. Yatırım yapmadan önce:</p>
+    <ul>
+      <li>Kendi araştırmanızı yapın</li>
+      <li>Finansal danışmanınıza danışın</li>
+      <li>Yalnızca kaybetmeyi göze alabileceğiniz parayı yatırın</li>
+      <li>Riskleri anlayın</li>
+    </ul>
+
+    <h2>11. Analiz ve Bilgi</h2>
+    <p>Uygulamada görüntülenen fiyatlar, grafikler ve analizler yalnızca bilgilendirme amaçlıdır. Bu bilgiler:</p>
+    <ul>
+      <li>Yatırım tavsiyesi değildir</li>
+      <li>Garanti edilmez</li>
+      <li>Gelecekteki performansı öngörmez</li>
+    </ul>
+
+    <h2>12. İletişim</h2>
+    <p>Sorumluluk Reddi ile ilgili sorularınız için: <a href="mailto:support@cyberex.com.tr">support@cyberex.com.tr</a></p>
+
+    <div class="warning" style="margin-top: 3rem;">
+      <p><strong>SON UYARI:</strong> Kripto para yatırımları yüksek risk içerir. Yalnızca kaybetmeyi göze alabileceğiniz parayı yatırın. Geçmiş performans, gelecekteki sonuçları garanti etmez.</p>
+    </div>
+  </div>
+
+  <footer class="border-t border-slate-800/80 py-8 mt-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 text-center text-[0.7rem] text-slate-400">
+      <p>© <span id="year"></span> <strong class="text-cyan-300">CyberEx</strong>. Tüm hakları saklıdır.</p>
+      <p class="mt-2">
+        <strong class="text-cyan-300">CyberEx</strong> ürünü • 
+        <a href="https://cyberex.com.tr/web3wallet" class="text-cyan-300 hover:underline" target="_blank">CyberEx Wallet</a> • 
+        <a href="https://cyberex.com.tr/web3extension" class="text-cyan-300 hover:underline" target="_blank">CyberEx Extension</a> • 
+        <a href="https://cyberex.com.tr/web3app" class="text-cyan-300 hover:underline">CyberEx App</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

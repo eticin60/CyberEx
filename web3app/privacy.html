@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gizlilik Politikası - CyberEx Web3 App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{
+      --bg:#020617;
+      --neon:#00e5ff;
+      --mint:#00f5a0;
+      --card:rgba(15,23,42,0.92);
+      --border:rgba(148,163,184,0.35);
+    }
+    body{
+      font-family: system-ui,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif;
+      background: radial-gradient(circle at top,#021222 0,var(--bg) 45%,#000 100%);
+      color:#fff;
+      min-height:100vh;
+    }
+    .bg-network{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      background-image:
+        radial-gradient(circle at top,var(--neon) 0,transparent 55%),
+        radial-gradient(circle at 80% 10%,#00b3ff33 0,transparent 60%);
+      opacity:0.25;
+      pointer-events:none;
+      animation: bgPulse 8s ease-in-out infinite;
+    }
+    @keyframes bgPulse {
+      0%, 100% { opacity: 0.25; }
+      50% { opacity: 0.35; }
+    }
+    .glass-nav{
+      background:rgba(15,23,42,0.94);
+      backdrop-filter:blur(16px);
+      box-shadow:0 18px 45px rgba(0,0,0,.65);
+      border:1px solid rgba(148,163,184,0.28);
+      transition: all 0.3s ease;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--card);
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      padding: 3rem;
+      box-shadow: 0 18px 45px rgba(15,23,42,0.7);
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+    h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(135deg,var(--neon),var(--mint));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 1rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      color: var(--neon);
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+    p, li {
+      line-height: 1.8;
+      color: #cbd5e1;
+      margin-bottom: 1rem;
+    }
+    a {
+      color: var(--neon);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .btn-ghost{
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.55);
+      padding:9px 20px;
+      font-size:.9rem;
+      color:#9ca3af;
+      background:rgba(15,23,42,0.9);
+      transition:background .2s ease,border-color .2s ease,color .2s ease,transform .2s;
+    }
+    .btn-ghost:hover{
+      background:rgba(15,23,42,1);
+      border-color:rgba(148,163,184,0.9);
+      color:#e5e7eb;
+      transform:translateY(-1px);
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-network"></div>
+
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-40">
+    <div class="glass-nav mx-auto max-w-6xl mt-4 mb-4 px-4 sm:px-6 py-3 rounded-2xl flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full border border-cyan-400/60 bg-cyan-400/10 flex items-center justify-center overflow-hidden">
+            <img src="cyberex-logo.png" alt="CyberEX Logo" class="w-7 h-7 object-contain" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-cyan-300 font-bold text-sm\'>CE</span>';" />
+          </div>
+          <div class="flex flex-col leading-tight">
+            <span class="text-sm font-semibold tracking-[0.18em] uppercase text-cyan-300">CyberEX</span>
+            <span class="text-xs text-slate-400">Web3 App</span>
+          </div>
+        </a>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-8 text-sm text-slate-300">
+        <a href="index.html#features" class="hover:text-cyan-300 transition-colors">Özellikler</a>
+        <a href="index.html#download" class="hover:text-cyan-300 transition-colors">İndir</a>
+        <a href="index.html#guide" class="hover:text-cyan-300 transition-colors">Kılavuz</a>
+        <a href="index.html#faq" class="hover:text-cyan-300 transition-colors">SSS</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="btn-ghost text-xs sm:text-sm">Ana Sayfa</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <h1>Gizlilik Politikası</h1>
+    <p><strong>Son Güncelleme:</strong> 2025</p>
+    <p class="text-sm text-slate-400 mb-4">
+      <strong class="text-cyan-300">CyberEx Web3 App</strong>, <strong class="text-cyan-300">CyberEx</strong> ekosisteminin bir parçasıdır. 
+      <a href="https://cyberex.com.tr/web3wallet" class="text-cyan-300 hover:underline" target="_blank">CyberEx Wallet</a>, 
+      <a href="https://cyberex.com.tr/web3extension" class="text-cyan-300 hover:underline" target="_blank">CyberEx Extension</a> ve 
+      <a href="https://cyberex.com.tr/web3app" class="text-cyan-300 hover:underline">CyberEx App</a> birbirleriyle entegre çalışan ürünlerdir.
+    </p>
+
+    <h2>1. Giriş</h2>
+    <p>CyberEx Web3 App ("Uygulama"), kullanıcılarının gizliliğini korumayı taahhüt eder. Bu Gizlilik Politikası, uygulamanın veri toplama, kullanma ve koruma uygulamalarını açıklar.</p>
+
+    <h2>2. Toplanan Veriler</h2>
+    <h3>2.1. Kişisel Olmayan Veriler</h3>
+    <p>Uygulama, aşağıdaki kişisel olmayan verileri toplayabilir:</p>
+    <ul>
+      <li>Cihaz bilgileri (model, işletim sistemi, versiyon)</li>
+      <li>Uygulama kullanım istatistikleri</li>
+      <li>Hata raporları ve teknik loglar</li>
+      <li>Anonim kullanım verileri</li>
+    </ul>
+
+    <h3>2.2. Kişisel Veriler</h3>
+    <p>Uygulama, aşağıdaki kişisel verileri toplayabilir:</p>
+    <ul>
+      <li>E-posta adresi (isteğe bağlı, erken erişim listesi için)</li>
+      <li>Cihaz kimliği</li>
+    </ul>
+
+    <h2>3. Toplanmayan Veriler</h2>
+    <p><strong>ÖNEMLİ:</strong> Uygulama aşağıdaki hassas verileri ASLA toplamaz:</p>
+    <ul>
+      <li>Private key'ler</li>
+      <li>Seed phrase'ler</li>
+      <li>Cüzdan adresleri</li>
+      <li>İşlem geçmişi</li>
+      <li>Token bakiyeleri</li>
+      <li>Kişisel kimlik bilgileri</li>
+    </ul>
+    <p>Tüm bu veriler yalnızca cihazınızda saklanır ve hiçbir zaman sunuculara gönderilmez.</p>
+
+    <h2>4. Veri Kullanımı</h2>
+    <p>Toplanan veriler aşağıdaki amaçlarla kullanılır:</p>
+    <ul>
+      <li>Uygulama performansını iyileştirme</li>
+      <li>Hata ayıklama ve teknik sorunları çözme</li>
+      <li>Kullanıcı deneyimini geliştirme</li>
+      <li>Güvenlik ihlallerini tespit etme</li>
+      <li>Yasal yükümlülükleri yerine getirme</li>
+    </ul>
+
+    <h2>5. Veri Paylaşımı</h2>
+    <p>CyberEx, toplanan verileri aşağıdaki durumlar dışında üçüncü taraflarla paylaşmaz:</p>
+    <ul>
+      <li>Yasal zorunluluklar (mahkeme kararı, yasal süreçler)</li>
+      <li>Güvenlik ihlallerini önleme</li>
+      <li>Hizmet sağlayıcılar (analitik, hata raporlama - yalnızca anonim veriler)</li>
+    </ul>
+
+    <h2>6. Veri Güvenliği</h2>
+    <p>CyberEx, verilerinizi korumak için endüstri standardı güvenlik önlemleri kullanır:</p>
+    <ul>
+      <li>Veri şifreleme</li>
+      <li>Güvenli veri saklama</li>
+      <li>Düzenli güvenlik denetimleri</li>
+      <li>Erişim kontrolleri</li>
+    </ul>
+
+    <h2>7. Çerezler ve İzleme</h2>
+    <p>Uygulama, temel işlevsellik için gerekli çerezler kullanabilir. Üçüncü taraf izleme çerezleri kullanılmaz.</p>
+
+    <h2>8. Üçüncü Taraf Hizmetleri</h2>
+    <p>Uygulama, aşağıdaki üçüncü taraf hizmetlerini kullanabilir:</p>
+    <ul>
+      <li><strong>CoinGecko:</strong> Kripto para fiyat verileri (anonim)</li>
+      <li><strong>Blockchain RPC Sağlayıcıları:</strong> Blockchain verilerine erişim (anonim)</li>
+    </ul>
+    <p>Bu hizmetlerin kendi gizlilik politikaları geçerlidir.</p>
+
+    <h2>9. Kullanıcı Hakları</h2>
+    <p>KVKK kapsamında aşağıdaki haklara sahipsiniz:</p>
+    <ul>
+      <li>Kişisel verilerinize erişim hakkı</li>
+      <li>Kişisel verilerinizin düzeltilmesini talep etme hakkı</li>
+      <li>Kişisel verilerinizin silinmesini talep etme hakkı</li>
+      <li>Kişisel verilerinizin işlenmesine itiraz etme hakkı</li>
+      <li>Kişisel verilerinizin aktarılmasını talep etme hakkı</li>
+    </ul>
+
+    <h2>10. Veri Saklama</h2>
+    <p>Kişisel verileriniz, yasal yükümlülükler ve hizmet sağlama gereksinimleri süresince saklanır. Hesabınızı silerseniz, verileriniz 30 gün içinde silinir.</p>
+
+    <h2>11. Çocukların Gizliliği</h2>
+    <p>Uygulama, 18 yaş altındaki kullanıcılardan bilerek veri toplamaz. 18 yaş altındaysanız, lütfen uygulamayı kullanmayın.</p>
+
+    <h2>12. Uluslararası Veri Transferi</h2>
+    <p>Verileriniz, Türkiye dışındaki sunucularda saklanabilir. Bu durumda, uygun güvenlik önlemleri alınır.</p>
+
+    <h2>13. Politika Değişiklikleri</h2>
+    <p>Bu Gizlilik Politikası, gerektiğinde güncellenebilir. Önemli değişiklikler, uygulama içinde bildirilir.</p>
+
+    <h2>14. İletişim</h2>
+    <p>Gizlilik ile ilgili sorularınız için: <a href="mailto:privacy@cyberex.com.tr">privacy@cyberex.com.tr</a></p>
+
+    <p style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(148,163,184,0.3);">
+      <strong>Önemli:</strong> Private key'leriniz ve cüzdan verileriniz ASLA toplanmaz ve yalnızca cihazınızda saklanır.
+    </p>
+  </div>
+
+  <footer class="border-t border-slate-800/80 py-8 mt-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 text-center text-[0.7rem] text-slate-400">
+      <p>© <span id="year"></span> <strong class="text-cyan-300">CyberEx</strong>. Tüm hakları saklıdır.</p>
+      <p class="mt-2">
+        <strong class="text-cyan-300">CyberEx</strong> ürünü • 
+        <a href="https://cyberex.com.tr/web3wallet" class="text-cyan-300 hover:underline" target="_blank">CyberEx Wallet</a> • 
+        <a href="https://cyberex.com.tr/web3extension" class="text-cyan-300 hover:underline" target="_blank">CyberEx Extension</a> • 
+        <a href="https://cyberex.com.tr/web3app" class="text-cyan-300 hover:underline">CyberEx App</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

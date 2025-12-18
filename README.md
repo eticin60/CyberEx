@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🌐 CyberEx - Futuristic Cryptocurrency Exchange Ecosystem
 
 <div align="center">
@@ -68,3 +69,6 @@ For business inquiries and licensing:
   <sub>High-performance apps • Realtime platforms • AI integrations • Blockchain</sub>
 </div>
 
+=======
+# CyberEx-Home
+>>>>>>> 7933c5d10753a1c798e5faf740daf10b49cedffb
