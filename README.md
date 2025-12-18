@@ -4,11 +4,11 @@
   <img src="cyberex-logo.png" width="300" alt="CyberEx Logo">
   <br>
   
-  [![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE)
-  [![Website: cyberex.com.tr](https://img.shields.io/badge/Website-cyberex.com.tr-blue.svg)](https://cyberex.com.tr)
-  [![Ecosystem: CyberEx](https://img.shields.io/badge/Ecosystem-CyberEx-purple.svg)](https://cyberex.com.tr)
-  [![Platform: Android](https://img.shields.io/badge/Platform-Android-green.svg)](https://kotlinlang.org/)
-  [![Language: Kotlin](https://img.shields.io/badge/Language-Kotlin-orange.svg)](https://kotlinlang.org/)
+  [![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg?style=for-the-badge)](LICENSE)
+  [![Website: cyberex.com.tr](https://img.shields.io/badge/Website-cyberex.com.tr-blue.svg?style=for-the-badge)](https://cyberex.com.tr)
+  [![Ecosystem: CyberEx](https://img.shields.io/badge/Ecosystem-CyberEx-purple.svg?style=for-the-badge)](https://cyberex.com.tr)
+  [![Platform: Android](https://img.shields.io/badge/Platform-Android-green.svg?style=for-the-badge)](https://kotlinlang.org/)
+  [![Language: Kotlin](https://img.shields.io/badge/Language-Kotlin-orange.svg?style=for-the-badge)](https://kotlinlang.org/)
 
   <p align="center">
     <strong>The next generation of digital asset management.</strong><br>
@@ -22,41 +22,36 @@
 
 ## 🎯 What is CyberEx?
 
-**CyberEx** is an advanced, high-performance cryptocurrency exchange and financial technology ecosystem. By leveraging cutting-edge Google Gemini AI and real-time blockchain infrastructure, CyberEx provides traders with institutional-grade tools, deep market insights, and a seamless, secure trading environment.
+**CyberEx** is an advanced, high-performance cryptocurrency exchange and financial technology ecosystem. By leveraging cutting-edge **Google Gemini AI** and real-time blockchain infrastructure, CyberEx provides traders with institutional-grade tools, deep market insights, and a seamless, secure trading environment.
 
 ### Our Mission
 To democratize professional-grade trading by making high-speed execution and AI-powered intelligence accessible to every trader, ensuring the future of finance is open, secure, and intelligent.
 
 ---
 
-## ✨ Key Capabilities
+## ✨ Core Features & Functionalities
 
-*   🤖 **AI-Powered Intelligence**: Deep integration with **Google Gemini 2.0 Flash** for real-time market structure, technical analysis, and trade setups.
-*   📊 **Institutional Market Data**: Ultra-low latency feeds from **Binance** and **CoinGecko** for millisecond-accurate order books and pricing.
-*   💡 **Smart Risk Management**: Automated liquidation tracking, position monitoring, and AI-driven risk assessments.
-*   📈 **Advanced Technical Analysis**: Real-time pattern recognition (HH/HL, CHoCH/BOS), liquidity maps, and trend identification.
-*   🎯 **Precision Execution**: High-speed trading engine designed for both Spot and Futures markets with custom order types.
+### 🏦 Advanced Financial Infrastructure
+*   **Dynamic Wallet Engine**: Proprietary system generating unique, permanent deposit addresses for **TRC20, BEP20, and ERC20** networks.
+*   **Smart QR Integration**: Real-time generation of QR codes for seamless asset transfers.
+*   **Integrated Fiat Gateway**: Full-stack bank deposit and withdrawal systems supporting **TRY (TL)** and **USD** with automated IBAN formatting and verification.
+*   **Credit Card On-Ramp**: Instant crypto purchases via global providers: **MoonPay, Banxa, Simplex, Sardine,** and **Mercuryo** within a secured environment.
 
----
-
-## 💎 Exclusive Features
-
-### 🏦 Financial Infrastructure
-*   **Proprietary Wallet Architecture**: Unique, permanent deposit addresses for **TRC20, BEP20, and ERC20** networks, generated per user.
-*   **Seamless Fiat Gateway**: Integrated bank transfer systems supporting **TRY (TL)** and **USD** with automated IBAN formatting.
-*   **Credit Card On-Ramp**: Instant crypto purchases via **MoonPay, Banxa, Simplex, Sardine,** and **Mercuryo** within a secured environment.
-
-### 🧠 Intelligence Hub
-*   **AnalyticaX Integration**: Advanced AI-powered chart analysis directly within the ecosystem.
-*   **Sentiment Analysis**: Real-time processing of global news and social signals to gauge market mood.
+### 🧠 Intelligence & Analytics
+*   **Gemini AI Core**: Deep integration with **Google Gemini 2.0 Flash** for real-time market structure, technical analysis, and trade setups.
+*   **Institutional Market Data**: Ultra-low latency feeds from **Binance** and **CoinGecko** for millisecond-accurate order books and pricing.
+*   **Smart Risk Management**: Automated liquidation tracking, position monitoring, and AI-driven risk assessments.
+*   **Technical Pattern Recognition**: Real-time identification of HH/HL, CHoCH/BOS, liquidity maps, and trend structures.
 
 ### 🔐 Security & Compliance
-*   **Custodian Control**: Centralized security with a decentralized user experience, allowing for instant asset protection and freezing.
+*   **Custodian Wallet Control**: Centralized security with a decentralized user experience, allowing for instant asset protection and freezing.
 *   **Military-Grade Encryption**: All user data and transaction logs are secured via **Firebase Firestore** with multi-layer security protocols.
+*   **Real-time Fraud Detection**: Continuous monitoring of transactions and IP-based security audits.
 
 ### 📱 Modern User Experience
-*   **Cyber-Neon Interface**: A stunning, futuristic UI featuring 32dp oval components, glassmorphism, and neon accents.
-*   **Real-time Communication**: Integrated Global and Private chat systems for seamless community interaction.
+*   **Cyber-Neon UI**: A stunning, futuristic interface featuring 32dp oval components, glassmorphism, and neon accents.
+*   **Real-time Communication**: Integrated Global, Group, and Private chat systems for seamless community interaction.
+*   **Push Notification System**: Instant alerts for price changes, security updates, and transaction confirmations.
 
 ---
 
@@ -93,12 +88,12 @@ CyberEx/
 
 **Copyright (c) 2025 CyberEx Kripto Para Anonim Şirketi. All Rights Reserved.**
 
-This software and associated documentation files are the proprietary and confidential property of **CyberEx Kripto Para A.Ş.** Unauthorized copying, modification, or distribution is strictly prohibited.
+This project is protected by a **Proprietary Software License**. Unauthorized use, copying, or distribution is strictly prohibited and protected by international law.
 
 *   ❌ **NOT Open Source**
-*   ❌ **No Redistribution**
-*   ❌ **No Commercial Use**
-*   ❌ **No Reverse Engineering**
+*   ❌ **No Redistribution or Reproduction**
+*   ❌ **No Commercial Use without Permission**
+*   ❌ **No Reverse Engineering or Decompilation**
 
 **Violation of these terms may result in severe legal action.**
 
