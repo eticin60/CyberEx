@@ -1,7 +1,7 @@
 # 🌐 CyberEx - Futuristic Cryptocurrency Exchange Ecosystem
 
 <div align="center">
-  <img src="LOGO CyberEx.png" width="300" alt="CyberEx Logo">
+  <img src="cyberex-logo.png" width="300" alt="CyberEx Logo">
   <br>
   
   [![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE)
