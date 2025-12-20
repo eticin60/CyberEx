@@ -1,0 +1,42 @@
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null",
+    
+    "users": {
+      "$uid": {
+        ".read": "$uid === auth.uid || root.child('users').child(auth.uid).child('admin').val() === true",
+        ".write": "$uid === auth.uid || root.child('users').child(auth.uid).child('admin').val() === true",
+        
+        "status": {
+          ".read": true,
+          ".write": "$uid === auth.uid"
+        },
+        
+        "presence": {
+          ".read": true,
+          ".write": "$uid === auth.uid"
+        }
+      }
+    },
+    
+    "global": {
+      ".read": true,
+      ".write": "root.child('users').child(auth.uid).child('admin').val() === true"
+    },
+    
+    "chat": {
+      "$chatId": {
+        ".read": "auth != null && (data.child('participants').hasChild(auth.uid) || data.child('type').val() === 'global')",
+        ".write": "auth != null && (data.child('participants').hasChild(auth.uid) || data.child('type').val() === 'global')",
+        
+        "messages": {
+          "$messageId": {
+            ".read": "auth != null && (root.child('chat').child($chatId).child('participants').hasChild(auth.uid) || root.child('chat').child($chatId).child('type').val() === 'global')",
+            ".write": "auth != null && $messageId === auth.uid || root.child('chat').child($chatId).child('participants').hasChild(auth.uid)"
+          }
+        }
+      }
+    }
+  }
+}

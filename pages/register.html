@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kayıt Ol - CyberEx</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/auth.css">
+</head>
+<body>
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h1 class="auth-logo">CyberEx</h1>
+        <p class="auth-subtitle">Hesap Oluştur</p>
+      </div>
+
+      <form id="registerForm" class="auth-form">
+        <div class="form-group">
+          <label for="displayName">Ad Soyad</label>
+          <input type="text" id="displayName" name="displayName" autocomplete="name">
+        </div>
+
+        <div class="form-group">
+          <label for="email">E-posta</label>
+          <input type="email" id="email" name="email" required autocomplete="email">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Şifre</label>
+          <input type="password" id="password" name="password" required autocomplete="new-password" minlength="6">
+          <small class="form-hint">En az 6 karakter olmalı</small>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Şifre Tekrar</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" required autocomplete="new-password">
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="agreeTerms" required>
+            <span>Kullanım şartlarını ve gizlilik politikasını kabul ediyorum</span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn-primary" id="registerBtn">
+          <span>Kayıt Ol</span>
+        </button>
+      </form>
+
+      <div class="auth-divider">
+        <span>veya</span>
+      </div>
+
+      <div class="auth-footer">
+        <p>Zaten hesabınız var mı? <a href="login.html" class="link">Giriş Yap</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { authManager } from '../js/authManager.js';
+
+    const registerForm = document.getElementById('registerForm');
+    const registerBtn = document.getElementById('registerBtn');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+
+    // Password match validation
+    confirmPasswordInput.addEventListener('input', () => {
+      if (passwordInput.value !== confirmPasswordInput.value) {
+        confirmPasswordInput.setCustomValidity('Şifreler eşleşmiyor');
+      } else {
+        confirmPasswordInput.setCustomValidity('');
+      }
+    });
+
+    // Register form submit
+    registerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const displayName = document.getElementById('displayName').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      if (password !== confirmPassword) {
+        alert('Şifreler eşleşmiyor');
+        return;
+      }
+      
+      registerBtn.disabled = true;
+      registerBtn.innerHTML = '<span>Hesap oluşturuluyor...</span>';
+      
+      const result = await authManager.register(email, password, displayName);
+      
+      if (result.success) {
+        alert('Hesabınız başarıyla oluşturuldu!');
+        window.location.href = '../index.html';
+      } else {
+        alert(result.error);
+        registerBtn.disabled = false;
+        registerBtn.innerHTML = '<span>Kayıt Ol</span>';
+      }
+    });
+
+    // Check if already logged in
+    if (authManager.isAuthenticated()) {
+      window.location.href = '../index.html';
+    }
+  </script>
+</body>
+</html>

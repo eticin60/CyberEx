@@ -1,0 +1,23 @@
+// Firebase Configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCC5H6_5CDrmCqJPD5GvpUdIlCMBS8EwEk",
+  authDomain: "cyberex-firebase.firebaseapp.com",
+  projectId: "cyberex-firebase",
+  storageBucket: "cyberex-firebase.firebasestorage.app",
+  messagingSenderId: "25879594487",
+  appId: "1:25879594487:android:e2989ff0a5df955d3bdaf2",
+  databaseURL: "https://cyberex-firebase-default-rtdb.firebaseio.com"
+};
+
+// Initialize Firebase
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import { getDatabase } from 'firebase/database';
+
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+export const database = getDatabase(app);
+
+export default app;

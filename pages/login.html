@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giriş Yap - CyberEx</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/auth.css">
+</head>
+<body>
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h1 class="auth-logo">CyberEx</h1>
+        <p class="auth-subtitle">Giriş Yap</p>
+      </div>
+
+      <form id="loginForm" class="auth-form">
+        <div class="form-group">
+          <label for="email">E-posta</label>
+          <input type="email" id="email" name="email" required autocomplete="email">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Şifre</label>
+          <input type="password" id="password" name="password" required autocomplete="current-password">
+        </div>
+
+        <div class="form-options">
+          <label class="checkbox-label">
+            <input type="checkbox" id="rememberMe">
+            <span>Beni hatırla</span>
+          </label>
+          <a href="#" id="forgotPassword" class="link">Şifremi Unuttum</a>
+        </div>
+
+        <button type="submit" class="btn-primary" id="loginBtn">
+          <span>Giriş Yap</span>
+        </button>
+      </form>
+
+      <div class="auth-divider">
+        <span>veya</span>
+      </div>
+
+      <div class="auth-footer">
+        <p>Hesabınız yok mu? <a href="register.html" class="link">Kayıt Ol</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { authManager } from '../js/authManager.js';
+
+    const loginForm = document.getElementById('loginForm');
+    const loginBtn = document.getElementById('loginBtn');
+    const forgotPasswordLink = document.getElementById('forgotPassword');
+
+    // Login form submit
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      loginBtn.disabled = true;
+      loginBtn.innerHTML = '<span>Giriş yapılıyor...</span>';
+      
+      const result = await authManager.login(email, password);
+      
+      if (result.success) {
+        // Redirect to home page
+        window.location.href = '../index.html';
+      } else {
+        alert(result.error);
+        loginBtn.disabled = false;
+        loginBtn.innerHTML = '<span>Giriş Yap</span>';
+      }
+    });
+
+    // Forgot password
+    forgotPasswordLink.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const email = prompt('E-posta adresinizi girin:');
+      if (email) {
+        const result = await authManager.resetPassword(email);
+        if (result.success) {
+          alert('Şifre sıfırlama e-postası gönderildi. Lütfen e-posta kutunuzu kontrol edin.');
+        } else {
+          alert(result.error);
+        }
+      }
+    });
+
+    // Check if already logged in
+    if (authManager.isAuthenticated()) {
+      window.location.href = '../index.html';
+    }
+  </script>
+</body>
+</html>
