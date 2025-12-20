@@ -36,17 +36,33 @@ class WalletManager {
   initialize() {
     if (this.initialized) {
       console.log('WalletManager already initialized');
+      // If already initialized but user is logged in, reload data
+      const user = auth.currentUser;
+      if (user) {
+        this.loadWalletFromFirestore();
+        this.startRealtimeListeners(user.uid);
+      }
       return;
     }
 
     console.log('Initializing WalletManager...');
 
-    // Listen to auth state
+    // Check if user is already logged in
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      console.log('WalletManager: User already logged in, loading wallet data');
+      this.loadWalletFromFirestore();
+      this.startRealtimeListeners(currentUser.uid);
+    }
+
+    // Listen to auth state changes
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        console.log('WalletManager: User logged in, loading wallet data');
         this.loadWalletFromFirestore();
         this.startRealtimeListeners(user.uid);
       } else {
+        console.log('WalletManager: User logged out, resetting wallet');
         this.reset();
       }
     });
@@ -57,23 +73,20 @@ class WalletManager {
   // Load wallet data from Firestore
   async loadWalletFromFirestore() {
     const user = auth.currentUser;
-    if (!user) return;
+    if (!user) {
+      console.warn('WalletManager: No user logged in');
+      return;
+    }
 
     try {
       const userId = user.uid;
+      console.log('WalletManager: Loading wallet data for user:', userId);
 
       // Load SPOT wallet data
       const summaryDoc = await getDoc(doc(db, 'users', userId, 'wallet', 'summary'));
       const balanceDoc = await getDoc(doc(db, 'users', userId, 'wallet', 'usdt_balance'));
       const assetsSnapshot = await getDocs(
         collection(db, 'users', userId, 'wallet', 'spot_assets', 'assets')
-      );
-      const historySnapshot = await getDocs(
-        query(
-          collection(db, 'users', userId, 'wallet', 'spot_history', 'trades'),
-          orderBy('timestamp', 'desc'),
-          limit(50)
-        )
       );
 
       // Load FUTURES wallet data
@@ -87,11 +100,24 @@ class WalletManager {
         collection(db, 'users', userId, 'futures_wallet', 'open_positions', 'positions')
       );
 
+      console.log('WalletManager: Firestore documents loaded');
+
       // Process SPOT data
-      if (balanceDoc.exists()) {
-        this.usdtBalance = balanceDoc.data().balance || 0;
+      if (summaryDoc.exists()) {
+        const summaryData = summaryDoc.data();
+        this.principalBalance = summaryData.principalBalance || 0;
+        this.spotPortfolioValue = summaryData.spotPortfolioValue || 0;
+        this.spotPnl = summaryData.spotPnl || 0;
+        console.log('WalletManager: Summary loaded - principalBalance:', this.principalBalance, 'spotPnl:', this.spotPnl);
       }
 
+      if (balanceDoc.exists()) {
+        const balanceData = balanceDoc.data();
+        this.usdtBalance = balanceData.balance || 0;
+        console.log('WalletManager: USDT balance:', this.usdtBalance);
+      }
+
+      // Process assets
       this.walletAssets.clear();
       assetsSnapshot.forEach((assetDoc) => {
         const data = assetDoc.data();
@@ -99,15 +125,28 @@ class WalletManager {
           symbol: assetDoc.id,
           balance: data.balance || 0,
           available: data.available || 0,
-          locked: data.locked || 0
+          locked: data.locked || 0,
+          price: data.price || 0
         });
       });
+      console.log('WalletManager: Assets loaded:', this.walletAssets.size);
 
       // Process FUTURES data
-      if (futuresBalanceDoc.exists()) {
-        this.futuresWalletBalance = futuresBalanceDoc.data().balance || 0;
+      if (futuresSummaryDoc.exists()) {
+        const futuresSummaryData = futuresSummaryDoc.data();
+        this.futuresPrincipalBalance = futuresSummaryData.principalBalance || 0;
+        this.futuresPortfolioValue = futuresSummaryData.totalPortfolioValue || 0;
+        this.futuresPnl = futuresSummaryData.futuresUnrealizedPnlSum || 0;
+        console.log('WalletManager: Futures summary loaded - futuresPnl:', this.futuresPnl);
       }
 
+      if (futuresBalanceDoc.exists()) {
+        const futuresBalanceData = futuresBalanceDoc.data();
+        this.futuresWalletBalance = futuresBalanceData.balance || 0;
+        console.log('WalletManager: Futures balance:', this.futuresWalletBalance);
+      }
+
+      // Process open positions
       this.openPositions = [];
       openPositionsSnapshot.forEach((positionDoc) => {
         const data = positionDoc.data();
@@ -120,22 +159,58 @@ class WalletManager {
           currentPrice: data.currentPrice || 0,
           margin: data.margin || 0,
           leverage: data.leverage || 1,
-          pnl: data.pnl || 0
+          pnl: data.pnl || data.unrealizedPnl || 0
         });
       });
+      console.log('WalletManager: Open positions loaded:', this.openPositions.length);
 
-      // Calculate portfolio values
-      this.calculatePortfolioValues();
+      // Calculate total portfolio values (summary'den gelen değerleri kullan, yoksa hesapla)
+      if (summaryDoc.exists() && futuresSummaryDoc.exists()) {
+        const summaryData = summaryDoc.data();
+        const futuresSummaryData = futuresSummaryDoc.data();
+        this.totalPortfolioValue = summaryData.totalPortfolioValue || (this.spotPortfolioValue + this.futuresPortfolioValue);
+        this.totalPnl = summaryData.totalPnl || (this.spotPnl + this.futuresPnl);
+      } else {
+        // Summary yoksa manuel hesapla
+        this.calculatePortfolioValues();
+      }
+
+      console.log('WalletManager: Portfolio calculated - total:', this.totalPortfolioValue, 'pnl:', this.totalPnl);
+      
+      // Notify listeners
       this.notifyListeners();
 
-      console.log('Wallet data loaded successfully');
+      console.log('WalletManager: Wallet data loaded successfully');
     } catch (error) {
-      console.error('Error loading wallet:', error);
+      console.error('WalletManager: Error loading wallet:', error);
+      console.error('Error details:', error.message, error.stack);
     }
   }
 
   // Start realtime listeners
   startRealtimeListeners(userId) {
+    // Cleanup previous listeners
+    this.cleanup();
+
+    // Listen to SPOT wallet summary
+    const spotSummaryUnsubscribe = onSnapshot(
+      doc(db, 'users', userId, 'wallet', 'summary'),
+      (doc) => {
+        if (doc.exists()) {
+          const data = doc.data();
+          this.principalBalance = data.principalBalance || 0;
+          this.spotPortfolioValue = data.spotPortfolioValue || 0;
+          this.spotPnl = data.spotPnl || 0;
+          this.totalPortfolioValue = data.totalPortfolioValue || (this.spotPortfolioValue + this.futuresPortfolioValue);
+          this.totalPnl = data.totalPnl || (this.spotPnl + this.futuresPnl);
+          this.notifyListeners();
+        }
+      },
+      (error) => {
+        console.error('WalletManager: Error listening to spot summary:', error);
+      }
+    );
+
     // Listen to USDT balance
     const balanceUnsubscribe = onSnapshot(
       doc(db, 'users', userId, 'wallet', 'usdt_balance'),
@@ -145,6 +220,51 @@ class WalletManager {
           this.calculatePortfolioValues();
           this.notifyListeners();
         }
+      },
+      (error) => {
+        console.error('WalletManager: Error listening to balance:', error);
+      }
+    );
+
+    // Listen to spot assets
+    const assetsUnsubscribe = onSnapshot(
+      collection(db, 'users', userId, 'wallet', 'spot_assets', 'assets'),
+      (snapshot) => {
+        this.walletAssets.clear();
+        snapshot.forEach((assetDoc) => {
+          const data = assetDoc.data();
+          this.walletAssets.set(assetDoc.id, {
+            symbol: assetDoc.id,
+            balance: data.balance || 0,
+            available: data.available || 0,
+            locked: data.locked || 0,
+            price: data.price || 0
+          });
+        });
+        this.calculatePortfolioValues();
+        this.notifyListeners();
+      },
+      (error) => {
+        console.error('WalletManager: Error listening to assets:', error);
+      }
+    );
+
+    // Listen to FUTURES wallet summary
+    const futuresSummaryUnsubscribe = onSnapshot(
+      doc(db, 'users', userId, 'futures_wallet', 'summary'),
+      (doc) => {
+        if (doc.exists()) {
+          const data = doc.data();
+          this.futuresPrincipalBalance = data.principalBalance || 0;
+          this.futuresPortfolioValue = data.totalPortfolioValue || 0;
+          this.futuresPnl = data.futuresUnrealizedPnlSum || 0;
+          this.totalPortfolioValue = (this.spotPortfolioValue + this.futuresPortfolioValue);
+          this.totalPnl = (this.spotPnl + this.futuresPnl);
+          this.notifyListeners();
+        }
+      },
+      (error) => {
+        console.error('WalletManager: Error listening to futures summary:', error);
       }
     );
 
@@ -157,6 +277,9 @@ class WalletManager {
           this.calculatePortfolioValues();
           this.notifyListeners();
         }
+      },
+      (error) => {
+        console.error('WalletManager: Error listening to futures balance:', error);
       }
     );
 
@@ -176,37 +299,61 @@ class WalletManager {
             currentPrice: data.currentPrice || 0,
             margin: data.margin || 0,
             leverage: data.leverage || 1,
-            pnl: data.pnl || 0
+            pnl: data.pnl || data.unrealizedPnl || 0
           });
         });
         this.calculatePortfolioValues();
         this.notifyListeners();
+      },
+      (error) => {
+        console.error('WalletManager: Error listening to positions:', error);
       }
     );
 
-    this.listeners.push(balanceUnsubscribe, futuresBalanceUnsubscribe, positionsUnsubscribe);
+    this.listeners.push(
+      spotSummaryUnsubscribe,
+      balanceUnsubscribe,
+      assetsUnsubscribe,
+      futuresSummaryUnsubscribe,
+      futuresBalanceUnsubscribe,
+      positionsUnsubscribe
+    );
   }
 
-  // Calculate portfolio values
+  // Calculate portfolio values (fallback if summary not available)
   calculatePortfolioValues() {
     // Calculate spot portfolio value
     let spotValue = this.usdtBalance;
+    let spotPnlValue = 0;
+    
+    // Add asset values if available
     this.walletAssets.forEach((asset) => {
-      // This would require current prices from DataManager
-      // For now, just use USDT balance
+      const assetValue = (asset.balance || 0) * (asset.price || 0);
+      spotValue += assetValue;
     });
+    
+    // If spotPnl is not set, try to calculate from balance change
+    if (this.spotPnl === 0 && this.principalBalance > 0) {
+      spotPnlValue = spotValue - this.principalBalance;
+    } else {
+      spotPnlValue = this.spotPnl;
+    }
+    
     this.spotPortfolioValue = spotValue;
+    this.spotPnl = spotPnlValue;
 
     // Calculate futures portfolio value
     let futuresValue = this.futuresWalletBalance;
-    let futuresPnl = 0;
+    let futuresPnlValue = 0;
+    
     this.openPositions.forEach((position) => {
-      const positionValue = position.margin + (position.pnl || 0);
+      const positionValue = (position.margin || 0) + (position.pnl || 0);
       futuresValue += positionValue;
-      futuresPnl += position.pnl || 0;
+      futuresPnlValue += position.pnl || 0;
     });
+    
     this.futuresPortfolioValue = futuresValue;
-    this.futuresPnl = futuresPnl;
+    this.futuresPnl = futuresPnlValue;
 
     // Calculate totals
     this.totalPortfolioValue = this.spotPortfolioValue + this.futuresPortfolioValue;

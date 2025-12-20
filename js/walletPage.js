@@ -11,17 +11,26 @@ class WalletPageManager {
 
   // Initialize wallet page
   async initialize() {
-    if (this.initialized) return;
+    if (this.initialized) {
+      // Already initialized, just reload
+      walletManager.loadWalletFromFirestore();
+      return;
+    }
+
     if (!authManager.isAuthenticated()) {
+      console.warn('WalletPageManager: User not authenticated, redirecting to login');
       window.location.href = './pages/login.html';
       return;
     }
+
+    console.log('WalletPageManager: Initializing...');
 
     // Initialize WalletManager
     walletManager.initialize();
 
     // Listen to wallet updates
     walletManager.addListener((walletData) => {
+      console.log('WalletPageManager: Wallet data updated', walletData);
       this.walletData = walletData;
       this.renderWallet();
     });
@@ -29,6 +38,9 @@ class WalletPageManager {
     // Setup tabs
     this.setupTabs();
     this.setupActions();
+
+    // Initial render (will be updated when data loads)
+    this.renderWallet();
 
     this.initialized = true;
   }

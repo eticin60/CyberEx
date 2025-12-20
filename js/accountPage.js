@@ -11,12 +11,20 @@ class AccountPageManager {
 
   // Initialize account page
   async initialize() {
-    if (this.initialized) return;
+    if (this.initialized) {
+      // If already initialized, reload data
+      await this.loadUserData();
+      this.renderAccount();
+      return;
+    }
+
     if (!authManager.isAuthenticated()) {
+      console.warn('AccountPageManager: User not authenticated, redirecting to login');
       window.location.href = './pages/login.html';
       return;
     }
 
+    console.log('AccountPageManager: Initializing...');
     await this.loadUserData();
     this.setupProfileForm();
     this.setupSecuritySettings();
@@ -28,15 +36,33 @@ class AccountPageManager {
   // Load user data
   async loadUserData() {
     const user = authManager.getCurrentUser();
-    if (!user) return;
+    if (!user) {
+      console.warn('AccountPageManager: No user logged in');
+      return;
+    }
 
     try {
-      const userDoc = await getDoc(doc(db, 'users', user.uid));
+      const userId = user.uid;
+      console.log('AccountPageManager: Loading user data for:', userId);
+      
+      const userDoc = await getDoc(doc(db, 'users', userId));
       if (userDoc.exists()) {
         this.userData = { id: userDoc.id, ...userDoc.data() };
+        console.log('AccountPageManager: User data loaded:', this.userData);
+      } else {
+        console.warn('AccountPageManager: User document does not exist');
+        // Set default values
+        this.userData = {
+          id: userId,
+          email: user.email,
+          displayName: user.displayName || '',
+          premium: false,
+          referralCode: ''
+        };
       }
     } catch (error) {
-      console.error('Error loading user data:', error);
+      console.error('AccountPageManager: Error loading user data:', error);
+      console.error('Error details:', error.message, error.stack);
     }
   }
 
