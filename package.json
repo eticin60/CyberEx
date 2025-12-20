@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:prod": "NODE_ENV=production vite build",
+    "build:prod": "vite build",
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
     "security:deploy-rules": "firebase deploy --only firestore:rules,database:rules"
