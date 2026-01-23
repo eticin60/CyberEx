@@ -41,6 +41,86 @@
       "type": "image/png",
       "form_factor": "narrow",
       "label": "Mobile Web3 Experience"
+    },
+    {
+      "src": "cyberex_app_reklam.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobile Web3 Experience"
+    },
+    {
+      "src": "cyberex_app_reklam2.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobile Web3 Experience"
+    },
+    {
+      "src": "cyberex-logo-down.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "CyberEx Logo"
+    },
+    {
+      "src": "cyberex-logo-full.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "CyberEx Logo"
+    },
+    {
+      "src": "CyberEx_Web3.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "CyberEx Mobile Web3 Experience"
+    },
+    {
+      "src": "AnalyticaX.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "CyberEx - Analytica X Logo"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Piyasalar",
+      "short_name": "Piyasalar",
+      "description": "Canlı kripto para piyasalarını takip edin",
+      "url": "./index.html#markets",
+      "icons": [
+        {
+          "src": "icons/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Cüzdan",
+      "short_name": "Cüzdan",
+      "description": "Web3 cüzdanınıza hızlıca erişin",
+      "url": "./index.html#wallet",
+      "icons": [
+        {
+          "src": "icons/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Destek",
+      "short_name": "Destek",
+      "description": "CyberEx yardım merkezi",
+      "url": "./help.html",
+      "icons": [
+        {
+          "src": "icons/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }
