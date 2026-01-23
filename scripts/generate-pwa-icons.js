@@ -16,26 +16,25 @@ async function generatePWAIcons() {
 
     for (const size of sizes) {
         try {
-            // Safe zone (80% of total size) to prevent clipping and ensure centering
-            const padding = Math.round(size * 0.1); // 10% padding on each side
-            const innerSize = size - (padding * 2);
+            // Balanced safe zone (82% of total size) for perfectly centered transparency
+            const innerSize = Math.round(size * 0.82);
+            const padding = Math.round((size - innerSize) / 2);
 
             await sharp(sourceIcon)
                 .resize(innerSize, innerSize, {
                     fit: 'contain',
-                    background: { r: 33, g: 33, b: 33, alpha: 1 }
+                    background: { r: 0, g: 0, b: 0, alpha: 0 }
                 })
                 .extend({
                     top: padding,
-                    bottom: padding,
+                    bottom: size - innerSize - padding,
                     left: padding,
-                    right: padding,
-                    background: { r: 33, g: 33, b: 33 }
+                    right: size - innerSize - padding,
+                    background: { r: 0, g: 0, b: 0, alpha: 0 }
                 })
-                .flatten({ background: { r: 33, g: 33, b: 33 } })
                 .toFile(path.join(outputDir, `icon-${size}x${size}.png`));
 
-            console.log(`✓ Generated ${size}x${size} icon with safe-zone`);
+            console.log(`✓ Generated ${size}x${size} transparent icon`);
         } catch (err) {
             console.error(`✗ Failed to generate ${size}x${size} icon:`, err.message);
         }
@@ -46,7 +45,7 @@ async function generatePWAIcons() {
         await sharp(sourceIcon)
             .resize(32, 32, {
                 fit: 'contain',
-                background: { r: 0, g: 0, b: 0, alpha: 0 } // Transparent
+                background: { r: 0, g: 0, b: 0, alpha: 0 }
             })
             .toFile(path.join(outputDir, 'favicon-32x32.png'));
         console.log('✓ Generated 32x32 transparent favicon');
@@ -54,7 +53,7 @@ async function generatePWAIcons() {
         console.error('✗ Failed to generate favicon:', err.message);
     }
 
-    console.log('\n✅ PWA icons created successfully in /icons directory');
+    console.log('\n✅ All icons (PWA & Favicon) created with transparency');
 }
 
 generatePWAIcons();
