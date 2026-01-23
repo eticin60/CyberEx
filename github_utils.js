@@ -55,7 +55,7 @@ async function uploadToGitHub(filename, newData) {
         });
 
         if (putResponse.ok) {
-            alert(`CYBEREX TECHNOLOGY INC.\n\nİşleminiz başarıyla gerçekleştirilmiştir.\nTalebiniz sistemlerimize güvenli bir şekilde kaydedildi.\n\nReferans: ${filename}`);
+            alert(`CYBEREX TECHNOLOGY INC.\n\nİşleminiz başarıyla gerçekleştirilmiştir.\nTalebiniz sistemlerimize güvenli bir şekilde kaydedildi.`);
             return true;
         } else {
             return false;
