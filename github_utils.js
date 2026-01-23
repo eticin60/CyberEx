@@ -56,7 +56,7 @@ async function uploadToGitHub(filename, newData) {
         });
 
         if (putResponse.ok) {
-            alert(`✅ Başarılı! Veriler GitHub reperosuna (${filename}) kaydedildi.`);
+            alert(`CYBEREX TECHNOLOGY INC.\n\nİşleminiz başarıyla gerçekleştirilmiştir.\nTalebiniz sistemlerimize güvenli bir şekilde kaydedildi.\n\nReferans: ${filename}`);
             return true;
         } else {
             return false;
