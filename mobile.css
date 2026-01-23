@@ -91,7 +91,7 @@
         white-space: nowrap !important;
     }
 
-    /* Hamburger Menu Button (Pinned to Far Right) */
+    /* Hamburger Menu Button (Top Right Fix) */
     .navbar .mobile-menu-btn {
         display: flex !important;
         align-items: center !important;
@@ -99,20 +99,34 @@
         background: transparent !important;
         border: none !important;
         color: var(--neon-cyan) !important;
-        font-size: 2.2rem !important;
-        /* Larger for better tap target */
+        font-size: 2rem !important;
         cursor: pointer !important;
         padding: 5px !important;
         z-index: 10005 !important;
         position: absolute !important;
-        right: 15px !important;
-        /* Pinned far right */
-        left: auto !important;
-        top: 50% !important;
+        right: 12px !important;
+        /* Pinned to right */
+        top: 22px !important;
+        /* Aligned with top bar elements */
         transform: translateY(-50%) !important;
         margin: 0 !important;
         visibility: visible !important;
         opacity: 1 !important;
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    /* Keep button at top when menu is open */
+    .navbar.mobile-open .mobile-menu-btn {
+        top: 25px !important;
+        right: 15px !important;
+        transform: none !important;
+    }
+
+    /* Ensure button stays at top when menu is open */
+    .navbar.mobile-open .mobile-menu-btn {
+        top: 25px !important;
+        transform: none !important;
     }
 
     /* Navigation Links Container */
@@ -315,15 +329,21 @@
     .install-toast {
         left: 50% !important;
         transform: translateX(-50%) translateY(150px) !important;
-        width: 90% !important;
-        max-width: 340px !important;
-        bottom: 25px !important;
-        border-radius: 16px !important;
-        padding: 12px 15px !important;
+        width: 95% !important;
+        max-width: 380px !important;
+        bottom: 35px !important;
+        /* Raised to avoid being cut off */
+        border-radius: 20px !important;
+        padding: 15px !important;
         display: flex !important;
+        flex-direction: row !important;
         align-items: center !important;
         justify-content: space-between !important;
         gap: 10px !important;
+        background: rgba(0, 5, 15, 0.98) !important;
+        border: 2px solid var(--neon-cyan) !important;
+        box-shadow: 0 0 30px rgba(0, 240, 255, 0.3) !important;
+        z-index: 999999 !important;
     }
 
     .install-toast.show {
@@ -331,26 +351,52 @@
     }
 
     .install-toast img {
-        width: 45px !important;
-        height: 45px !important;
+        width: 55px !important;
+        height: 55px !important;
         flex-shrink: 0 !important;
+        border-radius: 12px !important;
     }
 
     .install-toast>div:first-of-type {
         flex: 1 !important;
-        text-align: left !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
         padding: 0 5px !important;
     }
 
+    .install-toast strong {
+        font-size: 0.95rem !important;
+        margin-bottom: 2px !important;
+    }
+
+    .install-toast p {
+        font-size: 0.75rem !important;
+        line-height: 1.2 !important;
+        margin: 0 !important;
+    }
+
     #install-btn {
-        flex-shrink: 0 !important;
-        padding: 8px 16px !important;
+        flex: 0 0 auto !important;
+        width: auto !important;
+        height: auto !important;
+        padding: 10px 15px !important;
+        font-size: 0.9rem !important;
+        background: var(--neon-cyan) !important;
+        color: #000 !important;
+        font-weight: 900 !important;
+        border-radius: 12px !important;
         white-space: nowrap !important;
+        box-shadow: 0 0 15px var(--neon-cyan) !important;
     }
 
     #close-toast {
-        flex-shrink: 0 !important;
-        padding: 0 0 0 5px !important;
+        flex: 0 0 auto !important;
+        padding: 8px !important;
+        color: #fff !important;
+        font-size: 1.4rem !important;
     }
 
     /* --- 8. GENERAL ALIGNMENT --- */
@@ -382,27 +428,76 @@
     }
 
     input,
-    button,
     .store-btn {
         width: 100% !important;
         max-width: 100% !important;
         margin: 0 !important;
     }
 
+    /* Avoid global button width reset for utility buttons */
+    button:not(#install-btn):not(.mobile-menu-btn):not(.lang-btn) {
+        width: 100% !important;
+    }
+
     .waitlist-input {
         margin-bottom: 10px !important;
+    }
+
+    /* --- 8. LOGO & HOLOGRAM CENTERING --- */
+    .logo-container,
+    .logo-wrap {
+        width: 160px !important;
+        height: 160px !important;
+        margin: 0 auto !important;
+        position: relative !important;
+        left: auto !important;
+        right: auto !important;
+    }
+
+    .logo-glow-ring {
+        inset: -20px !important;
+        /* Proper scaling for mobile */
+        border-width: 2px !important;
+    }
+
+    .logo-inner {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    .logo-inner::before {
+        inset: -8px !important;
+    }
+
+    /* --- 9. GENERAL ALIGNMENT --- */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    p,
+    span,
+    div {
+        text-align: center !important;
+        max-width: 100% !important;
+    }
+
+    .title {
+        font-size: 2.5rem !important;
+        /* Slightly smaller to fit better */
+        line-height: 1.1 !important;
+        margin-top: 20px !important;
+    }
+
+    .subtitle {
+        font-size: 0.95rem !important;
+        padding: 0 15px !important;
+        line-height: 1.6 !important;
     }
 
     img {
         max-width: 100% !important;
         height: auto !important;
         object-fit: contain !important;
-    }
-
-    .logo-container,
-    .logo-wrap {
-        margin: 0 auto !important;
-        left: auto !important;
-        right: auto !important;
     }
 }
