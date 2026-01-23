@@ -354,6 +354,10 @@
         letter-spacing: 2px !important;
         word-spacing: 5px !important;
     }
+    .elite-section div[style*="gap: 20px"] {
+    justify-content: center !important;
+  }
+
 }
     /* --- 6. POCKET SECTION FIXES --- */
     .pocket-section {
