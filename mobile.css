@@ -1,39 +1,108 @@
 /* Mobile Optimization Patch */
 @media screen and (max-width: 768px) {
 
-    /* 
-       USER REQUEST: "Hide the ones at the first entry (Top), keep the one at the bottom."
-       Top = Hero visuals (cyberex_app_reklam.png, cyberex_app_reklam2.png, top portals)
-       Bottom = Pocket Section (CyberEx_app_banner.png, bottom portal)
-    */
+    /* --- GLOBAL & SCROLL FIXES --- */
+    html,
+    body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        position: relative;
+    }
 
-    /* Hide TOP Hero Visuals (Portals + Images) */
+    /* --- TOP VISUALS (USER REQUEST: HIDE) --- */
     .hero-visual-left,
     .hero-visual-right {
         display: none !important;
     }
 
-    /* 
-       Keep Bottom Portal (Pocket Section) VISIBLE.
-       We previously hid .portal-container globally, now we removed that rule.
-       If we need to be safe, we can force show the bottom one, but default block is fine.
-       However, we still want to ensure heavy animations don't kill mobile. 
-       Maybe reduce animation complexity for the bottom one? 
-       For now, we just ensure it is NOT hidden.
-    */
-
-    /* Hide Hologram Section (Middle - Heavy SVG) */
-    .eco-hologram-section {
-        display: none !important;
-    }
-
-    /* Hide Security Visual (Middle - Heavy CSS Rings) */
+    /* --- MIDDLE HEAVY ELEMENTS (HIDE) --- */
+    .eco-hologram-section,
     .security-visual,
     .security-ring {
         display: none !important;
     }
 
-    /* Layout Adjustments */
+    /* --- LAYOUT ADJUSTMENTS --- */
+
+    /* 1. Security Section (Text Centering) */
+    .security-section {
+        display: flex !important;
+        flex-direction: column !important;
+        text-align: center !important;
+        height: auto !important;
+        gap: 30px !important;
+        margin: 60px auto !important;
+    }
+
+    .security-section h2 {
+        text-align: center !important;
+    }
+
+    .security-section>div {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+
+    .security-section div[style*="grid-template-columns"] {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 30px !important;
+    }
+
+    /* 2. Stats Bar */
+    .stats-bar {
+        flex-direction: column !important;
+        gap: 30px !important;
+        padding: 30px 20px !important;
+    }
+
+    /* 3. Grand Launch & Countdown */
+    .launch-section {
+        padding: 40px 20px !important;
+    }
+
+    .countdown-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 15px !important;
+    }
+
+    .waitlist-form {
+        flex-direction: column !important;
+        width: 100% !important;
+    }
+
+    .waitlist-btn {
+        width: 100% !important;
+    }
+
+    /* 4. Newsletter Section */
+    .newsletter-section {
+        flex-direction: column !important;
+        text-align: center !important;
+        gap: 30px !important;
+        padding: 30px 20px !important;
+    }
+
+    .newsletter-section div[style*="text-align: left"] {
+        text-align: center !important;
+    }
+
+    .newsletter-section form {
+        width: 100% !important;
+        flex-direction: column !important;
+    }
+
+    .newsletter-section input {
+        width: 100% !important;
+    }
+
+    .newsletter-section button {
+        width: 100% !important;
+    }
+
+    /* 5. Pocket Section Alignment */
     .pocket-section {
         flex-direction: column;
         text-align: center;
@@ -53,5 +122,63 @@
 
     .store-btns {
         align-items: center;
+    }
+
+    /* 6. Install Toast Centering */
+    .install-toast {
+        width: 90% !important;
+        max-width: 90% !important;
+        left: 50% !important;
+        bottom: 20px !important;
+        transform: translateX(-50%) translateY(150px);
+        /* Initial hidden state */
+        border-radius: 16px !important;
+    }
+
+    .install-toast.show {
+        transform: translateX(-50%) translateY(0) !important;
+    }
+
+    /* 7. Navbar & Download Button Styling */
+    .navbar {
+        padding: 15px !important;
+        border-radius: 30px !important;
+        background: rgba(0, 5, 15, 0.95) !important;
+        top: 10px !important;
+        width: 95% !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        margin: 0 !important;
+    }
+
+    .nav-links {
+        display: flex !important;
+        flex-direction: column !important;
+        position: static !important;
+        transform: none !important;
+        gap: 10px !important;
+        width: 100% !important;
+    }
+
+    /* Hide "Coming Soon" links to clean up mobile menu if desired, 
+       but user said "üst barımız uygulama indir kısmı vs çok şık durmalı" 
+       so we highlight the download button primarily. 
+    */
+
+    .nav-link[href="download.html"] {
+        background: linear-gradient(90deg, var(--neon-cyan), var(--neon-blue)) !important;
+        color: #000 !important;
+        text-align: center !important;
+        padding: 12px !important;
+        width: 100% !important;
+        display: block !important;
+        box-shadow: 0 0 20px rgba(0, 240, 255, 0.4) !important;
+        font-size: 1rem !important;
+        margin-top: 10px !important;
+    }
+
+    /* Hide Top Contact Bar on Mobile to save space/clean look */
+    .top-contact-bar {
+        display: none !important;
     }
 }
