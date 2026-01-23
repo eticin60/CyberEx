@@ -184,28 +184,40 @@
     }
 
     /* --- 4. CONTAINER STANDARDIZATION --- */
-    .container,
+    .container {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+        padding: 80px 20px 0 !important;
+        /* Reduced from 220px to close the gap */
+        box-sizing: border-box !important;
+        gap: 20px !important;
+    }
+
     .hero-flex,
     .grid-2,
     .security-section,
     .pocket-section,
     .newsletter-section,
-    .stats-bar,
     .footer-content,
-    .store-btns,
-    .waitlist-form,
     .elite-section {
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
         justify-content: center !important;
         width: 100% !important;
-        max-width: 100% !important;
-        margin: 0 auto !important;
-        padding-left: 20px !important;
-        padding-right: 20px !important;
-        box-sizing: border-box !important;
+        padding: 0 20px !important;
         gap: 30px !important;
+    }
+
+    .hero-flex {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+        min-height: auto !important;
     }
 
     .countdown-grid,
@@ -439,8 +451,27 @@
         width: 100% !important;
     }
 
-    .waitlist-input {
-        margin-bottom: 10px !important;
+    /* --- 8. FORM LAYOUTS (Stacked for Mobile) --- */
+    .waitlist-form,
+    .newsletter-section form {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 12px !important;
+        margin-top: 20px !important;
+    }
+
+    .waitlist-input,
+    .newsletter-section input {
+        width: 100% !important;
+        margin-bottom: 0 !important;
+        /* Managed by form gap */
+    }
+
+    .waitlist-btn,
+    .newsletter-section .waitlist-btn {
+        width: 100% !important;
+        margin: 0 !important;
     }
 
     /* --- 8. LOGO & HOLOGRAM CENTERING --- */
