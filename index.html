@@ -43,6 +43,8 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Mobile Optimization Patch -->
+  <link rel="stylesheet" href="mobile.css">
 
   <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
@@ -798,11 +800,21 @@
 
     .hero-text {
       width: 100%;
-      max-width: 700px;
-      /* Further narrowed to prevent portal hit */
       text-align: center;
-      z-index: 20;
+      position: relative;
+      z-index: 2;
     }
+
+
+
+    .live-ticker {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: var(--neon-green);
+      margin-top: 5px;
+    }
+
+
 
     .hero-visual-right {
       position: absolute;
@@ -1331,88 +1343,7 @@
       font-weight: 800;
     }
 
-    /* AI SENTINEL STYLES */
-    .sentinel-box {
-      background: rgba(0, 240, 255, 0.03);
-      border: 1px solid rgba(0, 240, 255, 0.1);
-      border-radius: 40px;
-      padding: 40px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
 
-    .gauge-wrapper {
-      width: 220px;
-      height: 110px;
-      margin: 0 auto 30px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .gauge-bg {
-      width: 220px;
-      height: 110px;
-      border-radius: 110px 110px 0 0;
-      background: rgba(255, 255, 255, 0.05);
-      border: 4px solid rgba(255, 255, 255, 0.1);
-      border-bottom: none;
-    }
-
-    .gauge-fill {
-      width: 220px;
-      height: 110px;
-      border-radius: 110px 110px 0 0;
-      background: conic-gradient(from -90deg at 50% 100%, #ff3366, #ffcc00, #00ff88);
-      position: absolute;
-      top: 0;
-      left: 0;
-      transform-origin: center bottom;
-      transform: rotate(0deg);
-      transition: 1s cubic-bezier(0.4, 0, 0.2, 1);
-      mask: radial-gradient(circle at 50% 100%, transparent 65%, #000 66%);
-      -webkit-mask: radial-gradient(circle at 50% 100%, transparent 65%, #000 66%);
-    }
-
-    .gauge-needle {
-      width: 4px;
-      height: 80px;
-      background: #fff;
-      position: absolute;
-      bottom: 0;
-      left: calc(50% - 2px);
-      transform-origin: bottom center;
-      transform: rotate(-90deg);
-      transition: 1s cubic-bezier(0.4, 0, 0.2, 1);
-      border-radius: 2px;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    }
-
-    .gauge-needle::after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: -3px;
-      width: 10px;
-      height: 10px;
-      background: #fff;
-      border-radius: 50%;
-    }
-
-    .sentinel-val {
-      font-size: 3rem;
-      font-weight: 950;
-      color: var(--neon-cyan);
-      margin-top: -20px;
-      display: block;
-    }
-
-    .sentinel-label {
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      font-size: 0.8rem;
-      color: #7f8c8d;
-    }
 
     /* LIVE INDICATOR STYLES */
     .live-activity-box {
@@ -1846,7 +1777,7 @@
           style="font-size:0.6em; background:rgba(255,255,255,0.2); padding:2px 4px; border-radius:3px; margin-left:4px;">YAKINDA</span></a>
       <a href="download.html" class="nav-link"
         style="background: var(--neon-cyan); color: #000; padding: 8px 16px; border-radius: 6px; font-weight: 800; letter-spacing: 0.5px;"
-        data-tr="APP İNDİR" data-en="DOWNLOAD APP">APP İNDİR</a>
+        data-tr="UYGULAMA İNDİR" data-en="DOWNLOAD APP">UYGULAMA İNDİR</a>
       <a href="#" class="nav-link" style="opacity: 0.5; cursor: not-allowed; pointer-events: none;"
         data-tr="Ekosistem <span style='font-size:0.6em; background:rgba(255,255,255,0.2); padding:2px 4px; border-radius:3px; margin-left:4px;'>YAKINDA</span>"
         data-en="Ecosystem <span style='font-size:0.6em; background:rgba(255,255,255,0.2); padding:2px 4px; border-radius:3px; margin-left:4px;'>SOON</span>">Ekosistem
@@ -1923,6 +1854,8 @@
             ve
             çok zincirli likidite ile <strong>geleceğin ticaret platformu</strong> burada.
           </p>
+
+
         </div>
 
         <div class="hero-visual-right">
@@ -2432,6 +2365,7 @@
     </footer>
   </div>
 
+  <script src="github_utils.js"></script>
   <script>
     // QR Code
     new QRCode(document.getElementById("qrcode"), { text: "https://github.com/eticin60/cyberex-update/raw/main/CyberEx-v1.3.8.apk", width: 120, height: 120 });
@@ -2568,13 +2502,31 @@
     updateCountdown();
 
     // Waitlist Simulation Logic
-    function joinWaitlist(e) {
+    async function joinWaitlist(e) {
       e.preventDefault();
-      const email = e.target.querySelector('input').value;
+      const form = e.target;
+      const input = form.querySelector('input');
+      const btn = form.querySelector('button');
+      const email = input.value;
+      const lang = document.documentElement.lang || 'en';
+
       if (email) {
-        console.log(`Email added to waitlist: ${email}`);
-        alert(document.documentElement.lang === 'en' ? 'Success! You joined the waitlist.' : 'Başarılı! Bekleme listesine eklendiniz.');
-        e.target.reset();
+        if (btn) btn.disabled = true;
+        input.disabled = true;
+
+        const timestamp = new Date().toISOString();
+        const data = { email, timestamp, source: form.closest('.footer') ? 'footer' : 'main' };
+
+        try {
+          await uploadToGitHub('waitlist.json', data);
+        } catch (err) {
+          console.error(err);
+          alert(lang === 'en' ? 'An error occurred. Please try again.' : 'Bir hata oluştu. Lütfen tekrar deneyin.');
+        }
+
+        form.reset();
+        if (btn) btn.disabled = false;
+        input.disabled = false;
       }
     }
 
@@ -2611,61 +2563,8 @@
     setInterval(updateTicker, 30000); // Update every 30s
 
     // AI Market Sentinel Logic
-    async function updateSentinel() {
-      const translations = {
-        tr: {
-          loading: "Duygu Analizi...",
-          extremeFear: "Aşırı Korku",
-          fear: "Korku",
-          neutral: "Nötr",
-          greed: "Açgözlülük",
-          extremeGreed: "Aşırı Açgözlülük"
-        },
-        en: {
-          loading: "Loading Sentiment...",
-          extremeFear: "Extreme Fear",
-          fear: "Fear",
-          neutral: "Neutral",
-          greed: "Greed",
-          extremeGreed: "Extreme Greed"
-        }
-      };
 
-      try {
-        const response = await fetch('https://api.alternative.me/fng/');
-        const data = await response.json();
-        const value = data.data[0].value;
-        const status = data.data[0].value_classification;
 
-        const currentLang = localStorage.getItem('lang') || 'tr';
-        const t = translations[currentLang];
-
-        if (document.getElementById('sentinelValue')) {
-          document.getElementById('sentinelValue').innerText = value;
-
-          let translatedStatus = status;
-          if (status === 'Extreme Fear') translatedStatus = t.extremeFear;
-          else if (status === 'Fear') translatedStatus = t.fear;
-          else if (status === 'Neutral') translatedStatus = t.neutral;
-          else if (status === 'Greed') translatedStatus = t.greed;
-          else if (status === 'Extreme Greed') translatedStatus = t.extremeGreed;
-
-          document.getElementById('sentinelStatus').innerText = translatedStatus.toUpperCase();
-
-          const deg = (value / 100) * 180 - 90;
-          document.querySelector('.gauge-needle').style.transform = `rotate(${deg}deg)`;
-        }
-      } catch (error) {
-        console.error('Sentinel Error:', error);
-        if (document.getElementById('sentinelStatus')) {
-          const currentLang = localStorage.getItem('lang') || 'tr';
-          // document.getElementById('sentinelStatus').innerText = translations[currentLang].loading;
-        }
-      }
-    }
-
-    updateSentinel();
-    setInterval(updateSentinel, 60000);
 
     // 3D Card Hover & Input Logic
     const cardContainer = document.getElementById('cardContainer');
@@ -2741,6 +2640,184 @@
         card.style.setProperty('--mouse-y', `${y}px`);
       });
     });
+  </script>
+
+  <!-- Custom Install Prompt -->
+  <div id="install-toast" class="install-toast">
+    <div class="toast-content">
+      <div class="app-icon">
+        <span style="font-size: 24px;">🚀</span>
+      </div>
+      <div class="text-content">
+        <h4 data-lang-en="Install CyberEx" data-lang-tr="CyberEx'i Yükle">Install CyberEx</h4>
+        <p data-lang-en="Add to Home Screen for best experience" data-lang-tr="En iyi deneyim için Ana Ekrana ekleyin">
+          Add to Home Screen for best experience</p>
+      </div>
+      <button id="install-btn" data-lang-en="Install" data-lang-tr="Yükle">Install</button>
+      <button id="close-toast" aria-label="Close">&times;</button>
+    </div>
+  </div>
+
+  <style>
+    .install-toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(150px);
+      background: rgba(10, 10, 20, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 255, 242, 0.3);
+      border-radius: 12px;
+      padding: 12px 20px;
+      z-index: 10000;
+      box-shadow: 0 0 20px rgba(0, 255, 242, 0.2);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.27);
+      display: flex;
+      align-items: center;
+      width: 90%;
+      max-width: 400px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .install-toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .toast-content {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      gap: 15px;
+    }
+
+    .app-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #00fff2, #0066ff);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 0 10px rgba(0, 255, 242, 0.3);
+    }
+
+    .text-content {
+      flex: 1;
+    }
+
+    .text-content h4 {
+      margin: 0;
+      font-size: 14px;
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .text-content p {
+      margin: 3px 0 0;
+      font-size: 11px;
+      color: #aaa;
+    }
+
+    #install-btn {
+      background: rgba(0, 255, 242, 0.1);
+      color: #00fff2;
+      border: 1px solid rgba(0, 255, 242, 0.3);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.2s;
+      text-transform: uppercase;
+    }
+
+    #install-btn:hover {
+      background: rgba(0, 255, 242, 0.2);
+      box-shadow: 0 0 10px rgba(0, 255, 242, 0.2);
+    }
+
+    #close-toast {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      opacity: 0.5;
+      padding: 0 0 0 10px;
+      transition: opacity 0.2s;
+    }
+
+    #close-toast:hover {
+      opacity: 1;
+    }
+  </style>
+
+  <script>
+    (function () {
+      let deferredPrompt;
+      const installToast = document.getElementById('install-toast');
+      const installBtn = document.getElementById('install-btn');
+      const closeToast = document.getElementById('close-toast');
+      const lang = document.documentElement.lang || 'en';
+
+      // Update text based on current language (initial check)
+      function updateToastLang() {
+        const currentLang = document.documentElement.lang;
+        document.querySelectorAll('[data-lang-' + currentLang + ']').forEach(el => {
+          if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+            // placeholder logic if needed
+          } else {
+            el.innerText = el.getAttribute('data-lang-' + currentLang);
+          }
+        });
+      }
+      updateToastLang(); // Run once
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        showInstallToast();
+      });
+
+      function showInstallToast() {
+        if (!localStorage.getItem('installPromptDismissed')) {
+          setTimeout(() => {
+            installToast.classList.add('show');
+          }, 3000);
+        }
+      }
+
+      installBtn.addEventListener('click', async () => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          if (outcome === 'accepted') {
+            deferredPrompt = null;
+          }
+        } else {
+          if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+            alert(lang === 'en' ? 'To install: Tap Share -> Add to Home Screen' : 'Yüklemek için: Paylaş -> Ana Ekrana Ekle\'ye dokunun');
+          } else {
+            alert(lang === 'en' ? 'Install the app from your browser menu.' : 'Uygulamayı tarayıcı menünüzden yükleyin.');
+          }
+        }
+        installToast.classList.remove('show');
+      });
+
+      closeToast.addEventListener('click', () => {
+        installToast.classList.remove('show');
+        localStorage.setItem('installPromptDismissed', 'true');
+      });
+
+      // Demo purpose: show after 5s if not already shown (and not standalone)
+      if (!window.matchMedia('(display-mode: standalone)').matches) {
+        setTimeout(() => {
+          if (!deferredPrompt && !localStorage.getItem('installPromptDismissed')) showInstallToast();
+        }, 5000);
+      }
+    })();
   </script>
 </body>
 
