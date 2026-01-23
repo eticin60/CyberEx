@@ -1,21 +1,36 @@
 {
-  "name": "CyberEx - AI Crypto Ex",
+  "name": "CyberEx",
   "short_name": "CyberEx",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0a0a14",
   "theme_color": "#00f0ff",
   "orientation": "portrait",
+  "scope": "./",
   "icons": [
     {
-      "src": "cyberex-logo.png",
+      "src": "./cyberex-logo.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "cyberex-logo.png",
+      "src": "./cyberex-logo.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./cyberex-logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./cyberex-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }
