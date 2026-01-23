@@ -19,6 +19,7 @@
   <!-- Favicons -->
   <link rel="icon" type="image/png" href="cyberex-logo.png">
   <link rel="apple-touch-icon" href="cyberex-logo.png">
+  <link rel="manifest" href="manifest.json">
 
   <!-- Open Graph (Facebook/LinkedIn) -->
   <meta property="og:type" content="website">
@@ -2756,6 +2757,18 @@
 
   <script>
     (function () {
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js')
+            .then(registration => {
+              console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            })
+            .catch(err => {
+              console.log('ServiceWorker registration failed: ', err);
+            });
+        });
+      }
+
       let deferredPrompt;
       const installToast = document.getElementById('install-toast');
       const installBtn = document.getElementById('install-btn');
