@@ -355,13 +355,8 @@
         word-spacing: 5px !important;
     }
     
-    .elite-section > div:first-child > div:has(> div:first-child > div[style*="font-size: 1.5rem"]) {
-    display: flex !important;
+    .elite-section > div:first-child > div {
     justify-content: center !important;
-    align-items: center !important;
-    gap: 30px !important;
-    width: 100% !important;
-    margin: 0 auto 30px !important;
 }
 
 }
