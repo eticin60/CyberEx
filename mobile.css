@@ -1,101 +1,57 @@
-/* CyberEx Mobile Patch Strategy */
-/* "Kodları bozmadan" %100 uyumluluk için sadece mobil cihazları hedefler */
+/* Mobile Optimization Patch */
+@media screen and (max-width: 768px) {
 
-@media only screen and (max-width: 768px) {
-    /* --- GLOBAL LAYOUT FIXES --- */
-    body {
-        overflow-x: hidden; /* Yatay kaydırmayı engelle */
+    /* 
+       USER REQUEST: "Hide the ones at the first entry (Top), keep the one at the bottom."
+       Top = Hero visuals (cyberex_app_reklam.png, cyberex_app_reklam2.png, top portals)
+       Bottom = Pocket Section (CyberEx_app_banner.png, bottom portal)
+    */
+
+    /* Hide TOP Hero Visuals (Portals + Images) */
+    .hero-visual-left,
+    .hero-visual-right {
+        display: none !important;
     }
 
-    .container {
-        padding: 100px 20px 40px !important; /* Mobil padding ayarı */
+    /* 
+       Keep Bottom Portal (Pocket Section) VISIBLE.
+       We previously hid .portal-container globally, now we removed that rule.
+       If we need to be safe, we can force show the bottom one, but default block is fine.
+       However, we still want to ensure heavy animations don't kill mobile. 
+       Maybe reduce animation complexity for the bottom one? 
+       For now, we just ensure it is NOT hidden.
+    */
+
+    /* Hide Hologram Section (Middle - Heavy SVG) */
+    .eco-hologram-section {
+        display: none !important;
     }
 
-    /* GRID & FLEX STACKING (Yan yana olanları alt alta al) */
-    .grid-2, 
-    .download-container, 
-    .features-grid, 
-    .stats-grid,
-    .hero-flex,
-    .pocket-section,
-    .about-content,
-    .api-layout {
-        display: flex !important;
-        flex-direction: column !important;
-        grid-template-columns: 1fr !important;
-        gap: 40px !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
+    /* Hide Security Visual (Middle - Heavy CSS Rings) */
+    .security-visual,
+    .security-ring {
+        display: none !important;
     }
 
-    /* --- TYPOGRAPHY SCALING --- */
-    h1, .hero-title, .title {
-        font-size: 2.2rem !important; /* Başlıkları küçült */
-        line-height: 1.1 !important;
-        word-wrap: break-word;
-    }
-
-    .section-title {
-        font-size: 1.6rem !important;
-        text-align: center;
-    }
-
-    .subtitle, p {
-        font-size: 0.95rem !important;
-        text-align: center; /* Mobilde ortalı metin daha iyi okunur */
-        padding: 0 10px;
-    }
-
-    /* --- NAVIGATION ADJUSTMENTS --- */
-    .top-contact-bar {
-        display: none !important; /* Mobilde üst barı gizle (yer kazanmak için) */
-    }
-
-    .navbar {
-        padding: 10px 15px !important;
-        top: 10px !important;
-        left: 10px !important;
-        right: 10px !important;
+    /* Layout Adjustments */
+    .pocket-section {
         flex-direction: column;
-        gap: 15px;
-        height: auto !important;
-    }
-
-    .nav-links {
-        position: static !important;
-        transform: none !important;
-        flex-wrap: wrap;
-        justify-content: center;
-        width: 100%;
-        gap: 15px !important;
-    }
-
-    .nav-link {
-        font-size: 0.75rem !important;
-    }
-
-    /* --- SPECIFIC COMPONENT FIXES --- */
-    
-    /* İndirme Sayfası */
-    .download-container {
-        padding: 30px 20px !important;
-    }
-    
-    .right-side img, .mockup-img {
-        max-width: 100% !important;
-        height: auto !important;
-        position: static !important;
-        transform: none !important;
-    }
-
-    /* Animasyonları Mobilde Basitleştir/Kapat (Performans için) */
-    .orb, .portal-rays {
-        opacity: 0.2 !important;
-    }
-
-    /* Footer */
-    footer {
-        padding: 40px 20px !important;
         text-align: center;
+        padding-top: 40px;
+    }
+
+    .pocket-left-content {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 20px;
+        align-items: center;
+    }
+
+    .pocket-left-content h2 {
+        font-size: 2.5rem !important;
+    }
+
+    .store-btns {
+        align-items: center;
     }
 }
