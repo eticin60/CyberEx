@@ -9,28 +9,16 @@
   "scope": "./",
   "icons": [
     {
-      "src": "./cyberex-logo.png",
+      "src": "cyberex-logo.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./cyberex-logo.png",
+      "src": "cyberex-logo.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
-    },
-    {
-      "src": "./cyberex-logo.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "./cyberex-logo.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
     }
   ]
 }
