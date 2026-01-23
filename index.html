@@ -410,68 +410,210 @@
 
     .pocket-section {
       width: 95%;
-      max-width: 1100px;
-      margin: 60px auto;
-      padding: 60px;
-      background: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
-      border: 1px solid var(--border);
-      border-radius: 50px;
+      max-width: 1200px;
+      margin: 80px auto;
+      padding: 80px 60px;
+      background: rgba(0, 10, 20, 0.4);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      border-radius: 60px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 50px;
-      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+      gap: 30px;
+      box-shadow: 0 0 100px rgba(0, 0, 0, 0.8), inset 0 0 50px rgba(0, 240, 255, 0.05);
       position: relative;
-      overflow: hidden;
+      overflow: visible;
     }
 
     .pocket-section::before {
       content: '';
       position: absolute;
-      inset: -50%;
-      background: radial-gradient(circle, rgba(0, 240, 255, 0.1), transparent 60%);
-      animation: rotate 15s linear infinite;
-      z-index: -1;
+      inset: -2px;
+      border-radius: 60px;
+      padding: 2px;
+      background: linear-gradient(45deg, var(--neon-cyan), transparent, var(--neon-blue), transparent);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0.5;
+      pointer-events: none;
     }
 
-    .mockup-container {
+    .portal-container {
       position: relative;
-      flex: 1.2;
-      height: 550px;
+      flex: 1.5;
+      height: 600px;
       display: flex;
       justify-content: center;
       align-items: center;
-      perspective: 1500px;
+      perspective: 2000px;
+    }
+
+    .portal-base {
+      position: absolute;
+      bottom: 60px;
+      width: 400px;
+      height: 120px;
+      transform: rotateX(75deg);
+      z-index: 1;
+    }
+
+    .portal-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 4px solid var(--neon-cyan);
+      box-shadow: 0 0 30px var(--neon-cyan), inset 0 0 30px var(--neon-cyan);
+      animation: portalSpin 4s linear infinite;
+    }
+
+    .portal-ring:nth-child(2) {
+      inset: 15px;
+      border-width: 2px;
+      border-style: dashed;
+      animation-direction: reverse;
+      opacity: 0.6;
+    }
+
+    .portal-ring:nth-child(3) {
+      inset: -20px;
+      border-width: 1px;
+      opacity: 0.3;
+      filter: blur(5px);
+    }
+
+    .portal-glow {
+      position: absolute;
+      inset: -50px;
+      background: radial-gradient(circle, var(--neon-cyan) 0%, transparent 70%);
+      opacity: 0.4;
+      filter: blur(30px);
+      animation: portalPulse 3s ease-in-out infinite;
+    }
+
+    .portal-rays {
+      position: absolute;
+      bottom: 120px;
+      width: 300px;
+      height: 400px;
+      background: linear-gradient(to top, var(--neon-cyan) 0%, transparent 80%);
+      clip-path: polygon(20% 100%, 80% 100%, 100% 0, 0 0);
+      opacity: 0.15;
+      filter: blur(20px);
+      transform-origin: bottom center;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes portalSpin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes portalPulse {
+
+      0%,
+      100% {
+        opacity: 0.2;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.5;
+        transform: scale(1.1);
+      }
     }
 
     .mockup-img {
       position: absolute;
       width: 280px;
-      border-radius: 40px;
-      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 240, 255, 0.2);
-      transition: 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-      cursor: pointer;
-      border: 1px solid rgba(0, 240, 255, 0.3);
+      border-radius: 35px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+      transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      z-index: 10;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transform-style: preserve-3d;
     }
 
     .mockup-1 {
-      transform: translateX(-80px) rotateY(25deg) rotateX(5deg) scale(0.9);
-      z-index: 1;
-      filter: brightness(0.6) blur(1px);
+      transform: translateY(-40px) translateX(-60px) rotateY(20deg) scale(0.9);
+      opacity: 0.7;
+      z-index: 9;
     }
 
     .mockup-2 {
-      transform: translateX(80px) rotateY(-25deg) rotateX(5deg) scale(0.95);
-      z-index: 2;
+      transform: translateY(-60px) translateX(60px) rotateY(-15deg) scale(1.05);
+      z-index: 11;
     }
 
     .mockup-img:hover {
-      z-index: 10;
-      transform: translate(0, -30px) rotateY(0) rotateX(0) scale(1.1);
-      filter: brightness(1.1) blur(0);
-      box-shadow: 0 50px 100px rgba(0, 0, 0, 1), 0 0 60px var(--neon-cyan);
+      transform: translateY(-90px) translateX(0) rotateY(0) scale(1.15) !important;
+      z-index: 20;
+      opacity: 1;
+      box-shadow: 0 50px 100px rgba(0, 0, 0, 1), 0 0 50px var(--neon-cyan);
+    }
+
+    .qr-neon-box {
+      position: relative;
+      padding: 15px;
+      background: rgba(0, 240, 255, 0.03);
+      border-radius: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .qr-frame {
+      position: relative;
+      padding: 12px;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+
+    .qr-frame::before,
+    .qr-frame::after {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border: 2px solid var(--neon-cyan);
+      border-radius: 22px;
+      opacity: 0.6;
+      animation: framePulse 2s ease-in-out infinite;
+    }
+
+    .qr-frame::after {
+      inset: -15px;
+      opacity: 0.2;
+      animation-delay: 1s;
+    }
+
+    @keyframes framePulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 0.3;
+      }
+
+      50% {
+        transform: scale(1.02);
+        opacity: 0.6;
+      }
+    }
+
+    .pocket-left-content {
+      flex: 1;
+      z-index: 15;
     }
 
     .eco-grid {
@@ -813,44 +955,65 @@
 
     <h2 class="section-title">Cebindeki Borsa</h2>
     <div class="pocket-section">
-      <div style="flex: 1; text-align: left; z-index: 5;">
-        <h2 style="font-size: clamp(2.5rem, 5vw, 3.8rem); font-weight: 950; margin-bottom:30px; line-height:1.1;">
-          Geleceği<br><span style="color:var(--neon-cyan);">Hemen İndir</span></h2>
+      <!-- Left Content -->
+      <div class="pocket-left-content">
+        <h2
+          style="font-size: clamp(2.8rem, 5vw, 4.2rem); font-weight: 950; margin-bottom:20px; line-height:1.1; color: #fff;">
+          Geleceğe<br><span style="color:var(--neon-cyan); text-shadow: 0 0 30px rgba(0,240,255,0.5);">Işınlanın</span>
+        </h2>
+        <p style="color: var(--muted); font-size: 1.1rem; line-height: 1.6; margin-bottom: 40px; max-width: 400px;">
+          CyberEx mobil ekosistemi ile kripto dünyası artık cebinizde. Ultra hızlı arayüz ve maksimum güvenlik her an
+          yanınızda.
+        </p>
 
-        <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px;">
+        <div style="display: flex; flex-direction: column; gap: 15px; width: fit-content;">
           <a href="#" class="store-btn"><i class="fab fa-google-play"></i> Google Play</a>
           <a href="#" class="store-btn"><i class="fab fa-apple"></i> App Store</a>
-          <a href="https://github.com/eticin60/cyberex-update/raw/main/CyberEx-v1.3.7.apk" class="store-btn"><i
-              class="fab fa-android"></i> Direct APK</a>
-        </div>
-
-        <div
-          style="display: flex; align-items: center; gap: 25px; background: rgba(0, 240, 255, 0.05); padding: 20px; border-radius: 30px; border: 1px solid rgba(0, 240, 255, 0.1); width: fit-content;">
-          <div style="background:#fff; padding:10px; border-radius:15px; flex-shrink: 0;">
-            <div id="qrcode" style="width: 120px; height: 120px;"></div>
-          </div>
-          <div style="text-align: left;">
-            <p
-              style="font-weight:950; color:var(--neon-cyan); font-size: 1.1rem; letter-spacing: 2px; margin: 0 0 5px 0;">
-              HEMEN TARA</p>
-            <p style="color: var(--muted); font-size: 0.75rem; font-weight: 600; line-height: 1.4; margin: 0;">Mobil
-              ekosisteme<br>anında geçiş yapın.</p>
-          </div>
+          <a href="https://github.com/eticin60/cyberex-update/raw/main/CyberEx-v1.3.7.apk" class="store-btn"
+            style="border-color: var(--neon-green); color: var(--neon-green);">
+            <i class="fab fa-android"></i> APK İndir
+          </a>
         </div>
       </div>
 
-      <div class="mockup-container">
-        <!-- Mockup 1 (Side View) -->
+      <!-- Center Portal & Mockups -->
+      <div class="portal-container">
+        <!-- Portal Base -->
+        <div class="portal-base">
+          <div class="portal-glow"></div>
+          <div class="portal-ring"></div>
+          <div class="portal-ring"></div>
+          <div class="portal-ring"></div>
+        </div>
+
+        <!-- Light Rays -->
+        <div class="portal-rays"></div>
+
+        <!-- Float Mockups -->
         <img src="app-mockup-1.png" alt="CyberEx App" class="mockup-img mockup-1"
-          onerror="this.style.visibility='hidden'">
-        <!-- Mockup 2 (Front View) -->
+          onerror="this.src='https://via.placeholder.com/280x580/001428/00f0ff?text=CyberEx+Mobile'">
         <img src="app-mockup-2.png" alt="CyberEx App" class="mockup-img mockup-2"
-          onerror="this.style.visibility='hidden'">
-        <!-- Fallback glow if images are missing -->
-        <div
-          style="position: absolute; inset: 0; background: radial-gradient(circle, rgba(0, 240, 255, 0.15), transparent 70%); pointer-events: none;">
+          onerror="this.src='https://via.placeholder.com/280x580/001428/00f0ff?text=CyberEx+Wallet'">
+      </div>
+
+      <!-- Right QR Section -->
+      <div style="z-index: 15;">
+        <div class="qr-neon-box">
+          <div class="qr-frame">
+            <div id="qrcode" style="width: 130px; height: 130px;"></div>
+          </div>
+          <div style="text-align: center; margin-top: 10px;">
+            <p style="font-weight:950; color:var(--neon-cyan); font-size: 1.2rem; letter-spacing: 2px; margin: 0;">HEMEN
+              TARA</p>
+            <p style="color: var(--muted); font-size: 0.8rem; font-weight: 600; margin-top: 5px;">YOLCULUĞA BAŞLA</p>
+          </div>
         </div>
       </div>
+    </div>
+
+    <!-- Fallback glow if images are missing -->
+    <div id="mockup-fallback"
+      style="display:none; position:absolute; bottom:100px; left:50%; transform:translateX(-50%); width:300px; height:500px; background:linear-gradient(to top, var(--neon-cyan), transparent); filter:blur(100px); opacity:0.3; z-index:0;">
     </div>
 
     <footer class="footer">
