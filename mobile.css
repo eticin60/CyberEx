@@ -230,28 +230,30 @@
     }
 
     /* --- 5. ELITE CARD FIXES --- */
-    .elite-section {
-        padding: 40px 20px !important;
-        overflow: visible !important;
-    }
-
-    .elite-section>div {
-        text-align: center !important;
-        width: 100% !important;
-    }
-
-    .elite-section input {
-        width: 70% !important;
-        max-width: 280px !important;
-        margin: 15px auto !important;
-        display: block !important;
-        text-align: center !important;
-    }
-
-    .elite-section label {
-        text-align: center !important;
-        width: 100% !important;
-    }
+.elite-section {
+    padding: 40px 20px !important;
+    overflow: visible !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+}
+.elite-section > div {
+    text-align: center !important;
+    width: 100% !important;
+    order: 1 !important;
+}
+.elite-section input {
+    width: 80% !important;
+    max-width: 320px !important;
+    margin: 15px auto !important;
+    display: block !important;
+    text-align: center !important;
+}
+.elite-section label {
+    text-align: center !important;
+    width: 100% !important;
+    display: block !important;
+}
 
     /* Fit card properly on mobile */
     .elite-section .card-container {
@@ -268,6 +270,73 @@
         width: 100% !important;
         height: 100% !important;
     }
+
+    .elite-section .card-container {
+    width: 92% !important;
+    max-width: 450px !important;
+    height: auto !important;
+    margin: 30px auto !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    order: 2 !important;
+}
+.elite-card-3d {
+    width: 100% !important;
+    height: 100% !important;
+    aspect-ratio: 1.586 / 1 !important;
+    padding: 30px !important;
+}
+.card-logo {
+    width: 50px !important;
+}
+.card-chip {
+    width: 45px !important;
+    height: 35px !important;
+    margin-top: 15px !important;
+}
+.card-number {
+    font-size: 1.35rem !important;
+    letter-spacing: 3px !important;
+    margin: 25px 0 !important;
+    word-spacing: 4px !important;
+}
+.card-holder {
+    font-size: 0.85rem !important;
+    letter-spacing: 1.8px !important;
+}
+.elite-card-3d img[src*="mastercard"] {
+    height: 35px !important;
+    opacity: 0.8 !important;
+}
+.elite-card-3d > div:first-child span {
+    font-size: 0.75rem !important;
+    font-weight: 800 !important;
+}
+@media screen and (max-width: 400px) {
+    .elite-section .card-container {
+        width: 95% !important;
+    }
+    .card-number {
+        font-size: 1.2rem !important;
+        letter-spacing: 2px !important;
+        word-spacing: 3px !important;
+    }
+    .card-logo {
+        width: 45px !important;
+    }
+}
+@media screen and (max-width: 360px) {
+    .card-number {
+        font-size: 1.1rem !important;
+        letter-spacing: 1.5px !important;
+        word-spacing: 2px !important;
+    }
+    .elite-card-3d {
+        padding: 25px !important;
+    }
+}
+
 
     /* --- 6. POCKET SECTION FIXES --- */
     .pocket-section {
