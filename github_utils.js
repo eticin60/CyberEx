@@ -32,7 +32,6 @@ async function uploadToGitHub(filename, newData) {
                 fileData = [];
             }
         } else if (getResponse.status !== 404) {
-            // proceed to append even if 404
         }
 
         fileData.push(newData);
