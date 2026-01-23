@@ -19,8 +19,9 @@ async function generatePWAIcons() {
             await sharp(sourceIcon)
                 .resize(size, size, {
                     fit: 'contain',
-                    background: { r: 0, g: 0, b: 0, alpha: 0 }
+                    background: { r: 10, g: 10, b: 20, alpha: 1 } // Matches the dark theme
                 })
+                .flatten({ background: { r: 10, g: 10, b: 20 } }) // Ensure no transparency
                 .toFile(path.join(outputDir, `icon-${size}x${size}.png`));
 
             console.log(`✓ Generated ${size}x${size} icon`);
