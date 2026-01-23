@@ -230,6 +230,7 @@
     }
 
     /* --- 5. ELITE CARD FIXES --- */
+/* --- 5. ELITE CARD FIXES --- */
 .elite-section {
     padding: 40px 20px !important;
     overflow: visible !important;
@@ -258,23 +259,25 @@
     display: block !important;
 }
 
-/* Kartı mobilde düzgün göster */
+/* Kartı mobilde düzgün göster - ORTALANMIŞ */
 .elite-section .card-container {
-    width: 95% !important;
-    max-width: 450px !important;
+    width: 100% !important;
+    max-width: 380px !important;
     height: auto !important;
     margin: 30px auto !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
     order: 2 !important;
+    padding: 0 20px !important;
 }
 
 .elite-card-3d {
     width: 100% !important;
     height: auto !important;
     aspect-ratio: 1.586 / 1 !important;
-    padding: 35px !important;
+    padding: 32px !important;
+    margin: 0 auto !important;
 }
 
 /* Kart içi elementler - Masaüstü boyutlarına yakın */
@@ -293,7 +296,7 @@
     letter-spacing: 4px !important;
     word-spacing: 8px !important;
     margin: 28px 0 !important;
-    white-space: nowrap !important; /* Tek satırda kal */
+    white-space: nowrap !important;
 }
 
 .elite-card-3d .card-holder {
@@ -317,7 +320,8 @@
 /* Küçük ekranlar için */
 @media screen and (max-width: 400px) {
     .elite-section .card-container {
-        width: 98% !important;
+        max-width: 340px !important;
+        padding: 0 15px !important;
     }
     
     .elite-card-3d {
@@ -336,6 +340,11 @@
 }
 
 @media screen and (max-width: 360px) {
+    .elite-section .card-container {
+        max-width: 320px !important;
+        padding: 0 10px !important;
+    }
+    
     .elite-card-3d {
         padding: 25px !important;
     }
@@ -346,7 +355,6 @@
         word-spacing: 5px !important;
     }
 }
-
     /* --- 6. POCKET SECTION FIXES --- */
     .pocket-section {
         display: flex !important;
