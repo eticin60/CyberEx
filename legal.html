@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yasal Uyarı | CyberEx - Legal Disclaimer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-cyan: #00f0ff;
+            --neon-red: #ff3366;
+            --deep-bg: #00050f;
+            --card-bg: rgba(0, 240, 255, 0.03);
+            --border: rgba(0, 240, 255, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--deep-bg);
+            color: #fff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(0, 5, 15, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .nav-tagline {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: var(--neon-red);
+            font-weight: 700;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            padding-left: 15px;
+        }
+
+        .back-btn {
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            color: var(--neon-cyan);
+        }
+
+        /* Hero Section */
+        .legal-hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(180deg, rgba(255, 51, 102, 0.05) 0%, transparent 100%);
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: #888;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Content */
+        .content-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .legal-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+
+        .legal-card h2 {
+            font-size: 1.5rem;
+            color: var(--neon-cyan);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .legal-card h2 i {
+            opacity: 0.5;
+        }
+
+        .legal-text {
+            color: #aaa;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            text-align: justify;
+        }
+
+        .warning-box {
+            background: rgba(255, 51, 102, 0.1);
+            border: 1px solid rgba(255, 51, 102, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .warning-title {
+            color: var(--neon-red);
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Footer */
+        .simple-footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 80px;
+        }
+
+        /* Lang Classes - Strict Control */
+        html.lang-tr [data-lang="en"] {
+            display: none !important;
+        }
+
+        html.lang-en [data-lang="tr"] {
+            display: none !important;
+        }
+
+        /* Show EN when active - Override default hidden */
+        html.lang-en [data-lang="en"] {
+            display: block;
+        }
+
+        html.lang-en span[data-lang="en"],
+        html.lang-en strong[data-lang="en"],
+        html.lang-en a[data-lang="en"] {
+            display: inline;
+        }
+
+        /* Ensure default visibility matches (Hide EN) */
+        [data-lang="en"] {
+            display: none;
+        }
+    </style>
+    <script>
+        // Immediate Language Check to prevent flash
+        (function () {
+            const savedLang = localStorage.getItem('lang') || 'tr';
+            document.documentElement.className = 'lang-' + savedLang;
+        })();
+    </script>
+</head>
+
+<body class="lang-tr">
+
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">
+            <img src="cyberex-logo.png" alt="CyberEx" style="height: 40px;">
+            <div class="nav-tagline">LEGAL</div>
+        </a>
+        <div style="display: flex; gap: 20px; align-items: center;">
+            <button id="langToggle"
+                style="background: transparent; border: 1px solid var(--border); color: #fff; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-size: 0.8rem;">EN</button>
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> <span data-lang="tr">Ana Sayfaya Dön</span><span data-lang="en">Back
+                    to Home</span>
+            </a>
+        </div>
+    </nav>
+
+    <header class="legal-hero">
+        <h1 class="hero-title" data-lang="tr">Yasal Uyarı & Sorumluluk Reddi</h1>
+        <h1 class="hero-title" data-lang="en">Legal Disclaimer & Risk Warning</h1>
+        <p class="hero-subtitle" data-lang="tr">
+            CyberEx Teknoloji A.Ş. hizmetlerini kullanmadan önce lütfen bu metni dikkatlice okuyunuz.
+        </p>
+        <p class="hero-subtitle" data-lang="en">
+            Please read this document carefully before using CyberEx Technology Inc. services.
+        </p>
+    </header>
+
+    <main class="content-container">
+
+        <!-- High Risk Warning -->
+        <div class="warning-box">
+            <div class="warning-title" data-lang="tr"><i class="fas fa-triangle-exclamation"></i> Yüksek Risk Uyarısı
+            </div>
+            <div class="warning-title" data-lang="en"><i class="fas fa-triangle-exclamation"></i> High Risk Warning
+            </div>
+            <p style="color: #ddd; font-size: 0.9rem;" data-lang="tr">
+                Kripto para birimleri ve dijital varlıklarla işlem yapmak yüksek düzeyde risk içerir ve tüm yatırımcılar
+                için uygun olmayabilir. Kaldıraçlı işlem yapabilme imkanı kârınızı artırabileceği gibi kayıplarınızı da
+                aynı oranda artırabilir. Yatırım yapmadan önce yatırım hedeflerinizi, deneyim seviyenizi ve risk
+                iştahınızı dikkatlice değerlendirmelisiniz. Başlangıç sermayenizin bir kısmını veya tamamını kaybetme
+                ihtimaliniz bulunmaktadır.
+            </p>
+            <p style="color: #ddd; font-size: 0.9rem;" data-lang="en">
+                Trading cryptocurrencies and digital assets involves a high level of risk and may not be suitable for
+                all investors. Leverage can work against you as well as for you. Before deciding to trade, you should
+                carefully consider your investment objectives, level of experience, and risk appetite. There is a
+                possibility that you may sustain a loss of some or all of your initial investment.
+            </p>
+        </div>
+
+        <!-- General Disclaimer -->
+        <div class="legal-card">
+            <h2 data-lang="tr"><i class="fas fa-file-contract"></i> Genel Sorumluluk Reddi</h2>
+            <h2 data-lang="en"><i class="fas fa-file-contract"></i> General Disclaimer</h2>
+            <p class="legal-text" data-lang="tr">
+                CyberEx Teknoloji A.Ş. ("CyberEx"), bu web sitesinde veya mobil uygulamasında yer alan bilgilerin
+                doğruluğu ve güncelliği konusunda azami özeni göstermekle birlikte, bu bilgilerin kesinliğini garanti
+                etmez. Piyasa verileri, analizler, haberler ve diğer içerikler yalnızca genel bilgilendirme amacı
+                taşımakta olup, kesinlikle yatırım tavsiyesi (YTD) niteliğinde değildir.
+            </p>
+            <p class="legal-text" data-lang="tr">
+                Bu platformda sunulan hiçbir veri, CyberEx tarafından belirli bir finansal varlığın alınması veya
+                satılması yönünde bir teklif veya icap olarak yorumlanamaz. Kullanıcılar, alım-satım kararlarını tamamen
+                kendi özgür iradeleriyle ve kendi risk değerlendirmeleri sonucunda verirler.
+            </p>
+
+            <p class="legal-text" data-lang="en">
+                CyberEx Technology Inc. ("CyberEx") strives to ensure the accuracy and timeliness of the information on
+                this website or mobile application but does not guarantee its precision. Market data, analysis, news,
+                and other content are for general informational purposes only and certainly do not constitute investment
+                advice (NFA).
+            </p>
+            <p class="legal-text" data-lang="en">
+                No data presented on this platform should be interpreted as an offer or solicitation by CyberEx to buy
+                or sell any specific financial asset. Users make trading decisions entirely at their own discretion and
+                as a result of their own risk assessment.
+            </p>
+        </div>
+
+        <!-- No Investment Advice -->
+        <div class="legal-card">
+            <h2 data-lang="tr"><i class="fas fa-chart-line"></i> Yatırım Tavsiyesi Değildir</h2>
+            <h2 data-lang="en"><i class="fas fa-chart-line"></i> No Investment Advice</h2>
+            <p class="legal-text" data-lang="tr">
+                CyberEx Platformu üzerindeki "AnalyticaX Intel", "AI Piyasa Analizi", "Duygu Analizi" gibi özellikler,
+                yalnızca matematiksel modellere ve geçmiş veri setlerine dayanan algoritmik çıktılardır. Bu araçlar
+                gelecekteki piyasa hareketlerini kesin olarak öngöremez. CyberEx, bu araçların kullanımından doğabilecek
+                kâr veya zarar konusunda hiçbir sorumluluk kabul etmez.
+            </p>
+            <p class="legal-text" data-lang="en">
+                Features such as "AnalyticaX Intel", "AI Market Analysis", and "Sentiment Analysis" on the CyberEx
+                Platform are algorithmic outputs based solely on mathematical models and historical datasets. These
+                tools cannot predict future market movements with certainty. CyberEx accepts no liability for any profit
+                or loss arising from the use of these tools.
+            </p>
+        </div>
+
+        <!-- Limitation of Liability -->
+        <div class="legal-card">
+            <h2 data-lang="tr"><i class="fas fa-shield-halved"></i> Sorumluluğun Sınırlandırılması</h2>
+            <h2 data-lang="en"><i class="fas fa-shield-halved"></i> Limitation of Liability</h2>
+            <p class="legal-text" data-lang="tr">
+                CyberEx; doğrudan, dolaylı, arızi veya cezai zararlar, veri kaybı, kâr kaybı, iş kesintisi dahil ancak
+                bunlarla sınırlı olmamak üzere, platformun kullanımından veya kullanılamamasından kaynaklanan hiçbir
+                zarardan sorumlu tutulamaz. Blockchain ağlarındaki gecikmeler, teknik arızalar, siber saldırılar veya
+                üçüncü taraf hizmet sağlayıcılarından kaynaklanan sorunlar CyberEx'in sorumluluğu dışındadır.
+            </p>
+            <p class="legal-text" data-lang="en">
+                CyberEx shall not be liable for any direct, indirect, incidental, or punitive damages, including but not
+                limited to loss of data, loss of profit, or business interruption, arising from the use or inability to
+                use the platform. Delays in blockchain networks, technical failures, cyber attacks, or issues arising
+                from third-party service providers are beyond CyberEx's responsibility.
+            </p>
+        </div>
+
+    </main>
+
+    <footer class="simple-footer">
+        <p data-lang="tr">© 2026 CyberEx Teknoloji A.Ş. Tüm hakları saklıdır. Bu beyan önceden haber verilmeksizin
+            güncellenebilir.</p>
+        <p data-lang="en">© 2026 CyberEx Technology Inc. All rights reserved. This disclaimer may be updated without
+            prior notice.</p>
+    </footer>
+
+    <script>
+        // Simple Language Switcher
+        const langToggle = document.getElementById('langToggle');
+        const html = document.documentElement;
+
+        // Init State
+        const savedLang = localStorage.getItem('lang') || 'tr';
+        html.className = 'lang-' + savedLang;
+        langToggle.innerText = savedLang === 'en' ? 'TR' : 'EN';
+
+        langToggle.addEventListener('click', () => {
+            if (html.classList.contains('lang-tr')) {
+                html.className = 'lang-en';
+                langToggle.innerText = 'TR';
+                localStorage.setItem('lang', 'en');
+            } else {
+                html.className = 'lang-tr';
+                langToggle.innerText = 'EN';
+                localStorage.setItem('lang', 'tr');
+            }
+        });
+    </script>
+</body>
+
+</html>

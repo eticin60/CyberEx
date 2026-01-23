@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakkımızda | CyberEx - Geleceğin Finansı</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-cyan: #00f0ff;
+            --neon-blue: #0066ff;
+            --deep-bg: #00050f;
+            --card-bg: rgba(0, 240, 255, 0.03);
+            --border: rgba(0, 240, 255, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--deep-bg);
+            color: #fff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Navbar (Simplified for subpage) */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(0, 5, 15, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .nav-logo img {
+            height: 40px;
+        }
+
+        .nav-tagline {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: var(--neon-cyan);
+            font-weight: 700;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            padding-left: 15px;
+        }
+
+        .back-btn {
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            color: var(--neon-cyan);
+        }
+
+        /* Hero Section */
+        .about-hero {
+            text-align: center;
+            padding: 100px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            width: 1000px;
+            height: 1000px;
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.05) 0%, transparent 70%);
+            transform: translateX(-50%);
+            z-index: -1;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, #aaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #888;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Content Sections */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .text-block h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .text-block span {
+            color: var(--neon-cyan);
+        }
+
+        .text-block p {
+            color: #aaa;
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        .visual-block {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .visual-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0, 240, 255, 0.1), transparent);
+            animation: pulse 4s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Stats */
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 40px 0;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-num {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--neon-cyan);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Values Grid */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .value-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 30px;
+            border-radius: 15px;
+            transition: 0.3s;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.1);
+            border-color: var(--neon-cyan);
+        }
+
+        .value-icon {
+            font-size: 2rem;
+            color: var(--neon-cyan);
+            margin-bottom: 20px;
+        }
+
+        .value-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .value-desc {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        /* Footer */
+        .simple-footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 80px;
+        }
+
+        /* Lang Classes */
+        /* Lang Classes - Strict Control */
+        html.lang-tr [data-lang="en"] {
+            display: none !important;
+        }
+
+        html.lang-en [data-lang="tr"] {
+            display: none !important;
+        }
+
+        /* Show EN when active - Override default hidden */
+        html.lang-en [data-lang="en"] {
+            display: block;
+        }
+
+        html.lang-en span[data-lang="en"],
+        html.lang-en strong[data-lang="en"],
+        html.lang-en a[data-lang="en"] {
+            display: inline;
+        }
+
+        /* Ensure default visibility matches (Hide EN) */
+        [data-lang="en"] {
+            display: none;
+        }
+    </style>
+    <script>
+        // Immediate Language Check to prevent flash
+        (function () {
+            const savedLang = localStorage.getItem('lang') || 'tr';
+            document.documentElement.className = 'lang-' + savedLang;
+        })();
+    </script>
+</head>
+
+<body class="lang-tr">
+
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">
+            <img src="cyberex-logo.png" alt="CyberEx">
+            <div class="nav-tagline">CORPORATE</div>
+        </a>
+        <div style="display: flex; gap: 20px; align-items: center;">
+            <button id="langToggle"
+                style="background: transparent; border: 1px solid var(--border); color: #fff; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-size: 0.8rem;">EN</button>
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> <span data-lang="tr">Ana Sayfaya Dön</span><span data-lang="en">Back
+                    to Home</span>
+            </a>
+        </div>
+    </nav>
+
+    <header class="about-hero">
+        <h1 class="hero-title" data-lang="tr">Finansın Geleceğini<br>Yeniden Kodluyoruz</h1>
+        <h1 class="hero-title" data-lang="en">Recoding the Future<br>of Finance</h1>
+        <p class="hero-subtitle" data-lang="tr">
+            CyberEx, geleneksel bankacılık güvenini merkeziyetsiz finansın (DeFi) hızıyla birleştiren, Google Gemini AI
+            destekli yeni nesil bir finans teknolojisi şirketidir.
+        </p>
+        <p class="hero-subtitle" data-lang="en">
+            CyberEx is a next-generation fintech company powered by Google Gemini AI, combining the trust of traditional
+            banking with the speed of decentralized finance (DeFi).
+        </p>
+    </header>
+
+    <main class="section">
+        <!-- Section 1: Who We Are -->
+        <div class="grid-2">
+            <div class="text-block">
+                <span style="font-size: 0.9rem; font-weight: 700; letter-spacing: 2px;">BİZ KİMİZ? (WHO WE ARE)</span>
+                <h2 data-lang="tr">Hibrit Finans <br><span>Teknolojisi</span></h2>
+                <h2 data-lang="en">Hybrid Finance <br><span>Technology</span></h2>
+                <p data-lang="tr">
+                    CyberEx Teknoloji A.Ş., 2024 yılında "Herkes için Erişilebilir Finans" vizyonuyla İstanbul merkezli
+                    olarak kurulmuştur. Küresel blockchain ekosisteminde bir köprü görevi görerek, kullanıcılarımıza
+                    Web2'nin kullanım kolaylığını ve Web3'ün özgürlüğünü aynı anda sunuyoruz.
+                </p>
+                <p data-lang="tr">
+                    Altyapımız, dünyanın en gelişmiş yapay zeka modellerinden biri olan <strong>Google Gemini
+                        AI</strong> üzerinde çalışmaktadır. Bu sayede piyasa analizleri, dolandırıcılık önleme
+                    (anti-fraud) ve kullanıcı deneyimi optimizasyonlarında rakiplerimizin ötesinde bir performans
+                    sergiliyoruz.
+                </p>
+
+                <p data-lang="en">
+                    CyberEx Technology Inc. was established in 2024 in Istanbul with the vision of "Accessible Finance
+                    for Everyone". Acting as a bridge in the global blockchain ecosystem, we offer our users the ease of
+                    use of Web2 and the freedom of Web3 simultaneously.
+                </p>
+                <p data-lang="en">
+                    Our infrastructure runs on <strong>Google Gemini AI</strong>, one of the world's most advanced AI
+                    models. This allows us to perform beyond our competitors in market analysis, anti-fraud prevention,
+                    and user experience optimization.
+                </p>
+            </div>
+            <div class="visual-block">
+                <div class="visual-glow"></div>
+                <i class="fas fa-building-columns" style="font-size: 8rem; color: #fff; z-index: 1;"></i>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-num">2.5M+</div>
+                <div class="stat-label" data-lang="tr">Beklenen Kullanıcı</div>
+                <div class="stat-label" data-lang="en">Expected Users</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">150+</div>
+                <div class="stat-label" data-lang="tr">Ülke & Bölge</div>
+                <div class="stat-label" data-lang="en">Countries & Regions</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">$1B+</div>
+                <div class="stat-label" data-lang="tr">Hedef Hacim</div>
+                <div class="stat-label" data-lang="en">Target Volume</div>
+            </div>
+        </div>
+
+        <!-- Section 2: Values -->
+        <div style="margin-top: 100px;">
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 50px;" data-lang="tr">Temel Değerlerimiz
+            </h2>
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 50px;" data-lang="en">Our Core Values</h2>
+
+            <div class="values-grid">
+                <div class="value-card">
+                    <i class="fas fa-shield-alt value-icon"></i>
+                    <h3 class="value-title" data-lang="tr">Önce Güvenlik</h3>
+                    <h3 class="value-title" data-lang="en">Security First</h3>
+                    <p class="value-desc" data-lang="tr">Kullanıcı varlıklarını soğuk cüzdanlarda (Cold Storage) ve
+                        çoklu imza (Multi-Sig) teknolojisiyle koruyoruz. Güvenlikten asla taviz vermeyiz.</p>
+                    <p class="value-desc" data-lang="en">We protect user assets with Cold Storage and Multi-Sig
+                        technology. We never compromise on security.</p>
+                </div>
+
+                <div class="value-card">
+                    <i class="fas fa-bolt value-icon"></i>
+                    <h3 class="value-title" data-lang="tr">İnovasyon</h3>
+                    <h3 class="value-title" data-lang="en">Innovation</h3>
+                    <p class="value-desc" data-lang="tr">Google Gemini AI entegrasyonu ile sektördeki en akıllı ticaret
+                        botlarını ve piyasa analiz araçlarını geliştiriyoruz.</p>
+                    <p class="value-desc" data-lang="en">With Google Gemini AI integration, we develop the smartest
+                        trading bots and market analysis tools in the industry.</p>
+                </div>
+
+                <div class="value-card">
+                    <i class="fas fa-users value-icon"></i>
+                    <h3 class="value-title" data-lang="tr">Topluluk Odaklılık</h3>
+                    <h3 class="value-title" data-lang="en">Community Driven</h3>
+                    <p class="value-desc" data-lang="tr">CyberEx, kullanıcılarının geri bildirimleriyle büyür. DAO
+                        yapımız sayesinde geleceğimizi topluluğumuzla birlikte şekillendiriyoruz.</p>
+                    <p class="value-desc" data-lang="en">CyberEx grows with user feedback. Thanks to our DAO structure,
+                        we shape our future together with our community.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Ecosystem -->
+        <div style="margin-top: 120px; text-align: center;">
+            <h2 style="font-size: 3rem; margin-bottom: 20px;" data-lang="tr">CyberEx <span
+                    style="color:var(--neon-cyan)">Ekosistemi</span></h2>
+            <h2 style="font-size: 3rem; margin-bottom: 20px;" data-lang="en">CyberEx <span
+                    style="color:var(--neon-cyan)">Ecosystem</span></h2>
+            <p style="color: #aaa; max-width: 700px; margin: 0 auto 60px;" data-lang="tr">
+                Sadece bir borsa değil, uçtan uca bir finansal çözüm merkezi.
+            </p>
+            <p style="color: #aaa; max-width: 700px; margin: 0 auto 60px;" data-lang="en">
+                Not just an exchange, but an end-to-end financial solution center.
+            </p>
+
+            <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+                <div
+                    style="background: rgba(255,255,255,0.03); padding: 20px 40px; border-radius: 50px; border: 1px solid var(--border);">
+                    CyberEx Platform</div>
+                <div
+                    style="background: rgba(255,255,255,0.03); padding: 20px 40px; border-radius: 50px; border: 1px solid var(--border);">
+                    Web3 Wallet</div>
+                <div
+                    style="background: rgba(255,255,255,0.03); padding: 20px 40px; border-radius: 50px; border: 1px solid var(--border);">
+                    AnalyticaX</div>
+                <div
+                    style="background: rgba(255,255,255,0.03); padding: 20px 40px; border-radius: 50px; border: 1px solid var(--border);">
+                    Elite Card</div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="simple-footer">
+        <p>© 2026 CyberEx Technology Inc. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Simple Language Switcher
+        const langToggle = document.getElementById('langToggle');
+        const html = document.documentElement;
+
+        // Init State
+        const savedLang = localStorage.getItem('lang') || 'tr';
+        html.className = 'lang-' + savedLang;
+        langToggle.innerText = savedLang === 'en' ? 'TR' : 'EN';
+
+        langToggle.addEventListener('click', () => {
+            if (html.classList.contains('lang-tr')) {
+                html.className = 'lang-en';
+                langToggle.innerText = 'TR';
+                localStorage.setItem('lang', 'en');
+            } else {
+                html.className = 'lang-tr';
+                langToggle.innerText = 'EN';
+                localStorage.setItem('lang', 'tr');
+            }
+        });
+    </script>
+</body>
+
+</html>

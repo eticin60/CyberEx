@@ -2,149 +2,358 @@
 <html lang="tr">
 
 <head>
-    <meta charset="UTF-8" />
-    <title>CyberEx – Gizlilik Politikası | Privacy Policy</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gizlilik Politikası | CyberEx - Privacy Policy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --neon-cyan: #00f0ff;
-            --neon-blue: #0066ff;
-            --text: #e8f0ff;
-            --border: rgba(255, 255, 255, 0.1);
+            --neon-purple: #bc13fe;
+            --deep-bg: #00050f;
+            --card-bg: rgba(0, 240, 255, 0.03);
+            --border: rgba(0, 240, 255, 0.2);
         }
 
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: #000510;
-            color: var(--text);
+            background-color: var(--deep-bg);
+            color: #fff;
+            overflow-x: hidden;
             line-height: 1.6;
         }
 
+        /* Navbar */
         .navbar {
-            position: fixed;
-            top: 20px;
-            left: 30px;
-            right: 30px;
-            z-index: 1500;
-            padding: 12px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(0, 5, 15, 0.8);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 60px;
+            padding: 20px 40px;
+            background: rgba(0, 5, 15, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .nav-logo {
-            height: 35px;
-            filter: drop-shadow(0 0 8px var(--neon-cyan));
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 150px auto 100px;
-            padding: 60px;
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(30px);
-            border: 1px solid var(--border);
-            border-radius: 40px;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
             color: #fff;
-            text-align: center;
         }
 
-        h2 {
-            font-size: 1.4rem;
+        .nav-tagline {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: var(--neon-purple);
+            font-weight: 700;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            padding-left: 15px;
+        }
+
+        .back-btn {
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
             color: var(--neon-cyan);
-            margin: 35px 0 15px;
         }
 
-        p {
-            margin-bottom: 15px;
-            color: #b0c4de;
-        }
-
-        li {
-            margin-left: 20px;
-            margin-bottom: 8px;
-            color: #b0c4de;
-        }
-
-        .footer-note {
-            margin-top: 50px;
+        /* Hero Section */
+        .privacy-hero {
             text-align: center;
-            font-size: 0.8rem;
+            padding: 80px 20px;
+            background: linear-gradient(180deg, rgba(188, 19, 254, 0.05) 0%, transparent 100%);
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: #888;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Content */
+        .content-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .privacy-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+
+        .privacy-card h2 {
+            font-size: 1.5rem;
+            color: var(--neon-cyan);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .privacy-list {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        .privacy-list li {
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 25px;
+            color: #aaa;
+        }
+
+        .privacy-list li::before {
+            content: '•';
+            color: var(--neon-purple);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -5px;
+        }
+
+        .legal-text {
+            color: #aaa;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            text-align: justify;
+        }
+
+        /* Footer */
+        .simple-footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
             color: #666;
+            font-size: 0.9rem;
+            margin-top: 80px;
+        }
+
+        /* Lang Classes - Strict Control */
+        html.lang-tr [data-lang="en"] {
+            display: none !important;
+        }
+
+        html.lang-en [data-lang="tr"] {
+            display: none !important;
+        }
+
+        /* Show EN when active - Override default hidden */
+        html.lang-en [data-lang="en"] {
+            display: block;
+        }
+
+        html.lang-en span[data-lang="en"],
+        html.lang-en strong[data-lang="en"],
+        html.lang-en a[data-lang="en"] {
+            display: inline;
+        }
+
+        /* Ensure default visibility matches (Hide EN) */
+        [data-lang="en"] {
+            display: none;
         }
     </style>
+    <script>
+        // Immediate Language Check to prevent flash
+        (function () {
+            const savedLang = localStorage.getItem('lang') || 'tr';
+            document.documentElement.className = 'lang-' + savedLang;
+        })();
+    </script>
 </head>
 
-<body>
+<body class="lang-tr">
+
     <nav class="navbar">
-        <a href="index.html"><img src="cyberex-logo.png" alt="Logo" class="nav-logo"></a>
-        <div style="font-weight: 800; color: var(--neon-cyan);">PRIVACY CENTER</div>
+        <a href="index.html" class="nav-logo">
+            <img src="cyberex-logo.png" alt="CyberEx" style="height: 40px;">
+            <div class="nav-tagline">PRIVACY</div>
+        </a>
+        <div style="display: flex; gap: 20px; align-items: center;">
+            <button id="langToggle"
+                style="background: transparent; border: 1px solid var(--border); color: #fff; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-size: 0.8rem;">EN</button>
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> <span data-lang="tr">Ana Sayfaya Dön</span><span data-lang="en">Back
+                    to Home</span>
+            </a>
+        </div>
     </nav>
-    <div class="container">
-        <h1>Gizlilik Politikası</h1>
-        <p><strong>Versiyon:</strong> 1.0 | <strong>Son Güncelleme:</strong> 23.01.2026</p>
 
-        <h2>1. VERİ TOPLAMA</h2>
-        <p>Topladığımız veriler:</p>
-        <ul>
-            <li>Kimlik bilgileri (ad, soyad, email, telefon)</li>
-            <li>KYC belgeleri (kimlik, adres belgesi)</li>
-            <li>İşlem geçmişi</li>
-            <li>Cihaz bilgileri (IP adresi, cihaz ID)</li>
-            <li>Kullanım verileri</li>
-        </ul>
+    <header class="privacy-hero">
+        <h1 class="hero-title" data-lang="tr">Gizlilik Politikası</h1>
+        <h1 class="hero-title" data-lang="en">Privacy Policy</h1>
+        <p class="hero-subtitle" data-lang="tr">
+            Verilerinizin güvenliği bizim için en büyük önceliktir. Kişisel verilerinizi nasıl topladığımızı,
+            kullandığımızı ve koruduğumuzu şeffaflıkla açıklıyoruz.
+        </p>
+        <p class="hero-subtitle" data-lang="en">
+            The security of your data is our top priority. We transparently explain how we collect, use, and protect
+            your personal data.
+        </p>
+    </header>
 
-        <h2>2. VERİ KULLANIMI</h2>
-        <p>Verilerinizi şu amaçlarla kullanırız:</p>
-        <ul>
-            <li>Hizmet sunumu</li>
-            <li>Güvenlik ve dolandırıcılık önleme</li>
-            <li>Yasal yükümlülükler</li>
-            <li>İyileştirme ve analiz</li>
-        </ul>
+    <main class="content-container">
 
-        <h2>3. VERİ PAYLAŞIMI</h2>
-        <p>Verilerinizi yalnızca yasal zorunluluklar gereği, güvenlik iş ortakları ile (şifrelenmiş) veya izin
-            verdiğiniz durumlarda paylaşırız.</p>
+        <!-- Data Collection -->
+        <div class="privacy-card">
+            <h2 data-lang="tr"><i class="fas fa-database"></i> 1. Veri Toplama ve Kullanımı</h2>
+            <h2 data-lang="en"><i class="fas fa-database"></i> 1. Data Collection & Usage</h2>
+            <p class="legal-text" data-lang="tr">
+                CyberEx Teknoloji A.Ş. ("CyberEx"), hizmetlerimizi sunabilmek, yasal yükümlülüklerimizi (KYC/AML) yerine
+                getirmek ve kullanıcı deneyimini iyileştirmek amacıyla aşağıdaki verileri toplayabilir:
+            </p>
+            <p class="legal-text" data-lang="en">
+                CyberEx Technology Inc. ("CyberEx") may collect the following data to provide our services, fulfill
+                legal obligations (KYC/AML), and improve user experience:
+            </p>
+            <ul class="privacy-list">
+                <li>
+                    <strong data-lang="tr">Kimlik Bilgileri:</strong>
+                    <span data-lang="tr">Ad, soyad, doğum tarihi, vatandaşlık numarası ve kimlik görselleri (KYC
+                        doğrulama süreçleri için zorunludur).</span>
+                    <strong data-lang="en">Identity Information:</strong>
+                    <span data-lang="en">Name, surname, date of birth, citizenship ID, and ID images (mandatory for KYC
+                        verification processes).</span>
+                </li>
+                <li>
+                    <strong data-lang="tr">İletişim Bilgileri:</strong>
+                    <span data-lang="tr">E-posta adresi, telefon numarası ve ikamet adresi.</span>
+                    <strong data-lang="en">Contact Information:</strong>
+                    <span data-lang="en">Email address, phone number, and residential address.</span>
+                </li>
+                <li>
+                    <strong data-lang="tr">Finansal Veriler:</strong>
+                    <span data-lang="tr">Cüzdan adresleri, işlem geçmişi, banka hesap bilgileri ve bakiye
+                        bilgileri.</span>
+                    <strong data-lang="en">Financial Data:</strong>
+                    <span data-lang="en">Wallet addresses, transaction history, bank account details, and balance
+                        information.</span>
+                </li>
+                <li>
+                    <strong data-lang="tr">Cihaz ve Log Verileri:</strong>
+                    <span data-lang="tr">IP adresi, cihaz türü, işletim sistemi, tarayıcı bilgisi ve oturum açma
+                        süreleri (Güvenlik ve dolandırıcılık önleme amacıyla).</span>
+                    <strong data-lang="en">Device & Log Data:</strong>
+                    <span data-lang="en">IP address, device type, OS, browser info, and login times (for security and
+                        anti-fraud purposes).</span>
+                </li>
+            </ul>
+        </div>
 
-        <h2>4. VERİ GÜVENLİĞİ</h2>
-        <p>Endüstri standardı şifreleme kullanıyoruz. Güvenli sunucu altyapısı ve düzenli güvenlik denetimleri ile KVKK
-            ve GDPR uyumlu çalışıyoruz.</p>
+        <!-- Data Protection -->
+        <div class="privacy-card">
+            <h2 data-lang="tr"><i class="fas fa-user-shield"></i> 2. Veri Güvenliği ve Saklama</h2>
+            <h2 data-lang="en"><i class="fas fa-user-shield"></i> 2. Data Security & Storage</h2>
+            <p class="legal-text" data-lang="tr">
+                Toplanan tüm kişisel veriler, ISO 27001 bilgi güvenliği standartlarına uygun olarak şifrelenmiş
+                (AES-256) veritabanlarında saklanmaktadır. CyberEx, yetkisiz erişimi, veri kaybını veya değiştirilmesini
+                önlemek için çok katmanlı güvenlik önlemleri uygular. Verileriniz, yasal zorunluluklar dışında (örneğin
+                mahkeme kararları) asla üçüncü taraflarla paylaşılmaz veya satılmaz.
+            </p>
+            <p class="legal-text" data-lang="en">
+                All collected personal data is stored in encrypted (AES-256) databases in compliance with ISO 27001
+                information security standards. CyberEx implements multi-layered security measures to prevent
+                unauthorized access, data loss, or alteration. Your data is never shared with or sold to third parties
+                unless required by law (e.g., court orders).
+            </p>
+        </div>
 
-        <h2>5. ÇEREZLER</h2>
-        <p>Platform deneyiminizi iyileştirmek için çerezler kullanır. Lütfen Çerez Politikamızı inceleyin.</p>
+        <!-- Cookies -->
+        <div class="privacy-card">
+            <h2 data-lang="tr"><i class="fas fa-cookie-bite"></i> 3. Çerezler (Cookies)</h2>
+            <h2 data-lang="en"><i class="fas fa-cookie-bite"></i> 3. Cookies</h2>
+            <p class="legal-text" data-lang="tr">
+                Web sitemiz ve mobil uygulamamız, kullanıcı deneyimini kişiselleştirmek, site trafiğini analiz etmek ve
+                oturum güvenliğini sağlamak amacıyla çerezleri kullanır. Tarayıcı ayarlarınızdan çerez tercihlerinizi
+                dilediğiniz zaman değiştirebilirsiniz, ancak zorunlu güvenlik çerezlerinin kapatılması platformun bazı
+                özelliklerinin çalışmamasına neden olabilir.
+            </p>
+            <p class="legal-text" data-lang="en">
+                Our website and mobile app use cookies to personalize user experience, analyze site traffic, and ensure
+                session security. You can change your cookie preferences via your browser settings at any time, but
+                disabling mandatory security cookies may cause some features of the platform to malfunction.
+            </p>
+        </div>
 
-        <h2>6. KULLANICI HAKLARI</h2>
-        <p>Verilerinize erişim, düzeltme talep etme, silme talep etme ve itiraz etme haklarınız saklıdır.</p>
+        <!-- User Rights -->
+        <div class="privacy-card">
+            <h2 data-lang="tr"><i class="fas fa-gavel"></i> 4. KVKK ve GDPR Haklarınız</h2>
+            <h2 data-lang="en"><i class="fas fa-gavel"></i> 4. Your Rights (KVKK & GDPR)</h2>
+            <p class="legal-text" data-lang="tr">
+                Kişisel verilerinizin işlenip işlenmediğini öğrenme, işlenmişse buna ilişkin bilgi talep etme, verilerin
+                düzeltilmesini veya -yasal saklama yükümlülükleri saklı kalmak kaydıyla- silinmesini isteme hakkına
+                sahipsiniz. Bu haklarınızı kullanmak için <a href="mailto:privacy@cyberex.com.tr"
+                    style="color:var(--neon-cyan); text-decoration:none;">privacy@cyberex.com.tr</a> adresi üzerinden
+                Veri Koruma Görevlimiz (DPO) ile iletişime geçebilirsiniz.
+            </p>
+            <p class="legal-text" data-lang="en">
+                You have the right to learn whether your personal data is being processed, to request information if
+                processed, to ask for correction, or -subject to legal retention obligations- to request deletion of
+                your data. To exercise these rights, you can contact our Data Protection Officer (DPO) via <a
+                    href="mailto:privacy@cyberex.com.tr"
+                    style="color:var(--neon-cyan); text-decoration:none;">privacy@cyberex.com.tr</a>.
+            </p>
+        </div>
 
-        <h2>7. VERİ SAKLAMA</h2>
-        <p>Verileriniz yasal süreler boyunca saklanır. Hesap silindikten sonra veriler güvenli şekilde silinir.</p>
+    </main>
 
-        <h2>8. ÇOCUKLARIN GİZLİLİĞİ</h2>
-        <p>Platform 18 yaş altı için uygun değildir. Çocuklardan veri toplamıyoruz.</p>
+    <footer class="simple-footer">
+        <p data-lang="tr">© 2026 CyberEx Teknoloji A.Ş. Tüm hakları saklıdır. Son Güncelleme: Ocak 2026</p>
+        <p data-lang="en">© 2026 CyberEx Technology Inc. All rights reserved. Last Updated: January 2026</p>
+    </footer>
 
-        <p class="footer-note">Bu gizlilik politikasını kabul ederek, verilerinizin bu şekilde işleneceğini
-            onaylıyorsunuz.</p>
-    </div>
+    <script>
+        // Simple Language Switcher
+        const langToggle = document.getElementById('langToggle');
+        const html = document.documentElement;
+
+        // Init State
+        const savedLang = localStorage.getItem('lang') || 'tr';
+        html.className = 'lang-' + savedLang;
+        langToggle.innerText = savedLang === 'en' ? 'TR' : 'EN';
+
+        langToggle.addEventListener('click', () => {
+            if (html.classList.contains('lang-tr')) {
+                html.className = 'lang-en';
+                langToggle.innerText = 'TR';
+                localStorage.setItem('lang', 'en');
+            } else {
+                html.className = 'lang-tr';
+                langToggle.innerText = 'EN';
+                localStorage.setItem('lang', 'tr');
+            }
+        });
+    </script>
 </body>
 
 </html>
