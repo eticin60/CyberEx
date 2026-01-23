@@ -127,6 +127,8 @@
             border: 1px solid var(--border);
             border-radius: 60px;
             position: relative;
+            margin: 120px auto 80px;
+            /* Added margin to move it down */
         }
 
         .left-side {
@@ -267,7 +269,127 @@
                 display: none;
             }
         }
+
+        /* Integrated Footer Styles */
+        .footer {
+            width: 100%;
+            padding: 80px 20px 0;
+            border-top: 1px solid rgba(0, 240, 255, 0.1);
+            background: transparent;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 10;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 60px;
+            text-align: left;
+        }
+
+        .footer-col-title {
+            color: #fff;
+            font-weight: 900;
+            margin-bottom: 25px;
+            border-left: 3px solid var(--neon-cyan);
+            padding-left: 15px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .footer-link {
+            display: block;
+            color: #7f8c8d;
+            text-decoration: none;
+            padding: 8px 0;
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .footer-link:hover {
+            color: var(--neon-cyan);
+            padding-left: 10px;
+        }
+
+        .waitlist-btn {
+            background: var(--neon-cyan);
+            color: #000;
+            border: none;
+            font-weight: 900;
+            cursor: pointer;
+            transition: 0.3s;
+            padding: 12px 25px;
+            border-radius: 12px;
+        }
+
+        .waitlist-btn:hover {
+            box-shadow: 0 0 15px var(--neon-cyan);
+            transform: scale(1.05);
+        }
+
+        /* Lang Classes - Strict Control */
+        html.lang-tr [data-lang="en"] {
+            display: none !important;
+        }
+
+        html.lang-en [data-lang="tr"] {
+            display: none !important;
+        }
+
+        /* Show EN when active */
+        html.lang-en [data-lang="en"] {
+            display: block;
+        }
+
+        html.lang-en span[data-lang="en"],
+        html.lang-en strong[data-lang="en"] {
+            display: inline-block;
+        }
+
+        html.lang-en a[data-lang="en"] {
+            display: block;
+            /* Ensure links stay stacked */
+        }
+
+        /* Ensure default visibility matches (Hide EN) */
+        [data-lang="en"] {
+            display: none;
+        }
+
+        .lang-toggle-container {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            z-index: 1000;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .lang-btn:hover {
+            border-color: var(--neon-cyan);
+            color: var(--neon-cyan);
+        }
     </style>
+    <script>
+        (function () {
+            const savedLang = localStorage.getItem('lang') || 'tr';
+            document.documentElement.className = 'lang-' + savedLang;
+        })();
+    </script>
 </head>
 
 <body>
@@ -276,31 +398,49 @@
         <div class="orb orb-2"></div>
     </div>
 
-    <a href="index.html" class="back-nav"><i class="fas fa-arrow-left"></i> ANA SAYFAYA DÖN</a>
+    <div class="lang-toggle-container">
+        <button id="langToggle" class="lang-btn">EN</button>
+    </div>
+
+    <a href="index.html" class="back-nav">
+        <i class="fas fa-arrow-left"></i>
+        <span data-lang="tr">ANA SAYFAYA DÖN</span>
+        <span data-lang="en">BACK TO HOME</span>
+    </a>
 
     <div class="download-container">
         <div class="left-side">
-            <h1>Cebindeki<br><span>Gelecek.</span></h1>
-            <p>CyberEx Mobil ile kripto dünyası her an yanınızda. Ultra hızlı alım-satım, Web3 cüzdan ve maksimum
-                güvenlik şimdi bir dokunuş uzağınızda.</p>
+            <h1 data-lang="tr">Cebindeki<br><span>Gelecek.</span></h1>
+            <h1 data-lang="en">The Future<br><span>In Your Pocket.</span></h1>
+
+            <p data-lang="tr">CyberEx Mobil ile kripto dünyası her an yanınızda. Ultra hızlı alım-satım, Web3 cüzdan ve
+                maksimum güvenlik şimdi bir dokunuş uzağınızda.</p>
+            <p data-lang="en">The crypto world is with you at every moment with CyberEx Mobile. Ultra-fast trading, Web3
+                wallet, and maximum security are now just a touch away.</p>
 
             <div class="store-btns">
                 <a href="https://github.com/eticin60/cyberex-update/raw/main/CyberEx-v1.3.8.apk" class="store-btn">
                     <i class="fab fa-android"></i>
                     <div>
-                        <div style="font-size: 0.7rem; opacity: 0.7;">Hemen İndir</div>APK v1.3.8
+                        <div style="font-size: 0.7rem; opacity: 0.7;" data-lang="tr">Hemen İndir</div>
+                        <div style="font-size: 0.7rem; opacity: 0.7;" data-lang="en">Download Now</div>
+                        APK v1.3.8
                     </div>
                 </a>
                 <a href="#" class="store-btn" style="opacity: 0.5; cursor: not-allowed;">
                     <i class="fab fa-google-play"></i>
                     <div>
-                        <div style="font-size: 0.7rem; opacity: 0.7;">Yakında</div>Google Play
+                        <div style="font-size: 0.7rem; opacity: 0.7;" data-lang="tr">Yakında</div>
+                        <div style="font-size: 0.7rem; opacity: 0.7;" data-lang="en">Coming Soon</div>
+                        Google Play
                     </div>
                 </a>
                 <a href="#" class="store-btn" style="opacity: 0.5; cursor: not-allowed;">
                     <i class="fab fa-apple"></i>
                     <div>
-                        <div style="font-size: 0.7rem; opacity: 0.7;">Yakında</div>App Store
+                        <div style="font-size: 0.7rem; opacity: 0.7;" data-lang="tr">Yakında</div>
+                        <div style="font-size: 0.7rem; opacity: 0.7;" data-lang="en">Coming Soon</div>
+                        App Store
                     </div>
                 </a>
             </div>
@@ -308,8 +448,12 @@
             <div class="qr-box">
                 <div id="qrcode"></div>
                 <div>
-                    <h4 style="color: var(--neon-cyan); margin-bottom: 5px;">Hemen Tara</h4>
-                    <p style="font-size: 0.8rem; margin: 0;">APK sürümünü anında indirmek için kameranı yaklaştır.</p>
+                    <h4 style="color: var(--neon-cyan); margin-bottom: 5px;" data-lang="tr">Hemen Tara</h4>
+                    <h4 style="color: var(--neon-cyan); margin-bottom: 5px;" data-lang="en">Scan Now</h4>
+                    <p style="font-size: 0.8rem; margin: 0;" data-lang="tr">APK sürümünü anında indirmek için kameranı
+                        yaklaştır.</p>
+                    <p style="font-size: 0.8rem; margin: 0;" data-lang="en">Bring your camera closer to instantly
+                        download the APK version.</p>
                 </div>
             </div>
         </div>
@@ -319,6 +463,57 @@
         </div>
     </div>
 
+    <footer class="footer">
+        <div class="footer-content">
+            <div style="grid-column: span 1.5;">
+                <img src="cyberex-logo.png" alt="CyberEx Corporate Logo" title="CyberEx Technology Inc"
+                    style="height: 60px; margin-bottom: 25px;">
+                <p style="color: #666; font-size: 0.85rem; line-height: 2; max-width: 480px;">
+                    <strong data-lang="tr">CyberEx Teknoloji Anonim Şirketi</strong>
+                    <strong data-lang="en">CyberEx Technology Inc.</strong><br>
+                    <span data-lang="tr">CyberEx, yeni nesil finansal teknolojiler ve dijital varlık yönetimi alanında
+                        global bir ekosistem inşa etmek amacıyla kurulmuş hibrit bir teknoloji şirketidir.</span>
+                    <span data-lang="en">CyberEx is a hybrid technology company established to build a global ecosystem
+                        in the field of next-generation financial technologies.</span>
+                </p>
+            </div>
+            <div>
+                <h4 class="footer-col-title" data-lang="tr">KURUMSAL</h4>
+                <h4 class="footer-col-title" data-lang="en">CORPORATE</h4>
+                <a href="about.html" class="footer-link" data-lang="tr">Hakkımızda</a>
+                <a href="about.html" class="footer-link" data-lang="en">About Us</a>
+                <a href="legal.html" class="footer-link" data-lang="tr">Yasal Uyarı</a>
+                <a href="legal.html" class="footer-link" data-lang="en">Legal Disclaimer</a>
+                <a href="privacy.html" class="footer-link" data-lang="tr">Gizlilik Politikası</a>
+                <a href="privacy.html" class="footer-link" data-lang="en">Privacy Policy</a>
+            </div>
+            <div>
+                <h4 class="footer-col-title" data-lang="tr">DESTEK</h4>
+                <h4 class="footer-col-title" data-lang="en">SUPPORT</h4>
+                <a href="help.html" class="footer-link" data-lang="tr">Yardım Merkezi</a>
+                <a href="help.html" class="footer-link" data-lang="en">Help Center</a>
+                <a href="fees.html" class="footer-link" data-lang="tr">Ücretler</a>
+                <a href="fees.html" class="footer-link" data-lang="en">Fees</a>
+                <a href="status.html" class="footer-link" data-lang="tr">Sistem Durumu</a>
+                <a href="status.html" class="footer-link" data-lang="en">Status Page</a>
+            </div>
+            <div>
+                <h4 class="footer-col-title" data-lang="tr">BÜLTEN</h4>
+                <h4 class="footer-col-title" data-lang="en">NEWSLETTER</h4>
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <input type="email" placeholder="Email"
+                        style="background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 8px 12px; border-radius: 8px; color: #fff; width: 140px;">
+                    <button class="waitlist-btn" style="padding: 8px 15px; font-size: 0.7rem;">OK</button>
+                </div>
+            </div>
+        </div>
+        <div
+            style="margin-top: 40px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding: 30px 0; color: #fff; font-size: 0.75rem;">
+            <span data-lang="tr">© 2026 CyberEx Teknoloji Anonim Şirketi. Tüm Hakları Saklıdır.</span>
+            <span data-lang="en">© 2026 CyberEx Technology Inc. All Rights Reserved.</span>
+        </div>
+    </footer>
+
     <script>
         new QRCode(document.getElementById("qrcode"), {
             text: "https://github.com/eticin60/cyberex-update/raw/main/CyberEx-v1.3.8.apk",
@@ -326,6 +521,26 @@
             colorDark: "#000000",
             colorLight: "#ffffff",
             correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // Language Switcher Toggle
+        const langToggle = document.getElementById('langToggle');
+        const html = document.documentElement;
+
+        const savedLang = localStorage.getItem('lang') || 'tr';
+        html.className = 'lang-' + savedLang;
+        langToggle.innerText = savedLang === 'en' ? 'TR' : 'EN';
+
+        langToggle.addEventListener('click', () => {
+            if (html.classList.contains('lang-tr')) {
+                html.className = 'lang-en';
+                langToggle.innerText = 'TR';
+                localStorage.setItem('lang', 'en');
+            } else {
+                html.className = 'lang-tr';
+                langToggle.innerText = 'EN';
+                localStorage.setItem('lang', 'tr');
+            }
         });
     </script>
 </body>

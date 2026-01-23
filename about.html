@@ -293,14 +293,152 @@
             color: #888;
         }
 
-        /* Footer */
-        .simple-footer {
-            text-align: center;
-            padding: 40px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            color: #666;
-            font-size: 0.9rem;
+        /* ROADMAP STYLES */
+        .roadmap-year-row {
+            margin-bottom: 80px;
+        }
+
+        .roadmap-year-title {
+            font-size: 2.5rem;
+            font-weight: 950;
+            color: #fff;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--neon-cyan);
+            padding-left: 20px;
+            text-align: left;
+        }
+
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .roadmap-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 25px;
+            transition: 0.3s;
+            text-align: left;
+        }
+
+        .roadmap-item:hover {
+            border-color: var(--neon-cyan);
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.15);
+        }
+
+        .roadmap-date {
+            font-weight: 950;
+            color: var(--neon-cyan);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .roadmap-content h4 {
+            margin-bottom: 10px;
+            font-size: 1rem;
+            font-weight: 800;
+        }
+
+        .roadmap-content p {
+            color: #7f8c8d;
+            font-size: 0.75rem;
+            line-height: 1.4;
+        }
+
+        /* AI DEEP DIVE STYLES */
+        .ai-deep-dive {
+            padding: 100px 20px;
+        }
+
+        .ai-orb {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+            animation: orbFloat 6s infinite alternate ease-in-out;
+        }
+
+        @keyframes orbFloat {
+            from {
+                transform: translate(0, 0);
+            }
+
+            to {
+                transform: translate(20px, -20px);
+            }
+        }
+
+        /* MOBILDE GİZLE (Desktop Only) */
+        @media (max-width: 968px) {
+            .desktop-only-section {
+                display: none !important;
+            }
+        }
+
+        /* Integrated Footer Styles */
+        .footer {
+            width: 100%;
+            padding: 80px 20px 0;
+            border-top: 1px solid rgba(0, 240, 255, 0.1);
+            background: transparent;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 10;
             margin-top: 80px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 60px;
+            text-align: left;
+        }
+
+        .footer-col-title {
+            color: #fff;
+            font-weight: 900;
+            margin-bottom: 25px;
+            border-left: 3px solid var(--neon-cyan);
+            padding-left: 15px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .footer-link {
+            display: block;
+            color: #7f8c8d;
+            text-decoration: none;
+            padding: 8px 0;
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .footer-link:hover {
+            color: var(--neon-cyan);
+            padding-left: 10px;
+        }
+
+        .waitlist-btn {
+            background: var(--neon-cyan);
+            color: #000;
+            border: none;
+            font-weight: 900;
+            cursor: pointer;
+            transition: 0.3s;
+            padding: 12px 25px;
+            border-radius: 12px;
+        }
+
+        .waitlist-btn:hover {
+            box-shadow: 0 0 15px var(--neon-cyan);
+            transform: scale(1.05);
         }
 
         /* Lang Classes */
@@ -319,9 +457,13 @@
         }
 
         html.lang-en span[data-lang="en"],
-        html.lang-en strong[data-lang="en"],
-        html.lang-en a[data-lang="en"] {
+        html.lang-en strong[data-lang="en"] {
             display: inline;
+        }
+
+        html.lang-en a[data-lang="en"] {
+            display: block;
+            /* Ensure links stay stacked */
         }
 
         /* Ensure default visibility matches (Hide EN) */
@@ -372,7 +514,9 @@
         <!-- Section 1: Who We Are -->
         <div class="grid-2">
             <div class="text-block">
-                <span style="font-size: 0.9rem; font-weight: 700; letter-spacing: 2px;">BİZ KİMİZ? (WHO WE ARE)</span>
+                <span style="font-size: 0.9rem; font-weight: 700; letter-spacing: 2px;" data-lang="tr">BİZ KİMİZ?</span>
+                <span style="font-size: 0.9rem; font-weight: 700; letter-spacing: 2px;" data-lang="en">WHO WE
+                    ARE?</span>
                 <h2 data-lang="tr">Hibrit Finans <br><span>Teknolojisi</span></h2>
                 <h2 data-lang="en">Hybrid Finance <br><span>Technology</span></h2>
                 <p data-lang="tr">
@@ -403,6 +547,34 @@
                 <i class="fas fa-building-columns" style="font-size: 8rem; color: #fff; z-index: 1;"></i>
             </div>
         </div>
+
+        <!-- AI Deep Dive Section (Desktop Only) -->
+        <section class="desktop-only-section ai-deep-dive" style="margin-top: 100px;">
+            <div class="grid-2">
+                <div class="visual-block">
+                    <div class="visual-glow"></div>
+                    <img src="cyberex-logo.png" alt="CyberEx AI Core Logo" title="CyberEx Google Gemini Integration"
+                        style="width: 150px; z-index: 2; filter: drop-shadow(0 0 20px var(--neon-cyan));">
+                    <div class="ai-orb"></div>
+                </div>
+                <div class="text-block">
+                    <span style="color: var(--neon-cyan); font-weight: 800; letter-spacing: 2px;">GOOGLE GEMINI AI
+                        CORE</span>
+                    <h2 data-lang="tr">Yapay Zeka ile <br><span>Güçlendirilmiş Güvenlik</span></h2>
+                    <h2 data-lang="en">AI-Powered <br><span>Security & Intelligence</span></h2>
+                    <p data-lang="tr">CyberEx, Google Gemini AI'ın gelişmiş desen tanıma algoritmalarını çekirdek
+                        sistemine entegre eder. Bu entegrasyon, milyarlarca işlemi gerçek zamanlı analiz ederek olası
+                        tehditleri milisaniyeler içinde etkisiz hale getirir.</p>
+                    <p data-lang="en">CyberEx integrates Google Gemini AI's advanced pattern recognition algorithms into
+                        its core system. This integration analyzes billions of transactions in real-time, neutralizing
+                        potential threats in milliseconds.</p>
+                    <p data-lang="tr">Piyasa yapıcı botlarımız, Gemini AI'ın tahminleme gücünü kullanarak en karmaşık
+                        piyasa koşullarında bile likidite dengesini korur.</p>
+                    <p data-lang="en">Our market maker bots use Gemini AI's predictive power to maintain liquidity
+                        balance even in the most complex market conditions.</p>
+                </div>
+            </div>
+        </section>
 
         <!-- Stats -->
         <div class="stats-bar">
@@ -491,10 +663,202 @@
             </div>
         </div>
 
+        <!-- Roadmap Section (Desktop Only) -->
+        <section class="desktop-only-section roadmap-section" style="margin-top: 120px;">
+            <h2 style="text-align: center; font-size: 3.5rem; margin-bottom: 20px;" data-lang="tr">Stratejik <span
+                    style="color:var(--neon-cyan)">Vizyon 2026-2028</span></h2>
+            <h2 style="text-align: center; font-size: 3.5rem; margin-bottom: 20px;" data-lang="en">Strategic <span
+                    style="color:var(--neon-cyan)">Vision 2026-2028</span></h2>
+            <p style="text-align: center; color: #888; margin-bottom: 80px;" data-lang="tr">CyberEx Mobil yayında (Beta)
+                / Büyük lansman 16 Haziran 2026'da!</p>
+            <p style="text-align: center; color: #888; margin-bottom: 80px;" data-lang="en">CyberEx Mobile is live
+                (Beta) / Grand Launch on June 16, 2026!</p>
+
+            <!-- 2026 ROW -->
+            <div class="roadmap-year-row">
+                <h3 class="roadmap-year-title">2026: <span style="color:var(--neon-cyan)">THE INCEPTION</span></h3>
+                <div class="roadmap-grid">
+                    <div class="roadmap-item"
+                        style="border-color: #bc13fe; box-shadow: 0 0 15px rgba(188, 19, 254, 0.1);">
+                        <div class="roadmap-date">Q1 2026 (BETA)</div>
+                        <div class="roadmap-content">
+                            <h4 data-lang="tr" style="color:#bc13fe;">EKOSİSTEM BETA SÜRECİ</h4>
+                            <h4 data-lang="en" style="color:#bc13fe;">ECOSYSTEM BETA PHASE</h4>
+                            <p data-lang="tr">Mobil Uygulama (Android/iOS), Kurumsal Web Sitesi ve Güvenlik Altyapısının
+                                topluluğa açılan ilk beta sürümü.</p>
+                            <p data-lang="en">First community beta release including Mobile App (Android/iOS), Corporate
+                                Website, and Security Infrastructure.</p>
+                        </div>
+                    </div>
+                    <div class="roadmap-item"
+                        style="border-color: var(--neon-cyan); background: rgba(0, 240, 255, 0.05);">
+                        <div class="roadmap-date">16.06.2026</div>
+                        <div class="roadmap-content">
+                            <h4 data-lang="tr" style="color:var(--neon-cyan);">GRAND LAUNCH</h4>
+                            <h4 data-lang="en" style="color:var(--neon-cyan);">GRAND LAUNCH</h4>
+                            <p data-lang="tr">Hibrit borsa, Web3 wallet ve ana dashboard'un resmi açılışı.</p>
+                            <p data-lang="en">Official release of the hybrid exchange, Web3 wallet, and dashboard.</p>
+                        </div>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-date">Q3 2026</div>
+                        <div class="roadmap-content">
+                            <h4 data-lang="tr">ELITE CARD ROLLOUT</h4>
+                            <h4 data-lang="en">ELITE CARD ROLLOUT</h4>
+                            <p data-lang="tr">Fiziksel CyberEx kartlarının kullanıcılara sevkiyatı.</p>
+                            <p data-lang="en">Shipment of physical CyberEx cards to the user base.</p>
+                        </div>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-date">Q4 2026</div>
+                        <div class="roadmap-content">
+                            <h4 data-lang="tr">LIQUIDITY HUB</h4>
+                            <h4 data-lang="en">LIQUIDITY HUB</h4>
+                            <p data-lang="tr">Yapay zeka destekli kurumsal piyasa yapıcı araçları.</p>
+                            <p data-lang="en">AI-powered institutional market maker toolkits.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2027 ROW -->
+            <div class="roadmap-year-row">
+                <h3 class="roadmap-year-title">2027: <span style="color:var(--neon-cyan)">EXPANSION</span></h3>
+                <div class="roadmap-grid">
+                    <div class="roadmap-item">
+                        <div class="roadmap-date">Q1 2027</div>
+                        <div class="roadmap-content">
+                            <h4 data-lang="tr">LAYER-2 PROTOCOL</h4>
+                            <h4 data-lang="en">LAYER-2 PROTOCOL</h4>
+                            <p data-lang="tr">CyberEx hibrit Layer-2 testnet ağının devreye alınması.</p>
+                            <p data-lang="en">Deployment of CyberEx hybrid Layer-2 testnet network.</p>
+                        </div>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-date">Q2 2027</div>
+                        <div class="roadmap-content">
+                            <h4 data-lang="tr">AI TRADING CENTER</h4>
+                            <h4 data-lang="en">AI TRADING CENTER</h4>
+                            <p data-lang="tr">Entegre otonom alım-satım asistanlarının lansmanı.</p>
+                            <p data-lang="en">Launch of integrated autonomous trading assistants.</p>
+                        </div>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-date">Q3 2027</div>
+                        <div class="roadmap-content">
+                            <h4 data-lang="tr">EUROPEAN HUB</h4>
+                            <h4 data-lang="en">EUROPEAN HUB</h4>
+                            <p data-lang="tr">Merkez Avrupa ofis açılışı ve AB lisanslama süreçleri.</p>
+                            <p data-lang="en">EU central office opening and licensing procedures.</p>
+                        </div>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-date">Q4 2027</div>
+                        <div class="roadmap-content">
+                            <h4 data-lang="tr">DEX GATEWAY</h4>
+                            <h4 data-lang="en">DEX GATEWAY</h4>
+                            <p data-lang="tr">Uçtan uca merkeziyetsiz çapraz zincir protokolü.</p>
+                            <p data-lang="en">End-to-end decentralized cross-chain protocol.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2028 ROW -->
+            <div class="roadmap-year-row">
+                <h3 class="roadmap-year-title">2028: <span style="color:var(--neon-cyan)">DOMINANCE</span></h3>
+                <div class="roadmap-grid">
+                    <div class="roadmap-item" style="border-style: dashed; opacity: 0.8;">
+                        <div class="roadmap-date">Q1 2028</div>
+                        <div class="roadmap-content">
+                            <h4 data-lang="tr">ASIA INTEGRATION</h4>
+                            <h4 data-lang="en">ASIA INTEGRATION</h4>
+                            <p data-lang="tr">Güneydoğu Asya ve BAE operasyonel lansmanları.</p>
+                            <p data-lang="en">Operational launches in Southeast Asia and UAE.</p>
+                        </div>
+                    </div>
+                    <div class="roadmap-item" style="border-style: dashed; opacity: 0.8;">
+                        <div class="roadmap-date">Q2 2028</div>
+                        <div class="roadmap-content">
+                            <h4 data-lang="tr">CYBEREX BANK BETA</h4>
+                            <h4 data-lang="en">CYBEREX BANK BETA</h4>
+                            <p data-lang="tr">Geleneksel baka-kripto geçitlerinin bankacılık lisanslı yayını.</p>
+                            <p data-lang="en">Banking licensed release of traditional-crypto bridges.</p>
+                        </div>
+                    </div>
+                    <div class="roadmap-item" style="border-style: dashed; opacity: 0.8;">
+                        <div class="roadmap-date">Q3 2028</div>
+                        <div class="roadmap-content">
+                            <h4 data-lang="tr">SENTINEL 4.0</h4>
+                            <h4 data-lang="en">SENTINEL 4.0</h4>
+                            <p data-lang="tr">Tam kapsamlı yapay zeka mülkiyet güvenliği altyapısı.</p>
+                            <p data-lang="en">Full-scale AI asset ownership security infrastructure.</p>
+                        </div>
+                    </div>
+                    <div class="roadmap-item" style="border-style: dashed; opacity: 0.8;">
+                        <div class="roadmap-date">Q4 2028</div>
+                        <div class="roadmap-content">
+                            <h4 data-lang="tr">GLOBAL ECONOMY</h4>
+                            <h4 data-lang="en">GLOBAL ECONOMY</h4>
+                            <p data-lang="tr">Küresel çapta Web3 ticaretinin merkezine yerleşme.</p>
+                            <p data-lang="en">Becoming the central hub for global Web3 commerce.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <footer class="simple-footer">
-        <p>© 2026 CyberEx Technology Inc. All Rights Reserved.</p>
+    <footer class="footer">
+        <div class="footer-content">
+            <div style="grid-column: span 1.5;">
+                <img src="cyberex-logo.png" alt="CyberEx Corporate Logo" title="CyberEx Technology Inc"
+                    style="height: 60px; margin-bottom: 25px;">
+                <p style="color: #666; font-size: 0.85rem; line-height: 2; max-width: 480px;">
+                    <strong data-lang="tr">CyberEx Teknoloji Anonim Şirketi</strong>
+                    <strong data-lang="en">CyberEx Technology Inc.</strong><br>
+                    <span data-lang="tr">CyberEx, yeni nesil finansal teknolojiler ve dijital varlık yönetimi alanında
+                        global bir ekosistem inşa etmek amacıyla kurulmuş hibrit bir teknoloji şirketidir.</span>
+                    <span data-lang="en">CyberEx is a hybrid technology company established to build a global ecosystem
+                        in the field of next-generation financial technologies.</span>
+                </p>
+            </div>
+            <div>
+                <h4 class="footer-col-title" data-lang="tr">KURUMSAL</h4>
+                <h4 class="footer-col-title" data-lang="en">CORPORATE</h4>
+                <a href="about.html" class="footer-link" data-lang="tr">Hakkımızda</a>
+                <a href="about.html" class="footer-link" data-lang="en">About Us</a>
+                <a href="legal.html" class="footer-link" data-lang="tr">Yasal Uyarı</a>
+                <a href="legal.html" class="footer-link" data-lang="en">Legal Disclaimer</a>
+                <a href="privacy.html" class="footer-link" data-lang="tr">Gizlilik Politikası</a>
+                <a href="privacy.html" class="footer-link" data-lang="en">Privacy Policy</a>
+            </div>
+            <div>
+                <h4 class="footer-col-title" data-lang="tr">DESTEK</h4>
+                <h4 class="footer-col-title" data-lang="en">SUPPORT</h4>
+                <a href="help.html" class="footer-link" data-lang="tr">Yardım Merkezi</a>
+                <a href="help.html" class="footer-link" data-lang="en">Help Center</a>
+                <a href="fees.html" class="footer-link" data-lang="tr">Ücretler</a>
+                <a href="fees.html" class="footer-link" data-lang="en">Fees</a>
+                <a href="status.html" class="footer-link" data-lang="tr">Sistem Durumu</a>
+                <a href="status.html" class="footer-link" data-lang="en">Status Page</a>
+            </div>
+            <div>
+                <h4 class="footer-col-title" data-lang="tr">BÜLTEN</h4>
+                <h4 class="footer-col-title" data-lang="en">NEWSLETTER</h4>
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <input type="email" placeholder="Email"
+                        style="background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 8px 12px; border-radius: 8px; color: #fff; width: 140px;">
+                    <button class="waitlist-btn" style="padding: 8px 15px; font-size: 0.7rem;">OK</button>
+                </div>
+            </div>
+        </div>
+        <div
+            style="margin-top: 40px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding: 30px 0; color: #fff; font-size: 0.75rem;">
+            <span data-lang="tr">© 2026 CyberEx Teknoloji Anonim Şirketi. Tüm Hakları Saklıdır.</span>
+            <span data-lang="en">© 2026 CyberEx Technology Inc. All Rights Reserved.</span>
+        </div>
     </footer>
 
     <script>
