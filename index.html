@@ -41,6 +41,9 @@
       color: var(--text);
       overflow-x: hidden;
       scroll-behavior: smooth;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     /* LAYOUT: HİZALI & NİZAMİ */
@@ -232,15 +235,15 @@
     .container {
       position: relative;
       z-index: 10;
-      min-height: 100vh;
+      flex: 1;
+      /* Fills remaining space */
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      /* Üstten hizalama için flex-start (User Feedback: sığmama sorunu fix) */
       padding: 220px 20px 80px;
-      /* Yukarıdan daha fazla boşluk */
       text-align: center;
+      width: 100%;
     }
 
     /* LOGO SECTION */
@@ -566,13 +569,20 @@
         padding-top: 50px;
       }
 
-      .hero-visual {
+      .hero-visual-left,
+      .hero-visual-right {
         position: relative;
         right: 0;
+        left: 0;
         top: 0;
         transform: translateY(0) scale(1);
-        margin-top: 60px;
+        margin-top: 40px;
         margin-right: 0;
+        margin-left: 0;
+      }
+
+      .hero-visual-left {
+        transform: translateY(0) scale(1) rotateY(180deg);
       }
     }
 
@@ -653,36 +663,45 @@
 
     .hero-flex {
       position: relative;
-      /* Allow absolute positioning of children */
       display: flex;
       align-items: center;
       justify-content: center;
-      /* Center the main hero content */
       width: 100%;
-      max-width: 1400px;
+      max-width: 1200px;
+      /* Constrained to keep text tight in center */
       margin: 0 auto;
-      min-height: 700px;
-      /* Ensure enough height for the portal */
+      min-height: 600px;
     }
 
     .hero-text {
       width: 100%;
-      max-width: 900px;
+      max-width: 700px;
+      /* Further narrowed to prevent portal hit */
       text-align: center;
       z-index: 20;
     }
 
-    .hero-visual {
+    .hero-visual-right {
       position: absolute;
-      right: -100px;
-      /* Closest to the right edge as requested */
+      right: -250px;
+      /* Aggressively pushed to the right to avoid overlap */
       top: 50%;
-      transform: translateY(-50%) scale(1.15);
-      /* Slightly bigger and centered vertically */
+      transform: translateY(-50%) scale(1.1);
       z-index: 10;
       opacity: 1;
       pointer-events: auto;
-      /* Ensure hover effects work */
+    }
+
+    .hero-visual-left {
+      position: absolute;
+      left: -250px;
+      /* Simmetrically pushed to the left */
+      top: 50%;
+      transform: translateY(-50%) scale(1.1) rotateY(180deg);
+      /* Mirrored rotation */
+      z-index: 10;
+      opacity: 1;
+      pointer-events: auto;
     }
 
     .wallet-mockup {
@@ -868,15 +887,19 @@
     }
 
     .footer {
-      margin-top: 120px;
-      padding: 80px 40px;
-      border-top: 1px solid var(--border);
-      background: rgba(0, 5, 15, 0.5);
-      backdrop-filter: blur(20px);
+      width: 100%;
+      padding: 80px 20px 0;
+      /* Zero bottom padding */
+      border-top: 1px solid rgba(0, 240, 255, 0.1);
+      background: transparent;
+      backdrop-filter: blur(10px);
+      position: relative;
+      z-index: 10;
+      margin-top: auto;
     }
 
     .footer-content {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -989,6 +1012,20 @@
   <div class="container">
     <section class="hero-section">
       <div class="hero-flex">
+        <div class="hero-visual-left">
+          <div class="portal-container portal-purple" style="position: relative; width: 450px; height: 600px;">
+            <div class="portal-base" style="bottom: 120px; left: 50%;">
+              <div class="portal-glow"></div>
+              <div class="portal-ring"></div>
+              <div class="portal-ring"></div>
+              <div class="portal-ring"></div>
+            </div>
+            <div class="portal-rays" style="bottom: 180px; left: 50%;"></div>
+            <img src="cyberex_app_reklam.png" alt="CyberEx App" class="wallet-mockup"
+              style="width: 320px; position: absolute; left: 50%; bottom: 240px; transform: translateX(-50%); z-index: 10;">
+          </div>
+        </div>
+
         <div class="hero-text">
           <div class="logo-section">
             <div class="logo-container">
@@ -1013,7 +1050,7 @@
           </p>
         </div>
 
-        <div class="hero-visual">
+        <div class="hero-visual-right">
           <div class="portal-container portal-purple" style="position: relative; width: 450px; height: 600px;">
             <!-- Portal Base -->
             <div class="portal-base" style="bottom: 120px; left: 50%;">
@@ -1234,99 +1271,98 @@
         </div>
       </div>
       <div
-        style="margin-top: 60px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 40px; color: #444; font-size: 0.75rem;">
+        style="margin-top: 40px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; padding-bottom: 30px; color: #444; font-size: 0.75rem; margin-bottom: 0;">
         © 2026 CyberEx Teknoloji Anonim Şirketi. All Rights Reserved. Varlıklarınız şirket güvencemiz altındadır.
       </div>
     </footer>
-  </div>
 
-  <script>
-    // QR Code
-    new QRCode(document.getElementById("qrcode"), { text: "https://github.com/eticin60/cyberex-update/raw/main/CyberEx-v1.3.8.apk", width: 120, height: 120 });
+    <script>
+      // QR Code
+      new QRCode(document.getElementById("qrcode"), { text: "https://github.com/eticin60/cyberex-update/raw/main/CyberEx-v1.3.8.apk", width: 120, height: 120 });
 
-    // Background Scripts System
-    (function initBackgroundSystems() {
-      // City Silhouette
-      const city = document.getElementById('citySilhouette');
-      for (let i = 0; i < 15; i++) {
-        const b = document.createElement('div'); b.className = 'city-building';
-        const w = 30 + Math.random() * 40; const h = 40 + Math.random() * 100;
-        b.style.width = w + 'px'; b.style.height = h + 'px'; b.style.left = (i / 15) * 100 + '%';
-        city.appendChild(b);
-      }
+      // Background Scripts System
+      (function initBackgroundSystems() {
+        // City Silhouette
+        const city = document.getElementById('citySilhouette');
+        for (let i = 0; i < 15; i++) {
+          const b = document.createElement('div'); b.className = 'city-building';
+          const w = 30 + Math.random() * 40; const h = 40 + Math.random() * 100;
+          b.style.width = w + 'px'; b.style.height = h + 'px'; b.style.left = (i / 15) * 100 + '%';
+          city.appendChild(b);
+        }
 
-      // Circuit Nodes
-      const nodesContainer = document.getElementById('circuitNodes');
-      for (let i = 0; i < 30; i++) {
-        const n = document.createElement('div'); n.className = 'circuit-node';
-        n.style.left = Math.random() * 100 + '%'; n.style.top = Math.random() * 100 + '%';
-        n.style.animationDelay = Math.random() * 2 + 's';
-        nodesContainer.appendChild(n);
-      }
+        // Circuit Nodes
+        const nodesContainer = document.getElementById('circuitNodes');
+        for (let i = 0; i < 30; i++) {
+          const n = document.createElement('div'); n.className = 'circuit-node';
+          n.style.left = Math.random() * 100 + '%'; n.style.top = Math.random() * 100 + '%';
+          n.style.animationDelay = Math.random() * 2 + 's';
+          nodesContainer.appendChild(n);
+        }
 
-      // Particles Canvas
-      const pCanv = document.getElementById('particles-canvas');
-      const pCtx = pCanv.getContext('2d');
-      function res() { pCanv.width = window.innerWidth; pCanv.height = window.innerHeight; }
-      res(); window.addEventListener('resize', res);
-      const pts = []; for (let i = 0; i < 60; i++) pts.push({ x: Math.random() * pCanv.width, y: Math.random() * pCanv.height, r: Math.random() * 1.5, vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5 });
+        // Particles Canvas
+        const pCanv = document.getElementById('particles-canvas');
+        const pCtx = pCanv.getContext('2d');
+        function res() { pCanv.width = window.innerWidth; pCanv.height = window.innerHeight; }
+        res(); window.addEventListener('resize', res);
+        const pts = []; for (let i = 0; i < 60; i++) pts.push({ x: Math.random() * pCanv.width, y: Math.random() * pCanv.height, r: Math.random() * 1.5, vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5 });
 
-      // Network Canvas
-      const nCanv = document.getElementById('network-canvas');
-      const nCtx = nCanv.getContext('2d');
-      const nNodes = []; for (let i = 0; i < 15; i++) nNodes.push({ x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight, vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4 });
+        // Network Canvas
+        const nCanv = document.getElementById('network-canvas');
+        const nCtx = nCanv.getContext('2d');
+        const nNodes = []; for (let i = 0; i < 15; i++) nNodes.push({ x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight, vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4 });
 
-      function animate() {
-        pCtx.clearRect(0, 0, pCanv.width, pCanv.height);
-        pts.forEach(p => {
-          p.x += p.vx; p.y += p.vy; if (p.x < 0 || p.x > pCanv.width) p.vx *= -1; if (p.y < 0 || p.y > pCanv.height) p.vy *= -1;
-          pCtx.beginPath(); pCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2); pCtx.fillStyle = 'rgba(0,240,255,0.4)'; pCtx.fill();
-        });
-
-        nCtx.clearRect(0, 0, nCanv.width, nCanv.height);
-        nNodes.forEach((node, i) => {
-          node.x += node.vx; node.y += node.vy;
-          if (node.x < 0 || node.x > nCanv.width) node.vx *= -1; if (node.y < 0 || node.y > nCanv.height) node.vy *= -1;
-          nNodes.slice(i + 1).forEach(other => {
-            const dx = node.x - other.x; const dy = node.y - other.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 200) {
-              nCtx.beginPath(); nCtx.moveTo(node.x, node.y); nCtx.lineTo(other.x, other.y);
-              nCtx.strokeStyle = `rgba(0, 240, 255, ${0.15 * (1 - dist / 200)})`; nCtx.stroke();
-            }
+        function animate() {
+          pCtx.clearRect(0, 0, pCanv.width, pCanv.height);
+          pts.forEach(p => {
+            p.x += p.vx; p.y += p.vy; if (p.x < 0 || p.x > pCanv.width) p.vx *= -1; if (p.y < 0 || p.y > pCanv.height) p.vy *= -1;
+            pCtx.beginPath(); pCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2); pCtx.fillStyle = 'rgba(0,240,255,0.4)'; pCtx.fill();
           });
+
+          nCtx.clearRect(0, 0, nCanv.width, nCanv.height);
+          nNodes.forEach((node, i) => {
+            node.x += node.vx; node.y += node.vy;
+            if (node.x < 0 || node.x > nCanv.width) node.vx *= -1; if (node.y < 0 || node.y > nCanv.height) node.vy *= -1;
+            nNodes.slice(i + 1).forEach(other => {
+              const dx = node.x - other.x; const dy = node.y - other.y;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+              if (dist < 200) {
+                nCtx.beginPath(); nCtx.moveTo(node.x, node.y); nCtx.lineTo(other.x, other.y);
+                nCtx.strokeStyle = `rgba(0, 240, 255, ${0.15 * (1 - dist / 200)})`; nCtx.stroke();
+              }
+            });
+          });
+          requestAnimationFrame(animate);
+        }
+        animate();
+      })();
+
+      // Lottie Animation System
+      (function initLottie() {
+        const heroContainer = document.getElementById('lottie-anim');
+
+        // Hero Animation
+        lottie.loadAnimation({
+          container: heroContainer,
+          renderer: 'svg',
+          loop: true,
+          autoplay: true,
+          path: 'cryptobitcoin.json'
         });
-        requestAnimationFrame(animate);
-      }
-      animate();
-    })();
 
-    // Lottie Animation System
-    (function initLottie() {
-      const heroContainer = document.getElementById('lottie-anim');
+        heroContainer.style.opacity = '1';
+      })();
 
-      // Hero Animation
-      lottie.loadAnimation({
-        container: heroContainer,
-        renderer: 'svg',
-        loop: true,
-        autoplay: true,
-        path: 'cryptobitcoin.json'
+      // Language Toggle
+      const btns = document.querySelectorAll('.lang-btn');
+      btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const lang = btn.dataset.lang;
+          btns.forEach(b => b.classList.remove('active')); btn.classList.add('active');
+          document.querySelectorAll('[data-tr]').forEach(el => el.innerHTML = el.dataset[lang]);
+        });
       });
-
-      heroContainer.style.opacity = '1';
-    })();
-
-    // Language Toggle
-    const btns = document.querySelectorAll('.lang-btn');
-    btns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const lang = btn.dataset.lang;
-        btns.forEach(b => b.classList.remove('active')); btn.classList.add('active');
-        document.querySelectorAll('[data-tr]').forEach(el => el.innerHTML = el.dataset[lang]);
-      });
-    });
-  </script>
+    </script>
 </body>
 
 </html>
