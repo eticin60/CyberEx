@@ -7,7 +7,7 @@ const path = require('path');
 
 const iconSVG = `
 <svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
-  <rect width="128" height="128" fill="#000000"/>
+  <rect width="128" height="128" fill="#212121"/>
   <g stroke="#00ffff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
     <path d="M 30 64 Q 30 30, 64 30" />
     <path d="M 30 64 Q 30 98, 64 98" />
