@@ -1,184 +1,408 @@
-/* Mobile Optimization Patch */
-@media screen and (max-width: 768px) {
+/* Global hidden state for desktop - placed first to allow mobile overrides */
+.mobile-menu-btn {
+    display: none !important;
+}
 
-    /* --- GLOBAL & SCROLL FIXES --- */
+@media screen and (max-width: 991px) {
+
+    /* --- 1. GLOBAL RESET & PERFORMANCE --- */
     html,
     body {
         overflow-x: hidden !important;
+        max-width: 100vw !important;
         width: 100% !important;
         position: relative;
+        touch-action: pan-y;
     }
 
-    /* --- TOP VISUALS (USER REQUEST: HIDE) --- */
-    .hero-visual-left,
-    .hero-visual-right {
+    /* Disable heavy background animations on mobile to prevent freezing */
+    #particles-canvas,
+    #network-canvas,
+    .orb,
+    .circuit-board {
         display: none !important;
     }
 
-    /* --- MIDDLE HEAVY ELEMENTS (HIDE) --- */
+    /* --- 2. HIDE UNAVAILABLE / HEAVY DESKTOP ELEMENTS --- */
+    .hero-visual-left,
+    .hero-visual-right,
     .eco-hologram-section,
     .security-visual,
-    .security-ring {
+    .security-ring,
+    .top-contact-bar,
+    .ticker-wrap,
+    .live-tx-section {
         display: none !important;
     }
 
-    /* --- LAYOUT ADJUSTMENTS --- */
+    /* --- 3. NAVBAR & HAMBURGER MENU --- */
+    .navbar {
+        width: 95% !important;
+        left: 2.5% !important;
+        right: 2.5% !important;
+        top: 15px !important;
+        padding: 10px 15px !important;
+        background: rgba(0, 5, 10, 0.95) !important;
+        border-radius: 40px !important;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        justify-content: center !important;
+        /* Center the logo block */
+        position: relative !important;
+        transform: none !important;
+        margin: 0 !important;
+        height: auto !important;
+        border: 1px solid rgba(0, 240, 255, 0.3) !important;
+        z-index: 9999 !important;
+    }
 
-    /* 1. Security Section (Text Centering) */
-    .security-section {
+    /* Logo (Left) */
+    .nav-logo-center {
         display: flex !important;
         flex-direction: column !important;
-        text-align: center !important;
-        height: auto !important;
-        gap: 30px !important;
-        margin: 60px auto !important;
+        /* Stack vertically */
+        align-items: center !important;
+        /* Center horizontally */
+        gap: 4px !important;
+        flex: 0 0 auto !important;
+        order: 1 !important;
     }
 
-    .security-section h2 {
-        text-align: center !important;
+    .nav-logo-center img {
+        height: 38px !important;
+        /* Slightly bigger logo */
+        width: auto !important;
+        margin: 0 !important;
     }
 
-    .security-section>div {
+    /* Tagline (Centered below logo) */
+    .nav-tagline {
+        display: block !important;
+        font-size: 0.55rem !important;
+        color: var(--neon-cyan) !important;
+        font-weight: 900 !important;
+        letter-spacing: 1.5px !important;
+        order: 2 !important;
+        flex: 0 0 auto !important;
+        text-align: center !important;
+        margin: 0 !important;
+        white-space: nowrap !important;
+    }
+
+    /* Hamburger Menu Button (Pinned to Far Right) */
+    .navbar .mobile-menu-btn {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: transparent !important;
+        border: none !important;
+        color: var(--neon-cyan) !important;
+        font-size: 2.2rem !important;
+        /* Larger for better tap target */
+        cursor: pointer !important;
+        padding: 5px !important;
+        z-index: 10005 !important;
+        position: absolute !important;
+        right: 15px !important;
+        /* Pinned far right */
+        left: auto !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        margin: 0 !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    /* Navigation Links Container */
+    .nav-links {
+        display: none !important;
+        width: 100% !important;
+        flex-direction: column !important;
+        text-align: center !important;
+        margin-top: 20px !important;
+        padding-top: 20px !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+        gap: 15px !important;
+        position: static !important;
+        transform: none !important;
+        order: 4 !important;
+    }
+
+    .navbar.mobile-open {
+        flex-wrap: wrap !important;
+        padding-bottom: 30px !important;
+        background: rgba(0, 0, 0, 0.98) !important;
+    }
+
+    .navbar.mobile-open .nav-links {
+        display: flex !important;
+    }
+
+    .navbar.mobile-open .lang-switcher {
+        display: flex !important;
+        width: 100% !important;
+        justify-content: center !important;
+        margin-top: 20px !important;
+    }
+
+    .nav-link {
+        font-size: 1.1rem !important;
+        padding: 10px !important;
+        color: #fff !important;
+        width: 100% !important;
+    }
+
+    .nav-link[href="download.html"] {
+        display: block !important;
+        background: var(--neon-cyan) !important;
+        color: #000 !important;
+        font-weight: 800 !important;
+        border-radius: 12px !important;
+        padding: 15px !important;
+        margin-bottom: 10px !important;
+        box-shadow: 0 0 20px rgba(0, 240, 255, 0.4) !important;
+    }
+
+    .lang-switcher {
+        display: none !important;
+    }
+
+    /* --- 4. CONTAINER STANDARDIZATION --- */
+    .container,
+    .hero-flex,
+    .grid-2,
+    .security-section,
+    .pocket-section,
+    .newsletter-section,
+    .stats-bar,
+    .footer-content,
+    .store-btns,
+    .waitlist-form,
+    .elite-section {
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        box-sizing: border-box !important;
+        gap: 30px !important;
     }
 
-    .security-section div[style*="grid-template-columns"] {
+    .countdown-grid,
+    .eco-grid,
+    .security-section>div {
         display: flex !important;
         flex-direction: column !important;
-        gap: 30px !important;
+        width: 100% !important;
+        gap: 20px !important;
     }
 
-    /* 2. Stats Bar */
-    .stats-bar {
+    /* --- 5. ELITE CARD FIXES --- */
+    .elite-section {
+        padding: 40px 20px !important;
+        overflow: visible !important;
+    }
+
+    .elite-section>div {
+        text-align: center !important;
+        width: 100% !important;
+    }
+
+    .elite-section input {
+        width: 70% !important;
+        max-width: 280px !important;
+        margin: 15px auto !important;
+        display: block !important;
+        text-align: center !important;
+    }
+
+    .elite-section label {
+        text-align: center !important;
+        width: 100% !important;
+    }
+
+    /* Fit card properly on mobile */
+    .elite-section .card-container {
+        width: 85% !important;
+        max-width: 340px !important;
+        height: auto !important;
+        aspect-ratio: 1.586 !important;
+        margin: 20px auto !important;
+        transform: scale(0.85) !important;
+        transform-origin: center center !important;
+    }
+
+    .elite-card-3d {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    /* --- 6. POCKET SECTION FIXES --- */
+    .pocket-section {
+        display: flex !important;
         flex-direction: column !important;
-        gap: 30px !important;
-        padding: 30px 20px !important;
-    }
-
-    /* 3. Grand Launch & Countdown */
-    .launch-section {
+        position: relative !important;
+        gap: 0px !important;
+        align-items: center !important;
         padding: 40px 20px !important;
     }
 
-    .countdown-grid {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr !important;
-        gap: 15px !important;
-    }
-
-    .waitlist-form {
-        flex-direction: column !important;
-        width: 100% !important;
-    }
-
-    .waitlist-btn {
-        width: 100% !important;
-    }
-
-    /* 4. Newsletter Section */
-    .newsletter-section {
-        flex-direction: column !important;
-        text-align: center !important;
-        gap: 30px !important;
-        padding: 30px 20px !important;
-    }
-
-    .newsletter-section div[style*="text-align: left"] {
-        text-align: center !important;
-    }
-
-    .newsletter-section form {
-        width: 100% !important;
-        flex-direction: column !important;
-    }
-
-    .newsletter-section input {
-        width: 100% !important;
-    }
-
-    .newsletter-section button {
-        width: 100% !important;
-    }
-
-    /* 5. Pocket Section Alignment */
-    .pocket-section {
-        flex-direction: column;
-        text-align: center;
-        padding-top: 40px;
-    }
-
     .pocket-left-content {
-        width: 100%;
-        max-width: 100%;
-        margin-bottom: 20px;
-        align-items: center;
+        order: 1 !important;
+        width: 100% !important;
+        margin-bottom: 30px !important;
+        position: relative !important;
+        z-index: 10 !important;
     }
 
-    .pocket-left-content h2 {
-        font-size: 2.5rem !important;
+    /* Show only first mockup image */
+    .pocket-section .mockup-img {
+        order: 2 !important;
+        display: block !important;
+        width: 70% !important;
+        max-width: 260px !important;
+        position: relative !important;
+        margin: 20px auto !important;
+        z-index: 15 !important;
     }
 
-    .store-btns {
-        align-items: center;
+    /* Hide second mockup (mockup-2) */
+    .pocket-section .mockup-2 {
+        display: none !important;
     }
 
-    /* 6. Install Toast Centering */
-    .install-toast {
+    .pocket-section .portal-container {
+        order: 3 !important;
+        display: flex !important;
         width: 90% !important;
-        max-width: 90% !important;
+        max-width: 300px !important;
+        height: 200px !important;
+        position: relative !important;
+        margin: 75px auto 0px !important;
+        /* Moved down from PNG to 75px */
+        transform: scale(0.85) !important;
+        z-index: 5 !important;
+    }
+
+    .portal-container img {
+        display: none !important;
+    }
+
+    .pocket-section>div:last-child {
+        order: 4 !important;
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        margin-top: 0px !important;
+        /* No margin above QR to touch portal */
+        padding-bottom: 40px !important;
+        position: relative !important;
+        z-index: 10 !important;
+    }
+
+    .qr-neon-box {
+        background: rgba(0, 240, 255, 0.05) !important;
+        padding: 20px !important;
+    }
+
+    /* --- 7. INSTALL TOAST CENTERING --- */
+    .install-toast {
         left: 50% !important;
-        bottom: 20px !important;
-        transform: translateX(-50%) translateY(150px);
-        /* Initial hidden state */
+        transform: translateX(-50%) translateY(150px) !important;
+        width: 90% !important;
+        max-width: 340px !important;
+        bottom: 25px !important;
         border-radius: 16px !important;
+        padding: 12px 15px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 10px !important;
     }
 
     .install-toast.show {
         transform: translateX(-50%) translateY(0) !important;
     }
 
-    /* 7. Navbar & Download Button Styling */
-    .navbar {
-        padding: 15px !important;
-        border-radius: 30px !important;
-        background: rgba(0, 5, 15, 0.95) !important;
-        top: 10px !important;
-        width: 95% !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
+    .install-toast img {
+        width: 45px !important;
+        height: 45px !important;
+        flex-shrink: 0 !important;
+    }
+
+    .install-toast>div:first-of-type {
+        flex: 1 !important;
+        text-align: left !important;
+        padding: 0 5px !important;
+    }
+
+    #install-btn {
+        flex-shrink: 0 !important;
+        padding: 8px 16px !important;
+        white-space: nowrap !important;
+    }
+
+    #close-toast {
+        flex-shrink: 0 !important;
+        padding: 0 0 0 5px !important;
+    }
+
+    /* --- 8. GENERAL ALIGNMENT --- */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    p,
+    span,
+    div {
+        text-align: center !important;
+        max-width: 100% !important;
+    }
+
+    .title {
+        font-size: 2.8rem !important;
+        line-height: 1.1 !important;
+    }
+
+    .subtitle {
+        font-size: 1rem !important;
+        padding: 0 10px !important;
+    }
+
+    .section-title {
+        margin-top: 60px !important;
+        margin-bottom: 30px !important;
+    }
+
+    input,
+    button,
+    .store-btn {
+        width: 100% !important;
+        max-width: 100% !important;
         margin: 0 !important;
     }
 
-    .nav-links {
-        display: flex !important;
-        flex-direction: column !important;
-        position: static !important;
-        transform: none !important;
-        gap: 10px !important;
-        width: 100% !important;
+    .waitlist-input {
+        margin-bottom: 10px !important;
     }
 
-    /* Hide "Coming Soon" links to clean up mobile menu if desired, 
-       but user said "üst barımız uygulama indir kısmı vs çok şık durmalı" 
-       so we highlight the download button primarily. 
-    */
-
-    .nav-link[href="download.html"] {
-        background: linear-gradient(90deg, var(--neon-cyan), var(--neon-blue)) !important;
-        color: #000 !important;
-        text-align: center !important;
-        padding: 12px !important;
-        width: 100% !important;
-        display: block !important;
-        box-shadow: 0 0 20px rgba(0, 240, 255, 0.4) !important;
-        font-size: 1rem !important;
-        margin-top: 10px !important;
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+        object-fit: contain !important;
     }
 
-    /* Hide Top Contact Bar on Mobile to save space/clean look */
-    .top-contact-bar {
-        display: none !important;
+    .logo-container,
+    .logo-wrap {
+        margin: 0 auto !important;
+        left: auto !important;
+        right: auto !important;
     }
 }

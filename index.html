@@ -1796,7 +1796,27 @@
       <button class="lang-btn" data-lang="en">EN</button>
     </div>
 
+    <!-- Mobile Hamburger Menu Button -->
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+      <i class="fas fa-bars"></i>
+    </button>
   </nav>
+
+  <script>
+    function toggleMobileMenu() {
+      const navbar = document.querySelector('.navbar');
+      navbar.classList.toggle('mobile-open');
+
+      const icon = document.querySelector('.mobile-menu-btn i');
+      if (navbar.classList.contains('mobile-open')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+      } else {
+        icon.classList.add('fa-bars');
+        icon.classList.remove('fa-times');
+      }
+    }
+  </script>
 
   <!-- Live Market Ticker (Moved out of fixed navbar to scroll away) -->
   <div class="ticker-wrap">
@@ -2358,7 +2378,7 @@
         </div>
       </div>
       <div
-        style="margin-top: 40px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; padding-bottom: 30px; color: #444; font-size: 0.75rem; margin-bottom: 0;"
+        style="margin-top: 40px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; padding-bottom: 30px; color: #fff; font-size: 0.75rem; margin-bottom: 0;"
         data-tr="© 2026 CyberEx Teknoloji Anonim Şirketi. Tüm Hakları Saklıdır. Varlıklarınız şirket güvencemiz altındadır."
         data-en="© 2026 CyberEx Technology Inc. All Rights Reserved. Your assets are under our corporate guarantee.">
         © 2026 CyberEx Teknoloji Anonim Şirketi. All Rights Reserved. Varlıklarınız şirket güvencemiz altındadır.
