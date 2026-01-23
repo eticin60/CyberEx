@@ -292,9 +292,9 @@
 }
 
 .elite-card-3d .card-number {
-    font-size: 1.45rem !important;
-    letter-spacing: 4px !important;
-    word-spacing: 8px !important;
+    font-size: 1.25rem !important; /* 1.45rem'den 1.25rem'e düştü */
+    letter-spacing: 3px !important; /* 4px'ten 3px'e düştü */
+    word-spacing: 6px !important; /* 8px'ten 6px'e düştü */
     margin: 28px 0 !important;
     white-space: nowrap !important;
 }
