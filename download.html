@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>CyberEx - Uygulamayı İndir | Gelecek Cebinizde</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        :root {
+            --neon-cyan: #00f0ff;
+            --neon-blue: #0072ff;
+            --bg: #000510;
+            --border: rgba(0, 240, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            font-family: 'Inter', sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Background Effects */
+        .bg-elements {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.3;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--neon-cyan);
+            top: -200px;
+            left: -200px;
+        }
+
+        .orb-2 {
+            width: 600px;
+            height: 600px;
+            background: var(--neon-blue);
+            bottom: -200px;
+            right: -100px;
+        }
+
+        .download-container {
+            width: 90%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            padding: 60px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(40px);
+            border: 1px solid var(--border);
+            border-radius: 60px;
+            position: relative;
+        }
+
+        .left-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right-side {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 950;
+            line-height: 1.1;
+            margin-bottom: 25px;
+        }
+
+        h1 span {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+        }
+
+        p {
+            color: #6b7a99;
+            font-size: 1.2rem;
+            line-height: 1.7;
+            margin-bottom: 45px;
+            max-width: 500px;
+        }
+
+        .store-btns {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .store-btn {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px 35px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .store-btn i {
+            font-size: 1.8rem;
+        }
+
+        .store-btn:hover {
+            background: var(--neon-cyan);
+            color: #000;
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.4);
+        }
+
+        .qr-box {
+            margin-top: 40px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(0, 240, 255, 0.05);
+            border-radius: 30px;
+            border: 1px dashed var(--neon-cyan);
+            width: fit-content;
+        }
+
+        #qrcode {
+            padding: 10px;
+            background: #fff;
+            border-radius: 12px;
+        }
+
+        .mockup-img {
+            width: 100%;
+            max-width: 450px;
+            filter: drop-shadow(0 0 50px rgba(0, 240, 255, 0.3));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .back-nav {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            text-decoration: none;
+            color: #6b7a99;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .back-nav:hover {
+            color: var(--neon-cyan);
+        }
+
+        @media (max-width: 900px) {
+            .download-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 40px 20px;
+            }
+
+            .left-side {
+                align-items: center;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .qr-box {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-elements">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <a href="index.html" class="back-nav"><i class="fas fa-arrow-left"></i> ANA SAYFAYA DÖN</a>
+
+    <div class="download-container">
+        <div class="left-side">
+            <h1>Cebindeki<br><span>Gelecek.</span></h1>
+            <p>CyberEx Mobil ile kripto dünyası her an yanınızda. Ultra hızlı alım-satım, Web3 cüzdan ve maksimum
+                güvenlik şimdi bir dokunuş uzağınızda.</p>
+
+            <div class="store-btns">
+                <a href="https://github.com/eticin60/cyberex-update/raw/main/CyberEx-v1.3.8.apk" class="store-btn">
+                    <i class="fab fa-android"></i>
+                    <div>
+                        <div style="font-size: 0.7rem; opacity: 0.7;">Hemen İndir</div>APK v1.3.8
+                    </div>
+                </a>
+                <a href="#" class="store-btn" style="opacity: 0.5; cursor: not-allowed;">
+                    <i class="fab fa-google-play"></i>
+                    <div>
+                        <div style="font-size: 0.7rem; opacity: 0.7;">Yakında</div>Google Play
+                    </div>
+                </a>
+                <a href="#" class="store-btn" style="opacity: 0.5; cursor: not-allowed;">
+                    <i class="fab fa-apple"></i>
+                    <div>
+                        <div style="font-size: 0.7rem; opacity: 0.7;">Yakında</div>App Store
+                    </div>
+                </a>
+            </div>
+
+            <div class="qr-box">
+                <div id="qrcode"></div>
+                <div>
+                    <h4 style="color: var(--neon-cyan); margin-bottom: 5px;">Hemen Tara</h4>
+                    <p style="font-size: 0.8rem; margin: 0;">APK sürümünü anında indirmek için kameranı yaklaştır.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-side">
+            <img src="cyberex_app_reklam2.png" alt="CyberEx App" class="mockup-img">
+        </div>
+    </div>
+
+    <script>
+        new QRCode(document.getElementById("qrcode"), {
+            text: "https://github.com/eticin60/cyberex-update/raw/main/CyberEx-v1.3.8.apk",
+            width: 120, height: 120,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+    </script>
+</body>
+
+</html>

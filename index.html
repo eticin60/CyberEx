@@ -102,6 +102,46 @@
       text-transform: uppercase;
     }
 
+    .nav-links {
+      display: flex;
+      gap: 35px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: var(--neon-cyan);
+      text-shadow: 0 0 10px var(--neon-cyan);
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--neon-cyan);
+      box-shadow: 0 0 10px var(--neon-cyan);
+      transition: 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
     /* ANIMATED BG SYSTEMS */
     .bg-animated {
       position: fixed;
@@ -236,12 +276,12 @@
       position: relative;
       z-index: 10;
       flex: 1;
-      /* Fills remaining space */
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      padding: 220px 20px 80px;
+      padding: 220px 20px 0px;
+      /* Removed bottom padding */
       text-align: center;
       width: 100%;
     }
@@ -830,6 +870,89 @@
       box-shadow: 0 25px 80px rgba(0, 240, 255, 0.4), 0 0 30px rgba(0, 240, 255, 0.2);
     }
 
+    /* Countdown & Waitlist Styles */
+    .launch-section {
+      width: 95%;
+      max-width: 1200px;
+      margin: 100px auto;
+      padding: 60px;
+      background: rgba(0, 240, 255, 0.03);
+      border: 1px solid rgba(0, 240, 255, 0.1);
+      border-radius: 50px;
+      text-align: center;
+      backdrop-filter: blur(20px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .countdown-grid {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 40px 0;
+    }
+
+    .countdown-item {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      border-radius: 20px;
+      min-width: 100px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .countdown-val {
+      font-size: 2.5rem;
+      font-weight: 950;
+      color: var(--neon-cyan);
+      display: block;
+    }
+
+    .countdown-label {
+      font-size: 0.8rem;
+      color: #7f8c8d;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .waitlist-form {
+      display: flex;
+      gap: 15px;
+      max-width: 500px;
+      margin: 30px auto 0;
+    }
+
+    .waitlist-input {
+      flex: 1;
+      padding: 15px 25px;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      color: #fff;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    .waitlist-input:focus {
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+    }
+
+    .waitlist-btn {
+      padding: 15px 30px;
+      border-radius: 15px;
+      background: var(--neon-cyan);
+      color: #000;
+      font-weight: 900;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .waitlist-btn:hover {
+      box-shadow: 0 0 30px var(--neon-cyan);
+      transform: scale(1.05);
+    }
+
     .feature-icon {
       font-size: 3.5rem;
       margin-bottom: 20px;
@@ -973,16 +1096,521 @@
       height: 350px;
       margin: 40px auto;
     }
+
+    /* Ticker Styles */
+    .ticker-wrap {
+      width: 100%;
+      background: transparent;
+      /* Fully transparent as requested */
+      backdrop-filter: blur(5px);
+      border-bottom: 1px solid rgba(0, 240, 255, 0.05);
+      padding: 12px 0;
+      position: absolute;
+      top: 100px;
+      z-index: 95;
+      overflow: hidden;
+    }
+
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      animation: sideScroll 40s linear infinite;
+      gap: 50px;
+      padding-left: 100%;
+    }
+
+    .ticker-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .ticker-symbol {
+      color: var(--neon-cyan);
+    }
+
+    .ticker-up {
+      color: #00ff88;
+    }
+
+    .ticker-down {
+      color: #ff3366;
+    }
+
+    @keyframes sideScroll {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
+
+    /* AI SENTINEL STYLES */
+    .sentinel-box {
+      background: rgba(0, 240, 255, 0.03);
+      border: 1px solid rgba(0, 240, 255, 0.1);
+      border-radius: 40px;
+      padding: 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gauge-wrapper {
+      width: 220px;
+      height: 110px;
+      margin: 0 auto 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gauge-bg {
+      width: 220px;
+      height: 110px;
+      border-radius: 110px 110px 0 0;
+      background: rgba(255, 255, 255, 0.05);
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-bottom: none;
+    }
+
+    .gauge-fill {
+      width: 220px;
+      height: 110px;
+      border-radius: 110px 110px 0 0;
+      background: conic-gradient(from -90deg at 50% 100%, #ff3366, #ffcc00, #00ff88);
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform-origin: center bottom;
+      transform: rotate(0deg);
+      transition: 1s cubic-bezier(0.4, 0, 0.2, 1);
+      mask: radial-gradient(circle at 50% 100%, transparent 65%, #000 66%);
+      -webkit-mask: radial-gradient(circle at 50% 100%, transparent 65%, #000 66%);
+    }
+
+    .gauge-needle {
+      width: 4px;
+      height: 80px;
+      background: #fff;
+      position: absolute;
+      bottom: 0;
+      left: calc(50% - 2px);
+      transform-origin: bottom center;
+      transform: rotate(-90deg);
+      transition: 1s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 2px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    .gauge-needle::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: -3px;
+      width: 10px;
+      height: 10px;
+      background: #fff;
+      border-radius: 50%;
+    }
+
+    .sentinel-val {
+      font-size: 3rem;
+      font-weight: 950;
+      color: var(--neon-cyan);
+      margin-top: -20px;
+      display: block;
+    }
+
+    .sentinel-label {
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 0.8rem;
+      color: #7f8c8d;
+    }
+
+    /* LIVE INDICATOR STYLES */
+    .live-activity-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(0, 255, 136, 0.1);
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(0, 255, 136, 0.2);
+      font-weight: 800;
+      font-size: 0.65rem;
+      letter-spacing: 1px;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: #00ff88;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #00ff88;
+      animation: pulseGreen 1.5s infinite;
+    }
+
+    @keyframes pulseGreen {
+      0% {
+        opacity: 0.5;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.3);
+      }
+
+      100% {
+        opacity: 0.5;
+        transform: scale(1);
+      }
+    }
+
+    /* LIVE TRANSACTION STREAM */
+    .live-tx-section {
+      width: 95%;
+      max-width: 1200px;
+      margin: 80px auto;
+      text-align: left;
+    }
+
+    .tx-stream-container {
+      background: rgba(0, 5, 15, 0.6);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: 30px;
+      height: 300px;
+      overflow-y: hidden;
+      position: relative;
+    }
+
+    .tx-item {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      padding: 12px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.85rem;
+      animation: slideDown 0.5s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .tx-buy {
+      color: #00ff88;
+      font-weight: 800;
+    }
+
+    .tx-sell {
+      color: #ff3366;
+      font-weight: 800;
+    }
+
+    /* Ticker Styles (Static) */
+    .ticker-wrap {
+      width: 100%;
+      background: transparent;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+      padding: 10px 0;
+      position: relative;
+      /* Changed from fixed/absolute to move with page */
+      z-index: 95;
+      overflow: hidden;
+      margin-top: 35px;
+      /* Stay below top bar */
+    }
+
+    /* ECOSYSTEM HOLOGRAM STYLES */
+    .eco-hologram-section {
+      width: 95%;
+      max-width: 1200px;
+      margin: 120px auto;
+      text-align: center;
+      position: relative;
+    }
+
+    .hologram-container {
+      height: 500px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px;
+    }
+
+    .hologram-core {
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(0, 240, 255, 0.2) 0%, transparent 70%);
+      border: 2px solid var(--neon-cyan);
+      border-radius: 50%;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0 50px rgba(0, 240, 255, 0.4);
+      z-index: 10;
+      animation: corePulse 3s infinite alternate;
+    }
+
+    @keyframes corePulse {
+      from {
+        transform: scale(1);
+        box-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
+      }
+
+      to {
+        transform: scale(1.1);
+        box-shadow: 0 0 60px rgba(0, 240, 255, 0.6);
+      }
+    }
+
+    .hologram-node {
+      position: absolute;
+      width: 120px;
+      height: 60px;
+      background: rgba(0, 5, 15, 0.8);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(10px);
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .hologram-node:hover {
+      border-color: var(--neon-cyan);
+      transform: scale(1.1) translateZ(20px);
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+    }
+
+    .node-label {
+      font-size: 0.7rem;
+      color: #7f8c8d;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .node-title {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .hologram-lines {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hologram-line {
+      stroke: var(--neon-cyan);
+      stroke-width: 1;
+      stroke-dasharray: 5, 5;
+      animation: lineFlow 10s linear infinite;
+      opacity: 0.3;
+    }
+
+    @keyframes lineFlow {
+      to {
+        stroke-dashoffset: -100;
+      }
+    }
+
+    /* AI SENTINEL STYLES */
+    .sentinel-box {
+      background: rgba(0, 240, 255, 0.03);
+      border: 1px solid rgba(0, 240, 255, 0.1);
+      border-radius: 40px;
+      padding: 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gauge-wrapper {
+      width: 220px;
+      height: 110px;
+      margin: 0 auto 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gauge-bg {
+      width: 220px;
+      height: 110px;
+      border-radius: 110px 110px 0 0;
+      background: rgba(255, 255, 255, 0.05);
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-bottom: none;
+    }
+
+    .gauge-fill {
+      width: 220px;
+      height: 110px;
+      border-radius: 110px 110px 0 0;
+      background: conic-gradient(from -90deg at 50% 100%, #ff3366, #ffcc00, #00ff88);
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform-origin: center bottom;
+      transform: rotate(0deg);
+      transition: 1s cubic-bezier(0.4, 0, 0.2, 1);
+      mask: radial-gradient(circle at 50% 100%, transparent 65%, #000 66%);
+      -webkit-mask: radial-gradient(circle at 50% 100%, transparent 65%, #000 66%);
+    }
+
+    .gauge-needle {
+      width: 4px;
+      height: 80px;
+      background: #fff;
+      position: absolute;
+      bottom: 0;
+      left: calc(50% - 2px);
+      transform-origin: bottom center;
+      transform: rotate(-90deg);
+      transition: 1s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 2px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    .sentinel-val {
+      font-size: 3.5rem;
+      font-weight: 950;
+      color: var(--neon-cyan);
+      margin-top: -20px;
+      display: block;
+    }
+
+    /* LIVE INDICATOR STYLES */
+    .live-activity-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(0, 255, 136, 0.1);
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(0, 255, 136, 0.2);
+      font-weight: 800;
+      font-size: 0.65rem;
+      letter-spacing: 1px;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: #00ff88;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #00ff88;
+      animation: pulseGreen 1.5s infinite;
+    }
+
+    @keyframes pulseGreen {
+      0% {
+        opacity: 0.5;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.3);
+      }
+
+      100% {
+        opacity: 0.5;
+        transform: scale(1);
+      }
+    }
+
+    /* LIVE TRANSACTION STREAM */
+    .live-tx-section {
+      width: 95%;
+      max-width: 1200px;
+      margin: 80px auto;
+      text-align: left;
+    }
+
+    .tx-stream-container {
+      background: rgba(0, 5, 15, 0.6);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: 30px;
+      height: 300px;
+      overflow-y: hidden;
+      position: relative;
+    }
+
+    .tx-item {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      padding: 12px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.85rem;
+      animation: slideDown 0.5s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .tx-buy {
+      color: #00ff88;
+      font-weight: 800;
+    }
+
+    .tx-sell {
+      color: #ff3366;
+      font-weight: 800;
+    }
   </style>
 </head>
 
 <body>
   <div class="top-contact-bar">
-    <div style="display: flex; gap: 30px;">
-      <span>📧 corporate@cyberex.com.tr</span>
+    <div style="display: flex; gap: 30px; align-items: center;">
+      <span>📧 iletisim@cyberex.com.tr</span>
       <span>💼 contact@cyberex.com.tr</span>
-      <span>💬 destek@cyberex.com.tr</span>
-      <span>📞 iletisim@cyberex.com.tr</span>
+      <div class="live-activity-box">
+        <div class="live-dot"></div>
+        <span id="liveTxCount">LIVE: 1,842 TX/S</span>
+      </div>
+      <a href="download.html"
+        style="color: #fff; text-decoration: none; font-weight: 800; background: var(--neon-cyan); color: #000; padding: 2px 10px; border-radius: 4px; font-size: 0.65rem;"
+        data-tr="UYGULAMAYI İNDİR" data-en="DOWNLOAD APP">UYGULAMAYI İNDİR</a>
       <span>🌐 cyberex.com.tr</span>
     </div>
   </div>
@@ -992,11 +1620,30 @@
       <img src="cyberex-logo.png" alt="CyberEx Logo">
       <div class="nav-tagline">AI POWERED FINTECH</div>
     </a>
+
+    <div class="nav-links">
+      <a href="#markets" class="nav-link" data-tr="Piyasalar" data-en="Markets">Piyasalar</a>
+      <a href="#exchange" class="nav-link" data-tr="Borsa" data-en="Exchange">Borsa</a>
+      <a href="#wallet" class="nav-link" data-tr="Cüzdan" data-en="Wallet">Cüzdan</a>
+      <a href="download.html" class="nav-link" style="color: var(--neon-cyan);" data-tr="App İndir"
+        data-en="Download">App İndir</a>
+      <a href="#ecosystem" class="nav-link" data-tr="Ekosistem" data-en="Ecosystem">Ekosistem</a>
+      <a href="#support" class="nav-link" data-tr="Destek" data-en="Support">Destek</a>
+    </div>
+
     <div class="lang-switcher">
       <button class="lang-btn active" data-lang="tr">TR</button>
       <button class="lang-btn" data-lang="en">EN</button>
     </div>
+
   </nav>
+
+  <!-- Live Market Ticker (Moved out of fixed navbar to scroll away) -->
+  <div class="ticker-wrap">
+    <div class="ticker-track" id="tickerTrack">
+      <div class="ticker-item" data-tr="Yükleniyor..." data-en="Loading...">Loading Market Data...</div>
+    </div>
+  </div>
 
   <div class="bg-animated">
     <div class="circuit-board"></div>
@@ -1100,6 +1747,45 @@
       </div>
     </div>
 
+    <!-- Ecosystem Hologram Section -->
+    <section class="eco-hologram-section">
+      <h2 class="section-title" data-tr="Ekosistem Hologramı" data-en="Ecosystem Hologram">Ekosistem Hologramı</h2>
+      <p style="color: var(--muted); margin-bottom: 50px;"
+        data-tr="CyberEx ürünlerinin birbiriyle olan kusursuz bağını keşfedin."
+        data-en="Discover the seamless connection between CyberEx products.">CyberEx ürünlerinin birbiriyle olan
+        kusursuz bağını keşfedin.</p>
+
+      <div class="hologram-container">
+        <svg class="hologram-lines" width="100%" height="100%">
+          <line class="hologram-line" x1="50%" y1="50%" x2="25%" y2="25%"></line>
+          <line class="hologram-line" x1="50%" y1="50%" x2="75%" y2="25%"></line>
+          <line class="hologram-line" x1="50%" y1="50%" x2="25%" y2="75%"></line>
+          <line class="hologram-line" x1="50%" y1="50%" x2="75%" y2="75%"></line>
+        </svg>
+
+        <div class="hologram-core">
+          <img src="cyberex-logo.png" style="width: 80px; filter: drop-shadow(0 0 10px var(--neon-cyan));">
+        </div>
+
+        <div class="hologram-node" style="left: 20%; top: 20%;">
+          <span class="node-label">Web3</span>
+          <span class="node-title">WALLET</span>
+        </div>
+        <div class="hologram-node" style="right: 20%; top: 20%;">
+          <span class="node-label">Trading</span>
+          <span class="node-title">EXCHANGE</span>
+        </div>
+        <div class="hologram-node" style="left: 20%; bottom: 20%;">
+          <span class="node-label">DeFi</span>
+          <span class="node-title">CYBER DEX</span>
+        </div>
+        <div class="hologram-node" style="right: 20%; bottom: 20%;">
+          <span class="node-label">Analytics</span>
+          <span class="node-title">SENTINEL</span>
+        </div>
+      </div>
+    </section>
+
     <h2 class="section-title">Ecosystem Hub</h2>
     <div class="eco-grid">
       <a href="https://cyberex.com.tr" class="eco-card">
@@ -1138,6 +1824,65 @@
       </div>
     </div>
 
+    <!-- Security Infrastructure Section (New to fill space) -->
+    <section
+      style="width: 95%; max-width: 1200px; margin: 120px auto; display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; align-items: center; text-align: left;">
+      <div class="security-visual"
+        style="position: relative; height: 400px; background: rgba(0, 240, 255, 0.02); border: 1px solid rgba(0, 240, 255, 0.1); border-radius: 40px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+        <i class="fas fa-shield-halved"
+          style="font-size: 15rem; color: var(--neon-cyan); opacity: 0.1; position: absolute;"></i>
+        <div class="security-ring"
+          style="width: 300px; height: 300px; border: 2px dashed var(--neon-cyan); border-radius: 50%; animation: spin 20s linear infinite; opacity: 0.3;">
+        </div>
+        <div style="z-index: 5; text-align: center;">
+          <div style="font-size: 4rem; margin-bottom: 20px;">🛡️</div>
+          <div style="font-size: 1.5rem; font-weight: 900; color: #fff; letter-spacing: 4px;">SECURE CORE</div>
+        </div>
+      </div>
+      <div>
+        <h2 style="font-size: 3rem; font-weight: 950; margin-bottom: 30px;"
+          data-tr="Askeri Düzeyde<br><span style='color:var(--neon-cyan)'>Güvenlik Altyapısı</span>"
+          data-en="Military Grade<br><span style='color:var(--neon-cyan)'>Security Infrastructure</span>">Askeri
+          Düzeyde<br><span style="color:var(--neon-cyan)">Güvenlik Altyapısı</span></h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+          <div>
+            <h4 style="color: var(--neon-cyan); margin-bottom: 10px;" data-tr="Donanım Güvenliği"
+              data-en="Hardware Security">Donanım Güvenliği</h4>
+            <p style="font-size: 0.9rem; color: #7f8c8d; line-height: 1.6;"
+              data-tr="Varlıklarınız fiziksel olarak izole edilmiş HSM modülleri ve çoklu imza (Multi-Sig) katmanları ile korunur."
+              data-en="Your assets are protected with physically isolated HSM modules and multi-signature (Multi-Sig) layers.">
+              Varlıklarınız fiziksel olarak izole edilmiş HSM modülleri ve çoklu imza (Multi-Sig) katmanları ile
+              korunur.</p>
+          </div>
+          <div>
+            <h4 style="color: var(--neon-cyan); margin-bottom: 10px;" data-tr="AI Tehdit Analizi"
+              data-en="AI Threat Analysis">AI Tehdit Analizi</h4>
+            <p style="font-size: 0.9rem; color: #7f8c8d; line-height: 1.6;"
+              data-tr="Google Gemini AI çekirdeği, şüpheli işlemleri milisaniyeler içinde tespit ederek anlık blokaj sağlar."
+              data-en="Google Gemini AI core detects suspicious transactions in milliseconds and provides instant blocking.">
+              Google Gemini AI çekirdeği, şüpheli işlemleri milisaniyeler içinde tespit ederek anlık blokaj sağlar.</p>
+          </div>
+          <div>
+            <h4 style="color: var(--neon-cyan); margin-bottom: 10px;" data-tr="Sıfır Güven (Zero Trust)"
+              data-en="Zero Trust Arch">Sıfır Güven (Zero Trust)</h4>
+            <p style="font-size: 0.9rem; color: #7f8c8d; line-height: 1.6;"
+              data-tr="Tüm ağ trafiği ve erişim yetkileri 'hiçbir şeye güvenme, her şeyi doğrula' prensibiyle şifrelenir."
+              data-en="All network traffic and access permissions are encrypted with the 'trust nothing, verify everything' principle.">
+              Tüm ağ trafiği ve erişim yetkileri 'hiçbir şeye güvenme, her şeyi doğrula' prensibiyle şifrelenir.</p>
+          </div>
+          <div>
+            <h4 style="color: var(--neon-cyan); margin-bottom: 10px;" data-tr="Bağımsız Denetim"
+              data-en="Independent Audit">Bağımsız Denetim</h4>
+            <p style="font-size: 0.9rem; color: #7f8c8d; line-height: 1.6;"
+              data-tr="Akıllı sözleşmelerimiz ve sistem mimarimiz, global güvenlik şirketleri tarafından düzenli olarak denetlenir."
+              data-en="Our smart contracts and system architecture are regularly audited by global security companies.">
+              Akıllı sözleşmelerimiz ve sistem mimarimiz, global güvenlik şirketleri tarafından düzenli olarak
+              denetlenir.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Platform Stats Bar -->
     <div
       style="width: 95%; max-width: 1200px; margin: 80px auto; padding: 40px; background: rgba(0, 240, 255, 0.02); border: 1px solid var(--border); border-radius: 40px; display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-around; backdrop-filter: blur(20px);">
@@ -1174,12 +1919,27 @@
           CyberEx mobil ekosistemi ile kripto dünyası artık cebinizde. Ultra hızlı arayüz ve maksimum güvenlik her an
           yanınızda.
         </p>
-        <div style="display: flex; flex-direction: column; gap: 15px; width: fit-content;">
-          <a href="#" class="store-btn"><i class="fab fa-google-play"></i> Google Play (Çok Yakında)</a>
-          <a href="#" class="store-btn"><i class="fab fa-apple"></i> App Store (Çok Yakında)</a>
-          <a href="https://github.com/eticin60/cyberex-update/raw/main/CyberEx-v1.3.8.apk" class="store-btn"
-            style="border-color: var(--neon-green); color: var(--neon-green);">
-            <i class="fab fa-android"></i> APK İndir
+        <div class="store-btns" style="display: flex; flex-direction: column; gap: 15px;">
+          <a href="https://github.com/eticin60/cyberex-update/raw/main/CyberEx-v1.3.8.apk" class="store-btn">
+            <i class="fab fa-android"></i>
+            <div>
+              <div style="font-size: 0.7rem; opacity: 0.7;" data-tr="Hemen İndir" data-en="Download Now">Hemen İndir
+              </div>APK v1.3.8
+            </div>
+          </a>
+          <a href="#" class="store-btn" style="opacity: 0.4; cursor: not-allowed; pointer-events: none;">
+            <i class="fab fa-google-play"></i>
+            <div>
+              <div style="font-size: 0.7rem; opacity: 0.7;" data-tr="Yakında" data-en="Coming Soon">Yakında</div>Google
+              Play
+            </div>
+          </a>
+          <a href="#" class="store-btn" style="opacity: 0.4; cursor: not-allowed; pointer-events: none;">
+            <i class="fab fa-apple"></i>
+            <div>
+              <div style="font-size: 0.7rem; opacity: 0.7;" data-tr="Yakında" data-en="Coming Soon">Yakında</div>App
+              Store
+            </div>
           </a>
         </div>
       </div>
@@ -1219,16 +1979,67 @@
       </div>
     </div>
 
-    <!-- Fallback glow if images are missing -->
-    <div id="mockup-fallback"
-      style="display:none; position:absolute; bottom:100px; left:50%; transform:translateX(-50%); width:300px; height:500px; background:linear-gradient(to top, var(--neon-cyan), transparent); filter:blur(100px); opacity:0.3; z-index:0;">
-    </div>
+    <!-- Launch Countdown & Waitlist -->
+    <section class="launch-section">
+      <h2 style="font-size: 2.5rem; font-weight: 950; margin-bottom: 10px;" data-tr="BÜYÜK LANSMANA AZ KALDI"
+        data-en="GRAND LAUNCH COMING SOON">BÜYÜK LANSMANA AZ KALDI</h2>
+      <p style="color: var(--muted);" data-tr="Geleceğin finans kapıları aralanıyor. Yerini şimdiden ayırt."
+        data-en="The doors of the future finance are opening. Reserved your spot now.">Geleceğin finans kapıları
+        aralanıyor. Yerini şimdiden ayırt.</p>
+
+      <div class="countdown-grid">
+        <div class="countdown-item">
+          <span class="countdown-val" id="days">14</span>
+          <span class="countdown-label" data-tr="GÜN" data-en="DAYS">GÜN</span>
+        </div>
+        <div class="countdown-item">
+          <span class="countdown-val" id="hours">23</span>
+          <span class="countdown-label" data-tr="SAAT" data-en="HOURS">SAAT</span>
+        </div>
+        <div class="countdown-item">
+          <span class="countdown-val" id="mins">59</span>
+          <span class="countdown-label" data-tr="DAKİKA" data-en="MINS">DAKİKA</span>
+        </div>
+        <div class="countdown-item">
+          <span class="countdown-val" id="secs">42</span>
+          <span class="countdown-label" data-tr="SANİYE" data-en="SECS">SANİYE</span>
+        </div>
+      </div>
+
+      <form class="waitlist-form" onsubmit="joinWaitlist(event)">
+        <input type="email" class="waitlist-input" placeholder="E-posta adresiniz..."
+          data-tr-placeholder="E-posta adresiniz..." data-en-placeholder="Your email address..." required>
+        <button type="submit" class="waitlist-btn" data-tr="SIRAYA GİR" data-en="JOIN WAITLIST">SIRAYA GİR</button>
+      </form>
+    </section>
 
     <footer class="footer">
+      <!-- Newsletter Row -->
+      <div
+        style="width: 100%; max-width: 1200px; margin: 0 auto 60px; padding: 40px; background: rgba(0, 240, 255, 0.02); border-bottom: 1px solid rgba(0, 240, 255, 0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+        <div style="text-align: left;">
+          <h3 style="font-weight: 950; margin-bottom: 10px;" data-tr="Bültenimize Katılın"
+            data-en="Join Our Newsletter">Bültenimize Katılın</h3>
+          <p style="color: #666; font-size: 0.9rem;"
+            data-tr="Yeni özellikler, listelemeler ve kurumsal haberlerden ilk siz haberdar olun."
+            data-en="Be the first to know about new features, listings, and corporate news.">Yeni özellikler,
+            listelemeler ve kurumsal haberlerden ilk siz haberdar olun.</p>
+        </div>
+        <form style="display: flex; gap: 10px; width: 100%; max-width: 400px;" onsubmit="joinWaitlist(event)">
+          <input type="email" placeholder="E-posta Adresiniz" data-tr-placeholder="E-posta Adresiniz"
+            data-en-placeholder="Your Email Address" required
+            style="flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(0,240,255,0.2); padding: 12px 20px; border-radius: 12px; color: #fff; outline: none;">
+          <button type="submit" class="waitlist-btn" style="padding: 12px 25px; border-radius: 12px;" data-tr="ABONE OL"
+            data-en="SUBSCRIBE">ABONE OL</button>
+        </form>
+      </div>
+
       <div class="footer-content">
         <div style="grid-column: span 1.5;">
           <img src="cyberex-logo.png" alt="Logo" style="height: 60px; margin-bottom: 25px;">
-          <p style="color: #666; font-size: 0.85rem; line-height: 2; max-width: 480px;">
+          <p style="color: #666; font-size: 0.85rem; line-height: 2; max-width: 480px;"
+            data-tr="<strong>CyberEx Teknoloji Anonim Şirketi</strong><br>CyberEx, yeni nesil finansal teknolojiler ve dijital varlık yönetimi alanında global bir ekosistem inşa etmek amacıyla kurulmuş hibrit bir teknoloji şirketidir. Geleneksel finansın güvenilirliğini, blockchain teknolojisinin hızı ve şeffaflığıyla birleştiriyoruz."
+            data-en="<strong>CyberEx Technology Inc.</strong><br>CyberEx is a hybrid technology company established to build a global ecosystem in the field of next-generation financial technologies and digital asset management. We combine the reliability of traditional finance with the speed and transparency of blockchain technology.">
             <strong>CyberEx Teknoloji Anonim Şirketi</strong><br>
             CyberEx, yeni nesil finansal teknolojiler ve dijital varlık yönetimi alanında global bir ekosistem inşa
             etmek amacıyla kurulmuş hibrit bir teknoloji şirketidir. Geleneksel finansın güvenilirliğini, blockchain
@@ -1253,120 +2064,277 @@
           </div>
         </div>
         <div>
-          <h4 class="footer-col-title">KURUMSAL</h4>
-          <a href="terms.html" class="footer-link">Legal & License</a>
-          <a href="privacy.html" class="footer-link">Privacy Policy</a>
-          <a href="kvkk.html" class="footer-link">KVKK Metni</a>
-          <a href="security.html" class="footer-link">Security Whitepaper</a>
+          <h4 class="footer-col-title" data-tr="KURUMSAL" data-en="CORPORATE">KURUMSAL</h4>
+          <a href="terms.html" class="footer-link" data-tr="Hakkımızda" data-en="About Us">About Us</a>
+          <a href="legal.html" class="footer-link" data-tr="Yasal Uyarı" data-en="Legal Disclaimer">Legal Disclaimer</a>
+          <a href="privacy.html" class="footer-link" data-tr="Gizlilik Politikası" data-en="Privacy Policy">Privacy
+            Policy</a>
+          <a href="kvkk.html" class="footer-link" data-tr="KVKK Metni" data-en="GDPR Policy">KVKK Metni</a>
+          <a href="security.html" class="footer-link" data-tr="Güvenlik Raporu" data-en="Security Whitepaper">Security
+            Whitepaper</a>
         </div>
         <div>
-          <h4 class="footer-col-title">İLETİŞİM / ASSET</h4>
-          <a href="how-it-works.html" class="footer-link">How it Works</a>
-          <a href="brand-assets.html" class="footer-link">Brand Assets</a>
-          <a href="api-docs.html" class="footer-link">Technical API</a>
-          <a href="mailto:corporate@cyberex.com.tr" class="footer-link">Corporate Support</a>
+          <h4 class="footer-col-title" data-tr="DESTEK" data-en="SUPPORT">DESTEK</h4>
+          <a href="how-it-works.html" class="footer-link" data-tr="Yardım Merkezi" data-en="Help Center">Help Center</a>
+          <a href="brand-assets.html" class="footer-link" data-tr="Ücretler" data-en="Fees">Fees</a>
+          <a href="api-docs.html" class="footer-link" data-tr="Limitler" data-en="Limits">Limits</a>
+          <a href="mailto:corporate@cyberex.com.tr" class="footer-link" data-tr="Kurumsal Bilet"
+            data-en="Corporate Ticket">Corporate Ticket</a>
+          <a href="api-docs.html" class="footer-link" data-tr="Status Page" data-en="Status Page">Sistem Durumu</a>
         </div>
         <div>
-          <h4 class="footer-col-title">GLOBAL NETWORKS</h4>
-          <a href="https://analyticax.com.tr" class="footer-link" target="_blank">AnalyticaX Hub</a>
-          <a href="https://cyberex.com.tr/web3wallet/" class="footer-link">Web3 Ecosystem</a>
-          <a href="#" class="footer-link">Official GitHub</a>
-          <a href="#" class="footer-link">Community Chat</a>
+          <h4 class="footer-col-title" data-tr="GELİŞTİRİCİ" data-en="DEVELOPERS">DEVELOPERS</h4>
+          <a href="https://analyticax.com.tr" class="footer-link" data-tr="API Dökümanları" data-en="API Docs">API
+            Docs</a>
+          <a href="https://cyberex.com.tr/web3wallet/" class="footer-link" data-tr="GitHub Repo"
+            data-en="GitHub Repo">GitHub Repo</a>
+          <a href="#" class="footer-link" data-tr="Hata Ödülü" data-en="Bug Bounty">Bug Bounty</a>
+          <a href="#" class="footer-link" data-tr="Widget'lar" data-en="Widgets">Widgets</a>
         </div>
       </div>
       <div
-        style="margin-top: 40px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; padding-bottom: 30px; color: #444; font-size: 0.75rem; margin-bottom: 0;">
+        style="margin-top: 40px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; padding-bottom: 30px; color: #444; font-size: 0.75rem; margin-bottom: 0;"
+        data-tr="© 2026 CyberEx Teknoloji Anonim Şirketi. Tüm Hakları Saklıdır. Varlıklarınız şirket güvencemiz altındadır."
+        data-en="© 2026 CyberEx Technology Inc. All Rights Reserved. Your assets are under our corporate guarantee.">
         © 2026 CyberEx Teknoloji Anonim Şirketi. All Rights Reserved. Varlıklarınız şirket güvencemiz altındadır.
       </div>
     </footer>
+  </div>
 
-    <script>
-      // QR Code
-      new QRCode(document.getElementById("qrcode"), { text: "https://github.com/eticin60/cyberex-update/raw/main/CyberEx-v1.3.8.apk", width: 120, height: 120 });
+  <script>
+    // QR Code
+    new QRCode(document.getElementById("qrcode"), { text: "https://github.com/eticin60/cyberex-update/raw/main/CyberEx-v1.3.8.apk", width: 120, height: 120 });
 
-      // Background Scripts System
-      (function initBackgroundSystems() {
-        // City Silhouette
-        const city = document.getElementById('citySilhouette');
-        for (let i = 0; i < 15; i++) {
-          const b = document.createElement('div'); b.className = 'city-building';
-          const w = 30 + Math.random() * 40; const h = 40 + Math.random() * 100;
-          b.style.width = w + 'px'; b.style.height = h + 'px'; b.style.left = (i / 15) * 100 + '%';
-          city.appendChild(b);
-        }
+    // Background Scripts System
+    (function initBackgroundSystems() {
+      // City Silhouette
+      const city = document.getElementById('citySilhouette');
+      for (let i = 0; i < 15; i++) {
+        const b = document.createElement('div'); b.className = 'city-building';
+        const w = 30 + Math.random() * 40; const h = 40 + Math.random() * 100;
+        b.style.width = w + 'px'; b.style.height = h + 'px'; b.style.left = (i / 15) * 100 + '%';
+        city.appendChild(b);
+      }
 
-        // Circuit Nodes
-        const nodesContainer = document.getElementById('circuitNodes');
-        for (let i = 0; i < 30; i++) {
-          const n = document.createElement('div'); n.className = 'circuit-node';
-          n.style.left = Math.random() * 100 + '%'; n.style.top = Math.random() * 100 + '%';
-          n.style.animationDelay = Math.random() * 2 + 's';
-          nodesContainer.appendChild(n);
-        }
+      // Circuit Nodes
+      const nodesContainer = document.getElementById('circuitNodes');
+      for (let i = 0; i < 30; i++) {
+        const n = document.createElement('div'); n.className = 'circuit-node';
+        n.style.left = Math.random() * 100 + '%'; n.style.top = Math.random() * 100 + '%';
+        n.style.animationDelay = Math.random() * 2 + 's';
+        nodesContainer.appendChild(n);
+      }
 
-        // Particles Canvas
-        const pCanv = document.getElementById('particles-canvas');
-        const pCtx = pCanv.getContext('2d');
-        function res() { pCanv.width = window.innerWidth; pCanv.height = window.innerHeight; }
-        res(); window.addEventListener('resize', res);
-        const pts = []; for (let i = 0; i < 60; i++) pts.push({ x: Math.random() * pCanv.width, y: Math.random() * pCanv.height, r: Math.random() * 1.5, vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5 });
+      // Particles Canvas
+      const pCanv = document.getElementById('particles-canvas');
+      const pCtx = pCanv.getContext('2d');
+      function res() { pCanv.width = window.innerWidth; pCanv.height = window.innerHeight; }
+      res(); window.addEventListener('resize', res);
+      const pts = []; for (let i = 0; i < 60; i++) pts.push({ x: Math.random() * pCanv.width, y: Math.random() * pCanv.height, r: Math.random() * 1.5, vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5 });
 
-        // Network Canvas
-        const nCanv = document.getElementById('network-canvas');
-        const nCtx = nCanv.getContext('2d');
-        const nNodes = []; for (let i = 0; i < 15; i++) nNodes.push({ x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight, vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4 });
+      // Network Canvas
+      const nCanv = document.getElementById('network-canvas');
+      const nCtx = nCanv.getContext('2d');
+      const nNodes = []; for (let i = 0; i < 15; i++) nNodes.push({ x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight, vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4 });
 
-        function animate() {
-          pCtx.clearRect(0, 0, pCanv.width, pCanv.height);
-          pts.forEach(p => {
-            p.x += p.vx; p.y += p.vy; if (p.x < 0 || p.x > pCanv.width) p.vx *= -1; if (p.y < 0 || p.y > pCanv.height) p.vy *= -1;
-            pCtx.beginPath(); pCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2); pCtx.fillStyle = 'rgba(0,240,255,0.4)'; pCtx.fill();
-          });
-
-          nCtx.clearRect(0, 0, nCanv.width, nCanv.height);
-          nNodes.forEach((node, i) => {
-            node.x += node.vx; node.y += node.vy;
-            if (node.x < 0 || node.x > nCanv.width) node.vx *= -1; if (node.y < 0 || node.y > nCanv.height) node.vy *= -1;
-            nNodes.slice(i + 1).forEach(other => {
-              const dx = node.x - other.x; const dy = node.y - other.y;
-              const dist = Math.sqrt(dx * dx + dy * dy);
-              if (dist < 200) {
-                nCtx.beginPath(); nCtx.moveTo(node.x, node.y); nCtx.lineTo(other.x, other.y);
-                nCtx.strokeStyle = `rgba(0, 240, 255, ${0.15 * (1 - dist / 200)})`; nCtx.stroke();
-              }
-            });
-          });
-          requestAnimationFrame(animate);
-        }
-        animate();
-      })();
-
-      // Lottie Animation System
-      (function initLottie() {
-        const heroContainer = document.getElementById('lottie-anim');
-
-        // Hero Animation
-        lottie.loadAnimation({
-          container: heroContainer,
-          renderer: 'svg',
-          loop: true,
-          autoplay: true,
-          path: 'cryptobitcoin.json'
+      function animate() {
+        pCtx.clearRect(0, 0, pCanv.width, pCanv.height);
+        pts.forEach(p => {
+          p.x += p.vx; p.y += p.vy; if (p.x < 0 || p.x > pCanv.width) p.vx *= -1; if (p.y < 0 || p.y > pCanv.height) p.vy *= -1;
+          pCtx.beginPath(); pCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2); pCtx.fillStyle = 'rgba(0,240,255,0.4)'; pCtx.fill();
         });
 
-        heroContainer.style.opacity = '1';
-      })();
-
-      // Language Toggle
-      const btns = document.querySelectorAll('.lang-btn');
-      btns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const lang = btn.dataset.lang;
-          btns.forEach(b => b.classList.remove('active')); btn.classList.add('active');
-          document.querySelectorAll('[data-tr]').forEach(el => el.innerHTML = el.dataset[lang]);
+        nCtx.clearRect(0, 0, nCanv.width, nCanv.height);
+        nNodes.forEach((node, i) => {
+          node.x += node.vx; node.y += node.vy;
+          if (node.x < 0 || node.x > nCanv.width) node.vx *= -1; if (node.y < 0 || node.y > nCanv.height) node.vy *= -1;
+          nNodes.slice(i + 1).forEach(other => {
+            const dx = node.x - other.x; const dy = node.y - other.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 200) {
+              nCtx.beginPath(); nCtx.moveTo(node.x, node.y); nCtx.lineTo(other.x, other.y);
+              nCtx.strokeStyle = `rgba(0, 240, 255, ${0.15 * (1 - dist / 200)})`; nCtx.stroke();
+            }
+          });
         });
+        requestAnimationFrame(animate);
+      }
+      animate();
+    })();
+
+    // Lottie Animation System
+    (function initLottie() {
+      const heroContainer = document.getElementById('lottie-anim');
+
+      // Hero Animation
+      lottie.loadAnimation({
+        container: heroContainer,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: 'cryptobitcoin.json'
       });
-    </script>
+
+      heroContainer.style.opacity = '1';
+    })();
+
+    // Language System
+    function setLanguage(lang) {
+      document.querySelectorAll('[data-tr], [data-en]').forEach(el => {
+        if (el.dataset[lang]) el.innerHTML = el.dataset[lang];
+      });
+      document.querySelectorAll('[data-tr-placeholder], [data-en-placeholder]').forEach(el => {
+        if (el.dataset[lang + '-placeholder']) el.placeholder = el.dataset[lang + '-placeholder'];
+      });
+      document.querySelectorAll('.lang-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.lang === lang);
+      });
+    }
+
+    // Initialize on Load
+    document.addEventListener('DOMContentLoaded', () => {
+      const activeBtn = document.querySelector('.lang-btn.active');
+      setLanguage(activeBtn ? activeBtn.dataset.lang : 'tr');
+    });
+
+    // Language Toggle Click
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+    });
+
+    // Countdown Timer Logic
+    function updateCountdown() {
+      const launchDate = new Date("June 16, 2026 00:00:00").getTime();
+      const now = new Date().getTime();
+      const diff = launchDate - now;
+
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+      const dEl = document.getElementById("days");
+      const hEl = document.getElementById("hours");
+      const mEl = document.getElementById("mins");
+      const sEl = document.getElementById("secs");
+
+      if (dEl) dEl.innerText = d;
+      if (hEl) hEl.innerText = h;
+      if (mEl) mEl.innerText = m;
+      if (sEl) sEl.innerText = s;
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // Waitlist Simulation Logic
+    function joinWaitlist(e) {
+      e.preventDefault();
+      const email = e.target.querySelector('input').value;
+      if (email) {
+        console.log(`Email added to waitlist: ${email}`);
+        alert(document.documentElement.lang === 'en' ? 'Success! You joined the waitlist.' : 'Başarılı! Bekleme listesine eklendiniz.');
+        e.target.reset();
+      }
+    }
+
+    // Live Market Ticker Logic (Binance API)
+    async function updateTicker() {
+      const symbols = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT', 'XRPUSDT', 'ADAUSDT', 'AVAXUSDT', 'DOTUSDT', 'LINKUSDT', 'DOGEUSDT', 'MATICUSDT', 'LTCUSDT', 'UNIUSDT', 'APTUSDT', 'NEARUSDT'];
+      const track = document.getElementById('tickerTrack');
+
+      try {
+        const response = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbols=' + JSON.stringify(symbols));
+        const data = await response.json();
+
+        const htmlContent = data.map(item => {
+          const symbol = item.symbol.replace('USDT', '/USDT');
+          const price = parseFloat(item.lastPrice).toLocaleString(undefined, { minimumFractionDigits: 2 });
+          const change = parseFloat(item.priceChangePercent);
+          const changeClass = change >= 0 ? 'ticker-up' : 'ticker-down';
+          const sign = change >= 0 ? '+' : '';
+
+          return `<div class="ticker-item">
+            <span class="ticker-symbol">${symbol}</span> 
+            <span class="ticker-price">$${price}</span> 
+            <span class="${changeClass}">${sign}${change.toFixed(2)}%</span>
+          </div>`;
+        }).join('');
+
+        // Clone for seamless scroll
+        track.innerHTML = htmlContent + htmlContent;
+      } catch (err) {
+        console.error('Ticker error:', err);
+      }
+    }
+    updateTicker();
+    setInterval(updateTicker, 30000); // Update every 30s
+
+    // AI Market Sentinel Logic
+    async function updateSentinel() {
+      try {
+        const response = await fetch('https://api.alternative.me/fng/');
+        const data = await response.json();
+        const value = parseInt(data.data[0].value);
+        const label = data.data[0].value_classification;
+        const valEl = document.getElementById('sentinelVal');
+        const labelEl = document.getElementById('sentinelLabel');
+        const needleEl = document.getElementById('gaugeNeedle');
+        if (valEl) valEl.innerText = value;
+        if (labelEl) labelEl.innerText = label.toUpperCase();
+        const rotation = (value / 100) * 180 - 90;
+        if (needleEl) needleEl.style.transform = `rotate(${rotation}deg)`;
+      } catch (err) { console.error('Sentinel error:', err); }
+    }
+    updateSentinel();
+    setInterval(updateSentinel, 60000);
+
+
+    // Live Transaction Stream Logic
+    const txStreamList = document.getElementById('txList');
+    const streamPairs = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT'];
+
+    async function fetchLiveTrades() {
+      const pair = streamPairs[Math.floor(Math.random() * streamPairs.length)];
+      try {
+        const response = await fetch(`https://api.binance.com/api/v3/trades?symbol=${pair}&limit=5`);
+        const data = await response.json();
+        if (data && data.length > 0) renderLiveTrade(data[0], pair);
+      } catch (err) { console.error('Trade fetch error:', err); }
+    }
+
+    function renderLiveTrade(trade, pair) {
+      if (!txStreamList) return;
+      const time = new Date(trade.time).toLocaleTimeString();
+      const typeClass = trade.isBuyerMaker ? 'tx-sell' : 'tx-buy';
+      const item = document.createElement('div');
+      item.className = 'tx-item';
+      item.innerHTML = `
+        <div style="opacity: 0.6;">${time}</div>
+        <div style="font-weight: 800;">${pair.replace('USDT', '/USDT')}</div>
+        <div class="${typeClass}">${parseFloat(trade.qty).toFixed(4)}</div>
+        <div style="font-weight: 950;">$${parseFloat(trade.price).toLocaleString()}</div>
+      `;
+      txStreamList.prepend(item);
+      if (txStreamList.children.length > 8) txStreamList.removeChild(txStreamList.lastChild);
+
+      const liveCounter = document.getElementById('liveTxCount');
+      if (liveCounter) {
+        const count = 1500 + Math.floor(Math.random() * 500);
+        liveCounter.innerText = `LIVE: ${count.toLocaleString()} TX/S`;
+      }
+    }
+    setInterval(fetchLiveTrades, 2000);
+    // Final hover effects for cards
+    document.querySelectorAll('.eco-card, .launch-section, .security-visual').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+      });
+    });
+  </script>
 </body>
 
 </html>
