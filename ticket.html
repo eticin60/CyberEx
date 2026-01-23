@@ -250,6 +250,7 @@
         <p>&copy; 2026 CyberEx Technology Inc. All Rights Reserved.</p>
     </footer>
 
+    <script src="github_utils.js"></script>
     <script>
         const langToggle = document.getElementById('langToggle');
         const html = document.documentElement;
@@ -269,7 +270,7 @@
             }
         });
 
-        function submitCorporateForm(e) {
+        async function submitCorporateForm(e) {
             e.preventDefault();
 
             const data = {
@@ -280,17 +281,22 @@
                 date: new Date().toISOString()
             };
 
-            const jsonString = JSON.stringify(data, null, 2);
-            const blob = new Blob([jsonString], { type: "application/json" });
-            const url = URL.createObjectURL(blob);
+            // Try GitHub Upload
+            const success = await uploadToGitHub('corporatecommunication.json', data);
 
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'corporatecommunication.json';
-            a.click();
+            if (!success) {
+                const jsonString = JSON.stringify(data, null, 2);
+                const blob = new Blob([jsonString], { type: "application/json" });
+                const url = URL.createObjectURL(blob);
 
-            URL.revokeObjectURL(url);
-            alert("Talebiniz kaydedildi: corporatecommunication.json / Request saved.");
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'corporatecommunication.json';
+                a.click();
+
+                URL.revokeObjectURL(url);
+                alert("Uyarı: GitHub yüklemesi yapılamadı, dosya yerel olarak indirildi.");
+            }
         }
     </script>
 </body>

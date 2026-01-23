@@ -244,66 +244,242 @@
         <aside class="sidebar">
             <h3>Intro</h3>
             <ul>
-                <li><a href="#" class="active">Overview</a></li>
-                <li><a href="#">Authentication</a></li>
-                <li><a href="#">Rate Limits</a></li>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#auth">Authentication</a></li>
+                <li><a href="#ratelimits">Rate Limits</a></li>
             </ul>
             <h3>Market Data</h3>
             <ul>
-                <li><a href="#">Ticker</a></li>
-                <li><a href="#">Order Book</a></li>
-                <li><a href="#">Recent Trades</a></li>
+                <li><a href="#ticker">Ticker</a></li>
+                <li><a href="#orderbook">Order Book</a></li>
+                <li><a href="#recenttrades">Recent Trades</a></li>
             </ul>
             <h3>Private</h3>
             <ul>
-                <li><a href="#">Place Order</a></li>
-                <li><a href="#">Cancel Order</a></li>
-                <li><a href="#">Balance</a></li>
+                <li><a href="#placeorder">Place Order</a></li>
+                <li><a href="#cancelorder">Cancel Order</a></li>
+                <li><a href="#balance">Balance</a></li>
             </ul>
         </aside>
 
         <main class="content">
-            <h1 data-lang="tr">CyberEx API Dokümanı</h1>
-            <h1 data-lang="en">CyberEx API Docs</h1>
+            <!-- OVERVIEW -->
+            <section id="overview">
+                <h1 data-lang="tr">CyberEx API Dokümanı</h1>
+                <h1 data-lang="en">CyberEx API Docs</h1>
 
-            <p data-lang="tr">CyberEx API, yüksek frekanslı ticaret ve güvenli varlık yönetimi için tasarlanmış, düşük
-                gecikmeli bir REST ve WebSocket arayüzü sunar.</p>
-            <p data-lang="en">CyberEx API offers a low-latency REST and WebSocket interface designed for high-frequency
-                trading and secure asset management.</p>
+                <p data-lang="tr">CyberEx API, yüksek frekanslı ticaret ve güvenli varlık yönetimi için tasarlanmış,
+                    düşük
+                    gecikmeli bir REST ve WebSocket arayüzü sunar.</p>
+                <p data-lang="en">CyberEx API offers a low-latency REST and WebSocket interface designed for
+                    high-frequency
+                    trading and secure asset management.</p>
 
-            <div class="code-block">
-                https://api.cyberex.com.tr/v1
-            </div>
+                <div class="code-block">
+                    https://api.cyberex.com.tr/v1
+                </div>
+            </section>
 
-            <h2 data-lang="tr">Kimlik Doğrulama</h2>
-            <h2 data-lang="en">Authentication</h2>
-            <p data-lang="tr">Tüm özel uç noktalar (private endpoints), API Key ve Secret Key ile imzalanmış istekler
-                gerektirir. HMAC SHA256 kullanıyoruz.</p>
-            <p data-lang="en">All private endpoints require requests signed with API Key and Secret Key. We use HMAC
-                SHA256.</p>
+            <!-- AUTHENTICATION -->
+            <section id="auth">
+                <h2 data-lang="tr">Kimlik Doğrulama</h2>
+                <h2 data-lang="en">Authentication</h2>
+                <p data-lang="tr">Tüm özel uç noktalar (private endpoints), API Key ve Secret Key ile imzalanmış
+                    istekler
+                    gerektirir. İmza (signature) HMAC SHA256 algoritması kullanılarak oluşturulur.</p>
+                <p data-lang="en">All private endpoints require requests signed with API Key and Secret Key. The
+                    signature is generated using HMAC SHA256.</p>
 
-            <h2 data-lang="tr">Örnek İstek (Ticker)</h2>
-            <h2 data-lang="en">Example Request (Ticker)</h2>
+                <div class="code-block">
+                    Headers:
+                    X-CBX-APIKEY: vmPU...
+                    X-CBX-SIGNATURE: 124f...
+                    X-CBX-TIMESTAMP: 16789000
+                </div>
+            </section>
 
-            <div style="margin-bottom: 20px;">
-                <span class="method get">GET</span> <span
-                    style="font-family: 'Fira Code'; color: #aaa;">/market/ticker?symbol=BTCUSDT</span>
-            </div>
+            <!-- RATE LIMITS -->
+            <section id="ratelimits">
+                <h2 data-lang="tr">Hız Sınırları (Rate Limits)</h2>
+                <h2 data-lang="en">Rate Limits</h2>
+                <table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.9rem;">
+                    <tr style="border-bottom: 1px solid var(--border); text-align: left;">
+                        <th style="padding: 10px; color: var(--neon-cyan);">Type</th>
+                        <th style="padding: 10px; color: var(--neon-cyan);">Limit</th>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <td style="padding: 10px;">Public Requests</td>
+                        <td style="padding: 10px;">1200 req / min</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <td style="padding: 10px;">Private Requests</td>
+                        <td style="padding: 10px;">600 req / min</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px;">Orders</td>
+                        <td style="padding: 10px;">10 orders / sec</td>
+                    </tr>
+                </table>
+            </section>
 
-            <div class="code-block">
-                {
-                "symbol": "BTCUSDT",
-                "price": "98450.00",
-                "volume": "12500.45",
-                "change_24h": "+5.4%"
-                }
-            </div>
+            <!-- MARKET DATA: TICKER -->
+            <section id="ticker">
+                <h2 data-lang="tr">Piyasa Verileri: Ticker</h2>
+                <h2 data-lang="en">Market Data: Ticker</h2>
+                <p data-lang="tr">24 saatlik fiyat değişim istatistikleri.</p>
+                <p data-lang="en">24 hour rolling window price change statistics.</p>
 
-            <a href="https://analyticax.com.tr" target="_blank"
-                style="background: var(--neon-blue); color: #fff; padding: 12px 25px; border-radius: 8px; text-decoration: none; display: inline-block; margin-top: 20px; font-weight: 600;">
-                <span data-lang="tr">Tüm Dokümanları Gör</span>
-                <span data-lang="en">View Full Documentation</span>
-            </a>
+                <div style="margin-bottom: 20px;">
+                    <span class="method get">GET</span> <span
+                        style="font-family: 'Fira Code'; color: #aaa;">/market/ticker/24hr</span>
+                </div>
+
+                <div class="code-block">
+                    {
+                    "symbol": "BTCUSDT",
+                    "priceChange": "-94.99",
+                    "priceChangePercent": "-0.096",
+                    "lastPrice": "98450.00",
+                    "volume": "12500.45",
+                    "openTime": 1678900000,
+                    "closeTime": 1678986400
+                    }
+                </div>
+            </section>
+
+            <!-- MARKET DATA: ORDER BOOK -->
+            <section id="orderbook">
+                <h2 data-lang="tr">Emir Defteri (Order Book)</h2>
+                <h2 data-lang="en">Order Book</h2>
+                <p data-lang="tr">Belirli bir parite için derinlik verisi.</p>
+                <p data-lang="en">Order book depth for a specific pair.</p>
+
+                <div style="margin-bottom: 20px;">
+                    <span class="method get">GET</span> <span
+                        style="font-family: 'Fira Code'; color: #aaa;">/market/depth?symbol=BTCUSDT&limit=5</span>
+                </div>
+
+                <div class="code-block">
+                    {
+                    "lastUpdateId": 1027024,
+                    "bids": [
+                    ["98449.00", "0.500"],
+                    ["98448.00", "1.200"]
+                    ],
+                    "asks": [
+                    ["98451.00", "0.100"],
+                    ["98452.00", "2.500"]
+                    ]
+                    }
+                </div>
+            </section>
+
+            <!-- MARKET DATA: RECENT TRADES -->
+            <section id="recenttrades">
+                <h2 data-lang="tr">Son İşlemler (Recent Trades)</h2>
+                <h2 data-lang="en">Recent Trades</h2>
+                <p data-lang="tr">Son gerçekleşen işlemlerin listesi.</p>
+                <p data-lang="en">List of recent trades.</p>
+
+                <div style="margin-bottom: 20px;">
+                    <span class="method get">GET</span> <span
+                        style="font-family: 'Fira Code'; color: #aaa;">/market/trades?symbol=BTCUSDT</span>
+                </div>
+
+                <div class="code-block">
+                    [
+                    {
+                    "id": 28457,
+                    "price": "98450.00",
+                    "qty": "0.01",
+                    "time": 1678900000,
+                    "isBuyerMaker": true
+                    }
+                    ]
+                </div>
+            </section>
+
+            <!-- PRIVATE: PLACE ORDER -->
+            <section id="placeorder">
+                <h2 data-lang="tr">Emir Gir (Place Order)</h2>
+                <h2 data-lang="en">Place Order</h2>
+                <p data-lang="tr">Yeni bir alım veya satım emri gönderir.</p>
+                <p data-lang="en">Send a new buy or sell order.</p>
+
+                <div style="margin-bottom: 20px;">
+                    <span class="method post">POST</span> <span
+                        style="font-family: 'Fira Code'; color: #aaa;">/order</span>
+                </div>
+
+                <h4 style="color:var(--neon-cyan); margin-bottom:10px;">Parameters</h4>
+                <ul style="list-style: inside; color:#ccc; font-size:0.9rem; margin-bottom:20px;">
+                    <li>symbol (STRING): BTCUSDT</li>
+                    <li>side (ENUM): BUY, SELL</li>
+                    <li>type (ENUM): LIMIT, MARKET</li>
+                    <li>quantity (DECIMAL)</li>
+                    <li>price (DECIMAL) [Required for LIMIT]</li>
+                </ul>
+
+                <div class="code-block">
+                    {
+                    "symbol": "BTCUSDT",
+                    "orderId": 28,
+                    "transactTime": 1507725176595
+                    }
+                </div>
+            </section>
+
+            <!-- PRIVATE: CANCEL ORDER -->
+            <section id="cancelorder">
+                <h2 data-lang="tr">Emir İptal (Cancel Order)</h2>
+                <h2 data-lang="en">Cancel Order</h2>
+                <p data-lang="tr">Aktif bir emri iptal eder.</p>
+                <p data-lang="en">Cancel an active order.</p>
+
+                <div style="margin-bottom: 20px;">
+                    <span class="method" style="background:rgba(255,51,102,0.2); color:#ff3366;">DELETE</span> <span
+                        style="font-family: 'Fira Code'; color: #aaa;">/order</span>
+                </div>
+
+                <div class="code-block">
+                    {
+                    "symbol": "BTCUSDT",
+                    "orderId": 28,
+                    "status": "CANCELED"
+                    }
+                </div>
+            </section>
+
+            <!-- PRIVATE: BALANCE -->
+            <section id="balance">
+                <h2 data-lang="tr">Bakiye (Balance)</h2>
+                <h2 data-lang="en">Account Balance</h2>
+                <p data-lang="tr">Hesap bakiyesini ve varlık detaylarını getirir.</p>
+                <p data-lang="en">Get account balance and asset details.</p>
+
+                <div style="margin-bottom: 20px;">
+                    <span class="method get">GET</span> <span
+                        style="font-family: 'Fira Code'; color: #aaa;">/account</span>
+                </div>
+
+                <div class="code-block">
+                    {
+                    "canTrade": true,
+                    "balances": [
+                    {
+                    "asset": "BTC",
+                    "free": "1.50000000",
+                    "locked": "0.00000000"
+                    },
+                    {
+                    "asset": "USDT",
+                    "free": "5000.00",
+                    "locked": "1200.00"
+                    }
+                    ]
+                    }
+                </div>
+            </section>
 
         </main>
     </div>

@@ -318,6 +318,7 @@
         <p>&copy; 2026 CyberEx Technology Inc. All Rights Reserved.</p>
     </footer>
 
+    <script src="github_utils.js"></script>
     <script>
         const langToggle = document.getElementById('langToggle');
         const html = document.documentElement;
@@ -353,7 +354,7 @@
             document.querySelector('#bountyModal h2' + sel).style.display = 'block';
         }
 
-        function submitBountyForm(e) {
+        async function submitBountyForm(e) {
             e.preventDefault();
 
             const data = {
@@ -364,18 +365,23 @@
                 date: new Date().toISOString()
             };
 
-            const jsonString = JSON.stringify(data, null, 2);
-            const blob = new Blob([jsonString], { type: "application/json" });
-            const url = URL.createObjectURL(blob);
+            // Attempt GitHub Upload
+            const success = await uploadToGitHub('bugreward.json', data);
 
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'bugreward.json';
-            a.click();
+            if (!success) {
+                const jsonString = JSON.stringify(data, null, 2);
+                const blob = new Blob([jsonString], { type: "application/json" });
+                const url = URL.createObjectURL(blob);
 
-            URL.revokeObjectURL(url);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'bugreward.json';
+                a.click();
+
+                URL.revokeObjectURL(url);
+                alert("GitHub yüklemesi başarısız, dosya indirildi.");
+            }
             closeModal();
-            alert("Raporunuz başarıyla gönderildi: bugreward.json / Report submitted.");
         }
     </script>
 </body>
