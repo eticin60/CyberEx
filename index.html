@@ -1152,6 +1152,101 @@
       }
     }
 
+    /* 3D ELITE CARD STYLES (Restored) */
+    .elite-section {
+      width: 95%;
+      max-width: 1200px;
+      margin: 100px auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      perspective: 2000px;
+    }
+
+    .card-container {
+      width: 100%;
+      height: 350px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.1s ease;
+      cursor: pointer;
+    }
+
+    .elite-card-3d {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #111 0%, #000 100%);
+      border-radius: 25px;
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      position: relative;
+      transform-style: preserve-3d;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 240, 255, 0.2);
+      overflow: hidden;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .elite-card-3d::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(125deg, transparent 40%, rgba(0, 240, 255, 0.1) 45%, rgba(0, 240, 255, 0.2) 50%, rgba(0, 240, 255, 0.1) 55%, transparent 60%);
+      background-size: 200% 200%;
+      animation: cardShimmer 5s infinite;
+      pointer-events: none;
+    }
+
+    @keyframes cardShimmer {
+      0% {
+        background-position: -200% -200%;
+      }
+
+      100% {
+        background-position: 200% 200%;
+      }
+    }
+
+    .card-logo {
+      width: 60px;
+      filter: drop-shadow(0 0 10px var(--neon-cyan));
+    }
+
+    .card-chip {
+      width: 50px;
+      height: 40px;
+      background: linear-gradient(135deg, #ffd700, #b8860b);
+      border-radius: 8px;
+      margin-top: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-chip::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(0, 0, 0, 0.1) 5px, rgba(0, 0, 0, 0.1) 10px);
+    }
+
+    .card-number {
+      font-size: 1.5rem;
+      letter-spacing: 4px;
+      color: #fff;
+      font-family: 'Courier New', monospace;
+      margin: 30px 0;
+      text-shadow: 0 2px 4px #000;
+    }
+
+    .card-holder {
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      color: var(--neon-cyan);
+      font-weight: 800;
+    }
 
     /* AI SENTINEL STYLES */
     .sentinel-box {
@@ -1388,9 +1483,10 @@
 
     .hologram-node {
       position: absolute;
-      width: 120px;
-      height: 60px;
-      background: rgba(0, 5, 15, 0.8);
+      width: 140px;
+      height: 70px;
+      padding: 10px;
+      background: rgba(0, 5, 15, 0.9);
       border: 1px solid rgba(0, 240, 255, 0.3);
       border-radius: 12px;
       display: flex;
@@ -1398,27 +1494,59 @@
       justify-content: center;
       align-items: center;
       backdrop-filter: blur(10px);
-      transition: 0.3s;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
+      z-index: 5;
     }
 
     .hologram-node:hover {
       border-color: var(--neon-cyan);
-      transform: scale(1.1) translateZ(20px);
-      box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+      transform: scale(1.15) translateZ(30px);
+      box-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
+      height: auto;
+      width: 200px;
+      z-index: 100;
+      justify-content: flex-start;
+      padding-top: 20px;
     }
 
     .node-label {
-      font-size: 0.7rem;
-      color: #7f8c8d;
+      font-size: 0.65rem;
+      color: var(--neon-cyan);
       text-transform: uppercase;
-      margin-bottom: 2px;
+      margin-bottom: 4px;
+      font-weight: 700;
     }
 
     .node-title {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 800;
       color: #fff;
+      line-height: 1.2;
+    }
+
+    .node-desc {
+      font-size: 0.7rem;
+      color: #aaa;
+      margin-top: 10px;
+      display: none;
+      line-height: 1.4;
+      font-weight: 400;
+    }
+
+    .hologram-node:hover .node-desc {
+      display: block;
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
     }
 
     .hologram-lines {
@@ -1622,13 +1750,29 @@
     </a>
 
     <div class="nav-links">
-      <a href="#markets" class="nav-link" data-tr="Piyasalar" data-en="Markets">Piyasalar</a>
-      <a href="#exchange" class="nav-link" data-tr="Borsa" data-en="Exchange">Borsa</a>
-      <a href="#wallet" class="nav-link" data-tr="Cüzdan" data-en="Wallet">Cüzdan</a>
-      <a href="download.html" class="nav-link" style="color: var(--neon-cyan);" data-tr="App İndir"
-        data-en="Download">App İndir</a>
-      <a href="#ecosystem" class="nav-link" data-tr="Ekosistem" data-en="Ecosystem">Ekosistem</a>
-      <a href="#support" class="nav-link" data-tr="Destek" data-en="Support">Destek</a>
+      <a href="#" class="nav-link" style="opacity: 0.5; cursor: not-allowed; pointer-events: none;"
+        data-tr="Piyasalar <span style='font-size:0.6em; background:rgba(255,255,255,0.2); padding:2px 4px; border-radius:3px; margin-left:4px;'>YAKINDA</span>"
+        data-en="Markets <span style='font-size:0.6em; background:rgba(255,255,255,0.2); padding:2px 4px; border-radius:3px; margin-left:4px;'>SOON</span>">Piyasalar
+        <span
+          style="font-size:0.6em; background:rgba(255,255,255,0.2); padding:2px 4px; border-radius:3px; margin-left:4px;">YAKINDA</span></a>
+      <a href="#" class="nav-link" style="opacity: 0.5; cursor: not-allowed; pointer-events: none;"
+        data-tr="Cüzdan <span style='font-size:0.6em; background:rgba(255,255,255,0.2); padding:2px 4px; border-radius:3px; margin-left:4px;'>YAKINDA</span>"
+        data-en="Wallet <span style='font-size:0.6em; background:rgba(255,255,255,0.2); padding:2px 4px; border-radius:3px; margin-left:4px;'>SOON</span>">Cüzdan
+        <span
+          style="font-size:0.6em; background:rgba(255,255,255,0.2); padding:2px 4px; border-radius:3px; margin-left:4px;">YAKINDA</span></a>
+      <a href="download.html" class="nav-link"
+        style="background: var(--neon-cyan); color: #000; padding: 8px 16px; border-radius: 6px; font-weight: 800; letter-spacing: 0.5px;"
+        data-tr="APP İNDİR" data-en="DOWNLOAD APP">APP İNDİR</a>
+      <a href="#" class="nav-link" style="opacity: 0.5; cursor: not-allowed; pointer-events: none;"
+        data-tr="Ekosistem <span style='font-size:0.6em; background:rgba(255,255,255,0.2); padding:2px 4px; border-radius:3px; margin-left:4px;'>YAKINDA</span>"
+        data-en="Ecosystem <span style='font-size:0.6em; background:rgba(255,255,255,0.2); padding:2px 4px; border-radius:3px; margin-left:4px;'>SOON</span>">Ekosistem
+        <span
+          style="font-size:0.6em; background:rgba(255,255,255,0.2); padding:2px 4px; border-radius:3px; margin-left:4px;">YAKINDA</span></a>
+      <a href="#" class="nav-link" style="opacity: 0.5; cursor: not-allowed; pointer-events: none;"
+        data-tr="Destek <span style='font-size:0.6em; background:rgba(255,255,255,0.2); padding:2px 4px; border-radius:3px; margin-left:4px;'>YAKINDA</span>"
+        data-en="Support <span style='font-size:0.6em; background:rgba(255,255,255,0.2); padding:2px 4px; border-radius:3px; margin-left:4px;'>SOON</span>">Destek
+        <span
+          style="font-size:0.6em; background:rgba(255,255,255,0.2); padding:2px 4px; border-radius:3px; margin-left:4px;">YAKINDA</span></a>
     </div>
 
     <div class="lang-switcher">
@@ -1747,6 +1891,70 @@
       </div>
     </div>
 
+    <!-- 3D Elite Card Reveal Section (Restored) -->
+    <section class="elite-section">
+      <div style="text-align: left;">
+        <h2 style="font-size: 3rem; font-weight: 950; margin-bottom: 20px; line-height: 1.1;"
+          data-tr="CyberEx<br><span style='color:var(--neon-cyan)'>Elite Card</span>"
+          data-en="CyberEx<br><span style='color:var(--neon-cyan)'>Elite Card</span>">
+          CyberEx<br><span style="color:var(--neon-cyan)">Elite Card</span>
+        </h2>
+        <p style="color: var(--muted); font-size: 1.1rem; margin-bottom: 40px;"
+          data-tr="Web3 dünyasının anahtarı cebinizde. Harcadıkça kazan, stake et, yönet."
+          data-en="The key to Web3 world is in your pocket. Earn as you spend, stake, manage.">
+          Web3 dünyasının anahtarı cebinizde. Harcadıkça kazan, stake et, yönet.
+        </p>
+        <div style="display: flex; gap: 20px; margin-bottom: 30px;">
+          <div style="text-align: center;">
+            <div style="font-size: 1.5rem; font-weight: 800; color: #fff;">0%</div>
+            <div style="font-size: 0.75rem; color: #666;" data-tr="Komisyon" data-en="Fees">Komisyon</div>
+          </div>
+          <div style="width: 1px; height: 40px; background: rgba(255,255,255,0.1);"></div>
+          <div style="text-align: center;">
+            <div style="font-size: 1.5rem; font-weight: 800; color: #fff;">5%</div>
+            <div style="font-size: 0.75rem; color: #666;" data-tr="Cashback" data-en="Cashback">Cashback</div>
+          </div>
+          <div style="width: 1px; height: 40px; background: rgba(255,255,255,0.1);"></div>
+          <div style="text-align: center;">
+            <div style="font-size: 1.5rem; font-weight: 800; color: #fff;">∞</div>
+            <div style="font-size: 0.75rem; color: #666;" data-tr="Limit" data-en="Limit">Limit</div>
+          </div>
+        </div>
+
+        <!-- Interactive Name Input -->
+        <!-- Interactive Name Input -->
+        <div style="margin-top: 20px;">
+          <label
+            style="display:block; color:var(--neon-cyan); font-size: 0.75rem; letter-spacing: 1px; margin-bottom: 8px; font-weight: 700;"
+            data-tr="İSMİNİZİ YAZIN" data-en="ENTER YOUR NAME">İSMİNİZİ YAZIN</label>
+          <input type="text" id="cardNameInput" placeholder="ADINIZ SOYADINIZ..."
+            data-tr-placeholder="ADINIZ SOYADINIZ..." data-en-placeholder="YOUR FULL NAME..." maxlength="20"
+            style="background: transparent; border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 8px; padding: 12px 16px; color: #fff; width: 100%; max-width: 300px; outline: none; font-family: 'Inter', sans-serif; transition: all 0.3s; text-transform:uppercase;"
+            onfocus="this.style.borderColor='var(--neon-cyan)'; this.style.boxShadow='0 0 15px rgba(0,240,255,0.2)';"
+            onblur="this.style.borderColor='rgba(0, 240, 255, 0.3)'; this.style.boxShadow='none';">
+        </div>
+      </div>
+
+      <div class="card-container" id="cardContainer">
+        <div class="elite-card-3d">
+          <div style="display: flex; justify-content: space-between; align-items: start;">
+            <img src="cyberex-logo.png" class="card-logo">
+            <span style="font-weight: 800; color: rgba(255,255,255,0.5);">PREMIUM</span>
+          </div>
+          <div class="card-chip"></div>
+          <div class="card-number">4580 1200 8854 3000</div>
+          <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+            <div>
+              <div style="font-size: 0.6rem; color: #aaa; margin-bottom: 4px;">CARD HOLDER</div>
+              <div class="card-holder">CYBEREX COMMUNITY</div>
+            </div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
+              style="height: 40px; opacity: 0.8;">
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Ecosystem Hologram Section -->
     <section class="eco-hologram-section">
       <h2 class="section-title" data-tr="Ekosistem Hologramı" data-en="Ecosystem Hologram">Ekosistem Hologramı</h2>
@@ -1756,32 +1964,71 @@
         kusursuz bağını keşfedin.</p>
 
       <div class="hologram-container">
+        <!-- Connecting Lines (Hexagon Pattern) -->
         <svg class="hologram-lines" width="100%" height="100%">
-          <line class="hologram-line" x1="50%" y1="50%" x2="25%" y2="25%"></line>
-          <line class="hologram-line" x1="50%" y1="50%" x2="75%" y2="25%"></line>
-          <line class="hologram-line" x1="50%" y1="50%" x2="25%" y2="75%"></line>
-          <line class="hologram-line" x1="50%" y1="50%" x2="75%" y2="75%"></line>
+          <line class="hologram-line" x1="50%" y1="50%" x2="50%" y2="15%"></line>
+          <line class="hologram-line" x1="50%" y1="50%" x2="85%" y2="30%"></line>
+          <line class="hologram-line" x1="50%" y1="50%" x2="85%" y2="70%"></line>
+          <line class="hologram-line" x1="50%" y1="50%" x2="50%" y2="85%"></line>
+          <line class="hologram-line" x1="50%" y1="50%" x2="15%" y2="70%"></line>
+          <line class="hologram-line" x1="50%" y1="50%" x2="15%" y2="30%"></line>
         </svg>
 
         <div class="hologram-core">
           <img src="cyberex-logo.png" style="width: 80px; filter: drop-shadow(0 0 10px var(--neon-cyan));">
         </div>
 
-        <div class="hologram-node" style="left: 20%; top: 20%;">
-          <span class="node-label">Web3</span>
-          <span class="node-title">WALLET</span>
+        <!-- Node 1: Top Center -->
+        <div class="hologram-node" style="top: 10%; left: 50%; transform: translateX(-50%);">
+          <span class="node-label">Exchange</span>
+          <span class="node-title">CYBEREX PLATFORM</span>
+          <p class="node-desc" data-tr="Google Gemini AI çekirdekli, kurumsal düzeyde kripto para borsa arayüzü."
+            data-en="Institutional-grade crypto exchange interface powered by Google Gemini AI core.">Google Gemini AI
+            çekirdekli, kurumsal düzeyde borsa arayüzü.</p>
         </div>
-        <div class="hologram-node" style="right: 20%; top: 20%;">
-          <span class="node-label">Trading</span>
-          <span class="node-title">EXCHANGE</span>
+
+        <!-- Node 2: Top Right -->
+        <div class="hologram-node" style="top: 25%; right: 10%;">
+          <span class="node-label">AI & Data</span>
+          <span class="node-title">ANALYTICA X INTEL</span>
+          <p class="node-desc" data-tr="Yapay zeka destekli piyasa yapısı ve likidite haritalama merkezi."
+            data-en="AI-supported market structure and liquidity mapping center.">Yapay zeka destekli piyasa yapısı ve
+            likidite haritalama.</p>
         </div>
-        <div class="hologram-node" style="left: 20%; bottom: 20%;">
-          <span class="node-label">DeFi</span>
-          <span class="node-title">CYBER DEX</span>
+
+        <!-- Node 3: Bottom Right -->
+        <div class="hologram-node" style="bottom: 25%; right: 10%;">
+          <span class="node-label">Layer-2</span>
+          <span class="node-title">CYBEREX DEX</span>
+          <p class="node-desc" data-tr="CyberEx DEX Layer-2 & Cross-Chain Gateway"
+            data-en="CyberEx DEX Layer-2 & Cross-Chain Gateway">CyberEx DEX Layer-2 & Cross-Chain Gateway</p>
         </div>
-        <div class="hologram-node" style="right: 20%; bottom: 20%;">
-          <span class="node-label">Analytics</span>
-          <span class="node-title">SENTINEL</span>
+
+        <!-- Node 4: Bottom Center -->
+        <div class="hologram-node" style="bottom: 10%; left: 50%; transform: translateX(-50%);">
+          <span class="node-label">Custody</span>
+          <span class="node-title">WEB3 WALLET</span>
+          <p class="node-desc" data-tr="Çok zincirli (TRC20, ERC20, BEP20) saklama ve anlık swap cüzdanınız."
+            data-en="Your multi-chain (TRC20, ERC20, BEP20) custody and instant swap wallet.">Çok zincirli saklama ve
+            anlık swap cüzdanınız.</p>
+        </div>
+
+        <!-- Node 5: Bottom Left -->
+        <div class="hologram-node" style="bottom: 25%; left: 10%;">
+          <span class="node-label">Mobıle</span>
+          <span class="node-title">CYBEREX WEB3 APP</span>
+          <p class="node-desc" data-tr="Cepten DeFi ve staking protokollerine doğrudan erişim sağlayan anahtar."
+            data-en="The key providing direct access to DeFi and staking protocols from mobile.">Cepten DeFi ve staking
+            protokollerine doğrudan erişim.</p>
+        </div>
+
+        <!-- Node 6: Top Left -->
+        <div class="hologram-node" style="top: 25%; left: 10%;">
+          <span class="node-label">Applıcatıon</span>
+          <span class="node-title">CYBEREX APP</span>
+          <p class="node-desc" data-tr="Cepten DeFi ve staking protokollerine doğrudan erişim sağlayan anahtar."
+            data-en="The key providing direct access to DeFi and staking protocols from mobile.">Cepten kripto paralar, DeFi ve staking
+            protokollerine doğrudan erişim sağlayan anahtar ve uygulama.</p>
         </div>
       </div>
     </section>
@@ -2179,27 +2426,37 @@
     })();
 
     // Language System
-    function setLanguage(lang) {
-      document.querySelectorAll('[data-tr], [data-en]').forEach(el => {
-        if (el.dataset[lang]) el.innerHTML = el.dataset[lang];
+    // Language System
+    function changeLanguage(lang) {
+      localStorage.setItem('lang', lang);
+
+      document.querySelectorAll('[data-tr]').forEach(el => {
+        if (lang === 'en') el.innerHTML = el.getAttribute('data-en');
+        else el.innerHTML = el.getAttribute('data-tr');
       });
-      document.querySelectorAll('[data-tr-placeholder], [data-en-placeholder]').forEach(el => {
-        if (el.dataset[lang + '-placeholder']) el.placeholder = el.dataset[lang + '-placeholder'];
+
+      document.querySelectorAll('[data-tr-placeholder]').forEach(el => {
+        if (lang === 'en') el.placeholder = el.getAttribute('data-en-placeholder');
+        else el.placeholder = el.getAttribute('data-tr-placeholder');
       });
-      document.querySelectorAll('.lang-btn').forEach(b => {
-        b.classList.toggle('active', b.dataset.lang === lang);
+
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
       });
+
+      // Update dynamic content
+      updateSentinel();
     }
 
     // Initialize on Load
     document.addEventListener('DOMContentLoaded', () => {
-      const activeBtn = document.querySelector('.lang-btn.active');
-      setLanguage(activeBtn ? activeBtn.dataset.lang : 'tr');
+      const storedLang = localStorage.getItem('lang') || 'tr';
+      changeLanguage(storedLang);
     });
 
     // Language Toggle Click
     document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+      btn.addEventListener('click', () => changeLanguage(btn.dataset.lang));
     });
 
     // Countdown Timer Logic
@@ -2271,22 +2528,88 @@
 
     // AI Market Sentinel Logic
     async function updateSentinel() {
+      const translations = {
+        tr: {
+          loading: "Duygu Analizi...",
+          extremeFear: "Aşırı Korku",
+          fear: "Korku",
+          neutral: "Nötr",
+          greed: "Açgözlülük",
+          extremeGreed: "Aşırı Açgözlülük"
+        },
+        en: {
+          loading: "Loading Sentiment...",
+          extremeFear: "Extreme Fear",
+          fear: "Fear",
+          neutral: "Neutral",
+          greed: "Greed",
+          extremeGreed: "Extreme Greed"
+        }
+      };
+
       try {
         const response = await fetch('https://api.alternative.me/fng/');
         const data = await response.json();
-        const value = parseInt(data.data[0].value);
-        const label = data.data[0].value_classification;
-        const valEl = document.getElementById('sentinelVal');
-        const labelEl = document.getElementById('sentinelLabel');
-        const needleEl = document.getElementById('gaugeNeedle');
-        if (valEl) valEl.innerText = value;
-        if (labelEl) labelEl.innerText = label.toUpperCase();
-        const rotation = (value / 100) * 180 - 90;
-        if (needleEl) needleEl.style.transform = `rotate(${rotation}deg)`;
-      } catch (err) { console.error('Sentinel error:', err); }
+        const value = data.data[0].value;
+        const status = data.data[0].value_classification;
+
+        const currentLang = localStorage.getItem('lang') || 'tr';
+        const t = translations[currentLang];
+
+        if (document.getElementById('sentinelValue')) {
+          document.getElementById('sentinelValue').innerText = value;
+
+          let translatedStatus = status;
+          if (status === 'Extreme Fear') translatedStatus = t.extremeFear;
+          else if (status === 'Fear') translatedStatus = t.fear;
+          else if (status === 'Neutral') translatedStatus = t.neutral;
+          else if (status === 'Greed') translatedStatus = t.greed;
+          else if (status === 'Extreme Greed') translatedStatus = t.extremeGreed;
+
+          document.getElementById('sentinelStatus').innerText = translatedStatus.toUpperCase();
+
+          const deg = (value / 100) * 180 - 90;
+          document.querySelector('.gauge-needle').style.transform = `rotate(${deg}deg)`;
+        }
+      } catch (error) {
+        console.error('Sentinel Error:', error);
+        if (document.getElementById('sentinelStatus')) {
+          const currentLang = localStorage.getItem('lang') || 'tr';
+          // document.getElementById('sentinelStatus').innerText = translations[currentLang].loading;
+        }
+      }
     }
+
     updateSentinel();
     setInterval(updateSentinel, 60000);
+
+    // 3D Card Hover & Input Logic
+    const cardContainer = document.getElementById('cardContainer');
+    const nameInput = document.getElementById('cardNameInput');
+    const cardHolder = document.querySelector('.card-holder');
+
+    if (nameInput && cardHolder) {
+      nameInput.addEventListener('input', (e) => {
+        const val = e.target.value.toUpperCase();
+        cardHolder.innerText = val.length > 0 ? val : 'CYBEREX COMMUNITY';
+      });
+    }
+
+    if (cardContainer) {
+      cardContainer.addEventListener('mousemove', (e) => {
+        const rect = cardContainer.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (y - centerY) / 8;
+        const rotateY = (centerX - x) / 8;
+        cardContainer.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+      cardContainer.addEventListener('mouseleave', () => {
+        cardContainer.style.transform = `rotateX(0deg) rotateY(0deg)`;
+      });
+    }
 
 
     // Live Transaction Stream Logic
