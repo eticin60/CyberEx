@@ -1,12 +1,18 @@
 {
-  "name": "CyberEx",
+  "name": "CyberEx - AI Powered Crypto & Web3",
   "short_name": "CyberEx",
+  "description": "Google Gemini AI destekli, askeri düzeyde güvenlikli hibrit kripto borsası ve Web3 ekosistemi. Geleceğin finansına CyberEx ile bağlanın.",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#212121",
+  "background_color": "#0a0a14",
   "theme_color": "#00f0ff",
   "orientation": "portrait",
   "scope": "./",
+  "categories": [
+    "finance",
+    "business",
+    "security"
+  ],
   "icons": [
     {
       "src": "icons/icon-192x192.png",
@@ -19,6 +25,22 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "CyberEx_index.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "CyberEx AI Dashboard"
+    },
+    {
+      "src": "CyberEx_app_banner.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobile Web3 Experience"
     }
   ]
 }
