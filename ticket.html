@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kurumsal Bilet | CyberEx Corporate Ticket</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-gold: #ffd700;
+            --neon-cyan: #00f0ff;
+            --deep-bg: #00050f;
+            --card-bg: rgba(255, 255, 255, 0.02);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--deep-bg);
+            color: #fff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Lang Classes - Strict Control */
+        html.lang-tr [data-lang="en"] {
+            display: none !important;
+        }
+
+        html.lang-en [data-lang="tr"] {
+            display: none !important;
+        }
+
+        /* Show EN when active - Override default hidden */
+        html.lang-en [data-lang="en"] {
+            display: block;
+        }
+
+        html.lang-en span[data-lang="en"],
+        html.lang-en strong[data-lang="en"],
+        html.lang-en a[data-lang="en"] {
+            display: inline;
+        }
+
+        /* Ensure default visibility matches (Hide EN) */
+        [data-lang="en"] {
+            display: none;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(0, 5, 15, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .nav-tagline {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: var(--neon-gold);
+            font-weight: 700;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            padding-left: 15px;
+        }
+
+        .back-btn {
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            color: var(--neon-cyan);
+        }
+
+        /* Form */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .form-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 40px;
+            border-radius: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            border-color: var(--neon-gold);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
+        }
+
+        .form-btn {
+            background: var(--neon-gold);
+            color: #000;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .form-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+    <script>
+        (function () {
+            const savedLang = localStorage.getItem('lang') || 'tr';
+            document.documentElement.className = 'lang-' + savedLang;
+        })();
+    </script>
+</head>
+
+<body class="lang-tr">
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">
+            <img src="cyberex-logo.png" alt="CyberEx" style="height: 40px;">
+            <div class="nav-tagline">TICKET</div>
+        </a>
+        <div style="display: flex; gap: 20px; align-items: center;">
+            <button id="langToggle"
+                style="background: transparent; border: 1px solid var(--border); color: #fff; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-size: 0.8rem;">EN</button>
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> <span data-lang="tr">Ana Sayfa</span><span data-lang="en">Home</span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <div style="text-align: center; margin-bottom: 40px;">
+            <h1 style="color: var(--neon-gold); margin-bottom: 10px;" data-lang="tr">Kurumsal İletişim</h1>
+            <h1 style="color: var(--neon-gold); margin-bottom: 10px;" data-lang="en">Corporate Contact</h1>
+            <p style="color: #aaa;" data-lang="tr">İş ortaklıkları, API entegrasyonu ve kurumsal hesaplar için bize
+                ulaşın.</p>
+            <p style="color: #aaa;" data-lang="en">Contact us for partnerships, API integration and corporate accounts.
+            </p>
+        </div>
+
+        <div class="form-card">
+            <form id="ticketForm" onsubmit="submitCorporateForm(event)">
+                <div class="form-group">
+                    <label class="form-label" data-lang="tr">Ad Soyad</label><label class="form-label"
+                        data-lang="en">Full Name</label>
+                    <input type="text" id="corp_fullname" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" data-lang="tr">Kurumsal E-posta</label><label class="form-label"
+                        data-lang="en">Corporate Email</label>
+                    <input type="email" id="corp_email" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" data-lang="tr">Kategori</label><label class="form-label"
+                        data-lang="en">Category</label>
+                    <select id="corp_category" class="form-select">
+                        <option value="partnership">İş Ortaklığı / Partnership</option>
+                        <option value="corporate_account">Kurumsal Hesap / Corporate Account</option>
+                        <option value="api">API & Tech</option>
+                        <option value="other">Diğer / Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" data-lang="tr">Mesajınız</label><label class="form-label"
+                        data-lang="en">Message</label>
+                    <textarea id="corp_message" class="form-textarea" rows="5" required></textarea>
+                </div>
+
+                <button type="submit" class="form-btn">
+                    <span data-lang="tr">GÖNDER</span>
+                    <span data-lang="en">SUBMIT</span>
+                </button>
+            </form>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 CyberEx Technology Inc. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const langToggle = document.getElementById('langToggle');
+        const html = document.documentElement;
+
+        const savedLang = localStorage.getItem('lang') || 'tr';
+        langToggle.innerText = savedLang === 'en' ? 'TR' : 'EN';
+
+        langToggle.addEventListener('click', () => {
+            if (html.classList.contains('lang-tr')) {
+                html.className = 'lang-en';
+                langToggle.innerText = 'TR';
+                localStorage.setItem('lang', 'en');
+            } else {
+                html.className = 'lang-tr';
+                langToggle.innerText = 'EN';
+                localStorage.setItem('lang', 'tr');
+            }
+        });
+
+        function submitCorporateForm(e) {
+            e.preventDefault();
+
+            const data = {
+                fullname: document.getElementById('corp_fullname').value,
+                email: document.getElementById('corp_email').value,
+                category: document.getElementById('corp_category').value,
+                message: document.getElementById('corp_message').value,
+                date: new Date().toISOString()
+            };
+
+            const jsonString = JSON.stringify(data, null, 2);
+            const blob = new Blob([jsonString], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'corporatecommunication.json';
+            a.click();
+
+            URL.revokeObjectURL(url);
+            alert("Talebiniz kaydedildi: corporatecommunication.json / Request saved.");
+        }
+    </script>
+</body>
+
+</html>

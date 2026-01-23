@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hata Ödülü Programı | CyberEx Bug Bounty</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-red: #ff0044;
+            --neon-cyan: #00f0ff;
+            --deep-bg: #00050f;
+            --card-bg: rgba(255, 255, 255, 0.02);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--deep-bg);
+            color: #fff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Lang Classes - Strict Control */
+        html.lang-tr [data-lang="en"] {
+            display: none !important;
+        }
+
+        html.lang-en [data-lang="tr"] {
+            display: none !important;
+        }
+
+        /* Show EN when active - Override default hidden */
+        html.lang-en [data-lang="en"] {
+            display: block;
+        }
+
+        html.lang-en span[data-lang="en"],
+        html.lang-en strong[data-lang="en"],
+        html.lang-en a[data-lang="en"] {
+            display: inline;
+        }
+
+        /* Ensure default visibility matches (Hide EN) */
+        [data-lang="en"] {
+            display: none;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(0, 5, 15, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .nav-tagline {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: var(--neon-red);
+            font-weight: 700;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            padding-left: 15px;
+        }
+
+        .back-btn {
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            color: var(--neon-cyan);
+        }
+
+        /* Hero */
+        .bounty-hero {
+            text-align: center;
+            padding: 100px 20px;
+            background: radial-gradient(circle at center, rgba(255, 0, 68, 0.15), transparent 70%);
+        }
+
+        .reward-badge {
+            display: inline-block;
+            background: rgba(255, 0, 68, 0.2);
+            color: var(--neon-red);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            border: 1px solid var(--neon-red);
+            box-shadow: 0 0 20px rgba(255, 0, 68, 0.2);
+        }
+
+        /* Content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .bounty-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .bounty-card h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .bounty-list {
+            padding-left: 20px;
+        }
+
+        .bounty-list li {
+            margin-bottom: 10px;
+            color: #aaa;
+        }
+
+        .reward-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .reward-table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #ccc;
+        }
+
+        .reward-table tr:last-child td {
+            border: none;
+        }
+
+        .reward-amount {
+            font-weight: 800;
+            color: var(--neon-cyan);
+            text-align: right;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+    <script>
+        (function () {
+            const savedLang = localStorage.getItem('lang') || 'tr';
+            document.documentElement.className = 'lang-' + savedLang;
+        })();
+    </script>
+</head>
+
+<body class="lang-tr">
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">
+            <img src="cyberex-logo.png" alt="CyberEx" style="height: 40px;">
+            <div class="nav-tagline">BUG BOUNTY</div>
+        </a>
+        <div style="display: flex; gap: 20px; align-items: center;">
+            <button id="langToggle"
+                style="background: transparent; border: 1px solid var(--border); color: #fff; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-size: 0.8rem;">EN</button>
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> <span data-lang="tr">Ana Sayfa</span><span data-lang="en">Home</span>
+            </a>
+        </div>
+    </nav>
+
+    <header class="bounty-hero">
+        <div class="reward-badge">
+            <i class="fas fa-trophy"></i>
+            <span data-lang="tr">Toplam Ödül Havuzu: $1,000,000</span>
+            <span data-lang="en">Total Reward Pool: $1,000,000</span>
+        </div>
+        <h1 style="font-size: 3rem; margin-bottom: 20px;" data-lang="tr">Güvenliği Test Et, Ödülü Kazan</h1>
+        <h1 style="font-size: 3rem; margin-bottom: 20px;" data-lang="en">Test Security, Earn Rewards</h1>
+        <p style="color: #aaa; max-width: 600px; margin: 0 auto;" data-lang="tr">
+            CyberEx ekosistemini daha güvenli hale getirmek için beyaz şapkalı hacker topluluğuyla işbirliği yapıyoruz.
+        </p>
+        <p style="color: #aaa; max-width: 600px; margin: 0 auto;" data-lang="en">
+            We collaborate with the white hat hacker community to make the CyberEx ecosystem more secure.
+        </p>
+    </header>
+
+    <main class="container">
+
+        <div class="bounty-card">
+            <h3 data-lang="tr">Ödül Tablosu</h3>
+            <h3 data-lang="en">Reward Table</h3>
+            <table class="reward-table">
+                <tr>
+                    <td>Critical (Smart Contract / Wallet Drain)</td>
+                    <td class="reward-amount">$50,000 - $250,000</td>
+                </tr>
+                <tr>
+                    <td>High (Database Injection / Auth Bypass)</td>
+                    <td class="reward-amount">$10,000 - $50,000</td>
+                </tr>
+                <tr>
+                    <td>Medium (XSS / Sensitive Data Leak)</td>
+                    <td class="reward-amount">$1,000 - $10,000</td>
+                </tr>
+                <tr>
+                    <td>Low (UI Bugs / Non-Critical)</td>
+                    <td class="reward-amount">$100 - $1,000</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="bounty-card">
+            <h3 data-lang="tr">Kapsam Dışı Durumlar</h3>
+            <h3 data-lang="en">Out of Scope</h3>
+            <ul class="bounty-list">
+                <li data-lang="tr">DDoS saldırıları ve sosyal mühendislik girişimleri.</li>
+                <li data-lang="tr">Üçüncü taraf hizmetlerinden (örn. destek sistemi sağlayıcısı) kaynaklanan hatalar.
+                </li>
+                <li data-lang="tr">Kullanıcı deneyimini etkilemeyen küçük UI hataları.</li>
+
+                <li data-lang="en">DDoS attacks and social engineering attempts.</li>
+                <li data-lang="en">Bugs originating from third-party services (e.g., support system provider).</li>
+                <li data-lang="en">Minor UI bugs that do not affect user experience.</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 50px;">
+            <button onclick="openModal()"
+                style="background: #fff; color: #000; padding: 15px 40px; border-radius: 30px; border: none; font-weight: 700; cursor: pointer; font-size: 1rem;">
+                <span data-lang="tr">Rapor Gönder</span>
+                <span data-lang="en">Submit Report</span>
+            </button>
+            <p style="font-size: 0.8rem; color: #666; margin-top: 15px;">security@cyberex.com.tr</p>
+        </div>
+
+    </main>
+
+    <!-- Modal -->
+    <div id="bountyModal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
+        <div
+            style="background: #0d1117; padding: 40px; border-radius: 20px; border: 1px solid var(--neon-red); width: 90%; max-width: 500px; position: relative;">
+            <button onclick="closeModal()"
+                style="position: absolute; top: 20px; right: 20px; background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer;"><i
+                    class="fas fa-times"></i></button>
+
+            <h2 style="color: var(--neon-red); margin-bottom: 20px; text-align: center;" data-lang="tr">Hata Bildir</h2>
+            <h2 style="color: var(--neon-red); margin-bottom: 20px; text-align: center; display: none;" data-lang="en">
+                Report Bug</h2>
+
+            <form id="bountyForm" onsubmit="submitBountyForm(event)">
+                <div style="margin-bottom: 15px;">
+                    <input type="text" id="bounty_username" placeholder="Kullanıcı Adı / Username" required
+                        style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #333; background: #161b22; color: #fff; outline: none;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <input type="email" id="bounty_email" placeholder="E-posta / Email Address" required
+                        style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #333; background: #161b22; color: #fff; outline: none;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <select id="bounty_severity"
+                        style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #333; background: #161b22; color: #fff; outline: none;">
+                        <option value="low">Düşük / Low</option>
+                        <option value="medium">Orta / Medium</option>
+                        <option value="high">Yüksek / High</option>
+                        <option value="critical">Kritik / Critical</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <textarea id="bounty_desc" rows="5" placeholder="Hata Detayları / Bug Details" required
+                        style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #333; background: #161b22; color: #fff; outline: none;"></textarea>
+                </div>
+                <button type="submit"
+                    style="width: 100%; padding: 12px; background: var(--neon-red); color: #fff; border: none; border-radius: 8px; font-weight: 700; cursor: pointer;">
+                    <span data-lang="tr">RAPORLA</span>
+                    <span data-lang="en">SUBMIT REPORT</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 CyberEx Technology Inc. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const langToggle = document.getElementById('langToggle');
+        const html = document.documentElement;
+
+        const savedLang = localStorage.getItem('lang') || 'tr';
+        langToggle.innerText = savedLang === 'en' ? 'TR' : 'EN';
+
+        langToggle.addEventListener('click', () => {
+            if (html.classList.contains('lang-tr')) {
+                html.className = 'lang-en';
+                langToggle.innerText = 'TR';
+                localStorage.setItem('lang', 'en');
+                showHideModalTitle('en');
+            } else {
+                html.className = 'lang-tr';
+                langToggle.innerText = 'EN';
+                localStorage.setItem('lang', 'tr');
+                showHideModalTitle('tr');
+            }
+        });
+
+        // Modal Logic
+        function openModal() {
+            document.getElementById('bountyModal').style.display = 'flex';
+        }
+        function closeModal() {
+            document.getElementById('bountyModal').style.display = 'none';
+        }
+        function showHideModalTitle(lang) {
+            const titles = document.querySelectorAll('#bountyModal h2');
+            titles.forEach(t => t.style.display = 'none');
+            let sel = lang === 'tr' ? '[data-lang="tr"]' : '[data-lang="en"]';
+            document.querySelector('#bountyModal h2' + sel).style.display = 'block';
+        }
+
+        function submitBountyForm(e) {
+            e.preventDefault();
+
+            const data = {
+                username: document.getElementById('bounty_username').value,
+                email: document.getElementById('bounty_email').value,
+                severity: document.getElementById('bounty_severity').value,
+                description: document.getElementById('bounty_desc').value,
+                date: new Date().toISOString()
+            };
+
+            const jsonString = JSON.stringify(data, null, 2);
+            const blob = new Blob([jsonString], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'bugreward.json';
+            a.click();
+
+            URL.revokeObjectURL(url);
+            closeModal();
+            alert("Raporunuz başarıyla gönderildi: bugreward.json / Report submitted.");
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İşlem Limitleri | CyberEx Limits</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-red: #ff3366;
+            --neon-cyan: #00f0ff;
+            --deep-bg: #00050f;
+            --card-bg: rgba(255, 255, 255, 0.02);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--deep-bg);
+            color: #fff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Lang Classes - Strict Control */
+        html.lang-tr [data-lang="en"] {
+            display: none !important;
+        }
+
+        html.lang-en [data-lang="tr"] {
+            display: none !important;
+        }
+
+        /* Show EN when active - Override default hidden */
+        html.lang-en [data-lang="en"] {
+            display: block;
+        }
+
+        html.lang-en span[data-lang="en"],
+        html.lang-en strong[data-lang="en"],
+        html.lang-en a[data-lang="en"] {
+            display: inline;
+        }
+
+        /* Ensure default visibility matches (Hide EN) */
+        [data-lang="en"] {
+            display: none;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(0, 5, 15, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .nav-tagline {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: var(--neon-red);
+            font-weight: 700;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            padding-left: 15px;
+        }
+
+        .back-btn {
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            color: var(--neon-cyan);
+        }
+
+        /* Content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .limit-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .limit-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .limit-title {
+            color: var(--neon-red);
+            font-size: 1.2rem;
+        }
+
+        .limit-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: #ccc;
+        }
+
+        .limit-row strong {
+            color: #fff;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+    <script>
+        (function () {
+            const savedLang = localStorage.getItem('lang') || 'tr';
+            document.documentElement.className = 'lang-' + savedLang;
+        })();
+    </script>
+</head>
+
+<body class="lang-tr">
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">
+            <img src="cyberex-logo.png" alt="CyberEx" style="height: 40px;">
+            <div class="nav-tagline">LIMITS</div>
+        </a>
+        <div style="display: flex; gap: 20px; align-items: center;">
+            <button id="langToggle"
+                style="background: transparent; border: 1px solid var(--border); color: #fff; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-size: 0.8rem;">EN</button>
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> <span data-lang="tr">Ana Sayfa</span><span data-lang="en">Home</span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <h1 data-lang="tr">İşlem Limitleri</h1>
+        <h1 data-lang="en">Transaction Limits</h1>
+
+        <p style="text-align: center; color: #aaa; margin-bottom: 40px;" data-lang="tr">
+            Limitler, hesap doğrulama seviyenize (KYC) göre belirlenir. Güvenliğinizi sağlamak için kademeli limitler
+            uyguluyoruz.
+        </p>
+        <p style="text-align: center; color: #aaa; margin-bottom: 40px;" data-lang="en">
+            Limits are determined by your account verification level (KYC). We apply tiered limits to ensure your
+            security.
+        </p>
+
+        <!-- Level 1 -->
+        <div class="limit-card">
+            <div class="limit-header">
+                <h3 class="limit-title">Seviye 1 (E-posta Onaylı)</h3>
+            </div>
+            <div class="limit-row">
+                <span data-lang="tr">Kripto Yatırma</span><span data-lang="en">Crypto Deposit</span>
+                <strong>Sınırsız / Unlimited</strong>
+            </div>
+            <div class="limit-row">
+                <span data-lang="tr">Kripto Çekme (Günlük)</span><span data-lang="en">Crypto Withdrawal (Daily)</span>
+                <strong>0 BTC</strong>
+            </div>
+            <div class="limit-row">
+                <span data-lang="tr">Fiat Yatırma/Çekme</span><span data-lang="en">Fiat Deposit/Withdraw</span>
+                <strong>Yok / None</strong>
+            </div>
+        </div>
+
+        <!-- Level 2 -->
+        <div class="limit-card" style="border-color: rgba(0, 240, 255, 0.4); background: rgba(0, 240, 255, 0.05);">
+            <div class="limit-header">
+                <h3 class="limit-title" style="color: var(--neon-cyan);">Seviye 2 (Kimlik Doğrulanmış)</h3>
+                <i class="fas fa-check-circle" style="color: var(--neon-cyan);"></i>
+            </div>
+            <div class="limit-row">
+                <span data-lang="tr">Kripto Yatırma</span><span data-lang="en">Crypto Deposit</span>
+                <strong>Sınırsız / Unlimited</strong>
+            </div>
+            <div class="limit-row">
+                <span data-lang="tr">Kripto Çekme (Günlük)</span><span data-lang="en">Crypto Withdrawal (Daily)</span>
+                <strong>100 BTC</strong>
+            </div>
+            <div class="limit-row">
+                <span data-lang="tr">Fiat Çekme (Günlük)</span><span data-lang="en">Fiat Withdrawal (Daily)</span>
+                <strong>5.000.000 TRY</strong>
+            </div>
+            <div class="limit-row">
+                <span data-lang="tr">Fiat Çekme (Aylık)</span><span data-lang="en">Fiat Withdrawal (Monthly)</span>
+                <strong>25.000.000 TRY</strong>
+            </div>
+        </div>
+
+        <!-- Level 3 -->
+        <div class="limit-card">
+            <div class="limit-header">
+                <h3 class="limit-title">Seviye 3 (Kurumsal)</h3>
+            </div>
+            <div style="text-align: center; padding: 20px;">
+                <p style="color: #aaa; margin-bottom: 15px;" data-lang="tr">
+                    Daha yüksek limitler ve OTC masası hizmeti için kurumsal başvuru yapın.
+                </p>
+                <p style="color: #aaa; margin-bottom: 15px;" data-lang="en">
+                    Apply for corporate verification for higher limits and OTC desk services.
+                </p>
+                <a href="ticket.html" style="color: #fff; text-decoration: underline;">
+                    <span data-lang="tr">İletişime Geçin</span>
+                    <span data-lang="en">Contact Us</span>
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 CyberEx Technology Inc. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const langToggle = document.getElementById('langToggle');
+        const html = document.documentElement;
+
+        const savedLang = localStorage.getItem('lang') || 'tr';
+        langToggle.innerText = savedLang === 'en' ? 'TR' : 'EN';
+
+        langToggle.addEventListener('click', () => {
+            if (html.classList.contains('lang-tr')) {
+                html.className = 'lang-en';
+                langToggle.innerText = 'TR';
+                localStorage.setItem('lang', 'en');
+            } else {
+                html.className = 'lang-tr';
+                langToggle.innerText = 'EN';
+                localStorage.setItem('lang', 'tr');
+            }
+        });
+    </script>
+</body>
+
+</html>

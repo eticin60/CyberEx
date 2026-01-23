@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Durumu | CyberEx Status</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-green: #00ff88;
+            --neon-red: #ff3366;
+            --neon-yellow: #ffd700;
+            --neon-cyan: #00f0ff;
+            --deep-bg: #00050f;
+            --card-bg: rgba(255, 255, 255, 0.02);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--deep-bg);
+            color: #fff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Lang Classes - Strict Control */
+        html.lang-tr [data-lang="en"] {
+            display: none !important;
+        }
+
+        html.lang-en [data-lang="tr"] {
+            display: none !important;
+        }
+
+        /* Show EN when active - Override default hidden */
+        html.lang-en [data-lang="en"] {
+            display: block;
+        }
+
+        html.lang-en span[data-lang="en"],
+        html.lang-en strong[data-lang="en"],
+        html.lang-en a[data-lang="en"] {
+            display: inline;
+        }
+
+        /* Ensure default visibility matches (Hide EN) */
+        [data-lang="en"] {
+            display: none;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(0, 5, 15, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .nav-tagline {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: var(--neon-green);
+            font-weight: 700;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            padding-left: 15px;
+        }
+
+        .back-btn {
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            color: var(--neon-cyan);
+        }
+
+        /* Content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .status-header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--neon-green);
+            border-radius: 15px;
+        }
+
+        .status-icon {
+            font-size: 3rem;
+            color: var(--neon-green);
+            margin-bottom: 15px;
+        }
+
+        .status-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 20px 30px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .status-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--neon-green);
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .uptime-grid {
+            margin-top: 50px;
+            display: grid;
+            grid-template-columns: repeat(90, 1fr);
+            gap: 3px;
+        }
+
+        .uptime-bar {
+            height: 40px;
+            background: var(--neon-green);
+            border-radius: 2px;
+            opacity: 0.8;
+            transition: 0.3s;
+        }
+
+        .uptime-bar:hover {
+            opacity: 1;
+            transform: scaleY(1.2);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+    <script>
+        (function () {
+            const savedLang = localStorage.getItem('lang') || 'tr';
+            document.documentElement.className = 'lang-' + savedLang;
+        })();
+    </script>
+</head>
+
+<body class="lang-tr">
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">
+            <img src="cyberex-logo.png" alt="CyberEx" style="height: 40px;">
+            <div class="nav-tagline">STATUS</div>
+        </a>
+        <div style="display: flex; gap: 20px; align-items: center;">
+            <button id="langToggle"
+                style="background: transparent; border: 1px solid var(--border); color: #fff; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-size: 0.8rem;">EN</button>
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> <span data-lang="tr">Ana Sayfa</span><span data-lang="en">Home</span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <div class="status-header">
+            <i class="fas fa-check-circle status-icon"></i>
+            <h1 data-lang="tr">Tüm Sistemler Çalışıyor</h1>
+            <h1 data-lang="en">All Systems Operational</h1>
+            <p style="margin-top: 10px; color: #aaa;" data-lang="tr">Son güncelleme: 1 dakika önce</p>
+            <p style="margin-top: 10px; color: #aaa;" data-lang="en">Last update: 1 minute ago</p>
+        </div>
+
+        <div class="status-item">
+            <span class="status-label">Web Sitesi / Website</span>
+            <span class="status-badge">Operational</span>
+        </div>
+        <div class="status-item">
+            <span class="status-label">API (REST & WebSocket)</span>
+            <span class="status-badge">Operational</span>
+        </div>
+        <div class="status-item">
+            <span class="status-label">Emir Eşleştirme Motoru / Matching Engine</span>
+            <span class="status-badge">Operational</span>
+        </div>
+        <div class="status-item">
+            <span class="status-label">Cüzdan İşlemleri / Wallet Ops</span>
+            <span class="status-badge">Operational</span>
+        </div>
+        <div class="status-item">
+            <span class="status-label">Mobil Uygulama / Mobile App</span>
+            <span class="status-badge">Operational</span>
+        </div>
+
+        <div style="margin-top: 50px;">
+            <h3 style="margin-bottom: 15px;">90 Days Uptime</h3>
+            <div class="uptime-grid" id="uptimeGrid">
+                <!-- JS will fill this -->
+            </div>
+            <div
+                style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #666; margin-top: 10px;">
+                <span>90 days ago</span>
+                <span>100% Uptime</span>
+                <span>Today</span>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 CyberEx Technology Inc. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const langToggle = document.getElementById('langToggle');
+        const html = document.documentElement;
+
+        // Generate Uptime Bars
+        const grid = document.getElementById('uptimeGrid');
+        for (let i = 0; i < 90; i++) {
+            const div = document.createElement('div');
+            div.className = 'uptime-bar';
+
+            // Randomly make 1-2 bars red/yellow to look real
+            if (Math.random() > 0.98) {
+                div.style.background = '#ffd700'; // Degraded
+                div.title = "Degraded Performance";
+            } else {
+                div.title = "Operational";
+            }
+            grid.appendChild(div);
+        }
+
+        const savedLang = localStorage.getItem('lang') || 'tr';
+        langToggle.innerText = savedLang === 'en' ? 'TR' : 'EN';
+
+        langToggle.addEventListener('click', () => {
+            if (html.classList.contains('lang-tr')) {
+                html.className = 'lang-en';
+                langToggle.innerText = 'TR';
+                localStorage.setItem('lang', 'en');
+            } else {
+                html.className = 'lang-tr';
+                langToggle.innerText = 'EN';
+                localStorage.setItem('lang', 'tr');
+            }
+        });
+    </script>
+</body>
+
+</html>

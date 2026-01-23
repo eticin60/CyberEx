@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yardım Merkezi | CyberEx Help Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-blue: #0072ff;
+            --neon-cyan: #00f0ff;
+            --deep-bg: #00050f;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--deep-bg);
+            color: #fff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Lang Classes - Strict Control */
+        html.lang-tr [data-lang="en"] {
+            display: none !important;
+        }
+
+        html.lang-en [data-lang="tr"] {
+            display: none !important;
+        }
+
+        /* Show EN when active - Override default hidden */
+        html.lang-en [data-lang="en"] {
+            display: block;
+        }
+
+        html.lang-en span[data-lang="en"],
+        html.lang-en strong[data-lang="en"],
+        html.lang-en a[data-lang="en"] {
+            display: inline;
+        }
+
+        /* Ensure default visibility matches (Hide EN) */
+        [data-lang="en"] {
+            display: none;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(0, 5, 15, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .nav-tagline {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: var(--neon-blue);
+            font-weight: 700;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            padding-left: 15px;
+        }
+
+        .back-btn {
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            color: var(--neon-cyan);
+        }
+
+        /* Hero */
+        .help-hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(180deg, rgba(0, 114, 255, 0.1) 0%, transparent 100%);
+        }
+
+        .search-box {
+            max-width: 600px;
+            margin: 30px auto 0;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 20px 50px 20px 20px;
+            border-radius: 30px;
+            border: 1px solid var(--neon-blue);
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            font-size: 1.1rem;
+            outline: none;
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--neon-cyan);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        /* Categories */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .cat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .cat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .cat-card:hover {
+            border-color: var(--neon-cyan);
+            transform: translateY(-5px);
+        }
+
+        .cat-icon {
+            font-size: 2.5rem;
+            color: var(--neon-blue);
+            margin-bottom: 20px;
+        }
+
+        .cat-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .cat-list {
+            list-style: none;
+            text-align: left;
+            padding-left: 10px;
+        }
+
+        .cat-list li {
+            margin-bottom: 8px;
+        }
+
+        .cat-list li a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+
+        .cat-list li a:hover {
+            color: var(--neon-cyan);
+        }
+
+        /* FAQ Style */
+        .faq-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 20px;
+            text-align: left;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: 0.3s;
+            color: #aaa;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+    <script>
+        (function () {
+            const savedLang = localStorage.getItem('lang') || 'tr';
+            document.documentElement.className = 'lang-' + savedLang;
+        })();
+    </script>
+</head>
+
+<body class="lang-tr">
+
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">
+            <img src="cyberex-logo.png" alt="CyberEx" style="height: 40px;">
+            <div class="nav-tagline">HELP CENTER</div>
+        </a>
+        <div style="display: flex; gap: 20px; align-items: center;">
+            <button id="langToggle"
+                style="background: transparent; border: 1px solid var(--border); color: #fff; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-size: 0.8rem;">EN</button>
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> <span data-lang="tr">Ana Sayfa</span><span data-lang="en">Home</span>
+            </a>
+        </div>
+    </nav>
+
+    <header class="help-hero">
+        <h1 style="font-size: 3rem; margin-bottom: 10px;" data-lang="tr">Nasıl Yardımcı Olabiliriz?</h1>
+        <h1 style="font-size: 3rem; margin-bottom: 10px;" data-lang="en">How Can We Help?</h1>
+        <div class="search-box">
+            <input type="text" class="search-input" placeholder="Bir soru arayın..."
+                data-placeholder-tr="Bir soru arayın..." data-placeholder-en="Search for a question...">
+            <button class="search-btn"><i class="fas fa-search"></i></button>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <div class="cat-grid">
+            <!-- Account -->
+            <div class="cat-card">
+                <i class="fas fa-user-circle cat-icon"></i>
+                <h3 class="cat-title" data-lang="tr">Hesap & Güvenlik</h3>
+                <h3 class="cat-title" data-lang="en">Account & Security</h3>
+                <ul class="cat-list">
+                    <li><a href="#" data-lang="tr">Hesap doğrulama (KYC) nasıl yapılır?</a><a href="#"
+                            data-lang="en">How to verify account (KYC)?</a></li>
+                    <li><a href="#" data-lang="tr">2FA nasıl etkinleştirilir?</a><a href="#" data-lang="en">How to
+                            enable 2FA?</a></li>
+                    <li><a href="#" data-lang="tr">Şifremi unuttum</a><a href="#" data-lang="en">Forgot my password</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Trading -->
+            <div class="cat-card">
+                <i class="fas fa-chart-line cat-icon"></i>
+                <h3 class="cat-title" data-lang="tr">Alım - Satım</h3>
+                <h3 class="cat-title" data-lang="en">Trading</h3>
+                <ul class="cat-list">
+                    <li><a href="#" data-lang="tr">Spot işlem nasıl yapılır?</a><a href="#" data-lang="en">How to trade
+                            Spot?</a></li>
+                    <li><a href="#" data-lang="tr">Emir tipleri nelerdir?</a><a href="#" data-lang="en">What are order
+                            types?</a></li>
+                    <li><a href="#" data-lang="tr">Stop-loss kullanımı</a><a href="#" data-lang="en">Using Stop-loss</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Deposit/Withdraw -->
+            <div class="cat-card">
+                <i class="fas fa-wallet cat-icon"></i>
+                <h3 class="cat-title" data-lang="tr">Yatırma & Çekme</h3>
+                <h3 class="cat-title" data-lang="en">Deposit & Withdraw</h3>
+                <ul class="cat-list">
+                    <li><a href="#" data-lang="tr">Banka havalesi ile TL yatırma</a><a href="#" data-lang="en">Deposit
+                            Fiat via Bank Transfer</a></li>
+                    <li><a href="#" data-lang="tr">Kripto para çekme süreleri</a><a href="#" data-lang="en">Crypto
+                            withdrawal times</a></li>
+                    <li><a href="#" data-lang="tr">Yanlış ağ işlemi kurtarma</a><a href="#" data-lang="en">Wrong network
+                            recovery</a></li>
+                </ul>
+            </div>
+
+            <!-- API -->
+            <div class="cat-card">
+                <i class="fas fa-code cat-icon"></i>
+                <h3 class="cat-title" data-lang="tr">API & Teknik</h3>
+                <h3 class="cat-title" data-lang="en">API & Technical</h3>
+                <ul class="cat-list">
+                    <li><a href="api.html" data-lang="tr">API Anahtarı oluşturma</a><a href="api.html"
+                            data-lang="en">Creating API Keys</a></li>
+                    <li><a href="api.html" data-lang="tr">Rate limits (Hız sınırları)</a><a href="api.html"
+                            data-lang="en">Rate limits</a></li>
+                    <li><a href="#" data-lang="tr">Websocket bağlantı sorunları</a><a href="#" data-lang="en">Websocket
+                            connection issues</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <h2 style="text-align: center; margin-top: 60px; margin-bottom: 30px;" data-lang="tr">Sıkça Sorulan Sorular
+            (S.S.S)</h2>
+        <h2 style="text-align: center; margin-top: 60px; margin-bottom: 30px;" data-lang="en">Frequently Asked Questions
+            (FAQ)</h2>
+
+        <div class="faq-container" style="max-width: 800px; margin: 0 auto 60px;">
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span data-lang="tr">Hesabımı nasıl doğrulayabilirim?</span>
+                    <span data-lang="en">How can I verify my account?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p style="padding-bottom: 20px;" data-lang="tr">Profil ayarlarınızdan "Kimlik Doğrulama" sekmesine
+                        giderek gerekli belgeleri yükleyebilirsiniz.</p>
+                    <p style="padding-bottom: 20px;" data-lang="en">You can upload the necessary documents by going to
+                        the "Identity Verification" tab in your profile settings.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span data-lang="tr">Para çekme işlemleri ne kadar sürer?</span>
+                    <span data-lang="en">How long do withdrawals take?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p style="padding-bottom: 20px;" data-lang="tr">Kripto çekim işlemleri genellikle 10-30 dakika,
+                        banka transferleri ise mesai saatleri içinde aynı gün gerçekleşir.</p>
+                    <p style="padding-bottom: 20px;" data-lang="en">Crypto withdrawals usually take 10-30 minutes, while
+                        bank transfers are processed on the same day during business hours.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span data-lang="tr">2FA kodumu kaybettim, ne yapmalıyım?</span>
+                    <span data-lang="en">I lost my 2FA code, what should I do?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p style="padding-bottom: 20px;" data-lang="tr">Lütfen destek ekibiyle iletişime geçin. Güvenlik
+                        prosedürleri gereği kimlik doğrulaması talep edilecektir.</p>
+                    <p style="padding-bottom: 20px;" data-lang="en">Please contact the support team. Identity
+                        verification will be requested as per security procedures.</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 80px;">
+            <p style="color: #aaa; margin-bottom: 20px;" data-lang="tr">Aradığınızı bulamadınız mı?</p>
+            <p style="color: #aaa; margin-bottom: 20px;" data-lang="en">Couldn't find what you were looking for?</p>
+            <button onclick="openModal()"
+                style="background: var(--neon-cyan); color: #000; padding: 15px 30px; border-radius: 30px; border: none; font-weight: 700; cursor: pointer; font-size: 1rem;">
+                <span data-lang="tr">Destek Talebi Oluştur</span>
+                <span data-lang="en">Submit a Ticket</span>
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Modal -->
+    <div id="ticketModal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
+        <div
+            style="background: #0d1117; padding: 40px; border-radius: 20px; border: 1px solid var(--neon-cyan); width: 90%; max-width: 500px; position: relative;">
+            <button onclick="closeModal()"
+                style="position: absolute; top: 20px; right: 20px; background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer;"><i
+                    class="fas fa-times"></i></button>
+
+            <h2 style="color: var(--neon-cyan); margin-bottom: 20px; text-align: center;" data-lang="tr">Destek Talebi
+            </h2>
+            <h2 style="color: var(--neon-cyan); margin-bottom: 20px; text-align: center; display: none;" data-lang="en">
+                Support Ticket</h2>
+
+            <form id="helpForm" onsubmit="submitHelpForm(event)">
+                <div style="margin-bottom: 15px;">
+                    <input type="text" id="username" placeholder="Kullanıcı Adı / Username" required
+                        style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #333; background: #161b22; color: #fff; outline: none;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <input type="text" id="fullname" placeholder="Ad Soyad / Name Surname" required
+                        style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #333; background: #161b22; color: #fff; outline: none;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <input type="tel" id="phone" placeholder="Telefon No / Phone Number" required
+                        style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #333; background: #161b22; color: #fff; outline: none;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <input type="email" id="email" placeholder="E-posta / Email Address" required
+                        style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #333; background: #161b22; color: #fff; outline: none;">
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <textarea id="problem" rows="4" placeholder="Probleminiz / Your Problem" required
+                        style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #333; background: #161b22; color: #fff; outline: none;"></textarea>
+                </div>
+                <button type="submit"
+                    style="width: 100%; padding: 12px; background: var(--neon-cyan); color: #000; border: none; border-radius: 8px; font-weight: 700; cursor: pointer;">
+                    <span data-lang="tr">GÖNDER</span>
+                    <span data-lang="en">SUBMIT</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 CyberEx Technology Inc. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const langToggle = document.getElementById('langToggle');
+        const html = document.documentElement;
+        const searchInput = document.querySelector('.search-input');
+
+        const savedLang = localStorage.getItem('lang') || 'tr';
+        langToggle.innerText = savedLang === 'en' ? 'TR' : 'EN';
+        updatePlaceholder(savedLang);
+
+        langToggle.addEventListener('click', () => {
+            if (html.classList.contains('lang-tr')) {
+                html.className = 'lang-en';
+                langToggle.innerText = 'TR';
+                localStorage.setItem('lang', 'en');
+                updatePlaceholder('en');
+                showHideModalTitle('en');
+            } else {
+                html.className = 'lang-tr';
+                langToggle.innerText = 'EN';
+                localStorage.setItem('lang', 'tr');
+                updatePlaceholder('tr');
+                showHideModalTitle('tr');
+            }
+        });
+
+        function updatePlaceholder(lang) {
+            if (searchInput) {
+                if (lang === 'tr') {
+                    searchInput.placeholder = searchInput.getAttribute('data-placeholder-tr');
+                } else {
+                    searchInput.placeholder = searchInput.getAttribute('data-placeholder-en');
+                }
+            }
+        }
+
+        // FAQ Toggle
+        function toggleFaq(btn) {
+            const answer = btn.nextElementSibling;
+            const icon = btn.querySelector('i');
+            if (answer.style.maxHeight) {
+                answer.style.maxHeight = null;
+                icon.style.transform = 'rotate(0deg)';
+                btn.style.color = '#fff';
+            } else {
+                answer.style.maxHeight = answer.scrollHeight + "px";
+                icon.style.transform = 'rotate(180deg)';
+                btn.style.color = 'var(--neon-cyan)';
+            }
+        }
+
+        // Modal Logic
+        function openModal() {
+            document.getElementById('ticketModal').style.display = 'flex';
+        }
+        function closeModal() {
+            document.getElementById('ticketModal').style.display = 'none';
+        }
+        function showHideModalTitle(lang) {
+            const titles = document.querySelectorAll('#ticketModal h2');
+            titles.forEach(t => t.style.display = 'none');
+            let sel = lang === 'tr' ? '[data-lang="tr"]' : '[data-lang="en"]';
+            document.querySelector('#ticketModal h2' + sel).style.display = 'block';
+        }
+
+        // Form Submit -> JSON
+        function submitHelpForm(e) {
+            e.preventDefault();
+
+            const data = {
+                username: document.getElementById('username').value,
+                fullname: document.getElementById('fullname').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                problem: document.getElementById('problem').value,
+                date: new Date().toISOString()
+            };
+
+            const jsonString = JSON.stringify(data, null, 2);
+            const blob = new Blob([jsonString], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'helplist.json';
+            a.click();
+
+            URL.revokeObjectURL(url);
+            closeModal();
+            alert("Talebiniz başarıyla oluşturuldu ve 'helplist.json' dosyasına kaydedildi! / Ticket submitted & saved!");
+        }
+    </script>
+</body>
+
+</html>
