@@ -1,171 +1,218 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
   <meta charset="UTF-8" />
   <title>CyberEx – Web3 App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="CyberEx Web3 App - Güvenli ve modern kripto para cüzdanı. Android ve iOS desteği. Ethereum, BSC, Polygon ve daha fazlası." />
+  <meta name="description"
+    content="CyberEx Web3 App - Güvenli ve modern kripto para cüzdanı. Android ve iOS desteği. Ethereum, BSC, Polygon ve daha fazlası." />
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" href="../icons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="../icons/icon-192x192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="../icons/icon-192x192.png">
+  <link rel="shortcut icon" href="../icons/icon-192x192.png" type="image/x-icon">
+  <link rel="manifest" href="../manifest.json">
+
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js" integrity="sha512-jEnuDt6jfecCjthQAJ+ed0MTVA++5ZKmlUcmDGBv2vUI/REn6FuIdixLNnQT+vKusE2hhTk2is3cFvv5wA+Sgg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"
+    integrity="sha512-jEnuDt6jfecCjthQAJ+ed0MTVA++5ZKmlUcmDGBv2vUI/REn6FuIdixLNnQT+vKusE2hhTk2is3cFvv5wA+Sgg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <style>
-    :root{
-      --bg:#020617;
-      --bg-soft:#020817;
-      --bg-alt:#030b1a;
-      --neon:#00e5ff;
-      --mint:#00f5a0;
-      --card:rgba(15,23,42,0.92);
-      --border:rgba(148,163,184,0.35);
-      --text-soft:#9ca3af;
+    :root {
+      --bg: #020617;
+      --bg-soft: #020817;
+      --bg-alt: #030b1a;
+      --neon: #00e5ff;
+      --mint: #00f5a0;
+      --card: rgba(15, 23, 42, 0.92);
+      --border: rgba(148, 163, 184, 0.35);
+      --text-soft: #9ca3af;
     }
 
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     html {
       scroll-behavior: smooth;
     }
 
-    body{
-      font-family: system-ui,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif;
-      background: radial-gradient(circle at top,#021222 0,var(--bg) 45%,#000 100%);
-      color:#fff;
-      min-height:100vh;
-      overflow-x:hidden;
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #021222 0, var(--bg) 45%, #000 100%);
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    .bg-network{
-      position:fixed;
-      inset:0;
-      z-index:-1;
+    .bg-network {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
       background-image:
-        radial-gradient(circle at top,var(--neon) 0,transparent 55%),
-        radial-gradient(circle at 80% 10%,#00b3ff33 0,transparent 60%);
-      opacity:0.25;
-      pointer-events:none;
+        radial-gradient(circle at top, var(--neon) 0, transparent 55%),
+        radial-gradient(circle at 80% 10%, #00b3ff33 0, transparent 60%);
+      opacity: 0.25;
+      pointer-events: none;
       animation: bgPulse 8s ease-in-out infinite;
     }
 
     @keyframes bgPulse {
-      0%, 100% { opacity: 0.25; }
-      50% { opacity: 0.35; }
+
+      0%,
+      100% {
+        opacity: 0.25;
+      }
+
+      50% {
+        opacity: 0.35;
+      }
     }
 
-    .bg-network::before{
-      content:"";
-      position:absolute;
-      inset:0;
+    .bg-network::before {
+      content: "";
+      position: absolute;
+      inset: 0;
       background-image:
-        linear-gradient(#0f172a44 1px,transparent 1px),
-        linear-gradient(90deg,#0f172a44 1px,transparent 1px);
-      background-size:80px 80px;
-      mix-blend-mode:screen;
-      opacity:.35;
-      animation:gridMove 22s linear infinite;
+        linear-gradient(#0f172a44 1px, transparent 1px),
+        linear-gradient(90deg, #0f172a44 1px, transparent 1px);
+      background-size: 80px 80px;
+      mix-blend-mode: screen;
+      opacity: .35;
+      animation: gridMove 22s linear infinite;
     }
 
-    @keyframes gridMove{
-      0%{transform:translateY(0);}
-      100%{transform:translateY(80px);}
+    @keyframes gridMove {
+      0% {
+        transform: translateY(0);
+      }
+
+      100% {
+        transform: translateY(80px);
+      }
     }
 
-    .glass-nav{
-      background:rgba(15,23,42,0.94);
-      backdrop-filter:blur(16px);
-      box-shadow:0 18px 45px rgba(0,0,0,.65);
-      border:1px solid rgba(148,163,184,0.28);
+    .glass-nav {
+      background: rgba(15, 23, 42, 0.94);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, .65);
+      border: 1px solid rgba(148, 163, 184, 0.28);
       transition: all 0.3s ease;
     }
 
     .glass-nav.scrolled {
-      background:rgba(15,23,42,0.98);
-      box-shadow:0 20px 50px rgba(0,0,0,.8);
+      background: rgba(15, 23, 42, 0.98);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, .8);
     }
 
-    .headline{
+    .headline {
       font-size: clamp(2.6rem, 5vw, 3.8rem);
-      line-height:1.02;
-      letter-spacing:0.03em;
+      line-height: 1.02;
+      letter-spacing: 0.03em;
     }
 
-    .grad-text{
-      background:linear-gradient(135deg,var(--neon),var(--mint));
-      -webkit-background-clip:text;
-      background-clip:text;
-      color:transparent;
+    .grad-text {
+      background: linear-gradient(135deg, var(--neon), var(--mint));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
       animation: gradientShift 3s ease infinite;
       background-size: 200% 200%;
     }
 
     @keyframes gradientShift {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
+
+      0%,
+      100% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
     }
 
-    .pill{
-      border-radius:999px;
-      padding:6px 14px;
-      font-size:.78rem;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      border:1px solid rgba(148,163,184,0.4);
+    .pill {
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: .78rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border: 1px solid rgba(148, 163, 184, 0.4);
     }
 
-    .phone{
-      width:320px;
-      max-width:90vw;
-      border-radius:30px;
-      background:radial-gradient(circle at top,#0b162a,#020617 55%,#000 100%);
-      border:1px solid rgba(148,163,184,0.35);
+    .phone {
+      width: 320px;
+      max-width: 90vw;
+      border-radius: 30px;
+      background: radial-gradient(circle at top, #0b162a, #020617 55%, #000 100%);
+      border: 1px solid rgba(148, 163, 184, 0.35);
       box-shadow:
-        0 40px 80px rgba(0,0,0,0.9),
-        0 0 45px rgba(0,229,255,0.35);
-      padding:18px;
-      position:relative;
-      overflow:hidden;
-      transform:rotateX(10deg) rotateY(-16deg);
-      transform-style:preserve-3d;
+        0 40px 80px rgba(0, 0, 0, 0.9),
+        0 0 45px rgba(0, 229, 255, 0.35);
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+      transform: rotateX(10deg) rotateY(-16deg);
+      transform-style: preserve-3d;
       perspective: 1000px;
-      animation:floatPhone 7.5s ease-in-out infinite, phoneGlow 4s ease-in-out infinite;
+      animation: floatPhone 7.5s ease-in-out infinite, phoneGlow 4s ease-in-out infinite;
       transition: transform 0.1s ease-out;
     }
 
     @keyframes phoneGlow {
-      0%, 100% { 
-        box-shadow: 0 40px 80px rgba(0,0,0,0.9), 0 0 45px rgba(0,229,255,0.35);
+
+      0%,
+      100% {
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.9), 0 0 45px rgba(0, 229, 255, 0.35);
       }
-      50% { 
-        box-shadow: 0 40px 80px rgba(0,0,0,0.9), 0 0 60px rgba(0,229,255,0.6), 0 0 100px rgba(0,245,160,0.4);
+
+      50% {
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.9), 0 0 60px rgba(0, 229, 255, 0.6), 0 0 100px rgba(0, 245, 160, 0.4);
       }
     }
 
-    @keyframes floatPhone{
-      0%,100%{transform:translateY(0) rotateX(10deg) rotateY(-16deg) rotateZ(0deg);}
-      25%{transform:translateY(-14px) rotateX(8deg) rotateY(-12deg) rotateZ(1deg);}
-      50%{transform:translateY(-20px) rotateX(12deg) rotateY(-14deg) rotateZ(-1deg);}
-      75%{transform:translateY(-14px) rotateX(8deg) rotateY(-12deg) rotateZ(1deg);}
+    @keyframes floatPhone {
+
+      0%,
+      100% {
+        transform: translateY(0) rotateX(10deg) rotateY(-16deg) rotateZ(0deg);
+      }
+
+      25% {
+        transform: translateY(-14px) rotateX(8deg) rotateY(-12deg) rotateZ(1deg);
+      }
+
+      50% {
+        transform: translateY(-20px) rotateX(12deg) rotateY(-14deg) rotateZ(-1deg);
+      }
+
+      75% {
+        transform: translateY(-14px) rotateX(8deg) rotateY(-12deg) rotateZ(1deg);
+      }
     }
 
-    .section-alt{
-      background: radial-gradient(circle at top,#02101e,#020617 50%,#000 100%);
-    }
-    .section-soft{
-      background: radial-gradient(circle at 10% 0,#042f2e 0,#020617 50%,#000 100%);
+    .section-alt {
+      background: radial-gradient(circle at top, #02101e, #020617 50%, #000 100%);
     }
 
-    .feature-card{
-      background:var(--card);
-      border-radius:22px;
-      border:1px solid var(--border);
-      padding:20px 18px;
-      box-shadow:0 18px 45px rgba(15,23,42,0.7);
-      transition:transform .4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow .4s ease, border-color .4s ease;
-      position:relative;
-      overflow:hidden;
+    .section-soft {
+      background: radial-gradient(circle at 10% 0, #042f2e 0, #020617 50%, #000 100%);
+    }
+
+    .feature-card {
+      background: var(--card);
+      border-radius: 22px;
+      border: 1px solid var(--border);
+      padding: 20px 18px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.7);
+      transition: transform .4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow .4s ease, border-color .4s ease;
+      position: relative;
+      overflow: hidden;
       opacity: 0;
       transform: translateY(30px) rotateX(5deg);
       transform-style: preserve-3d;
@@ -184,7 +231,7 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(0,229,255,0.1), transparent);
+      background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.1), transparent);
       transition: left 0.5s ease;
     }
 
@@ -192,33 +239,35 @@
       left: 100%;
     }
 
-    .feature-card::after{
-      content:"";
-      position:absolute;
-      inset:-40%;
-      background:radial-gradient(circle at top,var(--neon) 0,transparent 55%);
-      opacity:0;
-      transition:opacity .4s ease;
-      mix-blend-mode:screen;
-    }
-    .feature-card:hover{
-      transform:translateY(-12px) translateZ(20px) scale(1.03) rotateX(-5deg) rotateY(2deg);
-      box-shadow:0 26px 60px rgba(15,23,42,0.9), 0 0 60px rgba(0,229,255,0.5), 0 0 100px rgba(0,245,160,0.3);
-      border-color:rgba(56,189,248,0.85);
-    }
-    .feature-card:hover::after{
-      opacity:0.15;
+    .feature-card::after {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at top, var(--neon) 0, transparent 55%);
+      opacity: 0;
+      transition: opacity .4s ease;
+      mix-blend-mode: screen;
     }
 
-    .btn-main{
-      border-radius:999px;
-      background:linear-gradient(135deg,var(--neon),var(--mint));
-      color:#020617;
-      font-weight:600;
-      padding:10px 22px;
-      font-size:.94rem;
-      box-shadow:0 0 22px rgba(0,229,255,0.55);
-      transition:transform .22s ease, box-shadow .22s ease, filter .22s ease;
+    .feature-card:hover {
+      transform: translateY(-12px) translateZ(20px) scale(1.03) rotateX(-5deg) rotateY(2deg);
+      box-shadow: 0 26px 60px rgba(15, 23, 42, 0.9), 0 0 60px rgba(0, 229, 255, 0.5), 0 0 100px rgba(0, 245, 160, 0.3);
+      border-color: rgba(56, 189, 248, 0.85);
+    }
+
+    .feature-card:hover::after {
+      opacity: 0.15;
+    }
+
+    .btn-main {
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--neon), var(--mint));
+      color: #020617;
+      font-weight: 600;
+      padding: 10px 22px;
+      font-size: .94rem;
+      box-shadow: 0 0 22px rgba(0, 229, 255, 0.55);
+      transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
       position: relative;
       overflow: hidden;
     }
@@ -231,7 +280,7 @@
       width: 0;
       height: 0;
       border-radius: 50%;
-      background: rgba(255,255,255,0.3);
+      background: rgba(255, 255, 255, 0.3);
       transform: translate(-50%, -50%);
       transition: width 0.6s, height 0.6s;
     }
@@ -241,45 +290,47 @@
       height: 300px;
     }
 
-    .btn-main:hover{
-      transform:translateY(-2px) scale(1.05);
-      box-shadow:0 0 32px rgba(34,211,238,0.8);
-      filter:saturate(1.15);
+    .btn-main:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 0 32px rgba(34, 211, 238, 0.8);
+      filter: saturate(1.15);
     }
 
-    .btn-ghost{
-      border-radius:999px;
-      border:1px solid rgba(148,163,184,0.55);
-      padding:9px 20px;
-      font-size:.9rem;
-      color:var(--text-soft);
-      background:rgba(15,23,42,0.9);
-      transition:background .2s ease,border-color .2s ease,color .2s ease,transform .2s;
-    }
-    .btn-ghost:hover{
-      background:rgba(15,23,42,1);
-      border-color:rgba(148,163,184,0.9);
-      color:#e5e7eb;
-      transform:translateY(-1px);
+    .btn-ghost {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      padding: 9px 20px;
+      font-size: .9rem;
+      color: var(--text-soft);
+      background: rgba(15, 23, 42, 0.9);
+      transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s;
     }
 
-    .social-icon{
-      width:34px;
-      height:34px;
-      border-radius:11px;
-      background:#020617;
-      border:1px solid rgba(148,163,184,0.35);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:.8rem;
-      transition:background .2s,border-color .2s,transform .2s,box-shadow .2s;
+    .btn-ghost:hover {
+      background: rgba(15, 23, 42, 1);
+      border-color: rgba(148, 163, 184, 0.9);
+      color: #e5e7eb;
+      transform: translateY(-1px);
     }
-    .social-icon:hover{
-      background:radial-gradient(circle at top,var(--neon),#0f172a);
-      border-color:var(--neon);
-      transform:translateY(-2px) scale(1.1);
-      box-shadow:0 0 20px rgba(0,229,255,0.6);
+
+    .social-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 11px;
+      background: #020617;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .8rem;
+      transition: background .2s, border-color .2s, transform .2s, box-shadow .2s;
+    }
+
+    .social-icon:hover {
+      background: radial-gradient(circle at top, var(--neon), #0f172a);
+      border-color: var(--neon);
+      transform: translateY(-2px) scale(1.1);
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.6);
     }
 
     .fade-in {
@@ -316,40 +367,59 @@
     }
 
     .download-card {
-      background:var(--card);
-      border-radius:24px;
-      border:1px solid var(--border);
-      padding:32px;
-      box-shadow:0 18px 45px rgba(15,23,42,0.7);
-      transition:transform .4s ease, box-shadow .4s ease, border-color .4s ease;
-      position:relative;
-      overflow:hidden;
+      background: var(--card);
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      padding: 32px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.7);
+      transition: transform .4s ease, box-shadow .4s ease, border-color .4s ease;
+      position: relative;
+      overflow: hidden;
     }
 
-    .download-card::after{
-      content:"";
-      position:absolute;
-      inset:-40%;
-      background:radial-gradient(circle at top,var(--neon) 0,transparent 55%);
-      opacity:0;
-      transition:opacity .4s ease;
-      mix-blend-mode:screen;
-    }
-    .download-card:hover{
-      transform:translateY(-12px) scale(1.03);
-      box-shadow:0 26px 60px rgba(15,23,42,0.9), 0 0 60px rgba(0,229,255,0.5);
-      border-color:rgba(56,189,248,0.85);
-    }
-    .download-card:hover::after{
-      opacity:0.15;
+    .download-card::after {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at top, var(--neon) 0, transparent 55%);
+      opacity: 0;
+      transition: opacity .4s ease;
+      mix-blend-mode: screen;
     }
 
-    .stagger-1 { transition-delay: 0.1s; }
-    .stagger-2 { transition-delay: 0.2s; }
-    .stagger-3 { transition-delay: 0.3s; }
-    .stagger-4 { transition-delay: 0.4s; }
-    .stagger-5 { transition-delay: 0.5s; }
-    .stagger-6 { transition-delay: 0.6s; }
+    .download-card:hover {
+      transform: translateY(-12px) scale(1.03);
+      box-shadow: 0 26px 60px rgba(15, 23, 42, 0.9), 0 0 60px rgba(0, 229, 255, 0.5);
+      border-color: rgba(56, 189, 248, 0.85);
+    }
+
+    .download-card:hover::after {
+      opacity: 0.15;
+    }
+
+    .stagger-1 {
+      transition-delay: 0.1s;
+    }
+
+    .stagger-2 {
+      transition-delay: 0.2s;
+    }
+
+    .stagger-3 {
+      transition-delay: 0.3s;
+    }
+
+    .stagger-4 {
+      transition-delay: 0.4s;
+    }
+
+    .stagger-5 {
+      transition-delay: 0.5s;
+    }
+
+    .stagger-6 {
+      transition-delay: 0.6s;
+    }
 
     /* Language Switcher */
     .lang-switcher {
@@ -359,16 +429,16 @@
       gap: 8px;
       padding: 6px 12px;
       border-radius: 999px;
-      background: rgba(15,23,42,0.8);
-      border: 1px solid rgba(148,163,184,0.3);
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.3);
       cursor: pointer;
       transition: all 0.3s ease;
     }
 
     .lang-switcher:hover {
-      background: rgba(15,23,42,1);
-      border-color: rgba(0,229,255,0.5);
-      box-shadow: 0 0 15px rgba(0,229,255,0.3);
+      background: rgba(15, 23, 42, 1);
+      border-color: rgba(0, 229, 255, 0.5);
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
     }
 
     .lang-switcher select {
@@ -383,7 +453,7 @@
     }
 
     .lang-switcher select option {
-      background: rgba(15,23,42,0.95);
+      background: rgba(15, 23, 42, 0.95);
       color: #fff;
       padding: 8px 12px;
     }
@@ -393,7 +463,7 @@
       position: absolute;
       right: 12px;
       font-size: 0.7rem;
-      color: rgba(148,163,184,0.6);
+      color: rgba(148, 163, 184, 0.6);
       pointer-events: none;
     }
 
@@ -405,16 +475,16 @@
       gap: 8px;
       padding: 6px 12px;
       border-radius: 999px;
-      background: rgba(15,23,42,0.8);
-      border: 1px solid rgba(148,163,184,0.3);
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.3);
       cursor: pointer;
       transition: all 0.3s ease;
     }
 
     .lang-switcher:hover {
-      background: rgba(15,23,42,1);
-      border-color: rgba(0,229,255,0.5);
-      box-shadow: 0 0 15px rgba(0,229,255,0.3);
+      background: rgba(15, 23, 42, 1);
+      border-color: rgba(0, 229, 255, 0.5);
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
     }
 
     .lang-switcher select {
@@ -429,7 +499,7 @@
     }
 
     .lang-switcher select option {
-      background: rgba(15,23,42,0.95);
+      background: rgba(15, 23, 42, 0.95);
       color: #fff;
       padding: 8px 12px;
     }
@@ -439,15 +509,15 @@
       position: absolute;
       right: 12px;
       font-size: 0.7rem;
-      color: rgba(148,163,184,0.6);
+      color: rgba(148, 163, 184, 0.6);
       pointer-events: none;
     }
 
-    @media (max-width:1024px){
-      .phone{
-        margin-top:40px;
-        transform:none;
-        animation:none;
+    @media (max-width:1024px) {
+      .phone {
+        margin-top: 40px;
+        transform: none;
+        animation: none;
       }
     }
 
@@ -464,6 +534,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+
       *,
       *::before,
       *::after {
@@ -477,713 +548,754 @@
 
 <body>
 
-<div class="bg-network"></div>
-<canvas id="particles" class="fixed inset-0 z-0 pointer-events-none"></canvas>
+  <div class="bg-network"></div>
+  <canvas id="particles" class="fixed inset-0 z-0 pointer-events-none"></canvas>
 
-<!-- NAVBAR -->
-<header class="sticky top-0 z-40">
-  <div class="glass-nav mx-auto max-w-6xl mt-4 mb-4 px-4 sm:px-6 py-3 rounded-2xl flex items-center justify-between gap-4">
-    <div class="flex items-center gap-3">
-      <div class="w-9 h-9 rounded-full border border-cyan-400/60 bg-cyan-400/10 flex items-center justify-center overflow-hidden">
-        <img src="cyberex-logo.png" alt="CyberEX Logo" class="w-7 h-7 object-contain" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-cyan-300 font-bold text-sm\'>CE</span>';" />
-                </div>
-      <div class="flex flex-col leading-tight">
-        <span class="text-sm font-semibold tracking-[0.18em] uppercase text-cyan-300">CyberEX</span>
-        <span class="text-xs text-slate-400" data-i18n="nav.subtitle">Web3 App</span>
-                </div>
-            </div>
-
-    <nav class="hidden md:flex items-center gap-8 text-sm text-slate-300">
-      <a href="#features" class="hover:text-cyan-300 transition-colors" data-i18n="nav.features">Özellikler</a>
-      <a href="#download" class="hover:text-cyan-300 transition-colors" data-i18n="nav.download">İndir</a>
-      <a href="#guide" class="hover:text-cyan-300 transition-colors" data-i18n="nav.guide">Kılavuz</a>
-      <a href="#faq" class="hover:text-cyan-300 transition-colors" data-i18n="nav.faq">SSS</a>
-    </nav>
-
-    <div class="flex items-center gap-3">
-      <div class="lang-switcher">
-        <select id="languageSelect">
-          <option value="tr" selected>TR</option>
-          <option value="en">EN</option>
-        </select>
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-40">
+    <div
+      class="glass-nav mx-auto max-w-6xl mt-4 mb-4 px-4 sm:px-6 py-3 rounded-2xl flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div
+          class="w-9 h-9 rounded-full border border-cyan-400/60 bg-cyan-400/10 flex items-center justify-center overflow-hidden">
+          <img src="cyberex-logo.png" alt="CyberEX Logo" class="w-7 h-7 object-contain"
+            onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-cyan-300 font-bold text-sm\'>CE</span>';" />
+        </div>
+        <div class="flex flex-col leading-tight">
+          <span class="text-sm font-semibold tracking-[0.18em] uppercase text-cyan-300">CyberEX</span>
+          <span class="text-xs text-slate-400" data-i18n="nav.subtitle">Web3 App</span>
+        </div>
       </div>
-      <button class="btn-main text-xs sm:text-sm" data-i18n="nav.download">İndir</button>
+
+      <nav class="hidden md:flex items-center gap-8 text-sm text-slate-300">
+        <a href="#features" class="hover:text-cyan-300 transition-colors" data-i18n="nav.features">Özellikler</a>
+        <a href="#download" class="hover:text-cyan-300 transition-colors" data-i18n="nav.download">İndir</a>
+        <a href="#guide" class="hover:text-cyan-300 transition-colors" data-i18n="nav.guide">Kılavuz</a>
+        <a href="#faq" class="hover:text-cyan-300 transition-colors" data-i18n="nav.faq">SSS</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <div class="lang-switcher">
+          <select id="languageSelect">
+            <option value="tr" selected>TR</option>
+            <option value="en">EN</option>
+          </select>
+        </div>
+        <button class="btn-main text-xs sm:text-sm" data-i18n="nav.download">İndir</button>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
 
-<main class="pb-20">
+  <main class="pb-20">
 
-  <!-- HERO -->
-  <section class="pt-6 sm:pt-12 lg:pt-16 pb-16 relative overflow-hidden">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-12 relative z-10">
-      <!-- Left -->
-      <div class="max-w-xl fade-in slide-in-left">
-        <div class="pill inline-flex items-center gap-2 mb-4 bg-slate-900/70 text-[0.7rem]">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(16,185,129,1)] animate-pulse"></span>
-          <span data-i18n="hero.badge">GÜVENLİ VE MODERN CÜZDAN</span>
-                    </div>
+    <!-- HERO -->
+    <section class="pt-6 sm:pt-12 lg:pt-16 pb-16 relative overflow-hidden">
+      <div
+        class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-12 relative z-10">
+        <!-- Left -->
+        <div class="max-w-xl fade-in slide-in-left">
+          <div class="pill inline-flex items-center gap-2 mb-4 bg-slate-900/70 text-[0.7rem]">
+            <span
+              class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(16,185,129,1)] animate-pulse"></span>
+            <span data-i18n="hero.badge">GÜVENLİ VE MODERN CÜZDAN</span>
+          </div>
 
-        <h1 class="headline font-semibold mb-4">
-          <span class="block" data-i18n="hero.title1">Güvenli ve Modern</span>
-          <span class="block grad-text font-bold" data-i18n="hero.title2">Kripto Para Cüzdanı</span>
-        </h1>
+          <h1 class="headline font-semibold mb-4">
+            <span class="block" data-i18n="hero.title1">Güvenli ve Modern</span>
+            <span class="block grad-text font-bold" data-i18n="hero.title2">Kripto Para Cüzdanı</span>
+          </h1>
 
-        <p class="text-sm sm:text-base text-slate-300 leading-relaxed mb-6" data-i18n="hero.description">
-          <strong class="text-cyan-300">CyberEx</strong> ürünü. CyberEx Web3 App ile kripto paralarınızı güvenle saklayın, gönderin ve alın. 
-                        Ethereum, BSC, Polygon, Avalanche ve daha fazlasını destekleyen profesyonel cüzdan çözümü.
-        </p>
-        <p class="text-xs text-slate-400 mb-4" data-i18n="hero.ecosystem">
-          <strong class="text-cyan-300">CyberEx</strong> ekosisteminin bir parçası: 
-          <a href="https://cyberex.com.tr/web3wallet" class="text-cyan-300 hover:underline" target="_blank">CyberEx Wallet</a>, 
-          <a href="https://cyberex.com.tr/web3extension" class="text-cyan-300 hover:underline" target="_blank">CyberEx Extension</a>, 
-          <a href="https://cyberex.com.tr/web3app" class="text-cyan-300 hover:underline">CyberEx App</a>
-        </p>
+          <p class="text-sm sm:text-base text-slate-300 leading-relaxed mb-6" data-i18n="hero.description">
+            <strong class="text-cyan-300">CyberEx</strong> ürünü. CyberEx Web3 App ile kripto paralarınızı güvenle
+            saklayın, gönderin ve alın.
+            Ethereum, BSC, Polygon, Avalanche ve daha fazlasını destekleyen profesyonel cüzdan çözümü.
+          </p>
+          <p class="text-xs text-slate-400 mb-4" data-i18n="hero.ecosystem">
+            <strong class="text-cyan-300">CyberEx</strong> ekosisteminin bir parçası:
+            <a href="https://cyberex.com.tr/web3wallet" class="text-cyan-300 hover:underline" target="_blank">CyberEx
+              Wallet</a>,
+            <a href="https://cyberex.com.tr/web3extension" class="text-cyan-300 hover:underline" target="_blank">CyberEx
+              Extension</a>,
+            <a href="https://cyberex.com.tr/web3app" class="text-cyan-300 hover:underline">CyberEx App</a>
+          </p>
 
-        <div class="flex flex-wrap items-center gap-3 mb-5">
-          <a href="#android-download" class="btn-main flex items-center gap-2 glow">
-            <span data-i18n="hero.android">🤖 Android APK İndir</span>
-          </a>
-          <a href="#ios-download" class="btn-ghost flex items-center gap-2">
-            <span data-i18n="hero.ios">🍎 iOS App Store</span>
-          </a>
+          <div class="flex flex-wrap items-center gap-3 mb-5">
+            <a href="#android-download" class="btn-main flex items-center gap-2 glow">
+              <span data-i18n="hero.android">🤖 Android APK İndir</span>
+            </a>
+            <a href="#ios-download" class="btn-ghost flex items-center gap-2">
+              <span data-i18n="hero.ios">🍎 iOS App Store</span>
+            </a>
+          </div>
+
+          <div class="grid grid-cols-3 gap-3 text-xs text-slate-400 mb-6">
+            <div
+              class="flex items-center gap-2 p-3 rounded-xl bg-slate-900/50 border border-slate-700/50 hover:border-cyan-400/50 transition-colors">
+              <span
+                class="w-6 h-6 rounded-full bg-emerald-400/15 border border-emerald-400/70 flex items-center justify-center text-[0.7rem] animate-pulse">✓</span>
+              <span data-i18n="hero.feature1">1000+ Token</span>
+            </div>
+            <div
+              class="flex items-center gap-2 p-3 rounded-xl bg-slate-900/50 border border-slate-700/50 hover:border-cyan-400/50 transition-colors">
+              <span
+                class="w-6 h-6 rounded-full bg-cyan-400/15 border border-cyan-400/70 flex items-center justify-center text-[0.7rem] animate-pulse">✓</span>
+              <span data-i18n="hero.feature2">5+ Blockchain</span>
+            </div>
+            <div
+              class="flex items-center gap-2 p-3 rounded-xl bg-slate-900/50 border border-slate-700/50 hover:border-emerald-400/50 transition-colors">
+              <span
+                class="w-6 h-6 rounded-full bg-emerald-400/15 border border-emerald-400/70 flex items-center justify-center text-[0.7rem] animate-pulse">✓</span>
+              <span data-i18n="hero.feature3">100% Güvenli</span>
+            </div>
+          </div>
         </div>
 
-        <div class="grid grid-cols-3 gap-3 text-xs text-slate-400 mb-6">
-          <div class="flex items-center gap-2 p-3 rounded-xl bg-slate-900/50 border border-slate-700/50 hover:border-cyan-400/50 transition-colors">
-            <span class="w-6 h-6 rounded-full bg-emerald-400/15 border border-emerald-400/70 flex items-center justify-center text-[0.7rem] animate-pulse">✓</span>
-            <span data-i18n="hero.feature1">1000+ Token</span>
-                        </div>
-          <div class="flex items-center gap-2 p-3 rounded-xl bg-slate-900/50 border border-slate-700/50 hover:border-cyan-400/50 transition-colors">
-            <span class="w-6 h-6 rounded-full bg-cyan-400/15 border border-cyan-400/70 flex items-center justify-center text-[0.7rem] animate-pulse">✓</span>
-            <span data-i18n="hero.feature2">5+ Blockchain</span>
-                        </div>
-          <div class="flex items-center gap-2 p-3 rounded-xl bg-slate-900/50 border border-slate-700/50 hover:border-emerald-400/50 transition-colors">
-            <span class="w-6 h-6 rounded-full bg-emerald-400/15 border border-emerald-400/70 flex items-center justify-center text-[0.7rem] animate-pulse">✓</span>
-            <span data-i18n="hero.feature3">100% Güvenli</span>
-                        </div>
-                    </div>
-                    </div>
-
-      <!-- Right: Phone mockup -->
-      <div class="flex flex-col gap-6 justify-center lg:justify-end flex-1 fade-in slide-in-right">
-        <div class="flex justify-center lg:justify-end">
-          <div class="phone">
-            <div class="flex items-center justify-between mb-4">
-              <div class="flex items-center gap-2 text-slate-300 text-sm">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(16,185,129,1)]"></span>
-                CyberEX Wallet
+        <!-- Right: Phone mockup -->
+        <div class="flex flex-col gap-6 justify-center lg:justify-end flex-1 fade-in slide-in-right">
+          <div class="flex justify-center lg:justify-end">
+            <div class="phone">
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2 text-slate-300 text-sm">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(16,185,129,1)]"></span>
+                  CyberEX Wallet
                 </div>
-              <div class="text-slate-400 text-xs">
-                Beta • v1.0
-                                </div>
-                                </div>
-
-            <div class="mb-4">
-              <div class="text-xs text-slate-400 mb-1">Bakiye</div>
-              <div class="text-2xl font-bold grad-text mb-1">0.00 ETH</div>
-              <div class="text-sm text-slate-400">$0.00</div>
-                                </div>
-
-            <div class="grid grid-cols-2 gap-3 mb-4">
-              <button class="rounded-xl bg-slate-900/80 border border-slate-700/80 p-3 text-xs text-cyan-300 hover:border-cyan-400/50 transition-colors">Gönder</button>
-              <button class="rounded-xl bg-slate-900/80 border border-slate-700/80 p-3 text-xs text-emerald-300 hover:border-emerald-400/50 transition-colors">Al</button>
-                                        </div>
-
-            <div class="rounded-xl bg-slate-900/80 border border-slate-700/80 p-3">
-              <div class="text-xs text-slate-400 mb-2">Tokenler</div>
-              <div class="flex items-center gap-2">
-                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-yellow-400 flex items-center justify-center text-xs font-bold">₿</div>
-                <div class="flex-1">
-                  <div class="text-xs text-slate-200">Bitcoin</div>
-                  <div class="text-[0.7rem] text-slate-400">$0.00</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="text-slate-400 text-xs">
+                  Beta • v1.0
                 </div>
+              </div>
+
+              <div class="mb-4">
+                <div class="text-xs text-slate-400 mb-1">Bakiye</div>
+                <div class="text-2xl font-bold grad-text mb-1">0.00 ETH</div>
+                <div class="text-sm text-slate-400">$0.00</div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3 mb-4">
+                <button
+                  class="rounded-xl bg-slate-900/80 border border-slate-700/80 p-3 text-xs text-cyan-300 hover:border-cyan-400/50 transition-colors">Gönder</button>
+                <button
+                  class="rounded-xl bg-slate-900/80 border border-slate-700/80 p-3 text-xs text-emerald-300 hover:border-emerald-400/50 transition-colors">Al</button>
+              </div>
+
+              <div class="rounded-xl bg-slate-900/80 border border-slate-700/80 p-3">
+                <div class="text-xs text-slate-400 mb-2">Tokenler</div>
+                <div class="flex items-center gap-2">
+                  <div
+                    class="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-yellow-400 flex items-center justify-center text-xs font-bold">
+                    ₿</div>
+                  <div class="flex-1">
+                    <div class="text-xs text-slate-200">Bitcoin</div>
+                    <div class="text-[0.7rem] text-slate-400">$0.00</div>
+                  </div>
+                </div>
+              </div>
             </div>
-        </div>
-    </section>
-
-  <!-- FEATURES GRID -->
-  <section id="features" class="py-12 section-alt border-y border-slate-800/80">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-8 mb-8 fade-in">
-        <div class="flex-1">
-          <p class="pill bg-slate-900/70 text-[0.68rem] mb-3">ÖZELLİKLER</p>
-          <h2 class="text-xl sm:text-2xl font-semibold mb-2">Neden CyberEx Web3 App?</h2>
-          <p class="text-sm text-slate-300 max-w-xl">
-            Güvenlik, hız ve kullanım kolaylığını bir araya getiren profesyonel cüzdan çözümü.
-          </p>
-            </div>
-                </div>
-
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-        <div class="feature-card stagger-1">
-          <div class="text-xs font-semibold text-cyan-300 mb-2">🔐 Güvenli Saklama</div>
-          <h3 class="font-semibold mb-2 text-sm">Private Key Güvenliği</h3>
-          <p class="text-xs text-slate-300 mb-3">
-            Private key'leriniz cihazınızda şifrelenmiş olarak saklanır. Hiçbir zaman sunuculara gönderilmez.
-          </p>
-          <p class="text-[0.7rem] text-slate-500">
-            Biyometrik kimlik doğrulama (parmak izi, yüz tanıma) ile ekstra güvenlik katmanı.
-          </p>
-                </div>
-
-        <div class="feature-card stagger-2">
-          <div class="text-xs font-semibold text-cyan-300 mb-2">🌐 Çoklu Ağ Desteği</div>
-          <h3 class="font-semibold mb-2 text-sm">5+ Blockchain Ağı</h3>
-          <p class="text-xs text-slate-300 mb-3">
-            Ethereum, BSC, Polygon, Avalanche, Arbitrum ve özel ağlar.
-          </p>
-          <p class="text-[0.7rem] text-slate-500">
-            RPC URL, Chain ID ve Explorer ayarları ile tam kontrol.
-          </p>
-                </div>
-
-        <div class="feature-card stagger-3">
-          <div class="text-xs font-semibold text-cyan-300 mb-2">💰 Token Yönetimi</div>
-          <h3 class="font-semibold mb-2 text-sm">Binlerce Token Desteği</h3>
-          <p class="text-xs text-slate-300 mb-3">
-            CoinGecko API entegrasyonu ile gerçek zamanlı fiyatlar.
-          </p>
-          <p class="text-[0.7rem] text-slate-500">
-            Özel token ekleme (contract adresi ile). Token bakiyelerinizi tek ekranda görüntüleyin.
-          </p>
-                </div>
-
-        <div class="feature-card stagger-4">
-          <div class="text-xs font-semibold text-cyan-300 mb-2">📱 QR Kod Desteği</div>
-          <h3 class="font-semibold mb-2 text-sm">Hızlı İşlemler</h3>
-          <p class="text-xs text-slate-300 mb-3">
-            QR kod ile hızlıca adres paylaşın ve işlem yapın.
-          </p>
-          <p class="text-[0.7rem] text-slate-500">
-            Alıcı adresini QR kod ile tarayın, gönderme işlemini saniyeler içinde tamamlayın.
-          </p>
-                </div>
-
-        <div class="feature-card stagger-5">
-          <div class="text-xs font-semibold text-cyan-300 mb-2">⚡ Hızlı İşlemler</div>
-          <h3 class="font-semibold mb-2 text-sm">Düşük Gas Fee</h3>
-          <p class="text-xs text-slate-300 mb-3">
-            Düşük gas fee'ler ve hızlı onay süreleri.
-          </p>
-          <p class="text-[0.7rem] text-slate-500">
-            İşlem geçmişi, onay durumu ve detaylı bilgiler tek tıkla erişilebilir.
-          </p>
-                </div>
-
-        <div class="feature-card stagger-6">
-          <div class="text-xs font-semibold text-cyan-300 mb-2">🎨 Modern Tasarım</div>
-          <h3 class="font-semibold mb-2 text-sm">Şık Arayüz</h3>
-          <p class="text-xs text-slate-300 mb-3">
-            CyberEx'in özel teması ile şık ve kullanıcı dostu arayüz.
-          </p>
-          <p class="text-[0.7rem] text-slate-500">
-            Dark mode desteği, smooth animasyonlar ve responsive tasarım.
-          </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-  <!-- HOW IT WORKS -->
-  <section id="guide" class="py-14 section-soft">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-12 fade-in">
-        <p class="pill bg-slate-900/70 text-[0.68rem] mb-3">KULLANIM KILAVUZU</p>
-        <h2 class="text-2xl sm:text-3xl font-semibold mb-3">Nasıl Kullanılır?</h2>
-        <p class="text-sm text-slate-300 max-w-2xl mx-auto">
-          3 basit adımda kripto dünyasına adım atın
-        </p>
-            </div>
-
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="feature-card fade-in stagger-1">
-          <div class="text-3xl font-bold grad-text mb-3">1</div>
-          <h3 class="font-semibold mb-2 text-sm">Cüzdan Oluştur</h3>
-          <p class="text-xs text-slate-300">
-            Uygulamayı açın ve "Cüzdan Oluştur" butonuna tıklayın. Güvenli bir şifre belirleyin. 
-            Private key'iniz otomatik olarak oluşturulur ve cihazınızda şifrelenmiş olarak saklanır.
-          </p>
-                    </div>
-
-        <div class="feature-card fade-in stagger-2">
-          <div class="text-3xl font-bold grad-text mb-3">2</div>
-          <h3 class="font-semibold mb-2 text-sm">Token Ekle</h3>
-          <p class="text-xs text-slate-300">
-            Popüler tokenler otomatik olarak listelenir. Özel token eklemek için contract adresini girin. 
-            Token bakiyeleriniz ve fiyatları gerçek zamanlı olarak güncellenir.
-          </p>
-                </div>
-
-        <div class="feature-card fade-in stagger-3">
-          <div class="text-3xl font-bold grad-text mb-3">3</div>
-          <h3 class="font-semibold mb-2 text-sm">İşlem Yap</h3>
-          <p class="text-xs text-slate-300">
-            Gönder, al veya swap işlemlerini kolayca yapın. QR kod ile hızlı adres paylaşımı. 
-            İşlem geçmişinizi görüntüleyin ve takip edin.
-          </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-  <!-- DOWNLOAD SECTION -->
-  <section id="download" class="py-14 border-t border-slate-800/80">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-12 fade-in">
-        <p class="pill bg-slate-900/70 text-[0.68rem] mb-3">İNDİR VE BAŞLA</p>
-        <h2 class="text-2xl sm:text-3xl font-semibold mb-3">Android ve iOS için Ücretsiz İndirin</h2>
-        <p class="text-sm text-slate-300 max-w-2xl mx-auto">
-          Android 8.0+ ve iOS 14.0+ cihazlarda çalışır
-        </p>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-6">
-        <div class="download-card fade-in stagger-1" id="android-download">
-          <div class="text-5xl mb-4">🤖</div>
-          <h3 class="text-xl font-semibold mb-2">Android</h3>
-          <p class="text-sm text-slate-300 mb-4">
-            APK dosyasını indirin ve kurun. Android 8.0 ve üzeri cihazlarda çalışır.
-          </p>
-          <a href="https://github.com/CyberEx/web3app/releases/latest/download/app-release.apk" class="btn-main inline-flex items-center gap-2 mb-4" download>
-            <span>APK İndir</span>
-          </a>
-          <div class="text-xs text-slate-400 space-y-1">
-            <div>Version 1.0.0</div>
-            <div>Min: Android 8.0 • Size: ~15 MB</div>
-            <div class="flex gap-2 mt-2">
-              <span class="px-2 py-1 rounded bg-emerald-400/10 text-emerald-300 text-[0.7rem]">✓ Güvenli</span>
-              <span class="px-2 py-1 rounded bg-cyan-400/10 text-cyan-300 text-[0.7rem]">✓ Hızlı</span>
-              <span class="px-2 py-1 rounded bg-purple-400/10 text-purple-300 text-[0.7rem]">✓ Ücretsiz</span>
-            </div>
-                    </div>
-                </div>
-
-        <div class="download-card fade-in stagger-2" id="ios-download">
-          <div class="text-5xl mb-4">🍎</div>
-          <h3 class="text-xl font-semibold mb-2">iOS</h3>
-          <p class="text-sm text-slate-300 mb-4">
-            App Store'dan indirin. iOS 14.0 ve üzeri cihazlarda çalışır.
-          </p>
-          <a href="https://apps.apple.com/app/cyberex-web3-wallet" class="btn-ghost inline-flex items-center gap-2 mb-4" target="_blank">
-            <span>App Store'da Görüntüle</span>
-          </a>
-          <div class="text-xs text-slate-400 space-y-1">
-            <div>Version 1.0.0</div>
-            <div>iOS 14.0+ • Size: ~20 MB</div>
-            <div class="flex gap-2 mt-2">
-              <span class="px-2 py-1 rounded bg-emerald-400/10 text-emerald-300 text-[0.7rem]">✓ Güvenli</span>
-              <span class="px-2 py-1 rounded bg-cyan-400/10 text-cyan-300 text-[0.7rem]">✓ Hızlı</span>
-              <span class="px-2 py-1 rounded bg-purple-400/10 text-purple-300 text-[0.7rem]">✓ Ücretsiz</span>
-                    </div>
-                    </div>
-                </div>
-            </div>
-
-      <div class="mt-8 p-4 rounded-2xl bg-slate-900/50 border border-slate-700/50 flex items-start gap-3 fade-in">
-        <div class="text-2xl">🛡️</div>
-        <div class="text-sm text-slate-300">
-          <strong class="text-cyan-300">Güvenlik Notu:</strong> APK dosyasını sadece resmi GitHub repository'mizden indirin. 
-                    Üçüncü parti kaynaklardan indirmeyin. Private key'leriniz asla paylaşılmaz.
-                </div>
-            </div>
-        </div>
-    </section>
-
-  <!-- FAQ SECTION -->
-  <section id="faq" class="py-14 section-alt border-t border-slate-800/80">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-12 fade-in">
-        <p class="pill bg-slate-900/70 text-[0.68rem] mb-3">SORULAR</p>
-        <h2 class="text-2xl sm:text-3xl font-semibold mb-3">Sık Sorulan Sorular</h2>
-            </div>
-
-      <div class="space-y-4">
-        <div class="feature-card fade-in">
-          <h3 class="font-semibold mb-2 text-sm">CyberEx Web3 App güvenli mi?</h3>
-          <p class="text-xs text-slate-300">
-            Evet, çok güvenli. Private key'leriniz cihazınızda şifrelenmiş olarak saklanır ve hiçbir zaman sunuculara gönderilmez. 
-            Biyometrik kimlik doğrulama ile ekstra güvenlik katmanı sağlanır.
-          </p>
-                    </div>
-
-        <div class="feature-card fade-in stagger-1">
-          <h3 class="font-semibold mb-2 text-sm">Hangi tokenleri destekliyor?</h3>
-          <p class="text-xs text-slate-300">
-            Ethereum, BSC, Polygon, Avalanche ve Arbitrum ağlarındaki tüm tokenler desteklenir. 
-            Ayrıca contract adresi ile özel token ekleyebilirsiniz.
-          </p>
-        </div>
-
-        <div class="feature-card fade-in stagger-2">
-          <h3 class="font-semibold mb-2 text-sm">Özel ağ nasıl eklenir?</h3>
-          <p class="text-xs text-slate-300">
-            Ayarlar menüsünden "Ağ Ekle" seçeneğini kullanın. RPC URL, Chain ID, Explorer URL ve native currency bilgilerini girin.
-          </p>
-        </div>
-
-        <div class="feature-card fade-in stagger-3">
-          <h3 class="font-semibold mb-2 text-sm">Ücret var mı?</h3>
-          <p class="text-xs text-slate-300">
-            Uygulama tamamen ücretsizdir. Blockchain işlemleri için sadece network gas fee'leri ödenir.
-          </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-</main>
-
-<!-- FOOTER -->
-<footer class="border-t border-slate-800/80 py-8 fade-in">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6">
-    <div class="grid md:grid-cols-4 gap-8 mb-8">
-      <!-- CyberEX Column -->
-      <div class="flex flex-col gap-3">
-        <div class="flex items-center gap-3 mb-2">
-          <div class="w-8 h-8 rounded-full border border-cyan-400/70 bg-cyan-400/10 flex items-center justify-center overflow-hidden">
-            <img src="cyberex-logo.png" alt="CyberEX Logo" class="w-6 h-6 object-contain" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-cyan-300 font-bold text-xs\'>CE</span>';" />
-            </div>
-          <div class="font-semibold text-slate-100 text-[0.85rem]">CyberEX</div>
-                </div>
-        <p class="text-[0.75rem] text-slate-400" data-i18n="footer.description">
-          <strong class="text-cyan-300">CyberEx</strong> ürünü. Güvenli ve modern kripto para cüzdanı. Blockchain teknolojisi ile geleceği şekillendiriyoruz.
-        </p>
-        <p class="text-[0.7rem] text-slate-500 mt-2" data-i18n="footer.ecosystem">
-          CyberEx ekosisteminin bir parçası: <a href="https://cyberex.com.tr/web3wallet" class="text-cyan-300 hover:underline" target="_blank">CyberEx Wallet</a>, 
-          <a href="https://cyberex.com.tr/web3extension" class="text-cyan-300 hover:underline" target="_blank">CyberEx Extension</a>, 
-          <a href="https://cyberex.com.tr/web3app" class="text-cyan-300 hover:underline">CyberEx App</a>
-        </p>
-        <div class="flex flex-wrap items-center gap-2 mt-3">
-          <a href="https://cyberex.com.tr/web3wallet" class="btn-ghost text-[0.7rem] px-3 py-1" target="_blank" data-i18n="footer.wallet">CyberEx Wallet</a>
-          <a href="https://cyberex.com.tr/web3extension" class="btn-ghost text-[0.7rem] px-3 py-1" target="_blank" data-i18n="footer.extension">CyberEx Extension</a>
+          </div>
         </div>
       </div>
+    </section>
 
-      <!-- Quick Links -->
-      <div>
-        <h4 class="font-semibold text-slate-100 mb-3 text-sm" data-i18n="footer.quickLinks">Hızlı Bağlantılar</h4>
-        <ul class="space-y-2 text-[0.75rem] text-slate-400">
-          <li><a href="#features" class="hover:text-cyan-300 transition-colors" data-i18n="nav.features">Özellikler</a></li>
-          <li><a href="#download" class="hover:text-cyan-300 transition-colors" data-i18n="nav.download">İndir</a></li>
-          <li><a href="#guide" class="hover:text-cyan-300 transition-colors" data-i18n="nav.guide">Kılavuz</a></li>
-          <li><a href="#faq" class="hover:text-cyan-300 transition-colors" data-i18n="nav.faq">SSS</a></li>
-                    </ul>
-                </div>
-
-      <!-- Legal -->
-      <div>
-        <h4 class="font-semibold text-slate-100 mb-3 text-sm" data-i18n="footer.legal">Yasal</h4>
-        <ul class="space-y-2 text-[0.75rem] text-slate-400">
-          <li><a href="terms.html" class="hover:text-cyan-300 transition-colors" data-i18n="footer.terms">Kullanım Şartları</a></li>
-          <li><a href="privacy.html" class="hover:text-cyan-300 transition-colors" data-i18n="footer.privacy">Gizlilik Politikası</a></li>
-          <li><a href="disclaimer.html" class="hover:text-cyan-300 transition-colors" data-i18n="footer.disclaimer">Sorumluluk Reddi</a></li>
-                    </ul>
-                </div>
-
-      <!-- Connect -->
-      <div>
-        <h4 class="font-semibold text-slate-100 mb-3 text-sm" data-i18n="footer.connect">Bağlantı</h4>
-        <p class="text-[0.75rem] text-slate-400 mb-3" data-i18n="footer.connectDesc">
-          Güvenli, hızlı ve güvenilir kripto işlemleri. <strong class="text-cyan-300">CyberEx</strong> ekosistemi tarafından desteklenmektedir.
-        </p>
-        <div class="flex items-center gap-2">
-          <a href="#" class="social-icon">X</a>
-          <a href="#" class="social-icon">G</a>
-          <a href="#" class="social-icon">TG</a>
-                    </div>
-                </div>
-            </div>
-
-    <!-- Bottom Footer -->
-    <div class="border-t border-slate-800/50 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-[0.7rem] text-slate-400">
-      <div><span data-i18n="footer.copyright">© </span><span id="year"></span><span data-i18n="footer.copyrightSuffix"> CyberEX. Tüm hakları saklıdır.</span></div>
-      <div class="text-center md:text-right">
-        <span data-i18n="footer.powered">Analiz sadece • Yatırım tavsiyesi değildir • </span><span class="text-cyan-300">CyberEx</span><span data-i18n="footer.poweredSuffix"> tarafından desteklenmektedir</span>
-      </div>
-            </div>
+    <!-- FEATURES GRID -->
+    <section id="features" class="py-12 section-alt border-y border-slate-800/80">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-8 mb-8 fade-in">
+          <div class="flex-1">
+            <p class="pill bg-slate-900/70 text-[0.68rem] mb-3">ÖZELLİKLER</p>
+            <h2 class="text-xl sm:text-2xl font-semibold mb-2">Neden CyberEx Web3 App?</h2>
+            <p class="text-sm text-slate-300 max-w-xl">
+              Güvenlik, hız ve kullanım kolaylığını bir araya getiren profesyonel cüzdan çözümü.
+            </p>
+          </div>
         </div>
-    </footer>
 
-<script>
-  const isMobile = window.innerWidth <= 768;
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div class="feature-card stagger-1">
+            <div class="text-xs font-semibold text-cyan-300 mb-2">🔐 Güvenli Saklama</div>
+            <h3 class="font-semibold mb-2 text-sm">Private Key Güvenliği</h3>
+            <p class="text-xs text-slate-300 mb-3">
+              Private key'leriniz cihazınızda şifrelenmiş olarak saklanır. Hiçbir zaman sunuculara gönderilmez.
+            </p>
+            <p class="text-[0.7rem] text-slate-500">
+              Biyometrik kimlik doğrulama (parmak izi, yüz tanıma) ile ekstra güvenlik katmanı.
+            </p>
+          </div>
 
-  // Language translations
-  const translations = {
-    tr: {
-      nav: {
-        subtitle: "Web3 App",
-        features: "Özellikler",
-        download: "İndir",
-        guide: "Kılavuz",
-        faq: "SSS"
+          <div class="feature-card stagger-2">
+            <div class="text-xs font-semibold text-cyan-300 mb-2">🌐 Çoklu Ağ Desteği</div>
+            <h3 class="font-semibold mb-2 text-sm">5+ Blockchain Ağı</h3>
+            <p class="text-xs text-slate-300 mb-3">
+              Ethereum, BSC, Polygon, Avalanche, Arbitrum ve özel ağlar.
+            </p>
+            <p class="text-[0.7rem] text-slate-500">
+              RPC URL, Chain ID ve Explorer ayarları ile tam kontrol.
+            </p>
+          </div>
+
+          <div class="feature-card stagger-3">
+            <div class="text-xs font-semibold text-cyan-300 mb-2">💰 Token Yönetimi</div>
+            <h3 class="font-semibold mb-2 text-sm">Binlerce Token Desteği</h3>
+            <p class="text-xs text-slate-300 mb-3">
+              CoinGecko API entegrasyonu ile gerçek zamanlı fiyatlar.
+            </p>
+            <p class="text-[0.7rem] text-slate-500">
+              Özel token ekleme (contract adresi ile). Token bakiyelerinizi tek ekranda görüntüleyin.
+            </p>
+          </div>
+
+          <div class="feature-card stagger-4">
+            <div class="text-xs font-semibold text-cyan-300 mb-2">📱 QR Kod Desteği</div>
+            <h3 class="font-semibold mb-2 text-sm">Hızlı İşlemler</h3>
+            <p class="text-xs text-slate-300 mb-3">
+              QR kod ile hızlıca adres paylaşın ve işlem yapın.
+            </p>
+            <p class="text-[0.7rem] text-slate-500">
+              Alıcı adresini QR kod ile tarayın, gönderme işlemini saniyeler içinde tamamlayın.
+            </p>
+          </div>
+
+          <div class="feature-card stagger-5">
+            <div class="text-xs font-semibold text-cyan-300 mb-2">⚡ Hızlı İşlemler</div>
+            <h3 class="font-semibold mb-2 text-sm">Düşük Gas Fee</h3>
+            <p class="text-xs text-slate-300 mb-3">
+              Düşük gas fee'ler ve hızlı onay süreleri.
+            </p>
+            <p class="text-[0.7rem] text-slate-500">
+              İşlem geçmişi, onay durumu ve detaylı bilgiler tek tıkla erişilebilir.
+            </p>
+          </div>
+
+          <div class="feature-card stagger-6">
+            <div class="text-xs font-semibold text-cyan-300 mb-2">🎨 Modern Tasarım</div>
+            <h3 class="font-semibold mb-2 text-sm">Şık Arayüz</h3>
+            <p class="text-xs text-slate-300 mb-3">
+              CyberEx'in özel teması ile şık ve kullanıcı dostu arayüz.
+            </p>
+            <p class="text-[0.7rem] text-slate-500">
+              Dark mode desteği, smooth animasyonlar ve responsive tasarım.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="guide" class="py-14 section-soft">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-12 fade-in">
+          <p class="pill bg-slate-900/70 text-[0.68rem] mb-3">KULLANIM KILAVUZU</p>
+          <h2 class="text-2xl sm:text-3xl font-semibold mb-3">Nasıl Kullanılır?</h2>
+          <p class="text-sm text-slate-300 max-w-2xl mx-auto">
+            3 basit adımda kripto dünyasına adım atın
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="feature-card fade-in stagger-1">
+            <div class="text-3xl font-bold grad-text mb-3">1</div>
+            <h3 class="font-semibold mb-2 text-sm">Cüzdan Oluştur</h3>
+            <p class="text-xs text-slate-300">
+              Uygulamayı açın ve "Cüzdan Oluştur" butonuna tıklayın. Güvenli bir şifre belirleyin.
+              Private key'iniz otomatik olarak oluşturulur ve cihazınızda şifrelenmiş olarak saklanır.
+            </p>
+          </div>
+
+          <div class="feature-card fade-in stagger-2">
+            <div class="text-3xl font-bold grad-text mb-3">2</div>
+            <h3 class="font-semibold mb-2 text-sm">Token Ekle</h3>
+            <p class="text-xs text-slate-300">
+              Popüler tokenler otomatik olarak listelenir. Özel token eklemek için contract adresini girin.
+              Token bakiyeleriniz ve fiyatları gerçek zamanlı olarak güncellenir.
+            </p>
+          </div>
+
+          <div class="feature-card fade-in stagger-3">
+            <div class="text-3xl font-bold grad-text mb-3">3</div>
+            <h3 class="font-semibold mb-2 text-sm">İşlem Yap</h3>
+            <p class="text-xs text-slate-300">
+              Gönder, al veya swap işlemlerini kolayca yapın. QR kod ile hızlı adres paylaşımı.
+              İşlem geçmişinizi görüntüleyin ve takip edin.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DOWNLOAD SECTION -->
+    <section id="download" class="py-14 border-t border-slate-800/80">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-12 fade-in">
+          <p class="pill bg-slate-900/70 text-[0.68rem] mb-3">İNDİR VE BAŞLA</p>
+          <h2 class="text-2xl sm:text-3xl font-semibold mb-3">Android ve iOS için Ücretsiz İndirin</h2>
+          <p class="text-sm text-slate-300 max-w-2xl mx-auto">
+            Android 8.0+ ve iOS 14.0+ cihazlarda çalışır
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="download-card fade-in stagger-1" id="android-download">
+            <div class="text-5xl mb-4">🤖</div>
+            <h3 class="text-xl font-semibold mb-2">Android</h3>
+            <p class="text-sm text-slate-300 mb-4">
+              APK dosyasını indirin ve kurun. Android 8.0 ve üzeri cihazlarda çalışır.
+            </p>
+            <a href="https://github.com/CyberEx/web3app/releases/latest/download/app-release.apk"
+              class="btn-main inline-flex items-center gap-2 mb-4" download>
+              <span>APK İndir</span>
+            </a>
+            <div class="text-xs text-slate-400 space-y-1">
+              <div>Version 1.0.0</div>
+              <div>Min: Android 8.0 • Size: ~15 MB</div>
+              <div class="flex gap-2 mt-2">
+                <span class="px-2 py-1 rounded bg-emerald-400/10 text-emerald-300 text-[0.7rem]">✓ Güvenli</span>
+                <span class="px-2 py-1 rounded bg-cyan-400/10 text-cyan-300 text-[0.7rem]">✓ Hızlı</span>
+                <span class="px-2 py-1 rounded bg-purple-400/10 text-purple-300 text-[0.7rem]">✓ Ücretsiz</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="download-card fade-in stagger-2" id="ios-download">
+            <div class="text-5xl mb-4">🍎</div>
+            <h3 class="text-xl font-semibold mb-2">iOS</h3>
+            <p class="text-sm text-slate-300 mb-4">
+              App Store'dan indirin. iOS 14.0 ve üzeri cihazlarda çalışır.
+            </p>
+            <a href="https://apps.apple.com/app/cyberex-web3-wallet"
+              class="btn-ghost inline-flex items-center gap-2 mb-4" target="_blank">
+              <span>App Store'da Görüntüle</span>
+            </a>
+            <div class="text-xs text-slate-400 space-y-1">
+              <div>Version 1.0.0</div>
+              <div>iOS 14.0+ • Size: ~20 MB</div>
+              <div class="flex gap-2 mt-2">
+                <span class="px-2 py-1 rounded bg-emerald-400/10 text-emerald-300 text-[0.7rem]">✓ Güvenli</span>
+                <span class="px-2 py-1 rounded bg-cyan-400/10 text-cyan-300 text-[0.7rem]">✓ Hızlı</span>
+                <span class="px-2 py-1 rounded bg-purple-400/10 text-purple-300 text-[0.7rem]">✓ Ücretsiz</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 p-4 rounded-2xl bg-slate-900/50 border border-slate-700/50 flex items-start gap-3 fade-in">
+          <div class="text-2xl">🛡️</div>
+          <div class="text-sm text-slate-300">
+            <strong class="text-cyan-300">Güvenlik Notu:</strong> APK dosyasını sadece resmi GitHub repository'mizden
+            indirin.
+            Üçüncü parti kaynaklardan indirmeyin. Private key'leriniz asla paylaşılmaz.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section id="faq" class="py-14 section-alt border-t border-slate-800/80">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-12 fade-in">
+          <p class="pill bg-slate-900/70 text-[0.68rem] mb-3">SORULAR</p>
+          <h2 class="text-2xl sm:text-3xl font-semibold mb-3">Sık Sorulan Sorular</h2>
+        </div>
+
+        <div class="space-y-4">
+          <div class="feature-card fade-in">
+            <h3 class="font-semibold mb-2 text-sm">CyberEx Web3 App güvenli mi?</h3>
+            <p class="text-xs text-slate-300">
+              Evet, çok güvenli. Private key'leriniz cihazınızda şifrelenmiş olarak saklanır ve hiçbir zaman sunuculara
+              gönderilmez.
+              Biyometrik kimlik doğrulama ile ekstra güvenlik katmanı sağlanır.
+            </p>
+          </div>
+
+          <div class="feature-card fade-in stagger-1">
+            <h3 class="font-semibold mb-2 text-sm">Hangi tokenleri destekliyor?</h3>
+            <p class="text-xs text-slate-300">
+              Ethereum, BSC, Polygon, Avalanche ve Arbitrum ağlarındaki tüm tokenler desteklenir.
+              Ayrıca contract adresi ile özel token ekleyebilirsiniz.
+            </p>
+          </div>
+
+          <div class="feature-card fade-in stagger-2">
+            <h3 class="font-semibold mb-2 text-sm">Özel ağ nasıl eklenir?</h3>
+            <p class="text-xs text-slate-300">
+              Ayarlar menüsünden "Ağ Ekle" seçeneğini kullanın. RPC URL, Chain ID, Explorer URL ve native currency
+              bilgilerini girin.
+            </p>
+          </div>
+
+          <div class="feature-card fade-in stagger-3">
+            <h3 class="font-semibold mb-2 text-sm">Ücret var mı?</h3>
+            <p class="text-xs text-slate-300">
+              Uygulama tamamen ücretsizdir. Blockchain işlemleri için sadece network gas fee'leri ödenir.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-800/80 py-8 fade-in">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
+        <!-- CyberEX Column -->
+        <div class="flex flex-col gap-3">
+          <div class="flex items-center gap-3 mb-2">
+            <div
+              class="w-8 h-8 rounded-full border border-cyan-400/70 bg-cyan-400/10 flex items-center justify-center overflow-hidden">
+              <img src="cyberex-logo.png" alt="CyberEX Logo" class="w-6 h-6 object-contain"
+                onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-cyan-300 font-bold text-xs\'>CE</span>';" />
+            </div>
+            <div class="font-semibold text-slate-100 text-[0.85rem]">CyberEX</div>
+          </div>
+          <p class="text-[0.75rem] text-slate-400" data-i18n="footer.description">
+            <strong class="text-cyan-300">CyberEx</strong> ürünü. Güvenli ve modern kripto para cüzdanı. Blockchain
+            teknolojisi ile geleceği şekillendiriyoruz.
+          </p>
+          <p class="text-[0.7rem] text-slate-500 mt-2" data-i18n="footer.ecosystem">
+            CyberEx ekosisteminin bir parçası: <a href="https://cyberex.com.tr/web3wallet"
+              class="text-cyan-300 hover:underline" target="_blank">CyberEx Wallet</a>,
+            <a href="https://cyberex.com.tr/web3extension" class="text-cyan-300 hover:underline" target="_blank">CyberEx
+              Extension</a>,
+            <a href="https://cyberex.com.tr/web3app" class="text-cyan-300 hover:underline">CyberEx App</a>
+          </p>
+          <div class="flex flex-wrap items-center gap-2 mt-3">
+            <a href="https://cyberex.com.tr/web3wallet" class="btn-ghost text-[0.7rem] px-3 py-1" target="_blank"
+              data-i18n="footer.wallet">CyberEx Wallet</a>
+            <a href="https://cyberex.com.tr/web3extension" class="btn-ghost text-[0.7rem] px-3 py-1" target="_blank"
+              data-i18n="footer.extension">CyberEx Extension</a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h4 class="font-semibold text-slate-100 mb-3 text-sm" data-i18n="footer.quickLinks">Hızlı Bağlantılar</h4>
+          <ul class="space-y-2 text-[0.75rem] text-slate-400">
+            <li><a href="#features" class="hover:text-cyan-300 transition-colors"
+                data-i18n="nav.features">Özellikler</a></li>
+            <li><a href="#download" class="hover:text-cyan-300 transition-colors" data-i18n="nav.download">İndir</a>
+            </li>
+            <li><a href="#guide" class="hover:text-cyan-300 transition-colors" data-i18n="nav.guide">Kılavuz</a></li>
+            <li><a href="#faq" class="hover:text-cyan-300 transition-colors" data-i18n="nav.faq">SSS</a></li>
+          </ul>
+        </div>
+
+        <!-- Legal -->
+        <div>
+          <h4 class="font-semibold text-slate-100 mb-3 text-sm" data-i18n="footer.legal">Yasal</h4>
+          <ul class="space-y-2 text-[0.75rem] text-slate-400">
+            <li><a href="terms.html" class="hover:text-cyan-300 transition-colors" data-i18n="footer.terms">Kullanım
+                Şartları</a></li>
+            <li><a href="privacy.html" class="hover:text-cyan-300 transition-colors" data-i18n="footer.privacy">Gizlilik
+                Politikası</a></li>
+            <li><a href="disclaimer.html" class="hover:text-cyan-300 transition-colors"
+                data-i18n="footer.disclaimer">Sorumluluk Reddi</a></li>
+          </ul>
+        </div>
+
+        <!-- Connect -->
+        <div>
+          <h4 class="font-semibold text-slate-100 mb-3 text-sm" data-i18n="footer.connect">Bağlantı</h4>
+          <p class="text-[0.75rem] text-slate-400 mb-3" data-i18n="footer.connectDesc">
+            Güvenli, hızlı ve güvenilir kripto işlemleri. <strong class="text-cyan-300">CyberEx</strong> ekosistemi
+            tarafından desteklenmektedir.
+          </p>
+          <div class="flex items-center gap-2">
+            <a href="#" class="social-icon">X</a>
+            <a href="#" class="social-icon">G</a>
+            <a href="#" class="social-icon">TG</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Footer -->
+      <div
+        class="border-t border-slate-800/50 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-[0.7rem] text-slate-400">
+        <div><span data-i18n="footer.copyright">© </span><span id="year"></span><span
+            data-i18n="footer.copyrightSuffix"> CyberEX. Tüm hakları saklıdır.</span></div>
+        <div class="text-center md:text-right">
+          <span data-i18n="footer.powered">Analiz sadece • Yatırım tavsiyesi değildir • </span><span
+            class="text-cyan-300">CyberEx</span><span data-i18n="footer.poweredSuffix"> tarafından
+            desteklenmektedir</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const isMobile = window.innerWidth <= 768;
+
+    // Language translations
+    const translations = {
+      tr: {
+        nav: {
+          subtitle: "Web3 App",
+          features: "Özellikler",
+          download: "İndir",
+          guide: "Kılavuz",
+          faq: "SSS"
+        },
+        hero: {
+          badge: "GÜVENLİ VE MODERN CÜZDAN",
+          title1: "Güvenli ve Modern",
+          title2: "Kripto Para Cüzdanı",
+          description: "CyberEx ürünü. CyberEx Web3 App ile kripto paralarınızı güvenle saklayın, gönderin ve alın. Ethereum, BSC, Polygon, Avalanche ve daha fazlasını destekleyen profesyonel cüzdan çözümü.",
+          ecosystem: "CyberEx ekosisteminin bir parçası: CyberEx Wallet, CyberEx Extension, CyberEx App",
+          android: "🤖 Android APK İndir",
+          ios: "🍎 iOS App Store",
+          feature1: "1000+ Token",
+          feature2: "5+ Blockchain",
+          feature3: "100% Güvenli"
+        },
+        footer: {
+          description: "CyberEx ürünü. Güvenli ve modern kripto para cüzdanı. Blockchain teknolojisi ile geleceği şekillendiriyoruz.",
+          ecosystem: "CyberEx ekosisteminin bir parçası: CyberEx Wallet, CyberEx Extension, CyberEx App",
+          wallet: "CyberEx Wallet",
+          extension: "CyberEx Extension",
+          quickLinks: "Hızlı Bağlantılar",
+          legal: "Yasal",
+          terms: "Kullanım Şartları",
+          privacy: "Gizlilik Politikası",
+          disclaimer: "Sorumluluk Reddi",
+          connect: "Bağlantı",
+          connectDesc: "Güvenli, hızlı ve güvenilir kripto işlemleri. CyberEx Platform ve CyberEx Wallet ile desteklenmektedir.",
+          copyright: "© ",
+          copyrightSuffix: " CyberEX. Tüm hakları saklıdır.",
+          powered: "Analiz sadece • Yatırım tavsiyesi değildir • ",
+          poweredSuffix: " tarafından desteklenmektedir"
+        }
       },
-      hero: {
-        badge: "GÜVENLİ VE MODERN CÜZDAN",
-        title1: "Güvenli ve Modern",
-        title2: "Kripto Para Cüzdanı",
-        description: "CyberEx ürünü. CyberEx Web3 App ile kripto paralarınızı güvenle saklayın, gönderin ve alın. Ethereum, BSC, Polygon, Avalanche ve daha fazlasını destekleyen profesyonel cüzdan çözümü.",
-        ecosystem: "CyberEx ekosisteminin bir parçası: CyberEx Wallet, CyberEx Extension, CyberEx App",
-        android: "🤖 Android APK İndir",
-        ios: "🍎 iOS App Store",
-        feature1: "1000+ Token",
-        feature2: "5+ Blockchain",
-        feature3: "100% Güvenli"
-      },
-      footer: {
-        description: "CyberEx ürünü. Güvenli ve modern kripto para cüzdanı. Blockchain teknolojisi ile geleceği şekillendiriyoruz.",
-        ecosystem: "CyberEx ekosisteminin bir parçası: CyberEx Wallet, CyberEx Extension, CyberEx App",
-        wallet: "CyberEx Wallet",
-        extension: "CyberEx Extension",
-        quickLinks: "Hızlı Bağlantılar",
-        legal: "Yasal",
-        terms: "Kullanım Şartları",
-        privacy: "Gizlilik Politikası",
-        disclaimer: "Sorumluluk Reddi",
-        connect: "Bağlantı",
-        connectDesc: "Güvenli, hızlı ve güvenilir kripto işlemleri. CyberEx Platform ve CyberEx Wallet ile desteklenmektedir.",
-        copyright: "© ",
-        copyrightSuffix: " CyberEX. Tüm hakları saklıdır.",
-        powered: "Analiz sadece • Yatırım tavsiyesi değildir • ",
-        poweredSuffix: " tarafından desteklenmektedir"
+      en: {
+        nav: {
+          subtitle: "Web3 App",
+          features: "Features",
+          download: "Download",
+          guide: "Guide",
+          faq: "FAQ"
+        },
+        hero: {
+          badge: "SECURE AND MODERN WALLET",
+          title1: "Secure and Modern",
+          title2: "Cryptocurrency Wallet",
+          description: "A CyberEx product. Securely store, send, and receive your cryptocurrencies with CyberEx Web3 App. Professional wallet solution supporting Ethereum, BSC, Polygon, Avalanche and more.",
+          ecosystem: "Part of the CyberEx ecosystem: CyberEx Wallet, CyberEx Extension, CyberEx App",
+          android: "🤖 Download Android APK",
+          ios: "🍎 iOS App Store",
+          feature1: "1000+ Tokens",
+          feature2: "5+ Blockchains",
+          feature3: "100% Secure"
+        },
+        footer: {
+          description: "A CyberEx product. Secure and modern cryptocurrency wallet. Shaping the future with blockchain technology.",
+          ecosystem: "Part of the CyberEx ecosystem: CyberEx Wallet, CyberEx Extension, CyberEx App",
+          wallet: "CyberEx Wallet",
+          extension: "CyberEx Extension",
+          quickLinks: "Quick Links",
+          legal: "Legal",
+          terms: "Terms of Service",
+          privacy: "Privacy Policy",
+          disclaimer: "Disclaimer",
+          connect: "Connect",
+          connectDesc: "Secure, fast, and reliable crypto transactions. Powered by CyberEx Platform and CyberEx Wallet.",
+          copyright: "© ",
+          copyrightSuffix: " CyberEX. All rights reserved.",
+          powered: "Analysis only • No investment advice • ",
+          poweredSuffix: "Powered by "
+        }
       }
-    },
-    en: {
-      nav: {
-        subtitle: "Web3 App",
-        features: "Features",
-        download: "Download",
-        guide: "Guide",
-        faq: "FAQ"
-      },
-      hero: {
-        badge: "SECURE AND MODERN WALLET",
-        title1: "Secure and Modern",
-        title2: "Cryptocurrency Wallet",
-        description: "A CyberEx product. Securely store, send, and receive your cryptocurrencies with CyberEx Web3 App. Professional wallet solution supporting Ethereum, BSC, Polygon, Avalanche and more.",
-        ecosystem: "Part of the CyberEx ecosystem: CyberEx Wallet, CyberEx Extension, CyberEx App",
-        android: "🤖 Download Android APK",
-        ios: "🍎 iOS App Store",
-        feature1: "1000+ Tokens",
-        feature2: "5+ Blockchains",
-        feature3: "100% Secure"
-      },
-      footer: {
-        description: "A CyberEx product. Secure and modern cryptocurrency wallet. Shaping the future with blockchain technology.",
-        ecosystem: "Part of the CyberEx ecosystem: CyberEx Wallet, CyberEx Extension, CyberEx App",
-        wallet: "CyberEx Wallet",
-        extension: "CyberEx Extension",
-        quickLinks: "Quick Links",
-        legal: "Legal",
-        terms: "Terms of Service",
-        privacy: "Privacy Policy",
-        disclaimer: "Disclaimer",
-        connect: "Connect",
-        connectDesc: "Secure, fast, and reliable crypto transactions. Powered by CyberEx Platform and CyberEx Wallet.",
-        copyright: "© ",
-        copyrightSuffix: " CyberEX. All rights reserved.",
-        powered: "Analysis only • No investment advice • ",
-        poweredSuffix: "Powered by "
-      }
+    };
+
+    // Language management
+    let currentLang = localStorage.getItem('language') || 'tr';
+    const langSelect = document.getElementById('languageSelect');
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('language', lang);
+      if (langSelect) langSelect.value = lang;
+
+      // Update HTML lang attribute
+      document.documentElement.lang = lang;
+
+      // Update all elements with data-i18n attribute
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const keys = key.split('.');
+        let value = translations[lang];
+
+        for (const k of keys) {
+          value = value?.[k];
+        }
+
+        if (value) {
+          el.textContent = value;
+        }
+      });
     }
-  };
 
-  // Language management
-  let currentLang = localStorage.getItem('language') || 'tr';
-  const langSelect = document.getElementById('languageSelect');
+    // Initialize language
+    setLanguage(currentLang);
 
-  function setLanguage(lang) {
-    currentLang = lang;
-    localStorage.setItem('language', lang);
-    if (langSelect) langSelect.value = lang;
-    
-    // Update HTML lang attribute
-    document.documentElement.lang = lang;
-    
-    // Update all elements with data-i18n attribute
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
-      const keys = key.split('.');
-      let value = translations[lang];
-      
-      for (const k of keys) {
-        value = value?.[k];
-      }
-      
-      if (value) {
-        el.textContent = value;
-      }
-    });
-  }
+    // Language switcher event
+    if (langSelect) {
+      langSelect.addEventListener('change', (e) => {
+        setLanguage(e.target.value);
+      });
+    }
 
-  // Initialize language
-  setLanguage(currentLang);
+    // Footer yıl
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-  // Language switcher event
-  if (langSelect) {
-    langSelect.addEventListener('change', (e) => {
-      setLanguage(e.target.value);
-    });
-  }
+    // Auto-animate feature cards on page load
+    function animateFeatureCards() {
+      const featureCards = document.querySelectorAll('.feature-card');
+      featureCards.forEach((card, index) => {
+        card.classList.add('visible');
+        setTimeout(() => {
+          card.classList.add('animate');
+        }, 200 + (index * 100));
+      });
+    }
 
-  // Footer yıl
-  document.getElementById("year").textContent = new Date().getFullYear();
-
-  // Auto-animate feature cards on page load
-  function animateFeatureCards() {
-    const featureCards = document.querySelectorAll('.feature-card');
-    featureCards.forEach((card, index) => {
-      card.classList.add('visible');
-      setTimeout(() => {
-        card.classList.add('animate');
-      }, 200 + (index * 100));
-    });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      setTimeout(animateFeatureCards, 300);
-    });
-  } else {
-    setTimeout(animateFeatureCards, 300);
-  }
-
-  // Scroll animations
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, observerOptions);
-
-  document.querySelectorAll('.fade-in:not(.feature-card), .slide-in-left, .slide-in-right').forEach(el => {
-    observer.observe(el);
-  });
-
-  // Navbar scroll effect
-  const navbar = document.querySelector('.glass-nav');
-  window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 50) {
-      navbar.classList.add('scrolled');
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(animateFeatureCards, 300);
+      });
     } else {
-      navbar.classList.remove('scrolled');
+      setTimeout(animateFeatureCards, 300);
     }
-  });
 
-  // Smooth scroll
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in:not(.feature-card), .slide-in-left, .slide-in-right').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Navbar scroll effect
+    const navbar = document.querySelector('.glass-nav');
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
       }
     });
-  });
 
-  // Particle System
-  const canvas = document.getElementById('particles');
-  if (canvas && !isMobile) {
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const particles = [];
-    const particleCount = 80;
-
-    class Particle {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 0.5;
-        this.speedX = (Math.random() - 0.5) * 0.5;
-        this.speedY = (Math.random() - 0.5) * 0.5;
-        this.opacity = Math.random() * 0.5 + 0.2;
-        this.color = Math.random() > 0.5 ? 'rgba(0, 229, 255,' : 'rgba(0, 245, 160,';
-      }
-
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-      }
-
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = this.color + this.opacity + ')';
-        ctx.fill();
-      }
-    }
-
-    for (let i = 0; i < particleCount; i++) {
-      particles.push(new Particle());
-    }
-
-    function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(particle => {
-        particle.update();
-        particle.draw();
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       });
+    });
 
-      particles.forEach((particle, i) => {
-        particles.slice(i + 1).forEach(otherParticle => {
-          const dx = particle.x - otherParticle.x;
-          const dy = particle.y - otherParticle.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          if (distance < 120) {
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(0, 229, 255, ${0.1 * (1 - distance / 120)})`;
-            ctx.lineWidth = 0.5;
-            ctx.moveTo(particle.x, particle.y);
-            ctx.lineTo(otherParticle.x, otherParticle.y);
-            ctx.stroke();
-          }
-        });
-      });
-
-      requestAnimationFrame(animateParticles);
-    }
-
-    animateParticles();
-
-    window.addEventListener('resize', () => {
+    // Particle System
+    const canvas = document.getElementById('particles');
+    if (canvas && !isMobile) {
+      const ctx = canvas.getContext('2d');
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-    });
-  }
 
-  // 3D Mouse Tracking for Phone
-  const phone = document.querySelector('.phone');
-  if (phone && !isMobile) {
-    phone.addEventListener('mousemove', (e) => {
-      const rect = phone.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      const rotateX = (y - centerY) / 20;
-      const rotateY = (centerX - x) / 20;
-      phone.style.transform = `perspective(1000px) rotateX(${10 + rotateX}deg) rotateY(${-16 + rotateY}deg) translateZ(0)`;
-    });
-    phone.addEventListener('mouseleave', () => {
-      phone.style.transform = '';
-    });
-  }
-</script>
+      const particles = [];
+      const particleCount = 80;
+
+      class Particle {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.size = Math.random() * 2 + 0.5;
+          this.speedX = (Math.random() - 0.5) * 0.5;
+          this.speedY = (Math.random() - 0.5) * 0.5;
+          this.opacity = Math.random() * 0.5 + 0.2;
+          this.color = Math.random() > 0.5 ? 'rgba(0, 229, 255,' : 'rgba(0, 245, 160,';
+        }
+
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+          if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+          if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+        }
+
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = this.color + this.opacity + ')';
+          ctx.fill();
+        }
+      }
+
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+
+      function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(particle => {
+          particle.update();
+          particle.draw();
+        });
+
+        particles.forEach((particle, i) => {
+          particles.slice(i + 1).forEach(otherParticle => {
+            const dx = particle.x - otherParticle.x;
+            const dy = particle.y - otherParticle.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance < 120) {
+              ctx.beginPath();
+              ctx.strokeStyle = `rgba(0, 229, 255, ${0.1 * (1 - distance / 120)})`;
+              ctx.lineWidth = 0.5;
+              ctx.moveTo(particle.x, particle.y);
+              ctx.lineTo(otherParticle.x, otherParticle.y);
+              ctx.stroke();
+            }
+          });
+        });
+
+        requestAnimationFrame(animateParticles);
+      }
+
+      animateParticles();
+
+      window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      });
+    }
+
+    // 3D Mouse Tracking for Phone
+    const phone = document.querySelector('.phone');
+    if (phone && !isMobile) {
+      phone.addEventListener('mousemove', (e) => {
+        const rect = phone.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (y - centerY) / 20;
+        const rotateY = (centerX - x) / 20;
+        phone.style.transform = `perspective(1000px) rotateX(${10 + rotateX}deg) rotateY(${-16 + rotateY}deg) translateZ(0)`;
+      });
+      phone.addEventListener('mouseleave', () => {
+        phone.style.transform = '';
+      });
+    }
+  </script>
 
 </body>
+
 </html>
