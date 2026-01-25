@@ -3,18 +3,24 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>CyberEx – Feragat ve Uyarı | Disclaimer</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>CyberEx | Risk Bildirimi & Feragat Beyanı | Risk Disclosure</title>
+
+    <!-- Mobile & PWA Integration -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="CyberEx Risk">
+    <meta name="mobile-web-app-capable" content="yes">
 
     <!-- SEO Meta Tags -->
     <meta name="description"
-        content="Google Gemini AI destekli CyberEx ile geleceğin finansına adım atın. En düşük komisyon oranları, Web3 cüzdan entegrasyonu ve askeri düzeyde güvenlik.">
+        content="CyberEx kripto para yatırım riskleri, feragat beyanı ve önemli yasal uyarılar. Lütfen işlem yapmadan önce dikkatlice okuyunuz.">
     <meta name="keywords"
-        content="CyberEx, Kripto Para Borsası, Bitcoin, Ethereum, Web3, DeFi, Yapay Zeka Finans, Gemini AI, Güvenilir Borsa, Blockchain">
+        content="CyberEx Risk, Kripto Risk, Yatırım Riski, Feragat Beyanı, Risk Bildirimi, Kripto Uyarı">
     <meta name="author" content="CyberEx Technology Inc.">
     <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#00f0ff">
-    <link rel="canonical" href="https://cyberex.com.tr/">
+    <meta name="theme-color" content="#000510">
+    <link rel="canonical" href="https://cyberex.com.tr/risk.html">
 
     <!-- Favicons -->
     <link rel="icon" type="image/png" href="icons/favicon-32x32.png" sizes="32x32">
@@ -22,46 +28,28 @@
     <link rel="apple-touch-icon" href="icons/icon-192x192.png">
     <link rel="shortcut icon" href="icons/icon-192x192.png" type="image/x-icon">
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://cyberex.com.tr/">
-    <meta property="og:title" content="CyberEx | Geleceğin Finansını Keşfedin">
-    <meta property="og:description"
-        content="Yapay zeka teknolojisiyle güçlendirilmiş, güvenli ve hızlı kripto para borsası. Web3 dünyasının kapılarını aralayın.">
-    <meta property="og:image" content="https://cyberex.com.tr/cyberex-logo.png">
-
-    <!-- Twitter Card -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://cyberex.com.tr/">
-    <meta property="twitter:title" content="CyberEx | AI Powered Crypto Exchange">
-    <meta property="twitter:description"
-        content="Trade with the power of AI. Secure, fast, and futuristic crypto exchange platform.">
-    <meta property="twitter:image" content="https://cyberex.com.tr/cyberex-logo.png">
-
-    <!-- Schema.org -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "CyberEx Technology Inc.",
-      "url": "https://cyberex.com.tr",
-      "logo": "https://cyberex.com.tr/cyberex-logo.png",
-      "sameAs": [
-        "https://twitter.com/cyberex",
-        "https://www.instagram.com/cyberex",
-        "https://linkedin.com/company/cyberex"
-      ]
-    }
-    </script>
+    <!-- Fonts & Libraries -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="mobile.css">
+
     <style>
         :root {
-            --neon-cyan: #ff465d;
+            --neon-cyan: #00f0ff;
+            --neon-blue: #0072ff;
+            --neon-purple: #bc13fe;
+            --neon-green: #00ff88;
+            --neon-red: #ff465d;
+            --dark-bg: #000a12;
+            --muted: #6b7a99;
             --text: #e8f0ff;
-            --border: rgba(255, 255, 255, 0.1);
+            --bg: #000510;
+            --card-bg: rgba(0, 20, 40, 0.7);
+            --border: rgba(0, 240, 255, 0.3);
         }
 
         * {
@@ -74,12 +62,36 @@
             font-family: 'Inter', sans-serif;
             background: #000510;
             color: var(--text);
-            line-height: 1.6;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
+        /* Top Bar */
+        .top-contact-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding-top: env(safe-area-inset-top, 0px);
+            height: calc(35px + env(safe-area-inset-top, 0px));
+            background: rgba(255, 70, 93, 0.08);
+            backdrop-filter: blur(15px);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            font-size: 0.73rem;
+            border-bottom: 1px solid rgba(255, 70, 93, 0.2);
+            color: var(--neon-red);
+        }
+
+        /* Navbar */
         .navbar {
             position: fixed;
-            top: 20px;
+            top: calc(35px + env(safe-area-inset-top, 0px));
             left: 30px;
             right: 30px;
             z-index: 1500;
@@ -87,101 +99,603 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(0, 5, 15, 0.8);
-            backdrop-filter: blur(20px);
+            background: rgba(0, 5, 15, 0.85);
+            backdrop-filter: blur(25px);
             border: 1px solid var(--border);
             border-radius: 60px;
+            margin-top: 10px;
         }
 
-        .nav-logo {
-            height: 35px;
+        .nav-logo-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .nav-logo-center img {
+            height: 38px;
             filter: drop-shadow(0 0 8px var(--neon-cyan));
         }
 
-        .container {
-            max-width: 900px;
-            margin: 150px auto 100px;
-            padding: 60px;
-            background: rgba(246, 70, 93, 0.05);
-            backdrop-filter: blur(30px);
-            border: 1px solid rgba(246, 70, 93, 0.2);
-            border-radius: 40px;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            color: #fff;
-            text-align: center;
-        }
-
-        h2 {
-            font-size: 1.4rem;
+        .nav-tagline {
+            font-size: 0.55rem;
             color: var(--neon-cyan);
-            margin: 35px 0 15px;
+            font-weight: 950;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
-        p {
-            margin-bottom: 15px;
-            color: #b0c4de;
+        /* Background */
+        .bg-animated {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
         }
 
-        li {
-            margin-left: 20px;
-            margin-bottom: 8px;
-            color: #b0c4de;
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.3;
+            animation: floatOrb 30s ease-in-out infinite;
         }
 
-        .footer-note {
-            margin-top: 50px;
+        @keyframes floatOrb {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(60px, -60px) scale(1.1);
+            }
+        }
+
+        /* Content Wrapper */
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            max-width: 1100px;
+            margin: 180px auto 100px;
+            padding: 80px 60px;
+            background: var(--card-bg);
+            backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid rgba(255, 70, 93, 0.3);
+            border-radius: 50px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+            width: 95%;
+        }
+
+        .page-header {
             text-align: center;
-            font-size: 0.8rem;
-            color: #666;
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid rgba(255, 70, 93, 0.2);
+        }
+
+        .warning-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(255, 70, 93, 0.1);
+            border: 2px solid var(--neon-red);
+            border-radius: 50px;
+            color: var(--neon-red);
+            font-weight: 900;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(255, 70, 93, 0.3);
+        }
+
+        h1.page-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 950;
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #fff 0%, var(--neon-red) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .version-info {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 15px;
+        }
+
+        .risk-section {
+            margin-bottom: 60px;
+        }
+
+        .section-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--neon-red), #ff8000);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: #000;
+            margin-bottom: 20px;
+            box-shadow: 0 0 30px rgba(255, 70, 93, 0.5);
+        }
+
+        .section-headline {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 25px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .risk-content {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 35px;
+            border-radius: 25px;
+            border-left: 4px solid var(--neon-red);
+        }
+
+        .risk-content p {
+            color: #b0c4de;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        .risk-content ul {
+            margin: 20px 0;
+            padding-left: 25px;
+        }
+
+        .risk-content li {
+            margin-bottom: 12px;
+            color: #b0c4de;
+            line-height: 1.7;
+            position: relative;
+            padding-left: 10px;
+        }
+
+        .risk-content li::before {
+            content: '⚠️';
+            position: absolute;
+            left: -25px;
+            font-size: 1rem;
+        }
+
+        .highlight-box {
+            background: rgba(255, 70, 93, 0.08);
+            border: 2px solid rgba(255, 70, 93, 0.3);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 30px 0;
+        }
+
+        .highlight-box strong {
+            color: var(--neon-red);
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .lang-switcher {
+            display: flex;
+            gap: 4px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            padding: 3px;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            transition: 0.3s;
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
+            color: #000;
+            box-shadow: 0 0 15px var(--neon-cyan);
+        }
+
+        .acknowledgment-box {
+            background: rgba(0, 240, 255, 0.05);
+            border: 2px solid var(--neon-cyan);
+            padding: 40px;
+            border-radius: 25px;
+            margin-top: 60px;
+            text-align: center;
+        }
+
+        .acknowledgment-box p {
+            font-size: 1.1rem;
+            color: #fff;
+            font-weight: 600;
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        .footer {
+            width: 100%;
+            padding: 80px 20px 0;
+            border-top: 1px solid rgba(0, 240, 255, 0.1);
+            background: transparent;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 10;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 60px;
+            text-align: left;
+        }
+
+        .footer-col-title {
+            color: #fff;
+            font-weight: 950;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--neon-cyan);
+            padding-left: 15px;
+            font-size: 0.9rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .footer-link {
+            display: block;
+            color: #7f8c8d;
+            text-decoration: none;
+            padding: 10px 0;
+            transition: 0.3s;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .footer-link:hover {
+            color: var(--neon-cyan);
+            padding-left: 10px;
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                margin-top: 160px;
+                padding: 40px 25px;
+                border-radius: 30px;
+            }
+
+            h1.page-title {
+                font-size: 2rem;
+            }
+
+            .section-headline {
+                font-size: 1.3rem;
+            }
+
+            .navbar {
+                left: 15px;
+                right: 15px;
+                padding: 10px 20px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <nav class="navbar">
-        <a href="index.html"><img src="cyberex-logo.png" alt="Logo" class="nav-logo"></a>
-        <div style="font-weight: 800; color: var(--neon-cyan);">RISK DISCLOSURE</div>
-    </nav>
-    <div class="container">
-        <h1>Feragat ve Uyarı</h1>
-        <p><strong>Versiyon:</strong> 1.0 | <strong>Son Güncelleme:</strong> 23.01.2026</p>
-
-        <h2>1. GENEL FERAĞAT</h2>
-        <p>CyberEx platformu, kripto para birimleri için bir alım-satım aracıdır. Platform, finansal tavsiye, yatırım
-            danışmanlığı veya yatırım önerisi sunmaz.</p>
-
-        <h2>2. YATIRIM RİSKLERİ</h2>
-        <ul>
-            <li>Kripto para yatırımları yüksek risk içerir.</li>
-            <li>Tüm paranızı kaybetme riski vardır.</li>
-            <li>Geçmiş performans gelecek sonuçları garanti etmez.</li>
-            <li>Fiyatlar büyük ölçüde dalgalanabilir.</li>
-        </ul>
-
-        <h2>3. FİNANSAL TAVSİYE YOKTUR</h2>
-        <p>Platform'da yer alan bilgiler finansal tavsiye değildir. Tüm kararlar kendi sorumluluğunuzdadır.</p>
-
-        <h2>4. SORUMLULUK SINIRLAMASI</h2>
-        <p>Platform; yatırım kayıpları, teknik sorunlar, piyasa volatilitesi veya üçüncü taraf eylemlerinden sorumlu
-            değildir.</p>
-
-        <h2>5. DOĞRULUK GARANTİSİ YOK</h2>
-        <p>Bilgiler "olduğu gibi" sunulur, hatalar olabilir ve güncel olmayabilir.</p>
-
-        <h2>6. YASAL UYARI</h2>
-        <p>Kripto para yatırımları tüm ülkelerde yasal değildir. Yerel yasalara uygunluğu kontrol etmek sizin
-            sorumluluğunuzdadır.</p>
-
-        <h2>7. TEKNİK RİSKLER</h2>
-        <p>Sistem arızaları, siber saldırılar ve veri kaybı riskleri mevcuttur.</p>
-
-        <p class="footer-note">Bu platformu kullanarak tüm riskleri kabul etmiş olursunuz. Kayıplardan sorumlu değiliz.
-        </p>
+    <div class="top-contact-bar">
+        <div style="display: flex; gap: 30px;">
+            <span>⚠️ <span data-tr="ÖNEMLİ RİSK BİLGİLENDİRMESİ" data-en="IMPORTANT RISK DISCLOSURE">ÖNEMLİ RİSK
+                    BİLGİLENDİRMESİ</span></span>
+        </div>
     </div>
+
+    <nav class="navbar" id="mainNavbar">
+        <a href="index.html" class="nav-logo-center">
+            <img src="cyberex-logo.png" alt="CyberEx Logo">
+            <div class="nav-tagline">AI POWERED FINTECH</div>
+        </a>
+        <div class="lang-switcher">
+            <button class="lang-btn active" data-lang="tr">TR</button>
+            <button class="lang-btn" data-lang="en">EN</button>
+        </div>
+    </nav>
+
+    <div class="bg-animated">
+        <div class="orb"
+            style="width: 700px; height: 700px; background: radial-gradient(circle, var(--neon-red), transparent 70%); top: -350px; left: -350px;">
+        </div>
+        <div class="orb"
+            style="width: 600px; height: 600px; background: radial-gradient(circle, var(--neon-purple), transparent 70%); bottom: -250px; right: -250px;">
+        </div>
+    </div>
+
+    <div class="content-wrapper">
+        <div class="page-header">
+            <div class="warning-badge">⚠️ RISK DISCLOSURE</div>
+            <h1 class="page-title" data-tr="Risk Bildirimi & Feragat" data-en="Risk Disclosure & Disclaimer">Risk
+                Bildirimi & Feragat</h1>
+            <p class="version-info"><strong data-tr="Versiyon:" data-en="Version:">Versiyon:</strong> 2.0 | <strong
+                    data-tr="Son Güncelleme:" data-en="Last Update:">Son Güncelleme:</strong> 25.01.2026</p>
+        </div>
+
+        <!-- Section 1 -->
+        <div class="risk-section">
+            <div class="section-headline">
+                <div class="section-number">1</div>
+                <span data-tr="GENEL FERAĞAT BEYANI" data-en="GENERAL DISCLAIMER">GENEL FERAĞAT BEYANI</span>
+            </div>
+            <div class="risk-content">
+                <p data-tr="CyberEx platformu, kripto para birimleri için profesyonel bir alım-satım aracıdır. Platform, finansal tavsiye, yatırım danışmanlığı veya yatırım önerisi sunmamaktadır. Platformda yer alan tüm bilgiler yalnızca bilgilendirme amaçlıdır."
+                    data-en="CyberEx platform is a professional trading tool for cryptocurrencies. The platform does not provide financial advice, investment consulting, or investment recommendations. All information on the platform is for informational purposes only.">
+                    CyberEx platformu, kripto para birimleri için profesyonel bir alım-satım aracıdır. Platform,
+                    finansal tavsiye, yatırım danışmanlığı veya yatırım önerisi sunmamaktadır. Platformda yer alan tüm
+                    bilgiler yalnızca bilgilendirme amaçlıdır.
+                </p>
+                <div class="highlight-box">
+                    <strong data-tr="ÖNEMLİ UYARI" data-en="IMPORTANT WARNING">ÖNEMLİ UYARI</strong>
+                    <p data-tr="Kripto para yatırımları yüksek risk içerir. Yatırım yapmadan önce kendi araştırmanızı yapmalı ve gerekirse profesyonel danışmanlık almalısınız."
+                        data-en="Cryptocurrency investments carry high risks. You should do your own research and seek professional advice if necessary before investing.">
+                        Kripto para yatırımları yüksek risk içerir. Yatırım yapmadan önce kendi araştırmanızı yapmalı ve
+                        gerekirse profesyonel danışmanlık almalısınız.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="risk-section">
+            <div class="section-headline">
+                <div class="section-number">2</div>
+                <span data-tr="YATIRIM RİSKLERİ" data-en="INVESTMENT RISKS">YATIRIM RİSKLERİ</span>
+            </div>
+            <div class="risk-content">
+                <ul>
+                    <li data-tr="Kripto para yatırımları, geleneksel finansal araçlara kıyasla çok daha yüksek volatilite ve risk içermektedir."
+                        data-en="Cryptocurrency investments carry much higher volatility and risk compared to traditional financial instruments.">
+                        Kripto para yatırımları, geleneksel finansal araçlara kıyasla çok daha yüksek volatilite ve risk
+                        içermektedir.
+                    </li>
+                    <li data-tr="Yatırım yaptığınız tüm sermayeyi kaybetme riski her zaman mevcuttur."
+                        data-en="There is always a risk of losing all the capital you invest.">
+                        Yatırım yaptığınız tüm sermayeyi kaybetme riski her zaman mevcuttur.
+                    </li>
+                    <li data-tr="Geçmiş performans, gelecekteki sonuçların garantisi değildir."
+                        data-en="Past performance is not a guarantee of future results.">
+                        Geçmiş performans, gelecekteki sonuçların garantisi değildir.
+                    </li>
+                    <li data-tr="Kripto para fiyatları kısa süre içinde büyük oranda dalgalanabilir."
+                        data-en="Cryptocurrency prices can fluctuate significantly in a short period.">
+                        Kripto para fiyatları kısa süre içinde büyük oranda dalgalanabilir.
+                    </li>
+                    <li data-tr="Piyasa manipülasyonu, düzenleyici değişiklikler ve teknolojik sorunlar ek riskler oluşturur."
+                        data-en="Market manipulation, regulatory changes, and technological issues create additional risks.">
+                        Piyasa manipülasyonu, düzenleyici değişiklikler ve teknolojik sorunlar ek riskler oluşturur.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="risk-section">
+            <div class="section-headline">
+                <div class="section-number">3</div>
+                <span data-tr="FİNANSAL TAVSİYE YOKTUR" data-en="NO FINANCIAL ADVICE">FİNANSAL TAVSİYE YOKTUR</span>
+            </div>
+            <div class="risk-content">
+                <p data-tr="Platform üzerinde yer alan bilgiler, analizler, grafikler ve veriler hiçbir şekilde finansal tavsiye, yatırım önerisi veya alım-satım teşviki olarak yorumlanmamalıdır. Tüm yatırım kararları kullanıcıların kendi sorumluluğundadır."
+                    data-en="Information, analysis, charts, and data on the platform should not be interpreted as financial advice, investment recommendations, or trading incentives. All investment decisions are the user's own responsibility.">
+                    Platform üzerinde yer alan bilgiler, analizler, grafikler ve veriler hiçbir şekilde finansal
+                    tavsiye, yatırım önerisi veya alım-satım teşviki olarak yorumlanmamalıdır. Tüm yatırım kararları
+                    kullanıcıların kendi sorumluluğundadır.
+                </p>
+            </div>
+        </div>
+
+        <!-- Section 4 -->
+        <div class="risk-section">
+            <div class="section-headline">
+                <div class="section-number">4</div>
+                <span data-tr="SORUMLULUK SINIRLAMASI" data-en="LIABILITY LIMITATION">SORUMLULUK SINIRLAMASI</span>
+            </div>
+            <div class="risk-content">
+                <p data-tr="CyberEx ve bağlı kuruluşları aşağıdaki durumlardan kaynaklanan kayıplardan sorumlu tutulamaz:"
+                    data-en="CyberEx and its affiliates cannot be held responsible for losses arising from the following situations:">
+                    CyberEx ve bağlı kuruluşları aşağıdaki durumlardan kaynaklanan kayıplardan sorumlu tutulamaz:
+                </p>
+                <ul>
+                    <li data-tr="Yatırım kararlarınızın sonucunda oluşan finansal kayıplar"
+                        data-en="Financial losses resulting from your investment decisions">
+                        Yatırım kararlarınızın sonucunda oluşan finansal kayıplar
+                    </li>
+                    <li data-tr="Piyasa volatilitesi ve fiyat dalgalanmaları"
+                        data-en="Market volatility and price fluctuations">
+                        Piyasa volatilitesi ve fiyat dalgalanmaları
+                    </li>
+                    <li data-tr="Teknik arızalar, sistem kesintileri veya bakım çalışmaları"
+                        data-en="Technical failures, system interruptions, or maintenance work">
+                        Teknik arızalar, sistem kesintileri veya bakım çalışmaları
+                    </li>
+                    <li data-tr="Üçüncü taraf hizmet sağlayıcılarının eylemleri veya ihmalleri"
+                        data-en="Actions or omissions of third-party service providers">
+                        Üçüncü taraf hizmet sağlayıcılarının eylemleri veya ihmalleri
+                    </li>
+                    <li data-tr="Siber saldırılar, güvenlik ihlalleri veya yetkisiz erişim"
+                        data-en="Cyber attacks, security breaches, or unauthorized access">
+                        Siber saldırılar, güvenlik ihlalleri veya yetkisiz erişim
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 5 -->
+        <div class="risk-section">
+            <div class="section-headline">
+                <div class="section-number">5</div>
+                <span data-tr="BİLGİ DOĞRULUĞU" data-en="INFORMATION ACCURACY">BİLGİ DOĞRULUĞU</span>
+            </div>
+            <div class="risk-content">
+                <p data-tr="Platform üzerinde sunulan bilgiler 'olduğu gibi' sunulmaktadır. Bilgilerde hatalar, eksiklikler veya güncel olmayan içerik bulunabilir. CyberEx, bilgilerin doğruluğu, tamlığı veya güncelliği konusunda garanti vermez."
+                    data-en="Information provided on the platform is presented 'as is'. There may be errors, omissions, or outdated content in the information. CyberEx does not guarantee the accuracy, completeness, or currency of the information.">
+                    Platform üzerinde sunulan bilgiler "olduğu gibi" sunulmaktadır. Bilgilerde hatalar, eksiklikler
+                    veya güncel olmayan içerik bulunabilir. CyberEx, bilgilerin doğruluğu, tamlığı veya güncelliği
+                    konusunda garanti vermez.
+                </p>
+            </div>
+        </div>
+
+        <!-- Section 6 -->
+        <div class="risk-section">
+            <div class="section-headline">
+                <div class="section-number">6</div>
+                <span data-tr="YASAL UYUM" data-en="LEGAL COMPLIANCE">YASAL UYUM</span>
+            </div>
+            <div class="risk-content">
+                <p data-tr="Kripto para işlemleri tüm ülkelerde yasal değildir. Platformu kullanmadan önce, bulunduğunuz ülkenin yasalarına uygun olup olmadığını kontrol etmek sizin sorumluluğunuzdadır. Yasal olmayan yargı bölgelerinden erişim yasaktır."
+                    data-en="Cryptocurrency transactions are not legal in all countries. Before using the platform, it is your responsibility to check whether it complies with the laws of your country. Access from illegal jurisdictions is prohibited.">
+                    Kripto para işlemleri tüm ülkelerde yasal değildir. Platformu kullanmadan önce, bulunduğunuz
+                    ülkenin yasalarına uygun olup olmadığını kontrol etmek sizin sorumluluğunuzdadır. Yasal olmayan
+                    yargı bölgelerinden erişim yasaktır.
+                </p>
+            </div>
+        </div>
+
+        <!-- Section 7 -->
+        <div class="risk-section">
+            <div class="section-headline">
+                <div class="section-number">7</div>
+                <span data-tr="TEKNOLOJİK RİSKLER" data-en="TECHNOLOGICAL RISKS">TEKNOLOJİK RİSKLER</span>
+            </div>
+            <div class="risk-content">
+                <ul>
+                    <li data-tr="Blockchain teknolojisi ve akıllı sözleşmelerde hatalar veya güvenlik açıkları bulunabilir."
+                        data-en="There may be bugs or security vulnerabilities in blockchain technology and smart contracts.">
+                        Blockchain teknolojisi ve akıllı sözleşmelerde hatalar veya güvenlik açıkları bulunabilir.
+                    </li>
+                    <li data-tr="Ağ kesintileri veya aşırı yüklenme nedeniyle işlemler gecikebilir veya başarısız olabilir."
+                        data-en="Transactions may be delayed or fail due to network outages or overload.">
+                        Ağ kesintileri veya aşırı yüklenme nedeniyle işlemler gecikebilir veya başarısız olabilir.
+                    </li>
+                    <li data-tr="Kripto cüzdanlarınızın özel anahtarlarını kaybetmeniz durumunda varlıklarınızı geri almanız mümkün olmayabilir."
+                        data-en="If you lose the private keys to your crypto wallets, you may not be able to recover your assets.">
+                        Kripto cüzdanlarınızın özel anahtarlarını kaybetmeniz durumunda varlıklarınızı geri almanız
+                        mümkün olmayabilir.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Acknowledgment -->
+        <div class="acknowledgment-box">
+            <p data-tr="Bu platformu kullanarak, yukarıda belirtilen tüm riskleri anladığınızı ve kabul ettiğinizi beyan etmiş olursunuz. CyberEx, kullanıcıların maruz kalabileceği kayıplardan sorumlu tutulamaz."
+                data-en="By using this platform, you declare that you understand and accept all the risks listed above. CyberEx cannot be held responsible for losses that users may incur.">
+                Bu platformu kullanarak, yukarıda belirtilen tüm riskleri anladığınızı ve kabul ettiğinizi beyan etmiş
+                olursunuz. CyberEx, kullanıcıların maruz kalabileceği kayıplardan sorumlu tutulamaz.
+            </p>
+        </div>
+    </div>
+
+    <!-- Global Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div style="grid-column: span 1.5;">
+                <img src="cyberex-logo.png" alt="Logo" style="height: 60px; margin-bottom: 25px;">
+                <p style="color: #666; font-size: 0.85rem; line-height: 2; max-width: 480px;"
+                    data-tr="<strong>CyberEx Teknoloji Anonim Şirketi</strong><br>CyberEx, yeni nesil finansal teknolojiler ve dijital varlık yönetimi alanında global bir ekosistem inşa etmek amacıyla kurulmuş hibrit bir teknoloji şirketidir."
+                    data-en="<strong>CyberEx Technology Inc.</strong><br>CyberEx is a hybrid technology company established to build a global ecosystem in the field of next-generation financial technologies.">
+                    <strong>CyberEx Teknoloji Anonim Şirketi</strong><br>
+                    CyberEx, yeni nesil finansal teknolojiler ve dijital varlık yönetimi alanında global bir ekosistem
+                    inşa etmek amacıyla kurulmuş hibrit bir teknoloji şirketidir.
+                </p>
+            </div>
+            <div>
+                <h4 class="footer-col-title" data-tr="KURUMSAL" data-en="CORPORATE">KURUMSAL</h4>
+                <a href="about.html" class="footer-link" data-tr="Hakkımızda" data-en="About Us">Hakkımızda</a>
+                <a href="brand-assets.html" class="footer-link" data-tr="Marka Varlıkları" data-en="Brand Assets">Marka
+                    Varlıkları</a>
+                <a href="legal.html" class="footer-link" data-tr="Yasal Uyarı" data-en="Legal Disclaimer">Yasal
+                    Uyarı</a>
+                <a href="privacy.html" class="footer-link" data-tr="Gizlilik Politikası"
+                    data-en="Privacy Policy">Gizlilik Politikası</a>
+                <a href="risk.html" class="footer-link" data-tr="Risk Bildirimi" data-en="Risk Disclosure">Risk
+                    Bildirimi</a>
+            </div>
+            <div>
+                <h4 class="footer-col-title" data-tr="DESTEK" data-en="SUPPORT">DESTEK</h4>
+                <a href="help.html" class="footer-link" data-tr="Yardım Merkezi" data-en="Help Center">Yardım
+                    Merkezi</a>
+                <a href="how-it-works.html" class="footer-link" data-tr="Nasıl Çalışır?" data-en="How it Works?">Nasıl
+                    Çalışır?</a>
+                <a href="fees.html" class="footer-link" data-tr="Ücretler" data-en="Fees">Ücretler</a>
+                <a href="ticket.html" class="footer-link" data-tr="Kurumsal Bilet" data-en="Corporate Ticket">Kurumsal
+                    Bilet</a>
+            </div>
+            <div>
+                <h4 class="footer-col-title" data-tr="GELİŞTİRİCİ" data-en="DEVELOPERS">GELİŞTİRİCİ</h4>
+                <a href="api.html" class="footer-link" data-tr="API Dökümanları" data-en="API Docs">API
+                    Dökümanları</a>
+                <a href="api-docs.html" class="footer-link" data-tr="API Referansı" data-en="API Reference">API
+                    Referansı</a>
+                <a href="bug_bounty.html" class="footer-link" data-tr="Hata Ödülü" data-en="Bug Bounty">Hata Ödülü</a>
+                <a href="widgets.html" class="footer-link" data-tr="Widget'lar" data-en="Widgets">Widget'lar</a>
+            </div>
+        </div>
+        <div style="margin-top: 40px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding: 30px; color: #fff; font-size: 0.75rem;"
+            data-tr="© 2026 CyberEx Teknoloji Anonim Şirketi. Tüm Hakları Saklıdır."
+            data-en="© 2026 CyberEx Technology Inc. All Rights Reserved.">
+            © 2026 CyberEx Teknoloji Anonim Şirketi. Tüm Hakları Saklıdır.
+        </div>
+    </footer>
+
+    <script>
+        const btns = document.querySelectorAll('.lang-btn');
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.dataset.lang;
+                localStorage.setItem('lang', lang);
+                btns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                document.querySelectorAll('[data-tr]').forEach(el => {
+                    const text = el.getAttribute(`data-${lang}`);
+                    if (text) el.innerHTML = text;
+                });
+            });
+        });
+
+        // Initialize language
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('lang') || 'tr';
+            const targetBtn = document.querySelector(`.lang-btn[data-lang="${savedLang}"]`);
+            if (targetBtn) targetBtn.click();
+        });
+    </script>
 </body>
 
 </html>

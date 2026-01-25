@@ -38,19 +38,86 @@
         content="Trade with the power of AI. Secure, fast, and futuristic crypto exchange platform.">
     <meta property="twitter:image" content="https://cyberex.com.tr/cyberex-logo.png">
 
-    <!-- Schema.org -->
+    <!-- CyberEx Corporation Schema -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "CyberEx Technology Inc.",
+      "@type": "Corporation",
+      "name": "CyberEx",
+      "brand": {
+        "@type": "Brand",
+        "name": "CyberEx"
+      },
       "url": "https://cyberex.com.tr",
       "logo": "https://cyberex.com.tr/cyberex-logo.png",
+      "description": "AI-powered cryptocurrency exchange and Web3 financial ecosystem.",
+      "foundingDate": "2024",
+      "founder": {
+        "@type": "Person",
+        "name": "Onurcan Demir"
+      },
       "sameAs": [
         "https://twitter.com/cyberex",
         "https://www.instagram.com/cyberex",
-        "https://linkedin.com/company/cyberex"
-      ]
+        "https://t.me/cyberex",
+        "https://www.linkedin.com/company/cyberex"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "contact@cyberex.com.tr",
+        "contactType": "customer service",
+        "availableLanguage": ["Turkish", "English"]
+      }
+    }
+    </script>
+
+
+    <!-- CyberEx Exchange Financial Service -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FinancialService",
+      "name": "CyberEx Exchange",
+      "image": "https://cyberex.com.tr/cyberex-logo.png",
+      "provider": {
+        "@type": "Corporation",
+        "name": "CyberEx",
+        "url": "https://cyberex.com.tr"
+      },
+      "areaServed": "Worldwide",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "TR"
+      }
+    }
+    </script>
+
+
+
+    <!-- CyberEx Mobile App -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "CyberEx App",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Android, iOS",
+      "publisher": {
+        "@type": "Corporation",
+        "name": "CyberEx"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Cryptocurrency Trading",
+        "Web3 Wallet",
+        "Staking",
+        "DEX Gateway"
+      ],
+      "screenshot": "https://cyberex.com.tr/CyberEx_app_banner.png"
     }
     </script>
     <link
@@ -62,10 +129,14 @@
     <style>
         :root {
             --neon-cyan: #00f0ff;
-            --neon-blue: #0066ff;
+            --neon-blue: #0072ff;
+            --neon-purple: #bc13fe;
             --neon-green: #00ff88;
+            --dark-bg: #000a12;
             --text: #e8f0ff;
-            --border: rgba(255, 255, 255, 0.1);
+            --bg: #000510;
+            --border: rgba(0, 240, 255, 0.3);
+            --muted: #6b7a99;
         }
 
         * {
@@ -79,6 +150,9 @@
             background: #000510;
             color: var(--text);
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* LIQUID GLASS SHARED TEMPLATE */
@@ -87,7 +161,8 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 35px;
+            padding-top: env(safe-area-inset-top, 0px);
+            height: calc(35px + env(safe-area-inset-top, 0px));
             background: rgba(0, 240, 255, 0.05);
             backdrop-filter: blur(15px);
             z-index: 2000;
@@ -101,7 +176,7 @@
 
         .navbar {
             position: fixed;
-            top: 35px;
+            top: calc(35px + env(safe-area-inset-top, 0px));
             left: 30px;
             right: 30px;
             z-index: 1500;
@@ -109,7 +184,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(0, 5, 15, 0.85);
             backdrop-filter: blur(25px);
             border: 1px solid var(--border);
             border-radius: 60px;
@@ -166,8 +241,8 @@
             z-index: 10;
             max-width: 1100px;
             margin: 180px auto 100px;
-            padding: 75px;
-            background: rgba(255, 255, 255, 0.03);
+            padding: 50px;
+            background: rgba(0, 20, 40, 0.7);
             backdrop-filter: blur(40px) saturate(180%);
             border: 1px solid var(--border);
             border-radius: 50px;

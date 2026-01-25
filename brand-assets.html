@@ -3,67 +3,45 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>CyberEx – Marka Varlıkları | Brand Assets</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>CyberEx | Marka Varlıkları & Brand Assets</title>
+
+    <!-- Mobile & PWA Integration -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="CyberEx">
+    <meta name="mobile-web-app-capable" content="yes">
 
     <!-- SEO Meta Tags -->
     <meta name="description"
-        content="Google Gemini AI destekli CyberEx ile geleceğin finansına adım atın. En düşük komisyon oranları, Web3 cüzdan entegrasyonu ve askeri düzeyde güvenlik.">
-    <meta name="keywords"
-        content="CyberEx, Kripto Para Borsası, Bitcoin, Ethereum, Web3, DeFi, Yapay Zeka Finans, Gemini AI, Güvenilir Borsa, Blockchain">
-    <meta name="author" content="CyberEx Technology Inc.">
-    <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#00f0ff">
-    <link rel="canonical" href="https://cyberex.com.tr/">
+        content="CyberEx kurumsal marka varlıkları, logolar, Analytica X ve ekosistem tasarım kılavuzu.">
+    <meta name="theme-color" content="#000510">
+    <link rel="manifest" href="manifest.json">
 
     <!-- Favicons -->
     <link rel="icon" type="image/png" href="icons/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="icons/icon-192x192.png" sizes="192x192">
     <link rel="apple-touch-icon" href="icons/icon-192x192.png">
-    <link rel="shortcut icon" href="icons/icon-192x192.png" type="image/x-icon">
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://cyberex.com.tr/">
-    <meta property="og:title" content="CyberEx | Geleceğin Finansını Keşfedin">
-    <meta property="og:description"
-        content="Yapay zeka teknolojisiyle güçlendirilmiş, güvenli ve hızlı kripto para borsası. Web3 dünyasının kapılarını aralayın.">
-    <meta property="og:image" content="https://cyberex.com.tr/cyberex-logo.png">
+    <!-- Fonts & Libraries -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="mobile.css">
 
-    <!-- Twitter Card -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://cyberex.com.tr/">
-    <meta property="twitter:title" content="CyberEx | AI Powered Crypto Exchange">
-    <meta property="twitter:description"
-        content="Trade with the power of AI. Secure, fast, and futuristic crypto exchange platform.">
-    <meta property="twitter:image" content="https://cyberex.com.tr/cyberex-logo.png">
-
-    <!-- Schema.org -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "CyberEx Technology Inc.",
-      "url": "https://cyberex.com.tr",
-      "logo": "https://cyberex.com.tr/cyberex-logo.png",
-      "sameAs": [
-        "https://twitter.com/cyberex",
-        "https://www.instagram.com/cyberex",
-        "https://linkedin.com/company/cyberex"
-      ]
-    }
-    </script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
         :root {
             --neon-cyan: #00f0ff;
-            --neon-blue: #0066ff;
-            --neon-purple: #bf00ff;
+            --neon-blue: #0072ff;
+            --neon-purple: #bc13fe;
+            --dark-bg: #000a12;
+            --muted: #6b7a99;
             --text: #e8f0ff;
-            --border: rgba(255, 255, 255, 0.1);
+            --bg: #000510;
+            --card-bg: rgba(0, 20, 40, 0.7);
+            --border: rgba(0, 240, 255, 0.3);
         }
 
         * {
@@ -77,15 +55,19 @@
             background: #000510;
             color: var(--text);
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        /* LIQUID GLASS SHARED TEMPLATE */
+        /* Top Bar */
         .top-contact-bar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            height: 35px;
+            padding-top: env(safe-area-inset-top, 0px);
+            height: calc(35px + env(safe-area-inset-top, 0px));
             background: rgba(0, 240, 255, 0.05);
             backdrop-filter: blur(15px);
             z-index: 2000;
@@ -95,11 +77,13 @@
             gap: 30px;
             font-size: 0.73rem;
             border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+            color: var(--neon-cyan);
         }
 
+        /* Navbar */
         .navbar {
             position: fixed;
-            top: 35px;
+            top: calc(35px + env(safe-area-inset-top, 0px));
             left: 30px;
             right: 30px;
             z-index: 1500;
@@ -107,7 +91,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(0, 5, 15, 0.85);
             backdrop-filter: blur(25px);
             border: 1px solid var(--border);
             border-radius: 60px;
@@ -129,151 +113,277 @@
         .nav-tagline {
             font-size: 0.55rem;
             color: var(--neon-cyan);
-            font-weight: 900;
+            font-weight: 950;
             letter-spacing: 2px;
             text-transform: uppercase;
         }
 
-        .bg-animated {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .bg-animated::before {
-            content: '';
-            position: absolute;
-            inset: -50%;
-            background: radial-gradient(circle at center, rgba(191, 0, 255, 0.1), rgba(0, 240, 255, 0.05), transparent 70%);
-            animation: rotate 30s linear infinite;
-        }
-
-        @keyframes rotate {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
+        /* Content Wrapper */
         .content-wrapper {
             position: relative;
             z-index: 10;
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 180px auto 100px;
-            padding: 75px;
-            background: rgba(255, 255, 255, 0.03);
+            padding: 80px 40px;
+            background: var(--card-bg);
             backdrop-filter: blur(40px) saturate(180%);
             border: 1px solid var(--border);
             border-radius: 50px;
             box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+            width: 95%;
         }
 
-        .page-title {
-            font-size: 3rem;
+        h1.page-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
             font-weight: 950;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
             text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        h1.page-title span {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+        }
+
+        .asset-section {
+            margin-bottom: 80px;
+        }
+
+        .section-headline {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 40px;
+            border-left: 5px solid var(--neon-cyan);
+            padding-left: 20px;
             color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .asset-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 35px;
+            gap: 30px;
         }
 
         .asset-card {
-            padding: 40px;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border);
             border-radius: 35px;
+            padding: 40px;
             text-align: center;
-            transition: 0.3s;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .asset-card:hover {
             border-color: var(--neon-cyan);
-            transform: scale(1.02);
-            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(0, 240, 255, 0.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
         .asset-preview {
-            background: #fff;
-            padding: 40px;
-            border-radius: 25px;
-            margin-bottom: 25px;
-            min-height: 220px;
+            height: 220px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 25px;
+            margin-bottom: 30px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .asset-preview img {
-            max-width: 80%;
-            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
             transition: 0.5s;
         }
 
         .asset-card:hover .asset-preview img {
-            transform: scale(1.1) rotate(5deg);
+            transform: scale(1.1);
         }
 
         .btn-download {
             display: inline-block;
-            padding: 15px 35px;
+            padding: 14px 35px;
             background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
             color: #000;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 900;
-            letter-spacing: 1px;
+            font-size: 0.9rem;
             transition: 0.3s;
-            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+            text-transform: uppercase;
         }
 
         .btn-download:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 240, 255, 0.5);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.6);
+            transform: scale(1.05);
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .color-card {
+            border-radius: 25px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+
+        .color-card:hover {
+            border-color: #fff;
+        }
+
+        .color-swatch {
+            height: 140px;
+        }
+
+        .color-info {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            font-size: 0.9rem;
+        }
+
+        .color-info strong {
+            display: block;
+            color: #fff;
+            margin-bottom: 5px;
+            font-weight: 800;
+        }
+
+        /* Background */
+        .bg-animated {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.3;
+            animation: floatOrb 30s ease-in-out infinite;
+        }
+
+        @keyframes floatOrb {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(60px, -60px) scale(1.1);
+            }
+        }
+
+        /* Footer */
+        .footer {
+            width: 100%;
+            padding: 80px 20px 0;
+            border-top: 1px solid rgba(0, 240, 255, 0.1);
+            background: transparent;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 10;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 60px;
+            text-align: left;
+        }
+
+        .footer-col-title {
+            color: #fff;
+            font-weight: 950;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--neon-cyan);
+            padding-left: 15px;
+            font-size: 0.9rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .footer-link {
+            display: block;
+            color: #7f8c8d;
+            text-decoration: none;
+            padding: 10px 0;
+            transition: 0.3s;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .footer-link:hover {
+            color: var(--neon-cyan);
+            padding-left: 10px;
+            text-shadow: 0 0 10px var(--neon-cyan);
         }
 
         .lang-switcher {
             display: flex;
             gap: 4px;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.4);
             border: 1px solid var(--border);
             border-radius: 50px;
-            padding: 2px;
+            padding: 3px;
         }
 
         .lang-btn {
-            padding: 6px 14px;
+            padding: 8px 16px;
             border: none;
             background: transparent;
             color: var(--muted);
             cursor: pointer;
             border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 700;
+            font-size: 0.75rem;
+            font-weight: 800;
+            transition: 0.3s;
         }
 
         .lang-btn.active {
             background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
             color: #000;
+            box-shadow: 0 0 15px var(--neon-cyan);
         }
 
-        footer {
-            padding: 40px;
-            text-align: center;
-            color: var(--muted);
-            border-top: 1px solid var(--border);
-            position: relative;
-            z-index: 10;
-            font-size: 0.85rem;
+        @media (max-width: 768px) {
+            .content-wrapper {
+                margin-top: 160px;
+                padding: 40px 20px;
+                border-radius: 30px;
+            }
+
+            h1.page-title {
+                font-size: 2.2rem;
+            }
+
+            .section-headline {
+                font-size: 1.3rem;
+            }
+
+            .navbar {
+                left: 15px;
+                right: 15px;
+                padding: 10px 20px;
+            }
         }
     </style>
 </head>
@@ -281,59 +391,188 @@
 <body>
     <div class="top-contact-bar">
         <div style="display: flex; gap: 30px;">
-            <span>📧 marketing@cyberex.com.tr</span>
-            <span>💼 corporate@cyberex.com.tr</span>
-            <span>💬 destek@cyberex.com.tr</span>
+            <span data-tr="📧 marketing@cyberex.com.tr" data-en="📧 marketing@cyberex.com.tr">📧
+                marketing@cyberex.com.tr</span>
+            <span data-tr="💼 corporate@cyberex.com.tr" data-en="💼 corporate@cyberex.com.tr">💼
+                corporate@cyberex.com.tr</span>
         </div>
     </div>
 
-    <nav class="navbar">
+    <nav class="navbar" id="mainNavbar">
         <a href="index.html" class="nav-logo-center">
             <img src="cyberex-logo.png" alt="CyberEx Logo">
             <div class="nav-tagline">AI POWERED FINTECH</div>
         </a>
         <div class="lang-switcher">
-            <button class="lang-btn active" data-lang="tr">TR</button>
+            <button class="lang-btn" data-lang="tr">TR</button>
             <button class="lang-btn" data-lang="en">EN</button>
         </div>
     </nav>
 
-    <div class="bg-animated"></div>
+    <div class="bg-animated">
+        <div class="orb"
+            style="width: 700px; height: 700px; background: radial-gradient(circle, var(--neon-cyan), transparent 70%); top: -350px; left: -350px;">
+        </div>
+        <div class="orb"
+            style="width: 600px; height: 600px; background: radial-gradient(circle, var(--neon-purple), transparent 70%); bottom: -250px; right: -250px;">
+        </div>
+        <div class="orb"
+            style="width: 500px; height: 500px; background: radial-gradient(circle, var(--neon-blue), transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.1;">
+        </div>
+    </div>
 
     <div class="content-wrapper">
         <h1 class="page-title" data-tr="Marka <span>Varlıkları</span>" data-en="Brand <span>Assets</span>">Marka
-            <span>Varlıkları</span>
-        </h1>
+            <span>Varlıkları</span></h1>
 
-        <div class="asset-grid">
-            <div class="asset-card">
-                <div class="asset-preview"><img src="cyberex-logo.png" alt="Logo Neon"></div>
-                <h3 style="margin-bottom:20px; color:#fff;" data-tr="Ana Logotip (Neon Mode)"
-                    data-en="Primary Logo (Neon Mode)">Ana Logotip (Neon Mode)</h3>
-                <a href="cyberex-logo.png" download class="btn-download" data-tr="PNG İNDİR" data-en="DOWNLOAD PNG">PNG
-                    İNDİR</a>
+        <!-- Primary Logos -->
+        <div class="asset-section">
+            <h2 class="section-headline" data-tr="Kurumsal Logolar" data-en="Corporate Logos">Kurumsal Logolar</h2>
+            <div class="asset-grid">
+                <div class="asset-card">
+                    <div class="asset-preview"><img src="cyberex-logo.png" alt="Primary Logo"></div>
+                    <h3 style="margin-bottom: 20px;" data-tr="CyberEx Ana Logo (Neon)"
+                        data-en="CyberEx Main Logo (Neon)">CyberEx Ana Logo (Neon)</h3>
+                    <a href="cyberex-logo.png" download class="btn-download" data-tr="PNG İNDİR"
+                        data-en="DOWNLOAD PNG">PNG İNDİR</a>
+                </div>
+                <div class="asset-card">
+                    <div class="asset-preview" style="background:#fff;"><img src="cyberex-logo.png" alt="Dark Logo"
+                            style="filter: brightness(0.1);"></div>
+                    <h3 style="margin-bottom: 20px;" data-tr="Kontrast Logo (Dark)" data-en="Contrast Logo (Dark)">
+                        Kontrast Logo (Dark)</h3>
+                    <a href="cyberex-logo.png" download class="btn-download" data-tr="PNG İNDİR"
+                        data-en="DOWNLOAD PNG">PNG İNDİR</a>
+                </div>
+                <div class="asset-card">
+                    <div class="asset-preview"><img src="cyberex-logo-full.png" alt="Full Identity"></div>
+                    <h3 style="margin-bottom: 20px;" data-tr="Tam Kimlik (Horizontal)"
+                        data-en="Full Identity (Horizontal)">Tam Kimlik (Horizontal)</h3>
+                    <a href="cyberex-logo-full.png" download class="btn-download" data-tr="PNG İNDİR"
+                        data-en="DOWNLOAD PNG">PNG İNDİR</a>
+                </div>
             </div>
-            <div class="asset-card">
-                <div class="asset-preview" style="background:#000510; border:1px solid rgba(255,255,255,0.1);"><img
-                        src="cyberex-logo.png" alt="Logo Dark"></div>
-                <h3 style="margin-bottom:20px; color:#fff;" data-tr="Kontrast Versiyon" data-en="Contrast Version">
-                    Kontrast Versiyon</h3>
-                <a href="cyberex-logo.png" download class="btn-download" data-tr="PNG İNDİR" data-en="DOWNLOAD PNG">PNG
-                    İNDİR</a>
+        </div>
+
+        <!-- Ecosystem Logos -->
+        <div class="asset-section">
+            <h2 class="section-headline" data-tr="Ekosistem Varlıkları" data-en="Ecosystem Assets">Ekosistem Varlıkları
+            </h2>
+            <div class="asset-grid">
+                <div class="asset-card">
+                    <div class="asset-preview"><img src="AnalyticaX.png" alt="Analytica X Logo"></div>
+                    <h3 style="margin-bottom: 20px;" data-tr="Analytica X Intel" data-en="Analytica X Intel">Analytica X
+                        Intel</h3>
+                    <a href="AnalyticaX.png" download class="btn-download" data-tr="PNG İNDİR"
+                        data-en="DOWNLOAD PNG">PNG İNDİR</a>
+                </div>
+                <div class="asset-card">
+                    <div class="asset-preview"><img src="CyberEx WALLET.png" alt="CyberEx Wallet Logo"></div>
+                    <h3 style="margin-bottom: 20px;" data-tr="CyberEx Wallet" data-en="CyberEx Wallet">CyberEx Wallet
+                    </h3>
+                    <a href="CyberEx WALLET.png" download class="btn-download" data-tr="PNG İNDİR"
+                        data-en="DOWNLOAD PNG">PNG İNDİR</a>
+                </div>
+                <div class="asset-card">
+                    <div class="asset-preview"><img src="cyberex-logo-down.png" alt="CyberEx Down Symbol"></div>
+                    <h3 style="margin-bottom: 20px;" data-tr="CyberEx Alt Sembol" data-en="CyberEx Alt Symbol">CyberEx
+                        Alt Sembol</h3>
+                    <a href="cyberex-logo-down.png" download class="btn-download" data-tr="PNG İNDİR"
+                        data-en="DOWNLOAD PNG">PNG İNDİR</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Color Palette -->
+        <div class="asset-section">
+            <h2 class="section-headline" data-tr="Kurumsal Renkler" data-en="Brand Colors">Kurumsal Renkler</h2>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #00f0ff;"></div>
+                    <div class="color-info"><strong>Neon Cyan</strong>#00F0FF</div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #bc13fe;"></div>
+                    <div class="color-info"><strong>Cyber Purple</strong>#BC13FE</div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #000510;"></div>
+                    <div class="color-info"><strong>Deep Dark</strong>#000510</div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #00ff88;"></div>
+                    <div class="color-info"><strong>Safety Green</strong>#00FF88</div>
+                </div>
             </div>
         </div>
     </div>
 
-    <footer>© 2025 CyberEx Global Technologies. All Rights Reserved.</footer>
+    <!-- Global Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div style="grid-column: span 1.5;">
+                <img src="cyberex-logo.png" alt="Logo" style="height: 60px; margin-bottom: 25px;">
+                <p style="color: #666; font-size: 0.85rem; line-height: 2; max-width: 480px;"
+                    data-tr="<strong>CyberEx Teknoloji Anonim Şirketi</strong><br>CyberEx, yeni nesil finansal teknolojiler ve dijital varlık yönetimi alanında global bir ekosistem inşa etmek amacıyla kurulmuş hibrit bir teknoloji şirketidir."
+                    data-en="<strong>CyberEx Technology Inc.</strong><br>CyberEx is a hybrid technology company established to build a global ecosystem in the field of next-generation financial technologies.">
+                    <strong>CyberEx Teknoloji Anonim Şirketi</strong><br>
+                    CyberEx, yeni nesil finansal teknolojiler ve dijital varlık yönetimi alanında global bir ekosistem
+                    inşa etmek amacıyla kurulmuş hibrit bir teknoloji şirketidir.
+                </p>
+            </div>
+            <div>
+                <h4 class="footer-col-title" data-tr="KURUMSAL" data-en="CORPORATE">KURUMSAL</h4>
+                <a href="about.html" class="footer-link" data-tr="Hakkımızda" data-en="About Us">About Us</a>
+                <a href="brand-assets.html" class="footer-link" data-tr="Marka Varlıkları" data-en="Brand Assets">Brand
+                    Assets</a>
+                <a href="legal.html" class="footer-link" data-tr="Yasal Uyarı" data-en="Legal Disclaimer">Legal
+                    Disclaimer</a>
+                <a href="privacy.html" class="footer-link" data-tr="Gizlilik Politikası"
+                    data-en="Privacy Policy">Privacy Policy</a>
+            </div>
+            <div>
+                <h4 class="footer-col-title" data-tr="DESTEK" data-en="SUPPORT">DESTEK</h4>
+                <a href="help.html" class="footer-link" data-tr="Yardım Merkezi" data-en="Help Center">Help Center</a>
+                <a href="how-it-works.html" class="footer-link" data-tr="Nasıl Çalışır?" data-en="How it Works?">How it
+                    Works?</a>
+                <a href="fees.html" class="footer-link" data-tr="Ücretler" data-en="Fees">Fees</a>
+                <a href="ticket.html" class="footer-link" data-tr="Kurumsal Bilet" data-en="Corporate Ticket">Corporate
+                    Ticket</a>
+            </div>
+            <div>
+                <h4 class="footer-col-title" data-tr="GELİŞTİRİCİ" data-en="DEVELOPERS">DEVELOPERS</h4>
+                <a href="api.html" class="footer-link" data-tr="API Dökümanları" data-en="API Docs">API Docs</a>
+                <a href="bug_bounty.html" class="footer-link" data-tr="Hata Ödülü" data-en="Bug Bounty">Bug Bounty</a>
+                <a href="widgets.html" class="footer-link" data-tr="Widget'lar" data-en="Widgets">Widgets</a>
+            </div>
+        </div>
+        <div style="margin-top: 40px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding: 30px; color: #fff; font-size: 0.75rem;"
+            data-tr="© 2026 CyberEx Teknoloji Anonim Şirketi. Tüm Hakları Saklıdır."
+            data-en="© 2026 CyberEx Technology Inc. All Rights Reserved.">
+            © 2026 CyberEx Teknoloji Anonim Şirketi. All Rights Reserved.
+        </div>
+    </footer>
 
     <script>
         const btns = document.querySelectorAll('.lang-btn');
         btns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const lang = btn.dataset.lang;
-                btns.forEach(b => b.classList.remove('active')); btn.classList.add('active');
-                document.querySelectorAll('[data-tr]').forEach(el => el.innerHTML = el.dataset[lang]);
+                localStorage.setItem('lang', lang);
+                btns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                document.querySelectorAll('[data-tr]').forEach(el => {
+                    const text = el.getAttribute(`data-${lang}`);
+                    if (text) el.innerHTML = text;
+                });
             });
+        });
+
+        // Initialize language
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('lang') || 'tr';
+            const targetBtn = document.querySelector(`.lang-btn[data-lang="${savedLang}"]`);
+            if (targetBtn) targetBtn.click();
         });
     </script>
 </body>

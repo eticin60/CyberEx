@@ -40,7 +40,7 @@
         width: 95% !important;
         left: 2.5% !important;
         right: 2.5% !important;
-        top: 15px !important;
+        top: calc(15px + env(safe-area-inset-top, 0px)) !important;
         padding: 10px 15px !important;
         background: rgba(0, 5, 10, 0.95) !important;
         border-radius: 40px !important;
@@ -230,136 +230,141 @@
     }
 
     /* --- 5. ELITE CARD FIXES --- */
-/* --- 5. ELITE CARD FIXES --- */
-.elite-section {
-    padding: 40px 20px !important;
-    overflow: visible !important;
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 40px !important;
-}
-
-.elite-section > div {
-    text-align: center !important;
-    width: 100% !important;
-    order: 1 !important;
-}
-
-.elite-section input {
-    width: 80% !important;
-    max-width: 320px !important;
-    margin: 15px auto !important;
-    display: block !important;
-    text-align: center !important;
-}
-
-.elite-section label {
-    text-align: center !important;
-    width: 100% !important;
-    display: block !important;
-}
-
-/* Kartı mobilde düzgün göster - ORTALANMIŞ */
-.elite-section .card-container {
-    width: 100% !important;
-    max-width: 380px !important;
-    height: auto !important;
-    margin: 30px auto !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    order: 2 !important;
-    padding: 0 20px !important;
-}
-
-.elite-card-3d {
-    width: 100% !important;
-    height: auto !important;
-    aspect-ratio: 1.586 / 1 !important;
-    padding: 32px !important;
-    margin: 0 auto !important;
-}
-
-/* Kart içi elementler - Masaüstü boyutlarına yakın */
-.elite-card-3d .card-logo {
-    width: 55px !important;
-}
-
-.elite-card-3d .card-chip {
-    width: 48px !important;
-    height: 38px !important;
-    margin-top: 18px !important;
-}
-
-.elite-card-3d .card-number {
-    font-size: 1.10rem !important; /* 1.45rem'den 1.25rem'e düştü */
-    letter-spacing: 3px !important; /* 4px'ten 3px'e düştü */
-    word-spacing: 6px !important; /* 8px'ten 6px'e düştü */
-    margin: 28px 0 !important;
-    white-space: nowrap !important;
-}
-
-.elite-card-3d .card-holder {
-    font-size: 0.6rem !important;
-    letter-spacing: 2px !important;
-}
-
-/* Mastercard logosu */
-.elite-card-3d img[src*="mastercard"],
-.elite-card-3d img[src*="Mastercard"] {
-    height: 38px !important;
-    opacity: 0.8 !important;
-}
-
-/* Premium text */
-.elite-card-3d > div:first-child span {
-    font-size: 0.8rem !important;
-    font-weight: 800 !important;
-}
-
-/* Küçük ekranlar için */
-@media screen and (max-width: 400px) {
-    .elite-section .card-container {
-        max-width: 340px !important;
-        padding: 0 15px !important;
+    /* --- 5. ELITE CARD FIXES --- */
+    .elite-section {
+        padding: 40px 20px !important;
+        overflow: visible !important;
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
     }
-    
-    .elite-card-3d {
-        padding: 28px !important;
-    }
-    
-    .elite-card-3d .card-number {
-        font-size: 1.25rem !important;
-        letter-spacing: 3px !important;
-        word-spacing: 6px !important;
-    }
-    
-    .elite-card-3d .card-logo {
-        width: 48px !important;
-    }
-}
 
-@media screen and (max-width: 360px) {
-    .elite-section .card-container {
+    .elite-section>div {
+        text-align: center !important;
+        width: 100% !important;
+        order: 1 !important;
+    }
+
+    .elite-section input {
+        width: 80% !important;
         max-width: 320px !important;
-        padding: 0 10px !important;
+        margin: 15px auto !important;
+        display: block !important;
+        text-align: center !important;
     }
-    
-    .elite-card-3d {
-        padding: 25px !important;
-    }
-    
-    .elite-card-3d .card-number {
-        font-size: 1.15rem !important;
-        letter-spacing: 2px !important;
-        word-spacing: 5px !important;
-    }
-    
 
-}
-    .elite-section > div:first-child > div {
-    justify-content: center !important;
-}
+    .elite-section label {
+        text-align: center !important;
+        width: 100% !important;
+        display: block !important;
+    }
+
+    /* Kartı mobilde düzgün göster - ORTALANMIŞ */
+    .elite-section .card-container {
+        width: 100% !important;
+        max-width: 380px !important;
+        height: auto !important;
+        margin: 30px auto !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        order: 2 !important;
+        padding: 0 20px !important;
+    }
+
+    .elite-card-3d {
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 1.586 / 1 !important;
+        padding: 32px !important;
+        margin: 0 auto !important;
+    }
+
+    /* Kart içi elementler - Masaüstü boyutlarına yakın */
+    .elite-card-3d .card-logo {
+        width: 55px !important;
+    }
+
+    .elite-card-3d .card-chip {
+        width: 48px !important;
+        height: 38px !important;
+        margin-top: 18px !important;
+    }
+
+    .elite-card-3d .card-number {
+        font-size: 1.10rem !important;
+        /* 1.45rem'den 1.25rem'e düştü */
+        letter-spacing: 3px !important;
+        /* 4px'ten 3px'e düştü */
+        word-spacing: 6px !important;
+        /* 8px'ten 6px'e düştü */
+        margin: 28px 0 !important;
+        white-space: nowrap !important;
+    }
+
+    .elite-card-3d .card-holder {
+        font-size: 0.6rem !important;
+        letter-spacing: 2px !important;
+    }
+
+    /* Mastercard logosu */
+    .elite-card-3d img[src*="mastercard"],
+    .elite-card-3d img[src*="Mastercard"] {
+        height: 38px !important;
+        opacity: 0.8 !important;
+    }
+
+    /* Premium text */
+    .elite-card-3d>div:first-child span {
+        font-size: 0.8rem !important;
+        font-weight: 800 !important;
+    }
+
+    /* Küçük ekranlar için */
+    @media screen and (max-width: 400px) {
+        .elite-section .card-container {
+            max-width: 340px !important;
+            padding: 0 15px !important;
+        }
+
+        .elite-card-3d {
+            padding: 28px !important;
+        }
+
+        .elite-card-3d .card-number {
+            font-size: 1.25rem !important;
+            letter-spacing: 3px !important;
+            word-spacing: 6px !important;
+        }
+
+        .elite-card-3d .card-logo {
+            width: 48px !important;
+        }
+    }
+
+    @media screen and (max-width: 360px) {
+        .elite-section .card-container {
+            max-width: 320px !important;
+            padding: 0 10px !important;
+        }
+
+        .elite-card-3d {
+            padding: 25px !important;
+        }
+
+        .elite-card-3d .card-number {
+            font-size: 1.15rem !important;
+            letter-spacing: 2px !important;
+            word-spacing: 5px !important;
+        }
+
+
+    }
+
+    .elite-section>div:first-child>div {
+        justify-content: center !important;
+    }
+
     /* --- 6. POCKET SECTION FIXES --- */
     .pocket-section {
         display: flex !important;

@@ -3,67 +3,45 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>CyberEx – Nasıl Çalışır? | How it Works</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>CyberEx | Nasıl Çalışır? & How It Works</title>
+
+    <!-- Mobile & PWA Integration -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="CyberEx">
+    <meta name="mobile-web-app-capable" content="yes">
 
     <!-- SEO Meta Tags -->
     <meta name="description"
-        content="Google Gemini AI destekli CyberEx ile geleceğin finansına adım atın. En düşük komisyon oranları, Web3 cüzdan entegrasyonu ve askeri düzeyde güvenlik.">
-    <meta name="keywords"
-        content="CyberEx, Kripto Para Borsası, Bitcoin, Ethereum, Web3, DeFi, Yapay Zeka Finans, Gemini AI, Güvenilir Borsa, Blockchain">
-    <meta name="author" content="CyberEx Technology Inc.">
-    <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#00f0ff">
-    <link rel="canonical" href="https://cyberex.com.tr/">
+        content="CyberEx ekosistemine nasıl dahil olursunuz? Adım adım Web3 ve AI destekli finans rehberi.">
+    <meta name="theme-color" content="#000510">
+    <link rel="manifest" href="manifest.json">
 
     <!-- Favicons -->
     <link rel="icon" type="image/png" href="icons/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="icons/icon-192x192.png" sizes="192x192">
     <link rel="apple-touch-icon" href="icons/icon-192x192.png">
-    <link rel="shortcut icon" href="icons/icon-192x192.png" type="image/x-icon">
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://cyberex.com.tr/">
-    <meta property="og:title" content="CyberEx | Geleceğin Finansını Keşfedin">
-    <meta property="og:description"
-        content="Yapay zeka teknolojisiyle güçlendirilmiş, güvenli ve hızlı kripto para borsası. Web3 dünyasının kapılarını aralayın.">
-    <meta property="og:image" content="https://cyberex.com.tr/cyberex-logo.png">
+    <!-- Fonts & Libraries -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="mobile.css">
 
-    <!-- Twitter Card -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://cyberex.com.tr/">
-    <meta property="twitter:title" content="CyberEx | AI Powered Crypto Exchange">
-    <meta property="twitter:description"
-        content="Trade with the power of AI. Secure, fast, and futuristic crypto exchange platform.">
-    <meta property="twitter:image" content="https://cyberex.com.tr/cyberex-logo.png">
-
-    <!-- Schema.org -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "CyberEx Technology Inc.",
-      "url": "https://cyberex.com.tr",
-      "logo": "https://cyberex.com.tr/cyberex-logo.png",
-      "sameAs": [
-        "https://twitter.com/cyberex",
-        "https://www.instagram.com/cyberex",
-        "https://linkedin.com/company/cyberex"
-      ]
-    }
-    </script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
         :root {
             --neon-cyan: #00f0ff;
-            --neon-blue: #0066ff;
-            --neon-purple: #bf00ff;
+            --neon-blue: #0072ff;
+            --neon-purple: #bc13fe;
+            --dark-bg: #000a12;
+            --muted: #6b7a99;
             --text: #e8f0ff;
-            --border: rgba(255, 255, 255, 0.1);
+            --bg: #000510;
+            --card-bg: rgba(0, 20, 40, 0.7);
+            --border: rgba(0, 240, 255, 0.3);
         }
 
         * {
@@ -77,15 +55,19 @@
             background: #000510;
             color: var(--text);
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        /* LIQUID GLASS SHARED TEMPLATE */
+        /* Standardized Navbar */
         .top-contact-bar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            height: 35px;
+            padding-top: env(safe-area-inset-top, 0px);
+            height: calc(35px + env(safe-area-inset-top, 0px));
             background: rgba(0, 240, 255, 0.05);
             backdrop-filter: blur(15px);
             z-index: 2000;
@@ -95,11 +77,12 @@
             gap: 30px;
             font-size: 0.73rem;
             border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+            color: var(--neon-cyan);
         }
 
         .navbar {
             position: fixed;
-            top: 35px;
+            top: calc(35px + env(safe-area-inset-top, 0px));
             left: 30px;
             right: 30px;
             z-index: 1500;
@@ -107,7 +90,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(0, 5, 15, 0.85);
             backdrop-filter: blur(25px);
             border: 1px solid var(--border);
             border-radius: 60px;
@@ -129,119 +112,201 @@
         .nav-tagline {
             font-size: 0.55rem;
             color: var(--neon-cyan);
-            font-weight: 900;
+            font-weight: 950;
             letter-spacing: 2px;
             text-transform: uppercase;
         }
 
-        .bg-animated {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .bg-animated::before {
-            content: '';
-            position: absolute;
-            inset: -50%;
-            background: radial-gradient(circle at center, rgba(0, 240, 255, 0.1), rgba(191, 0, 255, 0.05), transparent 70%);
-            animation: rotate 20s linear infinite;
-        }
-
-        @keyframes rotate {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
+        /* Content Wrapper */
         .content-wrapper {
             position: relative;
             z-index: 10;
-            max-width: 1100px;
+            max-width: 1300px;
             margin: 180px auto 100px;
-            padding: 75px;
-            background: rgba(255, 255, 255, 0.03);
+            padding: 80px 50px;
+            background: var(--card-bg);
             backdrop-filter: blur(40px) saturate(180%);
             border: 1px solid var(--border);
             border-radius: 50px;
             box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+            width: 95%;
         }
 
-        .page-title {
-            font-size: 3.5rem;
+        h1.page-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
             font-weight: 950;
-            margin-bottom: 60px;
+            margin-bottom: 30px;
             text-align: center;
-            color: #fff;
-            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 4px;
         }
 
-        .page-title span {
+        h1.page-title span {
             background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        .intro-text {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--muted);
+            margin-bottom: 80px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
         }
 
         .step-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 25px;
+            gap: 60px;
+            margin-bottom: 80px;
         }
 
-        .step-card {
-            padding: 40px;
+        .step-row {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 950;
+            color: #000;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+            position: sticky;
+            top: 200px;
+        }
+
+        .step-content {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border);
-            border-radius: 30px;
+            border-radius: 35px;
+            padding: 50px;
             transition: 0.4s;
-            position: relative;
         }
 
-        .step-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.05);
+        .step-content:hover {
             border-color: var(--neon-cyan);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            background: rgba(0, 240, 255, 0.05);
+            transform: translateX(10px);
         }
 
-        .step-num {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 3.5rem;
-            font-weight: 950;
-            color: rgba(255, 255, 255, 0.03);
-            z-index: 1;
+        .step-icon-title {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 30px;
         }
 
         .step-icon {
             font-size: 3.5rem;
             color: var(--neon-cyan);
-            margin-bottom: 25px;
-            position: relative;
-            z-index: 2;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
         }
 
-        .step-card h3 {
+        .step-content h2 {
             color: #fff;
-            font-size: 1.6rem;
-            margin-bottom: 15px;
-            font-weight: 800;
-            position: relative;
-            z-index: 2;
+            font-size: 2rem;
+            margin: 0;
+            font-weight: 900;
         }
 
-        .step-card p {
-            color: var(--muted);
-            line-height: 1.7;
-            font-size: 1rem;
+        .step-content p {
+            color: #aaa;
+            line-height: 1.9;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 25px;
+        }
+
+        .feature-list li {
+            padding: 12px 0;
+            padding-left: 35px;
             position: relative;
-            z-index: 2;
+            color: #ccc;
+            font-size: 1.05rem;
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--neon-cyan);
+            font-weight: 900;
+            font-size: 1.3rem;
+        }
+
+        .tech-badge {
+            display: inline-block;
+            padding: 8px 18px;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--neon-cyan);
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+
+        /* Global Footer Styles */
+        .footer {
+            width: 100%;
+            padding: 80px 20px 0;
+            border-top: 1px solid rgba(0, 240, 255, 0.1);
+            background: transparent;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 10;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 60px;
+            text-align: left;
+        }
+
+        .footer-col-title {
+            color: #fff;
+            font-weight: 900;
+            margin-bottom: 25px;
+            border-left: 3px solid var(--neon-cyan);
+            padding-left: 15px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .footer-link {
+            display: block;
+            color: #7f8c8d;
+            text-decoration: none;
+            padding: 8px 0;
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .footer-link:hover {
+            color: var(--neon-cyan);
+            padding-left: 10px;
         }
 
         .lang-switcher {
@@ -269,18 +334,53 @@
             color: #000;
         }
 
-        footer {
-            padding: 40px;
-            text-align: center;
-            color: var(--muted);
-            border-top: 1px solid var(--border);
-            position: relative;
-            z-index: 10;
-            font-size: 0.85rem;
+        .bg-animated {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
         }
 
-        [data-en] {
-            display: none;
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.2;
+            animation: floatOrb 30s ease-in-out infinite;
+        }
+
+        @keyframes floatOrb {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-100px, 100px) scale(1.2);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                margin-top: 150px;
+                padding: 40px 20px;
+            }
+
+            h1.page-title {
+                font-size: 2.2rem;
+            }
+
+            .step-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .step-number {
+                position: relative;
+                top: 0;
+            }
         }
     </style>
 </head>
@@ -288,9 +388,9 @@
 <body>
     <div class="top-contact-bar">
         <div style="display: flex; gap: 30px;">
-            <span>📧 contact@cyberex.com.tr</span>
-            <span>💼 corporate@cyberex.com.tr</span>
-            <span>💬 destek@cyberex.com.tr</span>
+            <span data-tr="📧 help@cyberex.com.tr" data-en="📧 help@cyberex.com.tr">📧 help@cyberex.com.tr</span>
+            <span data-tr="💼 business@cyberex.com.tr" data-en="💼 business@cyberex.com.tr">💼
+                business@cyberex.com.tr</span>
         </div>
     </div>
 
@@ -305,57 +405,247 @@
         </div>
     </nav>
 
-    <div class="bg-animated"></div>
+    <div class="bg-animated">
+        <div class="orb"
+            style="width: 800px; height: 800px; background: radial-gradient(circle, var(--neon-blue), transparent 70%); top: -200px; right: -200px;">
+        </div>
+        <div class="orb"
+            style="width: 600px; height: 600px; background: radial-gradient(circle, var(--neon-cyan), transparent 70%); bottom: -100px; left: -100px;">
+        </div>
+    </div>
 
     <div class="content-wrapper">
-        <h1 class="page-title" data-tr="Adım Adım Gelecek <span>CyberEx</span>"
-            data-en="Future Step by Step <span>CyberEx</span>">Adım Adım Gelecek <span>CyberEx</span></h1>
+        <h1 class="page-title" data-tr="CyberEx <span>Nasıl Çalışır?</span>" data-en="How <span>CyberEx Works?</span>">
+            CyberEx <span>Nasıl Çalışır?</span></h1>
+
+        <p class="intro-text"
+            data-tr="CyberEx, geleneksel finans altyapısını blockchain teknolojisiyle birleştirerek kurumsal düzeyde güvenlik, Google Gemini AI destekli akıllı ticaret ve kullanıcı dostu deneyim sunar. İşte CyberEx ekosisteminde yolculuğunuz:"
+            data-en="CyberEx combines traditional financial infrastructure with blockchain technology, offering enterprise-grade security, Google Gemini AI-powered smart trading, and a user-friendly experience. Here's your journey in the CyberEx ecosystem:">
+            CyberEx, geleneksel finans altyapısını blockchain teknolojisiyle birleştirerek kurumsal düzeyde güvenlik,
+            Google Gemini AI destekli akıllı ticaret ve kullanıcı dostu deneyim sunar. İşte CyberEx ekosisteminde
+            yolculuğunuz:
+        </p>
 
         <div class="step-grid">
-            <div class="step-card">
-                <div class="step-num">01</div>
-                <i class="fas fa-user-astronaut step-icon"></i>
-                <h3 data-tr="Ekosisteme Katıl" data-en="Join Ecosystem">Ekosisteme Katıl</h3>
-                <p data-tr="CyberEx uygulamasını indirin veya web üzerinden saniyeler içinde kaydolun. Tek kimlik ile tüm Web3 dünyasına açılın."
-                    data-en="Download the CyberEx app or sign up on the web in seconds. Open up to the whole Web3 world with a single identity.">
-                    CyberEx uygulamasını indirin veya web üzerinden saniyeler içinde kaydolun. Tek kimlik ile tüm Web3
-                    dünyasına açılın.
-                </p>
+            <!-- Step 1 -->
+            <div class="step-row">
+                <div class="step-number">01</div>
+                <div class="step-content">
+                    <div class="step-icon-title">
+                        <i class="fas fa-shield-alt step-icon"></i>
+                        <h2 data-tr="Kurumsal Düzeyde Kayıt & KYC" data-en="Enterprise-Grade Registration & KYC">
+                            Kurumsal Düzeyde Kayıt & KYC</h2>
+                    </div>
+                    <p data-tr="CyberEx ekosisteminde yer almak için güvenli ve hızlı bir onboarding sürecinden geçersiniz. E-posta veya Web3 cüzdanınızla anında hesap oluşturun, ardından uluslararası AML/CFT standartlarına uygun KYC (Know Your Customer) doğrulaması gerçekleştirin."
+                        data-en="To join the CyberEx ecosystem, you go through a secure and fast onboarding process. Create your account instantly with your email or Web3 wallet, then complete KYC (Know Your Customer) verification compliant with international AML/CFT standards.">
+                        CyberEx ekosisteminde yer almak için güvenli ve hızlı bir onboarding sürecinden geçersiniz.
+                        E-posta veya Web3 cüzdanınızla anında hesap oluşturun, ardından uluslararası AML/CFT
+                        standartlarına uygun KYC (Know Your Customer) doğrulaması gerçekleştirin.
+                    </p>
+                    <ul class="feature-list">
+                        <li data-tr="2FA (Two-Factor Authentication) ile çok katmanlı güvenlik"
+                            data-en="Multi-layered security with 2FA (Two-Factor Authentication)">2FA (Two-Factor
+                            Authentication) ile çok katmanlı güvenlik</li>
+                        <li data-tr="Biyometrik doğrulama desteği (Face ID / Touch ID)"
+                            data-en="Biometric authentication support (Face ID / Touch ID)">Biyometrik doğrulama desteği
+                            (Face ID / Touch ID)</li>
+                        <li data-tr="Regülatif uyumluluk sertifikaları (ISO 27001, SOC 2)"
+                            data-en="Regulatory compliance certificates (ISO 27001, SOC 2)">Regülatif uyumluluk
+                            sertifikaları (ISO 27001, SOC 2)</li>
+                    </ul>
+                    <div>
+                        <span class="tech-badge">KYC</span>
+                        <span class="tech-badge">2FA</span>
+                        <span class="tech-badge">Biometric Auth</span>
+                    </div>
+                </div>
             </div>
-            <div class="step-card">
-                <div class="step-num">02</div>
-                <i class="fas fa-fingerprint step-icon"></i>
-                <h3 data-tr="Zırhlı Güvenlik" data-en="Secure Armor">Zırhlı Güvenlik</h3>
-                <p data-tr="Biyometrik doğrulama ve 2FA katmanlarını aktif edin. Varlıklarınızı CyberEx'in askeri düzeydeki koruma kalkanına emanet edin."
-                    data-en="Activate biometric authentication and 2FA layers. Entrust your assets to CyberEx's military-grade protection shield.">
-                    Biyometrik doğrulama ve 2FA katmanlarını aktif edin. Varlıklarınızı CyberEx'in askeri düzeydeki
-                    koruma kalkanına emanet edin.
-                </p>
+
+            <!-- Step 2 -->
+            <div class="step-row">
+                <div class="step-number">02</div>
+                <div class="step-content">
+                    <div class="step-icon-title">
+                        <i class="fas fa-vault step-icon"></i>
+                        <h2 data-tr="Güvenli Varlık Transferi & Saklama" data-en="Secure Asset Transfer & Custody">
+                            Güvenli Varlık Transferi & Saklama</h2>
+                    </div>
+                    <p data-tr="Varlıklarınızı banka havalesi, kredi kartı veya mevcut kripto cüzdanlarınızdan CyberEx'e güvenle aktarın. Tüm fonlarınız askeri düzeyde şifrelenmiş Cold Storage altyapısında saklanır ve %95'i offline cüzdanlarda tutulur."
+                        data-en="Securely transfer your assets to CyberEx via bank transfer, credit card, or your existing crypto wallets. All your funds are stored in military-grade encrypted Cold Storage infrastructure, with 95% kept in offline wallets.">
+                        Varlıklarınızı banka havalesi, kredi kartı veya mevcut kripto cüzdanlarınızdan CyberEx'e güvenle
+                        aktarın. Tüm fonlarınız askeri düzeyde şifrelenmiş Cold Storage altyapısında saklanır ve %95'i
+                        offline cüzdanlarda tutulur.
+                    </p>
+                    <ul class="feature-list">
+                        <li data-tr="Cold Storage: Varlıkların %95'i offline saklanır"
+                            data-en="Cold Storage: 95% of assets stored offline">Cold Storage: Varlıkların %95'i offline
+                            saklanır</li>
+                        <li data-tr="Multi-Signature (Multi-Sig) Wallet desteği"
+                            data-en="Multi-Signature (Multi-Sig) Wallet support">Multi-Signature (Multi-Sig) Wallet
+                            desteği</li>
+                        <li data-tr="Sigortalı saklama: Varlıklarınız $150M'a kadar sigorta kapsamında"
+                            data-en="Insured custody: Your assets covered up to $150M">Sigortalı saklama: Varlıklarınız
+                            $150M'a kadar sigorta kapsamında</li>
+                        <li data-tr="Anlık fiat-to-crypto ve crypto-to-fiat dönüşüm"
+                            data-en="Instant fiat-to-crypto and crypto-to-fiat conversion">Anlık fiat-to-crypto ve
+                            crypto-to-fiat dönüşüm</li>
+                    </ul>
+                    <div>
+                        <span class="tech-badge">Cold Storage</span>
+                        <span class="tech-badge">Multi-Sig</span>
+                        <span class="tech-badge">Insured Vault</span>
+                    </div>
+                </div>
             </div>
-            <div class="step-card">
-                <div class="step-num">03</div>
-                <i class="fas fa-shuttle-space step-icon"></i>
-                <h3 data-tr="AI Destekli Trade" data-en="AI-Powered Trade">AI Destekli Trade</h3>
-                <p data-tr="Yapay zeka asistanımız Fikret ile piyasa analizlerini anlık alın. En karmaşık işlemleri bile tek tuşla, en iyi fiyata gerçekleştirin."
-                    data-en="Get real-time market analysis with our AI assistant Fikret. Execute even the most complex trades with a single click at the best price.">
-                    Yapay zeka asistanımız Fikret ile piyasa analizlerini anlık alın. En karmaşık işlemleri bile tek
-                    tuşla, en iyi fiyata gerçekleştirin.
-                </p>
+
+            <!-- Step 3 -->
+            <div class="step-row">
+                <div class="step-number">03</div>
+                <div class="step-content">
+                    <div class="step-icon-title">
+                        <i class="fas fa-brain step-icon"></i>
+                        <h2 data-tr="Google Gemini AI Entegreli Akıllı Ticaret"
+                            data-en="Google Gemini AI Integrated Smart Trading">Google Gemini AI Entegreli Akıllı
+                            Ticaret</h2>
+                    </div>
+                    <p data-tr="CyberEx'in en büyük farkı, Google Gemini AI teknolojisiyle desteklenen Fikret AI asistanıdır. Piyasa analizlerini gerçek zamanlı olarak işler, risk yönetimi önerileri sunar ve sizin yerinize en doğru emirleri otomatik olarak yerine getirebilir."
+                        data-en="CyberEx's biggest differentiator is Fikret AI assistant, powered by Google Gemini AI technology. It processes market analyses in real-time, offers risk management recommendations, and can automatically execute optimal orders on your behalf.">
+                        CyberEx'in en büyük farkı, Google Gemini AI teknolojisiyle desteklenen Fikret AI asistanıdır.
+                        Piyasa analizlerini gerçek zamanlı olarak işler, risk yönetimi önerileri sunar ve sizin yerinize
+                        en doğru emirleri otomatik olarak yerine getirebilir.
+                    </p>
+                    <ul class="feature-list">
+                        <li data-tr="Fikret AI: Kişisel finans asistanınız (powered by Google Gemini)"
+                            data-en="Fikret AI: Your personal finance assistant (powered by Google Gemini)">Fikret AI:
+                            Kişisel finans asistanınız (powered by Google Gemini)</li>
+                        <li data-tr="Gerçek zamanlı piyasa duyarlılık analizi (Sentiment Analysis)"
+                            data-en="Real-time market sentiment analysis">Gerçek zamanlı piyasa duyarlılık analizi
+                            (Sentiment Analysis)</li>
+                        <li data-tr="Otomatik arbitraj fırsatlarının tespiti"
+                            data-en="Automatic arbitrage opportunity detection">Otomatik arbitraj fırsatlarının tespiti
+                        </li>
+                        <li data-tr="Smart Order Routing: En iyi fiyat garantisi"
+                            data-en="Smart Order Routing: Best price guarantee">Smart Order Routing: En iyi fiyat
+                            garantisi</li>
+                        <li data-tr="0.08% ultra düşük komisyon oranları" data-en="0.08% ultra-low commission rates">
+                            0.08% ultra düşük komisyon oranları</li>
+                    </ul>
+                    <div>
+                        <span class="tech-badge">Gemini AI</span>
+                        <span class="tech-badge">Sentiment Analysis</span>
+                        <span class="tech-badge">Smart Routing</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step-row">
+                <div class="step-number">04</div>
+                <div class="step-content">
+                    <div class="step-icon-title">
+                        <i class="fas fa-rocket step-icon"></i>
+                        <h2 data-tr="Web3 Ekosistemi & Pasif Gelir" data-en="Web3 Ecosystem & Passive Income">Web3
+                            Ekosistemi & Pasif Gelir</h2>
+                    </div>
+                    <p data-tr="Sadece alım-satım değil; CyberEx size tam bir Web3 ekosistemi sunar. Varlıklarınızı stake ederek pasif gelir elde edin, DeFi protokollerine bağlanın, NFT'lerinizi yönetin ve merkezi olmayan uygulamalara (dApps) tek tıkla erişin."
+                        data-en="Not just trading; CyberEx offers you a complete Web3 ecosystem. Earn passive income by staking your assets, connect to DeFi protocols, manage your NFTs, and access decentralized applications (dApps) with one click.">
+                        Sadece alım-satım değil; CyberEx size tam bir Web3 ekosistemi sunar. Varlıklarınızı stake ederek
+                        pasif gelir elde edin, DeFi protokollerine bağlanın, NFT'lerinizi yönetin ve merkezi olmayan
+                        uygulamalara (dApps) tek tıkla erişin.
+                    </p>
+                    <ul class="feature-list">
+                        <li data-tr="Staking: %5-15 arası yıllık pasif getiri (APY)"
+                            data-en="Staking: 5-15% annual passive yield (APY)">Staking: %5-15 arası yıllık pasif getiri
+                            (APY)</li>
+                        <li data-tr="DeFi Gateway: Aave, Uniswap, PancakeSwap entegrasyonu"
+                            data-en="DeFi Gateway: Aave, Uniswap, PancakeSwap integration">DeFi Gateway: Aave, Uniswap,
+                            PancakeSwap entegrasyonu</li>
+                        <li data-tr="NFT Marketplace: Koleksiyon yönetimi ve alım-satım"
+                            data-en="NFT Marketplace: Collection management and trading">NFT Marketplace: Koleksiyon
+                            yönetimi ve alım-satım</li>
+                        <li data-tr="Cross-chain Bridge: Varlıklarınızı farklı blockchaın'ler arası taşıyın"
+                            data-en="Cross-chain Bridge: Move your assets between different blockchains">Cross-chain
+                            Bridge: Varlıklarınızı farklı blockchain'ler arası taşıyın</li>
+                        <li data-tr="Mobil App: iOS ve Android'de her yerden erişim"
+                            data-en="Mobile App: Access from anywhere on iOS and Android">Mobil App: iOS ve Android'de
+                            her yerden erişim</li>
+                    </ul>
+                    <div>
+                        <span class="tech-badge">Staking</span>
+                        <span class="tech-badge">DeFi</span>
+                        <span class="tech-badge">NFT</span>
+                        <span class="tech-badge">Cross-Chain</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <footer>© 2025 CyberEx Global Technologies. All Rights Reserved.</footer>
+    <!-- Global Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div style="grid-column: span 1.5;">
+                <img src="cyberex-logo.png" alt="Logo" style="height: 60px; margin-bottom: 25px;">
+                <p style="color: #666; font-size: 0.85rem; line-height: 2; max-width: 480px;"
+                    data-tr="<strong>CyberEx Teknoloji Anonim Şirketi</strong><br>CyberEx, yeni nesil finansal teknolojiler ve dijital varlık yönetimi alanında global bir ekosistem inşa etmek amacıyla kurulmuş hibrit bir teknoloji şirketidir."
+                    data-en="<strong>CyberEx Technology Inc.</strong><br>CyberEx is a hybrid technology company established to build a global ecosystem in the field of next-generation financial technologies.">
+                    <strong>CyberEx Teknoloji Anonim Şirketi</strong><br>
+                    CyberEx, yeni nesil finansal teknolojiler ve dijital varlık yönetimi alanında global bir ekosistem
+                    inşa etmek amacıyla kurulmuş hibrit bir teknoloji şirketidir.
+                </p>
+            </div>
+            <div>
+                <h4 class="footer-col-title" data-tr="KURUMSAL" data-en="CORPORATE">KURUMSAL</h4>
+                <a href="about.html" class="footer-link" data-tr="Hakkımızda" data-en="About Us">About Us</a>
+                <a href="brand-assets.html" class="footer-link" data-tr="Marka Varlıkları" data-en="Brand Assets">Brand
+                    Assets</a>
+                <a href="legal.html" class="footer-link" data-tr="Yasal Uyarı" data-en="Legal Disclaimer">Legal
+                    Disclaimer</a>
+                <a href="privacy.html" class="footer-link" data-tr="Gizlilik Politikası"
+                    data-en="Privacy Policy">Privacy Policy</a>
+            </div>
+            <div>
+                <h4 class="footer-col-title" data-tr="DESTEK" data-en="SUPPORT">DESTEK</h4>
+                <a href="help.html" class="footer-link" data-tr="Yardım Merkezi" data-en="Help Center">Help Center</a>
+                <a href="how-it-works.html" class="footer-link" data-tr="Nasıl Çalışır?" data-en="How it Works?">How it
+                    Works?</a>
+                <a href="fees.html" class="footer-link" data-tr="Ücretler" data-en="Fees">Fees</a>
+                <a href="ticket.html" class="footer-link" data-tr="Kurumsal Bilet" data-en="Corporate Ticket">Corporate
+                    Ticket</a>
+            </div>
+            <div>
+                <h4 class="footer-col-title" data-tr="GELİŞTİRİCİ" data-en="DEVELOPERS">DEVELOPERS</h4>
+                <a href="api.html" class="footer-link" data-tr="API Dökümanları" data-en="API Docs">API Docs</a>
+                <a href="bug_bounty.html" class="footer-link" data-tr="Hata Ödülü" data-en="Bug Bounty">Bug Bounty</a>
+                <a href="widgets.html" class="footer-link" data-tr="Widget'lar" data-en="Widgets">Widgets</a>
+            </div>
+        </div>
+        <div style="margin-top: 40px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding: 30px; color: #fff; font-size: 0.75rem;"
+            data-tr="© 2026 CyberEx Teknoloji Anonim Şirketi. Tüm Hakları Saklıdır."
+            data-en="© 2026 CyberEx Technology Inc. All Rights Reserved.">
+            © 2026 CyberEx Teknoloji Anonim Şirketi. All Rights Reserved.
+        </div>
+    </footer>
 
     <script>
         const btns = document.querySelectorAll('.lang-btn');
         btns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const lang = btn.dataset.lang;
-                btns.forEach(b => b.classList.remove('active')); btn.classList.add('active');
-                document.querySelectorAll('[data-tr]').forEach(el => el.style.display = lang === 'tr' ? 'block' : 'none');
-                document.querySelectorAll('[data-en]').forEach(el => el.style.display = lang === 'en' ? 'block' : 'none');
+                localStorage.setItem('lang', lang);
+                btns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                document.querySelectorAll('[data-tr]').forEach(el => {
+                    const text = el.getAttribute(`data-${lang}`);
+                    if (text) el.innerHTML = text;
+                });
             });
+        });
+        // Init language
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('lang') || 'tr';
+            const targetBtn = document.querySelector(`.lang-btn[data-lang="${savedLang}"]`);
+            if (targetBtn) targetBtn.click();
         });
     </script>
 </body>

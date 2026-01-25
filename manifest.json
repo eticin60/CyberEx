@@ -4,9 +4,13 @@
   "description": "Google Gemini AI destekli, askeri düzeyde güvenlikli hibrit kripto borsası ve Web3 ekosistemi. Geleceğin finansına CyberEx ile bağlanın.",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#0a0a14",
-  "theme_color": "#00f0ff",
+  "background_color": "#00050f",
+  "theme_color": "#00050f",
   "orientation": "portrait",
+  "display_override": [
+    "fullscreen",
+    "minimal-ui"
+  ],
   "scope": "./",
   "categories": [
     "finance",
