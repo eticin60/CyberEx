@@ -9,11 +9,18 @@
   [![Ecosystem: CyberEx](https://img.shields.io/badge/Ecosystem-CyberEx-purple.svg?style=for-the-badge)](https://cyberex.com.tr)
   [![Platform: Android](https://img.shields.io/badge/Platform-Android-green.svg?style=for-the-badge)](https://kotlinlang.org/)
   [![Language: Kotlin](https://img.shields.io/badge/Language-Kotlin-orange.svg?style=for-the-badge)](https://kotlinlang.org/)
+  
+  ![Beta](https://img.shields.io/badge/Status-BETA%20Test-orange?style=for-the-badge&logo=rocket)
+  ![SPK License](https://img.shields.io/badge/SPK%20License-In%20Progress-yellow?style=for-the-badge&logo=check-circle)
 
   <p align="center">
     <strong>The next generation of digital asset management.</strong><br>
     Built with precision, powered by AI, and designed for the global financial future.
   </p>
+  
+  > **🚀 Join Our Beta Test Program!**  
+  > CyberEx is currently in **BETA testing** phase. Early adopters get exclusive features and rewards!  
+  > SPK/CMB license application is in progress. Full regulatory compliance coming soon.
 
   **[Live Website](https://cyberex.com.tr)** • **[Web3 Wallet](https://cyberex.com.tr/web3wallet)** • **[AnalyticaX](https://analyticax.com.tr)** • **[Contact Us](mailto:contact@cyberex.com.tr)**
 </div>
@@ -135,9 +142,39 @@ CyberEx/
 
 ---
 
-## 📜 License & Copyright
+## 📜 License & Legal
 
-**Copyright (c) 2025 CyberEx Kripto Para Anonim Şirketi. All Rights Reserved.**
+**Copyright (c) 2024-2026 CyberEx Technology Inc. All Rights Reserved.**  
+**Copyright (c) 2024-2026 Onurcan Demir. All Rights Reserved.**
+
+### Beta Test Program
+
+> **🎯 Early Adopter Advantages**  
+> By joining our beta program, you get:  
+> ✅ Early access to cutting-edge features  
+> ✅ Priority support and feedback channel  
+> ✅ Exclusive rewards for beta testers  
+> ✅ Shape the future of CyberEx
+
+### Important Notices
+
+**⚖️ Regulatory Status**  
+CyberEx is currently operating in **BETA test mode**. SPK (Capital Markets Board) license application is in progress. Full regulatory compliance will be achieved before public launch.
+
+**⚠️ Risk Disclosure**  
+Trading cryptocurrencies carries risk. Please review our [Risk Disclosure](https://cyberex.com.tr/risk.html) before using the platform. By using CyberEx Beta, you acknowledge:
+- The platform is in active development
+- Features may change without notice
+- You use the service at your own risk
+- CyberEx is not responsible for market losses
+- This is not financial advice
+
+**🛡️ Your Protection**  
+Despite being in beta, we maintain:
+- Military-grade encryption
+- 24/7 security monitoring  
+- Regular security audits
+- Bug bounty program ($50-$2000)
 
 This project is protected by a **Proprietary Software License**. Unauthorized use, copying, or distribution is strictly prohibited and protected by international law.
 
