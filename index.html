@@ -53,52 +53,83 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-  <!-- Google Structured Data (JSON-LD Schema) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "CyberEx Technology Inc.",
-    "url": "https://cyberex.com.tr",
-    "logo": "https://cyberex.com.tr/cyberex-logo.png",
-    "sameAs": [
-      "https://twitter.com/cyberex",
-      "https://www.instagram.com/cyberex",
-      "https://t.me/cyberex",
-      "https://linkedin.com/company/cyberex"
-    ],
-    "description": "Google Gemini AI powered next-generation cryptocurrency exchange and Web3 ecosystem.",
-    "foundingDate": "2024",
-    "founders": [
-      {
-        "@type": "Person",
-        "name": "Onurcan Demir"
-      }
-    ],
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "email": "contact@cyberex.com.tr",
-      "contactType": "customer service",
-      "availableLanguage": ["Turkish", "English"]
-    }
+<!-- CyberEx Corporation Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Corporation",
+  "name": "CyberEx",
+  "brand": {
+    "@type": "Brand",
+    "name": "CyberEx"
+  },
+  "url": "https://cyberex.com.tr",
+  "logo": "https://cyberex.com.tr/cyberex-logo.png",
+  "description": "AI-powered cryptocurrency exchange and Web3 financial ecosystem.",
+  "foundingDate": "2024",
+  "founder": {
+    "@type": "Person",
+    "name": "Onurcan Demir"
+  },
+  "sameAs": [
+    "https://twitter.com/cyberex",
+    "https://www.instagram.com/cyberex",
+    "https://t.me/cyberex",
+    "https://www.linkedin.com/company/cyberex"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "contact@cyberex.com.tr",
+    "contactType": "customer service",
+    "availableLanguage": ["Turkish", "English"]
   }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "CyberEx Web3 App",
-    "operatingSystem": "Android, iOS",
-    "applicationCategory": "FinanceApplication",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "featureList": "Crypto Trading, Web3 Wallet, Staking, DEX Gateway",
-    "screenshot": "https://cyberex.com.tr/CyberEx_app_banner.png"
-  }
-  </script>
+}
+</script>
+
+
+<!-- CyberEx Exchange Financial Service -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FinancialService",
+  "name": "CyberEx Exchange",
+  "provider": {
+    "@type": "Corporation",
+    "name": "CyberEx",
+    "url": "https://cyberex.com.tr"
+  },
+  "areaServed": "Worldwide"
+}
+</script>
+
+
+<!-- CyberEx Mobile App -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "CyberEx App",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Android, iOS",
+  "publisher": {
+    "@type": "Corporation",
+    "name": "CyberEx"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "Cryptocurrency Trading",
+    "Web3 Wallet",
+    "Staking",
+    "DEX Gateway"
+  ],
+  "screenshot": "https://cyberex.com.tr/CyberEx_app_banner.png"
+}
+</script>
+
 
   <style>
     :root {
