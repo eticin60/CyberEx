@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="tr" class="lang-tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status History - CyberEx</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0e1a;
+            --bg-card: #111827;
+            --neon-cyan: #00f3ff;
+            --neon-pink: #ff006e;
+            --neon-yellow: #ffd700;
+            --neon-purple: #9c27b0;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-dark);
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        /* Language Toggle */
+        .lang-tr [data-lang="en"],
+        .lang-en [data-lang="tr"] {
+            display: none;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(17, 24, 39, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .nav-tagline {
+            font-size: 0.75rem;
+            color: var(--neon-cyan);
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(0, 243, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 8px;
+            color: var(--neon-cyan);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: rgba(0, 243, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .page-header p {
+            color: #aaa;
+            font-size: 1rem;
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            color: #999;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .filter-btn.active {
+            background: var(--neon-cyan);
+            color: #000;
+            border-color: var(--neon-cyan);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--neon-cyan), var(--neon-purple));
+        }
+
+        /* Month Separator */
+        .month-separator {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            margin: 40px 0 20px -40px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .month-separator::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* Event Card */
+        .event-card {
+            position: relative;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s, opacity 0.3s, transform 0.3s;
+            opacity: 1;
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 20px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--neon-cyan);
+        }
+
+        .event-card.incident::before {
+            background: #ff465d;
+        }
+
+        .event-card.maintenance::before {
+            background: #ffd700;
+        }
+
+        .event-card.update::before {
+            background: #4CAF50;
+        }
+
+        .event-card.bugfix::before {
+            background: #9c27b0;
+        }
+
+        .event-card:hover {
+            border-color: var(--neon-cyan);
+            transform: translateX(5px);
+        }
+
+        .event-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .event-title {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .event-title h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .event-date {
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        .event-badge {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-incident {
+            background: rgba(255, 70, 93, 0.2);
+            color: #ff465d;
+        }
+
+        .badge-maintenance {
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+        }
+
+        .badge-update {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+        }
+
+        .badge-bugfix {
+            background: rgba(156, 39, 176, 0.2);
+            color: #9c27b0;
+        }
+
+        .event-description {
+            color: #bbb;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .event-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .event-meta div {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Service Tags */
+        .service-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .service-tag {
+            padding: 4px 10px;
+            background: rgba(0, 243, 255, 0.1);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            border-radius: 10px;
+            font-size: 0.75rem;
+            color: var(--neon-cyan);
+        }
+
+        /* Status Badge */
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-resolved {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+        }
+
+        .status-scheduled {
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            margin-top: 50px;
+            border-top: 1px solid var(--border);
+        }
+    </style>
+    <script>
+        (function () {
+            const savedLang = localStorage.getItem('lang') || 'tr';
+            document.documentElement.className = 'lang-' + savedLang;
+        })();
+    </script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="status.html" class="nav-logo">
+            <img src="cyberex-logo.png" alt="CyberEx" style="height: 40px;">
+            <div class="nav-tagline">STATUS HISTORY</div>
+        </a>
+        <div style="display: flex; gap: 20px; align-items: center;">
+            <button id="langToggle"
+                style="background: transparent; border: 1px solid var(--border); color: #fff; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-size: 0.8rem;">EN</button>
+            <a href="status.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> <span data-lang="tr">Status Sayfası</span><span data-lang="en">Status
+                    Page</span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 data-lang="tr">Geçmiş Olaylar</h1>
+            <h1 data-lang="en">Incident History</h1>
+            <p data-lang="tr">Tüm sistem güncellemeleri, bakımlar ve olayların geçmişi</p>
+            <p data-lang="en">History of all system updates, maintenance, and incidents</p>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="filter-tabs">
+            <button class="filter-btn active" data-lang="tr">🔹 Tümü</button>
+            <button class="filter-btn active" data-lang="en">🔹 All</button>
+            <button class="filter-btn" data-lang="tr">🔴 Sorunlar</button>
+            <button class="filter-btn" data-lang="en">🔴 Incidents</button>
+            <button class="filter-btn" data-lang="tr">⚠️ Bakım</button>
+            <button class="filter-btn" data-lang="en">⚠️ Maintenance</button>
+            <button class="filter-btn" data-lang="tr">✅ Güncellemeler</button>
+            <button class="filter-btn" data-lang="en">✅ Updates</button>
+            <button class="filter-btn" data-lang="tr">🐛 Düzeltmeler</button>
+            <button class="filter-btn" data-lang="en">🐛 Bug Fixes</button>
+        </div>
+
+        <!-- Timeline -->
+        <div class="timeline">
+            <!-- January 2026 -->
+            <div class="month-separator" data-lang="tr">📅 Ocak 2026</div>
+            <div class="month-separator" data-lang="en">📅 January 2026</div>
+
+            <!-- Event: KYC Maintenance -->
+            <div class="event-card maintenance">
+                <div class="event-header">
+                    <div class="event-title">
+                        <h3 data-lang="tr">🔧 KYC Doğrulama Sistemi Bakımı</h3>
+                        <h3 data-lang="en">🔧 KYC Verification System Maintenance</h3>
+                        <div class="event-date">24 Ocak 2026, 14:00 UTC+3</div>
+                    </div>
+                    <span class="event-badge badge-maintenance" data-lang="tr">⚠️ Bakım</span>
+                    <span class="event-badge badge-maintenance" data-lang="en">⚠️ Maintenance</span>
+                </div>
+                <p class="event-description" data-lang="tr">
+                    KYC doğrulama sisteminde planlı bakım çalışması devam ediyor. Yüz eşleştirme ve canlılık tespiti
+                    algoritmaları güncelleniyor. Bazı kullanıcılar geçici olarak KYC işlemlerinde sorun yaşayabilir.
+                </p>
+                <p class="event-description" data-lang="en">
+                    Scheduled maintenance on KYC verification system ongoing. Face matching and liveness detection
+                    algorithms
+                    being updated. Some users may experience temporary issues with KYC verification.
+                </p>
+                <div class="event-meta">
+                    <div><i class="fas fa-clock"></i> <span data-lang="tr">Başlangıç: 24 Ocak 2026</span><span
+                            data-lang="en">Started: Jan 24, 2026</span></div>
+                    <div><span class="status-badge" style="background: rgba(255, 165, 0, 0.2); color: #ffa500;"
+                            data-lang="tr">⚙️ Devam Ediyor</span><span class="status-badge"
+                            style="background: rgba(255, 165, 0, 0.2); color: #ffa500;" data-lang="en">⚙️ Ongoing</span>
+                    </div>
+                </div>
+                <div class="service-tags">
+                    <span class="service-tag">KYC System</span>
+                    <span class="service-tag">Face Matching</span>
+                    <span class="service-tag">Liveness Detection</span>
+                </div>
+            </div>
+
+            <!-- Event: TL Deposit Issues -->
+            <div class="event-card incident">
+                <div class="event-header">
+                    <div class="event-title">
+                        <h3 data-lang="tr">🔴 TL Yatırma Servisi Kesintisi</h3>
+                        <h3 data-lang="en">🔴 TRY Deposit Service Outage</h3>
+                        <div class="event-date">20 Ocak 2026, 10:30 UTC+3</div>
+                    </div>
+                    <span class="event-badge badge-incident" data-lang="tr">🔴 Sorun</span>
+                    <span class="event-badge badge-incident" data-lang="en">🔴 Incident</span>
+                </div>
+                <p class="event-description" data-lang="tr">
+                    Kullanıcılar TL yatırma işlemlerinde sorun yaşıyor. Banka API bağlantısında oluşan
+                    teknik arıza nedeniyle işlemler gerçekleştirilemiyor. Ekibimiz sorun üzerinde çalışıyor.
+                </p>
+                <p class="event-description" data-lang="en">
+                    Users are experiencing issues with TRY deposits. Technical malfunction in bank API connectivity
+                    preventing transactions. Our team is working on the issue.
+                </p>
+                <div class="event-meta">
+                    <div><i class="fas fa-clock"></i> <span data-lang="tr">Başlangıç: 20 Ocak 2026</span><span
+                            data-lang="en">Started: Jan 20, 2026</span></div>
+                    <div><span class="status-badge" style="background: rgba(255, 165, 0, 0.2); color: #ffa500;"
+                            data-lang="tr">🔧 Araştırılıyor</span><span class="status-badge"
+                            style="background: rgba(255, 165, 0, 0.2); color: #ffa500;" data-lang="en">🔧 Under
+                            Investigation</span></div>
+                </div>
+                <div class="service-tags">
+                    <span class="service-tag">TL Deposit</span>
+                    <span class="service-tag">Bank API</span>
+                </div>
+            </div>
+
+            <!-- Event: TL Withdrawal Issues -->
+            <div class="event-card incident">
+                <div class="event-header">
+                    <div class="event-title">
+                        <h3 data-lang="tr">🔴 TL Çekme Servisi Kesintisi</h3>
+                        <h3 data-lang="en">🔴 TRY Withdrawal Service Outage</h3>
+                        <div class="event-date">20 Ocak 2026, 10:45 UTC+3</div>
+                    </div>
+                    <span class="event-badge badge-incident" data-lang="tr">🔴 Sorun</span>
+                    <span class="event-badge badge-incident" data-lang="en">🔴 Incident</span>
+                </div>
+                <p class="event-description" data-lang="tr">
+                    TL çekme işlemlerinde sorun yaşanıyor. Banka entegrasyonu kaynaklı teknik arıza nedeniyle
+                    çekim talepleri işlenemiyor. Ekibimiz sorun üzerinde çalışıyor.
+                </p>
+                <p class="event-description" data-lang="en">
+                    Issues with TRY withdrawals. Technical malfunction from bank integration preventing
+                    withdrawal processing. Our team is working on the issue.
+                </p>
+                <div class="event-meta">
+                    <div><i class="fas fa-clock"></i> <span data-lang="tr">Başlangıç: 20 Ocak 2026</span><span
+                            data-lang="en">Started: Jan 20, 2026</span></div>
+                    <div><span class="status-badge" style="background: rgba(255, 165, 0, 0.2); color: #ffa500;"
+                            data-lang="tr">🔧 Araştırılıyor</span><span class="status-badge"
+                            style="background: rgba(255, 165, 0, 0.2); color: #ffa500;" data-lang="en">🔧 Under
+                            Investigation</span></div>
+                </div>
+                <div class="service-tags">
+                    <span class="service-tag">TL Withdrawal</span>
+                    <span class="service-tag">Bank Integration</span>
+                </div>
+            </div>
+
+            <!-- Event: Mobile App Beta Launch -->
+            <div class="event-card update">
+                <div class="event-header">
+                    <div class="event-title">
+                        <h3 data-lang="tr">🚀 Mobil Uygulama Beta Yayınlandı</h3>
+                        <h3 data-lang="en">🚀 Mobile App Beta Released</h3>
+                        <div class="event-date">18 Ocak 2026, 16:00 UTC+3</div>
+                    </div>
+                    <span class="event-badge badge-update" data-lang="tr">✅ Güncelleme</span>
+                    <span class="event-badge badge-update" data-lang="en">✅ Update</span>
+                </div>
+                <p class="event-description" data-lang="tr">
+                    CyberEx Android mobil uygulaması beta olarak yayınlandı. 70+ özellik içeren uygulama, trading,
+                    cüzdan, sosyal ve AI özellikleriyle kullanıma sunuldu.
+                </p>
+                <p class="event-description" data-lang="en">
+                    CyberEx Android mobile app released in beta. Application with 70+ features including trading,
+                    wallet, social, and AI capabilities is now available.
+                </p>
+                <div class="event-meta">
+                    <div><span class="status-badge status-resolved" data-lang="tr">✓ Yayında</span><span
+                            class="status-badge status-resolved" data-lang="en">✓ Live</span></div>
+                </div>
+                <div class="service-tags">
+                    <span class="service-tag">Android App</span>
+                    <span class="service-tag">Trading</span>
+                    <span class="service-tag">Wallet</span>
+                    <span class="service-tag">Social</span>
+                    <span class="service-tag">AI</span>
+                </div>
+            </div>
+
+            <!-- Event: Spot Trading Engine Fix -->
+            <div class="event-card bugfix">
+                <div class="event-header">
+                    <div class="event-title">
+                        <h3 data-lang="tr">🐛 Spot Trading Eşleştirme Hatası Düzeltildi</h3>
+                        <h3 data-lang="en">🐛 Spot Trading Matching Bug Fixed</h3>
+                        <div class="event-date">15 Ocak 2026, 11:00 UTC+3</div>
+                    </div>
+                    <span class="event-badge badge-bugfix" data-lang="tr">🐛 Düzeltme</span>
+                    <span class="event-badge badge-bugfix" data-lang="en">🐛 Bug Fix</span>
+                </div>
+                <p class="event-description" data-lang="tr">
+                    Spot trading emir eşleştirme motoru optimize edildi. Yüksek hacimli işlemlerde yaşanan gecikme
+                    sorunu giderildi. Performans %40 artırıldı.
+                </p>
+                <p class="event-description" data-lang="en">
+                    Spot trading order matching engine optimized. Delay issue in high-volume transactions resolved.
+                    Performance improved by 40%.
+                </p>
+                <div class="event-meta">
+                    <div><span class="status-badge status-resolved" data-lang="tr">✓ Uygulandı</span><span
+                            class="status-badge status-resolved" data-lang="en">✓ Applied</span></div>
+                </div>
+                <div class="service-tags">
+                    <span class="service-tag">Spot Trading</span>
+                    <span class="service-tag">Matching Engine</span>
+                </div>
+            </div>
+
+            <!-- December 2025 -->
+            <div class="month-separator" data-lang="tr">📅 Aralık 2025</div>
+            <div class="month-separator" data-lang="en">📅 December 2025</div>
+
+            <!-- Event: Web3 Wallet Beta -->
+            <div class="event-card update">
+                <div class="event-header">
+                    <div class="event-title">
+                        <h3 data-lang="tr">🎉 Web3 Wallet Beta Lansmanı</h3>
+                        <h3 data-lang="en">🎉 Web3 Wallet Beta Launch</h3>
+                        <div class="event-date">28 Aralık 2025, 14:00 UTC+3</div>
+                    </div>
+                    <span class="event-badge badge-update" data-lang="tr">✅ Güncelleme</span>
+                    <span class="event-badge badge-update" data-lang="en">✅ Update</span>
+                </div>
+                <p class="event-description" data-lang="tr">
+                    Multi-chain desteği ile Web3 Wallet beta versiyonu yayınlandı. TRC20, ERC20 ve BEP20 zincirleri
+                    destekleniyor.
+                </p>
+                <p class="event-description" data-lang="en">
+                    Web3 Wallet beta version released with multi-chain support. TRC20, ERC20, and BEP20 chains
+                    supported.
+                </p>
+                <div class="service-tags">
+                    <span class="service-tag">Web3 Wallet</span>
+                    <span class="service-tag">Multi-Chain</span>
+                    <span class="service-tag">TRC20/ERC20/BEP20</span>
+                </div>
+            </div>
+
+            <!-- Event: Staking Launch -->
+            <div class="event-card update">
+                <div class="event-header">
+                    <div class="event-title">
+                        <h3 data-lang="tr">💎 Staking Servisi Aktif Edildi</h3>
+                        <h3 data-lang="en">💎 Staking Service Activated</h3>
+                        <div class="event-date">15 Aralık 2025, 10:00 UTC+3</div>
+                    </div>
+                    <span class="event-badge badge-update" data-lang="tr">✅ Güncelleme</span>
+                    <span class="event-badge badge-update" data-lang="en">✅ Update</span>
+                </div>
+                <p class="event-description" data-lang="tr">
+                    Kullanıcılar artık seçili kripto paralarını stake edebilir ve pasif gelir elde edebilir.
+                </p>
+                <p class="event-description" data-lang="en">
+                    Users can now stake selected cryptocurrencies and earn passive income.
+                </p>
+                <div class="service-tags">
+                    <span class="service-tag">Staking</span>
+                    <span class="service-tag">Passive Income</span>
+                </div>
+            </div>
+
+            <!-- Event: AnalyticaX Beta -->
+            <div class="event-card update">
+                <div class="event-header">
+                    <div class="event-title">
+                        <h3 data-lang="tr">📊 AnalyticaX Intel Platform Beta</h3>
+                        <h3 data-lang="en">📊 AnalyticaX Intel Platform Beta</h3>
+                        <div class="event-date">5 Aralık 2025, 12:00 UTC+3</div>
+                    </div>
+                    <span class="event-badge badge-update" data-lang="tr">✅ Güncelleme</span>
+                    <span class="event-badge badge-update" data-lang="en">✅ Update</span>
+                </div>
+                <p class="event-description" data-lang="tr">
+                    AI destekli chart analizi platformu AnalyticaX Intel beta olarak yayınlandı. Kullanıcılar yapay zeka
+                    ile teknik analiz yapabilir.
+                </p>
+                <p class="event-description" data-lang="en">
+                    AI-powered chart analysis platform AnalyticaX Intel released in beta. Users can perform technical
+                    analysis with artificial intelligence.
+                </p>
+                <div class="service-tags">
+                    <span class="service-tag">AnalyticaX</span>
+                    <span class="service-tag">AI Analysis</span>
+                </div>
+            </div>
+
+            <!-- Event: Web3 App Launch -->
+            <div class="event-card update">
+                <div class="event-header">
+                    <div class="event-title">
+                        <h3 data-lang="tr">🌐 CyberEx Web3 App Beta</h3>
+                        <h3 data-lang="en">🌐 CyberEx Web3 App Beta</h3>
+                        <div class="event-date">10 Aralık 2025, 16:00 UTC+3</div>
+                    </div>
+                    <span class="event-badge badge-update" data-lang="tr">✅ Güncelleme</span>
+                    <span class="event-badge badge-update" data-lang="en">✅ Update</span>
+                </div>
+                <p class="event-description" data-lang="tr">
+                    Merkezi olmayan uygulama platformu Web3 App beta olarak yayınlandı. DEX ve DeFi protokol
+                    entegrasyonları eklendi.
+                </p>
+                <p class="event-description" data-lang="en">
+                    Decentralized application platform Web3 App released in beta. DEX and DeFi protocol integrations
+                    added.
+                </p>
+                <div class="service-tags">
+                    <span class="service-tag">Web3 App</span>
+                    <span class="service-tag">DEX</span>
+                    <span class="service-tag">DeFi</span>
+                </div>
+            </div>
+
+            <!-- November 2025 -->
+            <div class="month-separator" data-lang="tr">📅 Kasım 2025</div>
+            <div class="month-separator" data-lang="en">📅 November 2025</div>
+
+            <!-- Event: Browser Extension -->
+            <div class="event-card update">
+                <div class="event-header">
+                    <div class="event-title">
+                        <h3 data-lang="tr">🔌 CyberEx Browser Extension Lansmanı</h3>
+                        <h3 data-lang="en">🔌 CyberEx Browser Extension Launch</h3>
+                        <div class="event-date">22 Kasım 2025, 14:00 UTC+3</div>
+                    </div>
+                    <span class="event-badge badge-update" data-lang="tr">✅ Güncelleme</span>
+                    <span class="event-badge badge-update" data-lang="en">✅ Update</span>
+                </div>
+                <p class="event-description" data-lang="tr">
+                    Chrome ve Firefox için CyberEx tarayıcı uzantısı yayınlandı. dApp bağlantısı ve hızlı trading
+                    özellikleri eklendi.
+                </p>
+                <p class="event-description" data-lang="en">
+                    CyberEx browser extension released for Chrome and Firefox. dApp connectivity and quick trading
+                    features added.
+                </p>
+                <div class="service-tags">
+                    <span class="service-tag">Browser Extension</span>
+                    <span class="service-tag">dApp</span>
+                </div>
+            </div>
+
+            <!-- Event: Futures Trading -->
+            <div class="event-card update">
+                <div class="event-header">
+                    <div class="event-title">
+                        <h3 data-lang="tr">📈 Futures Trading Başlatıldı</h3>
+                        <h3 data-lang="en">📈 Futures Trading Launched</h3>
+                        <div class="event-date">10 Kasım 2025, 10:00 UTC+3</div>
+                    </div>
+                    <span class="event-badge badge-update" data-lang="tr">✅ Güncelleme</span>
+                    <span class="event-badge badge-update" data-lang="en">✅ Update</span>
+                </div>
+                <p class="event-description" data-lang="tr">
+                    Vadeli işlemler (Futures) trading özelliği aktif edildi. 100x kaldıraç desteği ile.
+                </p>
+                <p class="event-description" data-lang="en">
+                    Futures trading feature activated. With 100x leverage support.
+                </p>
+                <div class="service-tags">
+                    <span class="service-tag">Futures</span>
+                    <span class="service-tag">Leverage Trading</span>
+                </div>
+            </div>
+
+            <!-- October 2025 -->
+            <div class="month-separator" data-lang="tr">📅 Ekim 2025</div>
+            <div class="month-separator" data-lang="en">📅 October 2025</div>
+
+            <!-- Event: AI Smart Advisor -->
+            <div class="event-card update">
+                <div class="event-header">
+                    <div class="event-title">
+                        <h3 data-lang="tr">🤖 Gemini AI Smart Advisor Entegrasyonu</h3>
+                        <h3 data-lang="en">🤖 Gemini AI Smart Advisor Integration</h3>
+                        <div class="event-date">18 Ekim 2025, 15:00 UTC+3</div>
+                    </div>
+                    <span class="event-badge badge-update" data-lang="tr">✅ Güncelleme</span>
+                    <span class="event-badge badge-update" data-lang="en">✅ Update</span>
+                </div>
+                <p class="event-description" data-lang="tr">
+                    Google Gemini AI entegre edildi. Kullanıcılara akıllı trading tavsiyeleri sunuluyor.
+                </p>
+                <p class="event-description" data-lang="en">
+                    Google Gemini AI integrated. Providing intelligent trading advice to users.
+                </p>
+                <div class="service-tags">
+                    <span class="service-tag">Gemini AI</span>
+                    <span class="service-tag">Smart Advisor</span>
+                </div>
+            </div>
+
+            <!-- Event: Social Trading -->
+            <div class="event-card update">
+                <div class="event-header">
+                    <div class="event-title">
+                        <h3 data-lang="tr">👥 Sosyal Trading ve Chat Özellikleri</h3>
+                        <h3 data-lang="en">👥 Social Trading and Chat Features</h3>
+                        <div class="event-date">5 Ekim 2025, 12:00 UTC+3</div>
+                    </div>
+                    <span class="event-badge badge-update" data-lang="tr">✅ Güncelleme</span>
+                    <span class="event-badge badge-update" data-lang="en">✅ Update</span>
+                </div>
+                <p class="event-description" data-lang="tr">
+                    Global chat, özel mesajlaşma ve sosyal trading özellikleri eklendi. Kullanıcılar artık birbirleriyle
+                    etkileşime girebilir.
+                </p>
+                <p class="event-description" data-lang="en">
+                    Global chat, private messaging, and social trading features added. Users can now interact with each
+                    other.
+                </p>
+                <div class="service-tags">
+                    <span class="service-tag">Social Trading</span>
+                    <span class="service-tag">Chat</span>
+                    <span class="service-tag">Community</span>
+                </div>
+            </div>
+
+            <!-- September 2025 -->
+            <div class="month-separator" data-lang="tr">📅 Eylül 2025</div>
+            <div class="month-separator" data-lang="en">📅 September 2025</div>
+
+            <!-- Event: KYC System Launch -->
+            <div class="event-card update">
+                <div class="event-header">
+                    <div class="event-title">
+                        <h3 data-lang="tr">🔐 KYC Doğrulama Sistemi Aktif</h3>
+                        <h3 data-lang="en">🔐 KYC Verification System Active</h3>
+                        <div class="event-date">20 Eylül 2025, 10:00 UTC+3</div>
+                    </div>
+                    <span class="event-badge badge-update" data-lang="tr">✅ Güncelleme</span>
+                    <span class="event-badge badge-update" data-lang="en">✅ Update</span>
+                </div>
+                <p class="event-description" data-lang="tr">
+                    Yüz tanıma ve canlılık tespiti destekli KYC doğrulama sistemi yayınlandı.
+                </p>
+                <p class="event-description" data-lang="en">
+                    KYC verification system with face recognition and liveness detection released.
+                </p>
+                <div class="service-tags">
+                    <span class="service-tag">KYC</span>
+                    <span class="service-tag">Face Recognition</span>
+                    <span class="service-tag">Liveness</span>
+                </div>
+            </div>
+
+            <!-- Event: Mobile Development Starts -->
+            <div class="event-card update">
+                <div class="event-header">
+                    <div class="event-title">
+                        <h3 data-lang="tr">📱 Mobil Uygulama Geliştirme Başladı</h3>
+                        <h3 data-lang="en">📱 Mobile App Development Started</h3>
+                        <div class="event-date">1 Eylül 2025, 09:00 UTC+3</div>
+                    </div>
+                    <span class="event-badge badge-update" data-lang="tr">✅ Güncelleme</span>
+                    <span class="event-badge badge-update" data-lang="en">✅ Update</span>
+                </div>
+                <p class="event-description" data-lang="tr">
+                    Android mobil uygulama geliştirme süreci resmi olarak başlatıldı.
+                </p>
+                <p class="event-description" data-lang="en">
+                    Android mobile application development process officially started.
+                </p>
+                <div class="service-tags">
+                    <span class="service-tag">Android</span>
+                    <span class="service-tag">Mobile Development</span>
+                </div>
+            </div>
+
+            <!-- August 2025 -->
+            <div class="month-separator" data-lang="tr">📅 Ağustos 2025</div>
+            <div class="month-separator" data-lang="en">📅 August 2025</div>
+
+            <!-- Event: API v2 -->
+            <div class="event-card update">
+                <div class="event-header">
+                    <div class="event-title">
+                        <h3 data-lang="tr">⚡ REST API v2 ve WebSocket Yayınlandı</h3>
+                        <h3 data-lang="en">⚡ REST API v2 and WebSocket Released</h3>
+                        <div class="event-date">15 Ağustos 2025, 14:00 UTC+3</div>
+                    </div>
+                    <span class="event-badge badge-update" data-lang="tr">✅ Güncelleme</span>
+                    <span class="event-badge badge-update" data-lang="en">✅ Update</span>
+                </div>
+                <p class="event-description" data-lang="tr">
+                    Geliştiriciler için REST API v2 ve gerçek zamanlı WebSocket API yayınlandı.
+                </p>
+                <p class="event-description" data-lang="en">
+                    REST API v2 and real-time WebSocket API released for developers.
+                </p>
+                <div class="service-tags">
+                    <span class="service-tag">REST API</span>
+                    <span class="service-tag">WebSocket</span>
+                    <span class="service-tag">Developers</span>
+                </div>
+            </div>
+
+            <!-- June 2025 -->
+            <div class="month-separator" data-lang="tr">📅 Haziran 2025</div>
+            <div class="month-separator" data-lang="en">📅 June 2025</div>
+
+            <!-- Event: TL Integration -->
+            <div class="event-card update">
+                <div class="event-header">
+                    <div class="event-title">
+                        <h3 data-lang="tr">💳 TL Yatırma/Çekme Entegrasyonu</h3>
+                        <h3 data-lang="en">💳 TRY Deposit/Withdrawal Integration</h3>
+                        <div class="event-date">10 Haziran 2025, 11:00 UTC+3</div>
+                    </div>
+                    <span class="event-badge badge-update" data-lang="tr">✅ Güncelleme</span>
+                    <span class="event-badge badge-update" data-lang="en">✅ Update</span>
+                </div>
+                <p class="event-description" data-lang="tr">
+                    Türk Lirası ile para yatırma ve çekme işlemleri aktif edildi. Banka havalesi desteği eklendi.
+                </p>
+                <p class="event-description" data-lang="en">
+                    Turkish Lira deposit and withdrawal activated. Bank transfer support added.
+                </p>
+                <div class="service-tags">
+                    <span class="service-tag">TRY</span>
+                    <span class="service-tag">Fiat</span>
+                    <span class="service-tag">Bank Transfer</span>
+                </div>
+            </div>
+
+            <!-- May 2025 -->
+            <div class="month-separator" data-lang="tr">📅 Mayıs 2025</div>
+            <div class="month-separator" data-lang="en">📅 May 2025</div>
+
+            <!-- Event: Spot Trading Launch -->
+            <div class="event-card update">
+                <div class="event-header">
+                    <div class="event-title">
+                        <h3 data-lang="tr">🚀 Spot Trading Motoru Aktif</h3>
+                        <h3 data-lang="en">🚀 Spot Trading Engine Active</h3>
+                        <div class="event-date">15 Mayıs 2025, 10:00 UTC+3</div>
+                    </div>
+                    <span class="event-badge badge-update" data-lang="tr">✅ Güncelleme</span>
+                    <span class="event-badge badge-update" data-lang="en">✅ Update</span>
+                </div>
+                <p class="event-description" data-lang="tr">
+                    Yüksek performanslı spot trading emir eşleştirme motoru yayınlandı. İlk trading çiftleri: BTC/USDT,
+                    ETH/USDT.
+                </p>
+                <p class="event-description" data-lang="en">
+                    High-performance spot trading matching engine released. First trading pairs: BTC/USDT, ETH/USDT.
+                </p>
+                <div class="service-tags">
+                    <span class="service-tag">Spot Trading</span>
+                    <span class="service-tag">Matching Engine</span>
+                </div>
+            </div>
+
+            <!-- Event: Website Launch -->
+            <div class="event-card update">
+                <div class="event-header">
+                    <div class="event-title">
+                        <h3 data-lang="tr">🌍 CyberEx Web Sitesi Yayında</h3>
+                        <h3 data-lang="en">🌍 CyberEx Website Launched</h3>
+                        <div class="event-date">20 Mayıs 2025, 14:00 UTC+3</div>
+                    </div>
+                    <span class="event-badge badge-update" data-lang="tr">✅ Güncelleme</span>
+                    <span class="event-badge badge-update" data-lang="en">✅ Update</span>
+                </div>
+                <p class="event-description" data-lang="tr">
+                    Resmi CyberEx web sitesi yayınlandı. Kullanıcılar platform hakkında bilgi alabilir ve beta kaydı
+                    yapabilir.
+                </p>
+                <p class="event-description" data-lang="en">
+                    Official CyberEx website launched. Users can learn about the platform and register for beta.
+                </p>
+                <div class="service-tags">
+                    <span class="service-tag">Website</span>
+                    <span class="service-tag">Public</span>
+                </div>
+            </div>
+
+            <!-- March 2025 -->
+            <div class="month-separator" data-lang="tr">📅 Mart 2025</div>
+            <div class="month-separator" data-lang="en">📅 March 2025</div>
+
+            <!-- Event: Public Beta -->
+            <div class="event-card update">
+                <div class="event-header">
+                    <div class="event-title">
+                        <h3 data-lang="tr">🎉 Public Beta Lansmanı</h3>
+                        <h3 data-lang="en">🎉 Public Beta Launch</h3>
+                        <div class="event-date">1 Mart 2025, 12:00 UTC+3</div>
+                    </div>
+                    <span class="event-badge badge-update" data-lang="tr">✅ Güncelleme</span>
+                    <span class="event-badge badge-update" data-lang="en">✅ Update</span>
+                </div>
+                <p class="event-description" data-lang="tr">
+                    CyberEx platformu public beta olarak kullanıma açıldı. İlk kullanıcılar kayıt olmaya başladı.
+                </p>
+                <p class="event-description" data-lang="en">
+                    CyberEx platform opened to public beta. First users started registering.
+                </p>
+                <div class="service-tags">
+                    <span class="service-tag">Beta Launch</span>
+                    <span class="service-tag">Platform</span>
+                </div>
+            </div>
+
+            <!-- 2024 -->
+            <div class="month-separator" data-lang="tr">📅 2024</div>
+            <div class="month-separator" data-lang="en">📅 2024</div>
+
+            <!-- Event: CyberEx Founded -->
+            <div class="event-card update">
+                <div class="event-header">
+                    <div class="event-title">
+                        <h3 data-lang="tr">🎊 CyberEx Kuruldu</h3>
+                        <h3 data-lang="en">🎊 CyberEx Founded</h3>
+                        <div class="event-date">2024</div>
+                    </div>
+                    <span class="event-badge badge-update" data-lang="tr">✅ Güncelleme</span>
+                    <span class="event-badge badge-update" data-lang="en">✅ Update</span>
+                </div>
+                <p class="event-description" data-lang="tr">
+                    Onurcan Demir tarafından CyberEx Technology Inc. kuruldu. AI destekli kripto para borsası vizyonu
+                    ile başlandı.
+                </p>
+                <p class="event-description" data-lang="en">
+                    CyberEx Technology Inc. founded by Onurcan Demir. Started with vision of AI-powered cryptocurrency
+                    exchange.
+                </p>
+                <div class="service-tags">
+                    <span class="service-tag">Foundation</span>
+                    <span class="service-tag">Company</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 CyberEx Technology Inc. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const langToggle = document.getElementById('langToggle');
+        const html = document.documentElement;
+
+        langToggle.addEventListener('click', () => {
+            const currentLang = html.classList.contains('lang-tr') ? 'tr' : 'en';
+            const newLang = currentLang === 'tr' ? 'en' : 'tr';
+            html.className = 'lang-' + newLang;
+            langToggle.textContent = newLang === 'tr' ? 'EN' : 'TR';
+            localStorage.setItem('lang', newLang);
+        });
+
+        // Set initial button text
+        const currentLang = html.classList.contains('lang-tr') ? 'tr' : 'en';
+        langToggle.textContent = currentLang === 'tr' ? 'EN' : 'TR';
+
+        // Filter Functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const eventCards = document.querySelectorAll('.event-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+
+                // Get filter type from button text
+                const buttonText = button.textContent.toLowerCase();
+                let filterType = 'all';
+
+                if (buttonText.includes('sorunlar') || buttonText.includes('incidents')) {
+                    filterType = 'incident';
+                } else if (buttonText.includes('bakım') || buttonText.includes('maintenance')) {
+                    filterType = 'maintenance';
+                } else if (buttonText.includes('güncelleme') || buttonText.includes('update')) {
+                    filterType = 'update';
+                } else if (buttonText.includes('düzeltme') || buttonText.includes('bug')) {
+                    filterType = 'bugfix';
+                }
+
+                // Filter events
+                eventCards.forEach(card => {
+                    if (filterType === 'all' || card.classList.contains(filterType)) {
+                        card.style.display = 'block';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateX(0)';
+                        }, 10);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateX(-20px)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

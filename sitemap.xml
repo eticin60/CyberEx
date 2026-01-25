@@ -61,9 +61,15 @@
    </url>
    <url>
       <loc>https://cyberex.com.tr/status.html</loc>
-      <lastmod>2026-01-23</lastmod>
+      <lastmod>2026-01-25</lastmod>
       <changefreq>hourly</changefreq>
       <priority>0.70</priority>
+   </url>
+   <url>
+      <loc>https://cyberex.com.tr/history.html</loc>
+      <lastmod>2026-01-25</lastmod>
+      <changefreq>daily</changefreq>
+      <priority>0.65</priority>
    </url>
    <url>
       <loc>https://cyberex.com.tr/brand-assets.html</loc>
@@ -72,7 +78,27 @@
       <priority>0.60</priority>
    </url>
 
-   <!-- Geliştirici ve Güvenlik -->
+   <!-- Web3 Ecosystem -->
+   <url>
+      <loc>https://cyberex.com.tr/web3wallet/</loc>
+      <lastmod>2026-01-25</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.85</priority>
+   </url>
+   <url>
+      <loc>https://cyberex.com.tr/web3extension/</loc>
+      <lastmod>2026-01-25</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.85</priority>
+   </url>
+   <url>
+      <loc>https://cyberex.com.tr/web3app/</loc>
+      <lastmod>2026-01-25</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.85</priority>
+   </url>
+
+   <!-- Developer and Security -->
    <url>
       <loc>https://cyberex.com.tr/api.html</loc>
       <lastmod>2026-01-23</lastmod>

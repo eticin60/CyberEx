@@ -284,6 +284,75 @@
             transform: scaleY(1.2);
         }
 
+        /* Tab System */
+        .tab-button {
+            background: transparent;
+            border: none;
+            color: #999;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .tab-button:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-button.active {
+            color: var(--neon-cyan);
+            border-bottom-color: var(--neon-cyan);
+        }
+
+        .tab-content {
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Nested Tab System */
+        .nested-tab-button {
+            background: rgba(255, 165, 0, 0.05);
+            border: 1px solid rgba(255, 165, 0, 0.2);
+            color: #999;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+
+        .nested-tab-button:hover {
+            color: #fff;
+            background: rgba(255, 165, 0, 0.15);
+            border-color: rgba(255, 165, 0, 0.4);
+        }
+
+        .nested-tab-button.active {
+            color: #ffa500;
+            background: rgba(255, 165, 0, 0.2);
+            border-color: #ffa500;
+        }
+
+        .mobile-nested-content {
+            animation: fadeIn 0.3s;
+        }
+
         /* Footer */
         .footer {
             text-align: center;
@@ -318,194 +387,904 @@
 
     <main class="container">
 
+
         <div class="status-header">
-            <i class="fas fa-check-circle status-icon"></i>
-            <h1 data-lang="tr">Tüm Sistemler Çalışıyor</h1>
-            <h1 data-lang="en">All Systems Operational</h1>
-            <p style="margin-top: 10px; color: #aaa;" data-lang="tr">Son güncelleme: 1 dakika önce</p>
-            <p style="margin-top: 10px; color: #aaa;" data-lang="en">Last update: 1 minute ago</p>
+            <i class="fas fa-exclamation-triangle" style="color: #ffa500;"></i>
+            <h1 data-lang="tr">Sistem Durumu</h1>
+            <h1 data-lang="en">System Status</h1>
+            <div
+                style="display: flex; gap: 20px; justify-content: center; margin-top: 15px; flex-wrap: wrap; font-size: 0.9rem;">
+                <span style="color: #4CAF50;">✅ <strong>74</strong> <span data-lang="tr">Çalışıyor</span><span
+                        data-lang="en">Operational</span></span>
+                <span style="color: #ffa500;">🧪 <strong>8</strong> <span data-lang="tr">Beta</span><span
+                        data-lang="en">Beta</span></span>
+                <span style="color: #ffd700;">⚠️ <strong>1</strong> <span data-lang="tr">Bakımda</span><span
+                        data-lang="en">Maintenance</span></span>
+                <span style="color: #ff465d;">🔴 <strong>2</strong> <span data-lang="tr">Hatalı</span><span
+                        data-lang="en">Issues</span></span>
+            </div>
+            <p style="margin-top: 10px; color: #aaa; font-size: 0.85rem;" data-lang="tr">Son güncelleme: 1 dakika önce
+            </p>
+            <p style="margin-top: 10px; color: #aaa; font-size: 0.85rem;" data-lang="en">Last update: 1 minute ago</p>
         </div>
 
-        <!-- Platform Services -->
-        <div style="margin-top: 40px; margin-bottom: 20px;">
-            <h3
-                style="font-size: 1.3rem; font-weight: 800; color: var(--neon-cyan); border-left: 4px solid var(--neon-cyan); padding-left: 15px;">
-                <span data-lang="tr">🌐 Platform Servisleri</span>
-                <span data-lang="en">🌐 Platform Services</span>
-            </h3>
+        <!-- Tab Navigation -->
+        <div class="tab-container" style="margin: 40px 0 30px 0; border-bottom: 2px solid rgba(255,255,255,0.1);">
+            <div style="display: flex; gap: 10px; max-width: 1200px; margin: 0 auto;">
+                <button class="tab-button active" onclick="switchTab('platform')" id="tab-platform">
+                    <span data-lang="tr">🌐 Platform</span>
+                    <span data-lang="en">🌐 Platform</span>
+                </button>
+                <button class="tab-button" onclick="switchTab('mobile')" id="tab-mobile">
+                    <span data-lang="tr">📱 Mobil Uygulama</span>
+                    <span data-lang="en">📱 Mobile App</span>
+                </button>
+                <button class="tab-button" onclick="switchTab('ecosystem')" id="tab-ecosystem">
+                    <span data-lang="tr">🔮 Ecosystem</span>
+                    <span data-lang="en">🔮 Ecosystem</span>
+                </button>
+            </div>
         </div>
 
-        <div class="status-item">
-            <span class="status-label">Web Sitesi / Website</span>
-            <span class="status-badge">Operational</span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">API (REST & WebSocket)</span>
-            <span class="status-badge">Operational</span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">Emir Eşleştirme Motoru / Matching Engine</span>
-            <span class="status-badge">Operational</span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">Cüzdan İşlemleri / Wallet Ops</span>
-            <span class="status-badge">Operational</span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">
-                <span data-lang="tr">Kripto Yatırma Servisi</span>
-                <span data-lang="en">Crypto Deposit Service</span>
-            </span>
-            <span class="status-badge">Operational</span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">
-                <span data-lang="tr">Kripto Çekme Servisi</span>
-                <span data-lang="en">Crypto Withdrawal Service</span>
-            </span>
-            <span class="status-badge">Operational</span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">
-                <span data-lang="tr">Staking Servisi</span>
-                <span data-lang="en">Staking Service</span>
-            </span>
-            <span class="status-badge">Operational</span>
-        </div>
+        <!-- Platform Services Tab -->
+        <div class="tab-content" id="content-platform" style="display: block;">
+            <div style="margin-top: 40px; margin-bottom: 20px;">
+                <h3
+                    style="font-size: 1.3rem; font-weight: 800; color: var(--neon-cyan); border-left: 4px solid var(--neon-cyan); padding-left: 15px;">
+                    <span data-lang="tr">🌐 Platform Servisleri (CyberEx Web)</span>
+                    <span data-lang="en">🌐 Platform Services (CyberEx Web)</span>
+                </h3>
+            </div>
 
-        <!-- Mobile App Services (Beta) -->
-        <div style="margin-top: 40px; margin-bottom: 20px;">
-            <h3
-                style="font-size: 1.3rem; font-weight: 800; color: #ffa500; border-left: 4px solid #ffa500; padding-left: 15px;">
-                <span data-lang="tr">📱 Mobil Uygulama Servisleri (Beta)</span>
-                <span data-lang="en">📱 Mobile App Services (Beta)</span>
-            </h3>
-        </div>
-
-        <div class="status-item">
-            <span class="status-label">
-                <span data-lang="tr">Mobil Uygulama (Beta)</span>
-                <span data-lang="en">Mobile App (Beta)</span>
-            </span>
-            <span class="status-badge" style="background: rgba(255, 165, 0, 0.2); color: #ffa500;">
-                <span data-lang="tr">🧪 Beta</span>
-                <span data-lang="en">🧪 Beta</span>
-            </span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">
-                <span data-lang="tr">Futures Trading Motoru</span>
+            <div class="status-item">
+                <span class="status-label">Web Sitesi / Website</span>
                 <span class="status-badge">Operational</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">API (REST & WebSocket)</span>
+                <span class="status-badge">Operational</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Emir Eşleştirme Motoru / Matching Engine</span>
+                <span class="status-badge">Operational</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">
+                    <span data-lang="tr">Spot Trading Motoru</span>
+                    <span data-lang="en">Spot Trading Engine</span>
+                </span>
+                <span class="status-badge" style="background: rgba(255, 215, 0, 0.2); color: var(--neon-yellow);">
+                    <span data-lang="tr">⚠️ Bakımda</span>
+                    <span data-lang="en">⚠️ Maintenance</span>
+                </span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">
+                    <span data-lang="tr">Futures Trading Motoru</span>
+                    <span data-lang="en">Futures Trading Engine</span>
+                </span>
+                <span class="status-badge">Operational</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Cüzdan İşlemleri / Wallet Ops</span>
+                <span class="status-badge">Operational</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">
+                    <span data-lang="tr">Kripto Yatırma Servisi</span>
+                    <span data-lang="en">Crypto Deposit Service</span>
+                </span>
+                <span class="status-badge">Operational</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">
+                    <span data-lang="tr">Kripto Çekme Servisi</span>
+                    <span data-lang="en">Crypto Withdrawal Service</span>
+                </span>
+                <span class="status-badge">Operational</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">
+                    <span data-lang="tr">Staking Servisi</span>
+                    <span data-lang="en">Staking Service</span>
+                </span>
+                <span class="status-badge">Operational</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">
+                    <span data-lang="tr">TL Yatırma Servisi</span>
+                    <span data-lang="en">TRY Deposit Service</span>
+                </span>
+                <span class="status-badge" style="background: rgba(255, 70, 93, 0.2); color: #ff465d;">
+                    <span data-lang="tr">🔴 Sorunlu</span>
+                    <span data-lang="en">🔴 Issues</span>
+                </span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">
+                    <span data-lang="tr">TL Çekme Servisi</span>
+                    <span data-lang="en">TRY Withdrawal Service</span>
+                </span>
+                <span class="status-badge" style="background: rgba(255, 70, 93, 0.2); color: #ff465d;">
+                    <span data-lang="tr">🔴 Sorunlu</span>
+                    <span data-lang="en">🔴 Issues</span>
+                </span>
+            </div>
         </div>
+        <!-- End Platform Tab -->
 
-        <!-- Ecosystem Services (Android App) -->
-        <div style="margin-top: 40px; margin-bottom: 20px;">
-            <h3
-                style="font-size: 1.3rem; font-weight: 800; color: #9c27b0; border-left: 4px solid #9c27b0; padding-left: 15px;">
-                <span data-lang="tr">🔮 Ekosistem Servisleri (Android App)</span>
-                <span data-lang="en">🔮 Ecosystem Services (Android App)</span>
-            </h3>
-        </div>
+        <!-- Mobile App Services Tab -->
+        <div class="tab-content" id="content-mobile" style="display: none;">
 
-        <div class="status-item">
-            <span class="status-label">
-                <span data-lang="tr">KYC Doğrulama Sistemi</span>
-                <span data-lang="en">KYC Verification System</span>
-            </span>
-            <span class="status-badge" style="background: rgba(255, 215, 0, 0.2); color: var(--neon-yellow);">
-                <span data-lang="tr">⚠️ Bakımda</span>
-                <span data-lang="en">⚠️ Maintenance</span>
-            </span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">
-                <span data-lang="tr">Cüzdan Servisleri (Genel)</span>
-                <span data-lang="en">Wallet Services (General)</span>
-            </span>
-            <span class="status-badge">Operational</span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">
-                <span data-lang="tr">TL Yatırma Servisi</span>
-                <span data-lang="en">TRY Deposit Service</span>
-            </span>
-            <span class="status-badge" style="background: rgba(255, 70, 93, 0.2); color: #ff465d;">
-                <span data-lang="tr">🔴 Sorunlu</span>
-                <span data-lang="en">🔴 Issues</span>
-            </span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">
-                <span data-lang="tr">TL Çekme Servisi</span>
-                <span data-lang="en">TRY Withdrawal Service</span>
-            </span>
-            <span class="status-badge" style="background: rgba(255, 70, 93, 0.2); color: #ff465d;">
-                <span data-lang="tr">🔴 Sorunlu</span>
-                <span data-lang="en">🔴 Issues</span>
-            </span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">
-                <span data-lang="tr">Özel Sohbet (Private Chat)</span>
-                <span data-lang="en">Private Chat</span>
-            </span>
-            <span class="status-badge">Operational</span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">
-                <span data-lang="tr">Global Sohbet (Global Chat)</span>
-                <span data-lang="en">Global Chat</span>
-            </span>
-            <span class="status-badge">Operational</span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">
-                <span data-lang="tr">Bildirim Sistemi (Notifications)</span>
-                <span data-lang="en">Notification System</span>
-            </span>
-            <span class="status-badge">Operational</span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">
-                <span data-lang="tr">Fiyat Alarmları (Price Alerts)</span>
-                <span data-lang="en">Price Alerts</span>
-            </span>
-            <span class="status-badge">Operational</span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">
-                <span data-lang="tr">Spot Trading Motoru</span>
-                <span data-lang="en">Spot Trading Engine</span>
-            </span>
-            <span class="status-badge" style="background: rgba(255, 215, 0, 0.2); color: var(--neon-yellow);">
-                <span data-lang="tr">⚠️ Bakımda</span>
-                <span data-lang="en">⚠️ Maintenance</span>
-            </span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">
-                <span data-lang="tr">Profil ve Avatar Sistemi</span>
-                <span data-lang="en">Profile & Avatar System</span>
-            </span>
-            <span class="status-badge">Operational</span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">
-                <span data-lang="tr">Firebase Veritabanı</span>
-                <span data-lang="en">Firebase Database</span>
-            </span>
-            <span class="status-badge">Operational</span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">
-                <span data-lang="tr">Kullanıcı Kimlik Doğrulama</span>
-                <span data-lang="en">User Authentication</span>
-            </span>
-            <span class="status-badge">Operational</span>
-        </div>
+            <!-- Mobile App Sub-Tabs -->
+            <div class="nested-tab-container"
+                style="margin: 20px 0 30px 0; border-bottom: 1px solid rgba(255,165,0,0.2);">
+                <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                    <button class="nested-tab-button active" onclick="switchMobileTab('trading')"
+                        id="mobile-tab-trading">
+                        <span data-lang="tr">📊 Trading</span>
+                        <span data-lang="en">📊 Trading</span>
+                    </button>
+                    <button class="nested-tab-button" onclick="switchMobileTab('wallet')" id="mobile-tab-wallet">
+                        <span data-lang="tr">💼 Cüzdan</span>
+                        <span data-lang="en">💼 Wallet</span>
+                    </button>
+                    <button class="nested-tab-button" onclick="switchMobileTab('security')" id="mobile-tab-security">
+                        <span data-lang="tr">🔐 Güvenlik</span>
+                        <span data-lang="en">🔐 Security</span>
+                    </button>
+                    <button class="nested-tab-button" onclick="switchMobileTab('social')" id="mobile-tab-social">
+                        <span data-lang="tr">👥 Sosyal</span>
+                        <span data-lang="en">👥 Social</span>
+                    </button>
+                    <button class="nested-tab-button" onclick="switchMobileTab('ai')" id="mobile-tab-ai">
+                        <span data-lang="tr">🤖 AI</span>
+                        <span data-lang="en">🤖 AI</span>
+                    </button>
+                    <button class="nested-tab-button" onclick="switchMobileTab('portfolio')" id="mobile-tab-portfolio">
+                        <span data-lang="tr">📊 Portföy</span>
+                        <span data-lang="en">📊 Portfolio</span>
+                    </button>
+                    <button class="nested-tab-button" onclick="switchMobileTab('rewards')" id="mobile-tab-rewards">
+                        <span data-lang="tr">🎁 Ödüller</span>
+                        <span data-lang="en">🎁 Rewards</span>
+                    </button>
+                    <button class="nested-tab-button" onclick="switchMobileTab('notifications')"
+                        id="mobile-tab-notifications">
+                        <span data-lang="tr">📢 Bildirimler</span>
+                        <span data-lang="en">📢 Notifications</span>
+                    </button>
+                    <button class="nested-tab-button" onclick="switchMobileTab('education')" id="mobile-tab-education">
+                        <span data-lang="tr">🎓 Eğitim</span>
+                        <span data-lang="en">🎓 Education</span>
+                    </button>
+                    <button class="nested-tab-button" onclick="switchMobileTab('system')" id="mobile-tab-system">
+                        <span data-lang="tr">⚙️ Sistem</span>
+                        <span data-lang="en">⚙️ System</span>
+                    </button>
+                </div>
+            </div>
 
+            <!-- App General Status (shown on all mobile tabs) -->
+            <div class="status-item">
+                <span class="status-label">
+                    <span data-lang="tr">Uygulama Genel Durum</span>
+                    <span data-lang="en">App General Status</span>
+                </span>
+                <span class="status-badge" style="background: rgba(255, 165, 0, 0.2); color: #ffa500;">
+                    <span data-lang="tr">🧪 Beta</span>
+                    <span data-lang="en">🧪 Beta</span>
+                </span>
+            </div>
+
+            <!-- Trading Services Sub-Tab -->
+            <div class="mobile-nested-content" id="mobile-content-trading" style="display: block;">
+                <div style="margin: 30px 0 15px 0; padding-left: 20px; border-left: 2px solid #ffa500;">
+                    <h4 style="color: #ffa500; font-size: 1.1rem; font-weight: 700;">
+                        <span data-lang="tr">📊 Trading Servisleri</span>
+                        <span data-lang="en">📊 Trading Services</span>
+                    </h4>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Spot Trading</span>
+                        <span data-lang="en">Spot Trading</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Futures Trading</span>
+                        <span data-lang="en">Futures Trading</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Position Monitoring</span>
+                        <span data-lang="en">Position Monitoring</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">One-Click Trading</span>
+                        <span data-lang="en">One-Click Trading</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Trading Bots</span>
+                        <span data-lang="en">Trading Bots</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Risk Management</span>
+                        <span data-lang="en">Risk Management</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Liquidation Tracker</span>
+                        <span data-lang="en">Liquidation Tracker</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Funding Rate Monitor</span>
+                        <span data-lang="en">Funding Rate Monitor</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+            </div>
+            <!-- End Trading Tab -->
+
+            <!-- Wallet & Finance Sub-Tab -->
+            <div class="mobile-nested-content" id="mobile-content-wallet" style="display: none;">
+                <div style="margin: 30px 0 15px 0; padding-left: 20px; border-left: 2px solid #ffa500;">
+                    <h4 style="color: #ffa500; font-size: 1.1rem; font-weight: 700;">
+                        <span data-lang="tr">💼 Cüzdan & Finans</span>
+                        <span data-lang="en">💼 Wallet & Finance</span>
+                    </h4>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Cüzdan Servisleri (Genel)</span>
+                        <span data-lang="en">Wallet Services (General)</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">TL Yatırma</span>
+                        <span data-lang="en">TRY Deposit</span>
+                    </span>
+                    <span class="status-badge" style="background: rgba(255, 70, 93, 0.2); color: #ff465d;">
+                        <span data-lang="tr">🔴 Sorunlu</span>
+                        <span data-lang="en">🔴 Issues</span>
+                    </span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">TL Çekme</span>
+                        <span data-lang="en">TRY Withdrawal</span>
+                    </span>
+                    <span class="status-badge" style="background: rgba(255, 70, 93, 0.2); color: #ff465d;">
+                        <span data-lang="tr">🔴 Sorunlu</span>
+                        <span data-lang="en">🔴 Issues</span>
+                    </span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Kripto Yatırma</span>
+                        <span data-lang="en">Crypto Deposit</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Kripto Çekme</span>
+                        <span data-lang="en">Crypto Withdrawal</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">NFT Yönetimi</span>
+                        <span data-lang="en">NFT Management</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Token Swap</span>
+                        <span data-lang="en">Token Swap</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Gas Tracker</span>
+                        <span data-lang="en">Gas Tracker</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Transaction History</span>
+                        <span data-lang="en">Transaction History</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Kart Yönetimi</span>
+                        <span data-lang="en">Card Management</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+            </div>
+            <!-- End Wallet Tab -->
+
+            <!-- Security & KYC Sub-Tab -->
+            <div class="mobile-nested-content" id="mobile-content-security" style="display: none;">
+                <div style="margin: 30px 0 15px 0; padding-left: 20px; border-left: 2px solid #ffa500;">
+                    <h4 style="color: #ffa500; font-size: 1.1rem; font-weight: 700;">
+                        <span data-lang="tr">🔐 Güvenlik & KYC</span>
+                        <span data-lang="en">🔐 Security & KYC</span>
+                    </h4>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">KYC Doğrulama</span>
+                        <span data-lang="en">KYC Verification</span>
+                    </span>
+                    <span class="status-badge" style="background: rgba(255, 215, 0, 0.2); color: var(--neon-yellow);">
+                        <span data-lang="tr">⚠️ Bakımda</span>
+                        <span data-lang="en">⚠️ Maintenance</span>
+                    </span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Yüz Eşleştirme (Face Matching)</span>
+                        <span data-lang="en">Face Matching</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Canlılık Tespiti (Liveness)</span>
+                        <span data-lang="en">Liveness Detection</span>
+                    </span>
+                    <span class="status-badge" style="background: rgba(255, 165, 0, 0.2); color: #ffa500;">
+                        <span data-lang="tr">🧪 Beta</span>
+                        <span data-lang="en">🧪 Beta</span>
+                    </span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Kimlik Doğrulama (2FA)</span>
+                        <span data-lang="en">Authentication (2FA)</span>
+                    </span>
+                    <span class="status-badge" style="background: rgba(255, 165, 0, 0.2); color: #ffa500;">
+                        <span data-lang="tr">🧪 Beta</span>
+                        <span data-lang="en">🧪 Beta</span>
+                    </span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Cihaz Yönetimi</span>
+                        <span data-lang="en">Device Management</span>
+                    </span>
+                    <span class="status-badge" style="background: rgba(255, 165, 0, 0.2); color: #ffa500;">
+                        <span data-lang="tr">🧪 Beta</span>
+                        <span data-lang="en">🧪 Beta</span>
+                    </span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Giriş Geçmişi</span>
+                        <span data-lang="en">Login History</span>
+                    </span>
+                    <span class="status-badge" style="background: rgba(255, 165, 0, 0.2); color: #ffa500;">
+                        <span data-lang="tr">🧪 Beta</span>
+                        <span data-lang="en">🧪 Beta</span>
+                    </span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Şifre Yönetimi</span>
+                        <span data-lang="en">Password Management</span>
+                    </span>
+                    <span class="status-badge" style="background: rgba(255, 165, 0, 0.2); color: #ffa500;">
+                        <span data-lang="tr">🧪 Beta</span>
+                        <span data-lang="en">🧪 Beta</span>
+                    </span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Multi-Account Support</span>
+                        <span data-lang="en">Multi-Account Support</span>
+                    </span>
+                    <span class="status-badge" style="background: rgba(255, 165, 0, 0.2); color: #ffa500;">
+                        <span data-lang="tr">🧪 Beta</span>
+                        <span data-lang="en">🧪 Beta</span>
+                    </span>
+                </div>
+            </div>
+            <!-- End Security Tab -->
+
+            <!-- Social & Community Sub-Tab -->
+            <div class="mobile-nested-content" id="mobile-content-social" style="display: none;">
+                <div style="margin: 30px 0 15px 0; padding-left: 20px; border-left: 2px solid #ffa500;">
+                    <h4 style="color: #ffa500; font-size: 1.1rem; font-weight: 700;">
+                        <span data-lang="tr">👥 Sosyal & Topluluk</span>
+                        <span data-lang="en">👥 Social & Community</span>
+                    </h4>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Özel Sohbet</span>
+                        <span data-lang="en">Private Chat</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Global Sohbet</span>
+                        <span data-lang="en">Global Chat</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Kripto Grup Sohbetleri</span>
+                        <span data-lang="en">Crypto Group Chats</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Arkadaş İstekleri</span>
+                        <span data-lang="en">Friend Requests</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Social Trading</span>
+                        <span data-lang="en">Social Trading</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Trading Yarışmaları</span>
+                        <span data-lang="en">Trading Competitions</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Liderlik Tablosu</span>
+                        <span data-lang="en">Leaderboard</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+            </div>
+            <!-- End Social Tab -->
+
+            <!-- AI & Analysis Sub-Tab -->
+            <div class="mobile-nested-content" id="mobile-content-ai" style="display: none;">
+                <div style="margin: 30px 0 15px 0; padding-left: 20px; border-left: 2px solid #ffa500;">
+                    <h4 style="color: #ffa500; font-size: 1.1rem; font-weight: 700;">
+                        <span data-lang="tr">🤖 AI & Analiz</span>
+                        <span data-lang="en">🤖 AI & Analysis</span>
+                    </h4>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Gemini AI Smart Advisor</span>
+                        <span data-lang="en">Gemini AI Smart Advisor</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Sentiment Analysis</span>
+                        <span data-lang="en">Sentiment Analysis</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Technical Indicators</span>
+                        <span data-lang="en">Technical Indicators</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Chart Analysis</span>
+                        <span data-lang="en">Chart Analysis</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">AI Smart Insights</span>
+                        <span data-lang="en">AI Smart Insights</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+            </div>
+            <!-- End AI Tab -->
+
+            <!-- Portfolio & Reports Sub-Tab -->
+            <div class="mobile-nested-content" id="mobile-content-portfolio" style="display: none;">
+                <div style="margin: 30px 0 15px 0; padding-left: 20px; border-left: 2px solid #ffa500;">
+                    <h4 style="color: #ffa500; font-size: 1.1rem; font-weight: 700;">
+                        <span data-lang="tr">📊 Portföy & Raporlar</span>
+                        <span data-lang="en">📊 Portfolio & Reports</span>
+                    </h4>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Portföy Takibi</span>
+                        <span data-lang="en">Portfolio Tracking</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Kar/Zarar Takvimi</span>
+                        <span data-lang="en">Profit/Loss Calendar</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Vergi Raporları</span>
+                        <span data-lang="en">Tax Reports</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Trading Journal</span>
+                        <span data-lang="en">Trading Journal</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+            </div>
+            <!-- End Portfolio Tab -->
+
+            <!-- Rewards & Gamification Sub-Tab -->
+            <div class="mobile-nested-content" id="mobile-content-rewards" style="display: none;">
+                <div style="margin: 30px 0 15px 0; padding-left: 20px; border-left: 2px solid #ffa500;">
+                    <h4 style="color: #ffa500; font-size: 1.1rem; font-weight: 700;">
+                        <span data-lang="tr">🎁 Ödüller & Promosyonlar</span>
+                        <span data-lang="en">🎁 Rewards & Promotions</span>
+                    </h4>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Puan Sistemi</span>
+                        <span data-lang="en">Points System</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Kuponlar</span>
+                        <span data-lang="en">Coupons</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">KYC Bonusları</span>
+                        <span data-lang="en">KYC Bonuses</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Kar Kuponları</span>
+                        <span data-lang="en">Profit Coupons</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+            </div>
+            <!-- End Rewards Tab -->
+
+            <!-- Notifications & Alerts Sub-Tab -->
+            <div class="mobile-nested-content" id="mobile-content-notifications" style="display: none;">
+                <div style="margin: 30px 0 15px 0; padding-left: 20px; border-left: 2px solid #ffa500;">
+                    <h4 style="color: #ffa500; font-size: 1.1rem; font-weight: 700;">
+                        <span data-lang="tr">📢 Bildirimler & Alarmlar</span>
+                        <span data-lang="en">📢 Notifications & Alerts</span>
+                    </h4>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Fiyat Alarmları</span>
+                        <span data-lang="en">Price Alerts</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Akıllı Bildirimler</span>
+                        <span data-lang="en">Smart Notifications</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Push Notifications (Firebase)</span>
+                        <span data-lang="en">Push Notifications (Firebase)</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Pozisyon Bildirimleri</span>
+                        <span data-lang="en">Position Notifications</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Aktivite Bildirimleri</span>
+                        <span data-lang="en">Activity Notifications</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+            </div>
+            <!-- End Notifications Tab -->
+
+            <!-- Education & News Sub-Tab -->
+            <div class="mobile-nested-content" id="mobile-content-education" style="display: none;">
+                <div style="margin: 30px 0 15px 0; padding-left: 20px; border-left: 2px solid #ffa500;">
+                    <h4 style="color: #ffa500; font-size: 1.1rem; font-weight: 700;">
+                        <span data-lang="tr">🎓 Eğitim & Haberler</span>
+                        <span data-lang="en">🎓 Education & News</span>
+                    </h4>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Eğitim İçerikleri</span>
+                        <span data-lang="en">Educational Content</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Ekonomik Takvim</span>
+                        <span data-lang="en">Economic Calendar</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Piyasa Haberleri</span>
+                        <span data-lang="en">Market News</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Fear & Greed Index</span>
+                        <span data-lang="en">Fear & Greed Index</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+            </div>
+            <!-- End Education Tab -->
+
+            <!-- System Services Sub-Tab -->
+            <div class="mobile-nested-content" id="mobile-content-system" style="display: none;">
+                <div style="margin: 30px 0 15px 0; padding-left: 20px; border-left: 2px solid #ffa500;">
+                    <h4 style="color: #ffa500; font-size: 1.1rem; font-weight: 700;">
+                        <span data-lang="tr">⚙️ Sistem Servisleri</span>
+                        <span data-lang="en">⚙️ System Services</span>
+                    </h4>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Firebase Integration</span>
+                        <span data-lang="en">Firebase Integration</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">WebSocket Bağlantıları</span>
+                        <span data-lang="en">WebSocket Connections</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">API Yönetimi</span>
+                        <span data-lang="en">API Management</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Data Sync</span>
+                        <span data-lang="en">Data Sync</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Dil Desteği</span>
+                        <span data-lang="en">Language Support</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Dashboard Özelleştirme</span>
+                        <span data-lang="en">Dashboard Customization</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">
+                        <span data-lang="tr">Profil & Avatar</span>
+                        <span data-lang="en">Profile & Avatar</span>
+                    </span>
+                    <span class="status-badge">Operational</span>
+                </div>
+            </div>
+            <!-- End System Tab -->
+
+        </div>
+        <!-- End Mobile App Tab -->
+
+        <!-- Ecosystem Tab -->
+        <div class="tab-content" id="content-ecosystem" style="display: none;">
+
+            <!-- Ecosystem: AnalyticaX -->
+            <div style="margin-top: 40px; margin-bottom: 20px;">
+                <h3
+                    style="font-size: 1.3rem; font-weight: 800; color: #9c27b0; border-left: 4px solid #9c27b0; padding-left: 15px;">
+                    <span data-lang="tr">🔮 Ecosystem: AnalyticaX Intel</span>
+                    <span data-lang="en">🔮 Ecosystem: AnalyticaX Intel</span>
+                </h3>
+            </div>
+
+            <div class="status-item">
+                <span class="status-label">
+                    <span data-lang="tr">AnalyticaX Platform</span>
+                    <span data-lang="en">AnalyticaX Platform</span>
+                </span>
+                <span class="status-badge" style="background: rgba(255, 165, 0, 0.2); color: #ffa500;">
+                    <span data-lang="tr">🧪 Beta</span>
+                    <span data-lang="en">🧪 Beta</span>
+                </span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">
+                    <span data-lang="tr">AI Chart Analysis</span>
+                    <span data-lang="en">AI Chart Analysis</span>
+                </span>
+                <span class="status-badge" style="background: rgba(255, 165, 0, 0.2); color: #ffa500;">
+                    <span data-lang="tr">🧪 Beta</span>
+                    <span data-lang="en">🧪 Beta</span>
+                </span>
+            </div>
+
+            <!-- Ecosystem: Web3 Wallet -->
+            <div style="margin-top: 40px; margin-bottom: 20px;">
+                <h3
+                    style="font-size: 1.3rem; font-weight: 800; color: #9c27b0; border-left: 4px solid #9c27b0; padding-left: 15px;">
+                    <span data-lang="tr">🔮 Ecosystem: CyberEx Web3 Wallet</span>
+                    <span data-lang="en">🔮 Ecosystem: CyberEx Web3 Wallet</span>
+                </h3>
+            </div>
+
+            <div class="status-item">
+                <span class="status-label">
+                    <span data-lang="tr">Multi-Chain Support (TRC20/ERC20/BEP20)</span>
+                    <span data-lang="en">Multi-Chain Support (TRC20/ERC20/BEP20)</span>
+                </span>
+                <span class="status-badge" style="background: rgba(255, 165, 0, 0.2); color: #ffa500;">
+                    <span data-lang="tr">🧪 Beta</span>
+                    <span data-lang="en">🧪 Beta</span>
+                </span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">
+                    <span data-lang="tr">Instant Swap</span>
+                    <span data-lang="en">Instant Swap</span>
+                </span>
+                <span class="status-badge" style="background: rgba(255, 165, 0, 0.2); color: #ffa500;">
+                    <span data-lang="tr">🧪 Beta</span>
+                    <span data-lang="en">🧪 Beta</span>
+                </span>
+            </div>
+
+            <!-- Ecosystem: Extension -->
+            <div style="margin-top: 40px; margin-bottom: 20px;">
+                <h3
+                    style="font-size: 1.3rem; font-weight: 800; color: #9c27b0; border-left: 4px solid #9c27b0; padding-left: 15px;">
+                    <span data-lang="tr">🔮 Ecosystem: CyberEx Extension</span>
+                    <span data-lang="en">🔮 Ecosystem: CyberEx Extension</span>
+                </h3>
+            </div>
+
+            <div class="status-item">
+                <span class="status-label">
+                    <span data-lang="tr">Browser Extension</span>
+                    <span data-lang="en">Browser Extension</span>
+                </span>
+                <span class="status-badge" style="background: rgba(255, 165, 0, 0.2); color: #ffa500;">
+                    <span data-lang="tr">🧪 Beta</span>
+                    <span data-lang="en">🧪 Beta</span>
+                </span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">
+                    <span data-lang="tr">dApp Connectivity</span>
+                    <span data-lang="en">dApp Connectivity</span>
+                </span>
+                <span class="status-badge" style="background: rgba(255, 165, 0, 0.2); color: #ffa500;">
+                    <span data-lang="tr">🧪 Beta</span>
+                    <span data-lang="en">🧪 Beta</span>
+                </span>
+            </div>
+
+            <!-- Ecosystem: Web3 App -->
+            <div style="margin-top: 40px; margin-bottom: 20px;">
+                <h3
+                    style="font-size: 1.3rem; font-weight: 800; color: #9c27b0; border-left: 4px solid #9c27b0; padding-left: 15px;">
+                    <span data-lang="tr">🔮 Ecosystem: CyberEx Web3 App</span>
+                    <span data-lang="en">🔮 Ecosystem: CyberEx Web3 App</span>
+                </h3>
+            </div>
+
+            <div class="status-item">
+                <span class="status-label">
+                    <span data-lang="tr">DeFi Gateway</span>
+                    <span data-lang="en">DeFi Gateway</span>
+                </span>
+                <span class="status-badge" style="background: rgba(255, 165, 0, 0.2); color: #ffa500;">
+                    <span data-lang="tr">🧪 Beta</span>
+                    <span data-lang="en">🧪 Beta</span>
+                </span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">
+                    <span data-lang="tr">Staking Protocols</span>
+                    <span data-lang="en">Staking Protocols</span>
+                </span>
+                <span class="status-badge" style="background: rgba(255, 165, 0, 0.2); color: #ffa500;">
+                    <span data-lang="tr">🧪 Beta</span>
+                    <span data-lang="en">🧪 Beta</span>
+                </span>
+            </div>
+        </div>
+        <!-- End Ecosystem Tab -->
+
+        <!-- Uptime History (Shared across all tabs) -->
         <div style="margin-top: 50px;">
-            <h3 style="margin-bottom: 15px;">90 Days Uptime</h3>
+            <h3 style="margin-bottom: 5px;">90 Days Uptime</h3>
+            <p style="font-size: 0.85rem; color: #888; margin-bottom: 15px;">
+                <span data-lang="tr">Uptime over the past 90 days. <a href="history.html"
+                        style="color: var(--neon-cyan); text-decoration: none;">Geçmiş olayları görüntüle →</a></span>
+                <span data-lang="en">Uptime over the past 90 days. <a href="history.html"
+                        style="color: var(--neon-cyan); text-decoration: none;">View historical uptime →</a></span>
+            </p>
             <div class="uptime-grid" id="uptimeGrid">
                 <!-- JS will fill this -->
             </div>
@@ -524,6 +1303,30 @@
     </footer>
 
     <script>
+        // Tab Switching
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            // Show selected tab
+            document.getElementById('content-' + tabName).style.display = 'block';
+            // Add active class to selected button
+            document.getElementById('tab-' + tabName).classList.add('active');
+        }
+
+        // Mobile Nested Tab Switching
+        function switchMobileTab(tabName) {
+            // Hide all mobile nested tabs
+            document.querySelectorAll('.mobile-nested-content').forEach(tab => tab.style.display = 'none');
+            // Remove active class from all nested buttons
+            document.querySelectorAll('.nested-tab-button').forEach(btn => btn.classList.remove('active'));
+            // Show selected tab
+            document.getElementById('mobile-content-' + tabName).style.display = 'block';
+            // Add active class to selected button
+            document.getElementById('mobile-tab-' + tabName).classList.add('active');
+        }
+
         const langToggle = document.getElementById('langToggle');
         const html = document.documentElement;
 
