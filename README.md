@@ -29,6 +29,57 @@ To democratize professional-grade trading by making high-speed execution and AI-
 
 ---
 
+## 🌐 Visit Our Website
+
+**Official Website**: [cyberex.com.tr](https://cyberex.com.tr)
+
+Explore features, documentation, and ecosystem products:
+- 📊 [Status Page](https://cyberex.com.tr/status.html) - Real-time system monitoring
+- 📜 [History](https://cyberex.com.tr/history.html) - Platform timeline
+- 📖 [API Docs](https://cyberex.com.tr/api-docs.html) - Developer documentation
+- 🔐 [Security](https://cyberex.com.tr/security.html) - Security information
+
+---
+
+## 📥 Download Mobile App
+
+### Latest Release: v1.3.9
+
+[![Download APK](https://img.shields.io/badge/Download-APK%20v1.3.9-orange?style=for-the-badge&logo=android)](https://github.com/eticin60/cyberex-update/raw/main/CyberEx-v1.3.9.apk)
+[![Download](https://img.shields.io/badge/Download-On%20Website-cyan?style=for-the-badge&logo=google-chrome)](https://cyberex.com.tr/download.html)
+
+**Quick Download:**
+- 📱 **Direct APK**: [CyberEx-v1.3.9.apk](https://github.com/eticin60/cyberex-update/raw/main/CyberEx-v1.3.9.apk) (~235 MB)
+- 🌐 **Website**: [cyberex.com.tr/download](https://cyberex.com.tr/download.html)
+- 📦 **Releases**: [GitHub Releases](https://github.com/eticin60/cyberex-update)
+
+**What's New in v1.3.9:**
+- ✅ Advanced KYC System with ML Kit face detection
+- ✅ Social Login (Google, Apple, Facebook)
+- ✅ Profile Redesign with Glassmorphism
+- ✅ Trading Limits (Daily/Weekly/Monthly)
+- ✅ AI Improvements (Internet search, screen sharing)
+- ✅ Futures Enhancements (Dynamic order book)
+
+[View Full Changelog →](https://github.com/eticin60/cyberex-update/blob/main/CHANGELOG.md)
+
+### Installation Instructions
+
+1. **Enable Unknown Sources**
+   - Go to `Settings` → `Security` → Enable `Install from Unknown Sources`
+
+2. **Download & Install**
+   - Click download link above
+   - Open the `.apk` file
+   - Follow installation prompts
+
+**Coming Soon:**
+- 📱 Google Play Store
+- 🍎 iOS App Store
+- 💻 Desktop App (Windows/Mac/Linux)
+
+---
+
 ## ✨ Core Features & Functionalities
 
 ### 🏦 Advanced Financial Infrastructure
