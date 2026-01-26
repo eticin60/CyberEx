@@ -50,17 +50,17 @@ Explore features, documentation, and ecosystem products:
 
 ## 📥 Download Mobile App
 
-### Latest Release: v1.3.9
+### Latest Release: v1.4.0
 
-[![Download APK](https://img.shields.io/badge/Download-APK%20v1.3.9-orange?style=for-the-badge&logo=android)](https://github.com/eticin60/cyberex-update/raw/main/CyberEx-v1.3.9.apk)
+[![Download APK](https://img.shields.io/badge/Download-APK%20v1.4.0-orange?style=for-the-badge&logo=android)](https://github.com/eticin60/cyberex-update/raw/main/CyberEx-v1.4.0.apk)
 [![Download](https://img.shields.io/badge/Download-On%20Website-cyan?style=for-the-badge&logo=google-chrome)](https://cyberex.com.tr/download.html)
 
 **Quick Download:**
-- 📱 **Direct APK**: [CyberEx-v1.3.9.apk](https://github.com/eticin60/cyberex-update/raw/main/CyberEx-v1.3.9.apk) (~235 MB)
+- 📱 **Direct APK**: [CyberEx-v1.4.0.apk](https://github.com/eticin60/cyberex-update/raw/main/CyberEx-v1.4.0.apk) (~235 MB)
 - 🌐 **Website**: [cyberex.com.tr/download](https://cyberex.com.tr/download.html)
 - 📦 **Releases**: [GitHub Releases](https://github.com/eticin60/cyberex-update)
 
-**What's New in v1.3.9:**
+**What's New in v1.4.0:**
 - ✅ Advanced KYC System with ML Kit face detection
 - ✅ Social Login (Google, Apple, Facebook)
 - ✅ Profile Redesign with Glassmorphism
