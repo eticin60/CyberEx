@@ -193,6 +193,40 @@
             text-decoration: none;
             margin: 0 10px;
         }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin: 0 10px;
+            color: #fff;
+        }
+
+        .footer-links {
+            margin-top: 60px;
+            border-top: 1px solid var(--border);
+            padding-top: 40px;
+        }
+
+        .footer-links p {
+            text-align: center;
+        }
+
+        .footer-links a {
+            color: var(--neon-cyan);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 
@@ -754,16 +788,42 @@
         </div>
 
         <!-- FOOTER -->
-        <div class="footer-note">
-            <p class="tr-text">
-                © 2024-2026 CyberEx Teknoloji A.Ş. Tüm hakları saklıdır.<br>
-                <a href="index.html">Ana Sayfa</a> | <a href="legal.html">Yasal Uyarı</a> | <a
-                    href="privacy.html">Gizlilik</a> | <a href="disclaimer.html">Beta Koşulları</a>
+        <!-- FOOTER -->
+        <div class="footer-links">
+            <p class="tr-text" style="color: #666; margin-bottom: 20px; text-align: center;">
+                © 2024-2026 CyberEx Teknoloji A.Ş. | Son Güncelleme: 26 Ocak 2026<br>
+                <span class="status-badge">BETA v1.3.9</span>
+                <span class="status-badge" style="background: linear-gradient(135deg, #4CAF50, #2E7D32);">SPK LİSANS
+                    SÜRECİ</span>
             </p>
-            <p class="en-text" style="display:none;">
-                © 2024-2026 CyberEx Technology Inc. All rights reserved.<br>
-                <a href="index.html">Home</a> | <a href="legal.html">Legal Notice</a> | <a
-                    href="privacy.html">Privacy</a> | <a href="disclaimer.html">Beta Terms</a>
+            <p class="en-text" style="color: #666; margin-bottom: 20px; text-align: center; display:none;">
+                © 2024-2026 CyberEx Technology Inc. | Last Updated: January 26, 2026<br>
+                <span class="status-badge">BETA v1.3.9</span>
+                <span class="status-badge" style="background: linear-gradient(135deg, #FF9800, #F57C00);">SPK LICENSE
+                    PENDING</span>
+            </p>
+
+            <p class="tr-text" style="text-align: center;">
+                <a href="index.html">Ana Sayfa</a> |
+                <a href="terms.html">Kullanım Şartları</a> |
+                <a href="legal.html">Yasal Uyarı</a> |
+                <a href="privacy.html">Gizlilik Politikası</a> |
+                <a href="kvkk.html">KVKK Metni</a> |
+                <a href="security.html">Güvenlik Raporu</a> |
+                <a href="risk.html">Risk Bildirimi</a> |
+                <a href="cookie-policy.html">Çerez Politikası</a> |
+                <a href="disclaimer.html">Beta Koşulları</a>
+            </p>
+            <p class="en-text" style="text-align: center; display:none;">
+                <a href="index.html">Home</a> |
+                <a href="terms.html">Terms of Service</a> |
+                <a href="legal.html">Legal Notice</a> |
+                <a href="privacy.html">Privacy Policy</a> |
+                <a href="kvkk.html">KVKK Notice</a> |
+                <a href="security.html">Security Report</a> |
+                <a href="risk.html">Risk Disclosure</a> |
+                <a href="cookie-policy.html">Cookie Policy</a> |
+                <a href="disclaimer.html">Beta Terms</a>
             </p>
         </div>
     </div>

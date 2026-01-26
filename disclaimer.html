@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Beta Test Programı | CyberEx - Beta Disclaimer</title>
+    <title>Beta Test Programı | Beta Test Program | CyberEx</title>
 
     <!-- Mobile & PWA Integration -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,11 +33,11 @@
     <style>
         :root {
             --neon-cyan: #00f0ff;
-            --beta-purple: #667eea;
-            --beta-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --deep-bg: #00050f;
-            --card-bg: rgba(255, 255, 255, 0.02);
-            --border: rgba(255, 255, 255, 0.1);
+            --neon-purple: #bc13fe;
+            --neon-pink: #ff0055;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
 
         * {
@@ -48,10 +48,14 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--deep-bg);
+            background-color: #030014;
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(188, 19, 254, 0.25), transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(0, 240, 255, 0.25), transparent 40%);
             color: #fff;
             overflow-x: hidden;
             line-height: 1.8;
+            min-height: 100vh;
         }
 
         /* Navbar */
@@ -60,12 +64,13 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 40px;
-            background: rgba(0, 5, 15, 0.95);
+            background: rgba(3, 0, 20, 0.6);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid rgba(0, 240, 255, 0.2);
             position: sticky;
             top: 0;
             z-index: 1000;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
         }
 
         .nav-logo {
@@ -78,28 +83,54 @@
 
         .nav-logo img {
             height: 40px;
+            filter: drop-shadow(0 0 8px var(--neon-cyan));
         }
 
         .beta-badge {
-            background: var(--beta-gradient);
+            background: rgba(188, 19, 254, 0.2);
+            border: 1px solid var(--neon-purple);
+            color: #fff;
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 0.7rem;
             font-weight: 800;
             letter-spacing: 1px;
-            animation: pulse 2s infinite;
+            box-shadow: 0 0 15px var(--neon-purple);
+            animation: badge-pulse 1.5s infinite alternate;
         }
 
-        @keyframes pulse {
+        @keyframes badge-pulse {
+            from {
+                box-shadow: 0 0 10px var(--neon-purple);
+                opacity: 0.8;
+            }
 
-            0%,
-            100% {
+            to {
+                box-shadow: 0 0 25px var(--neon-purple), 0 0 10px #fff;
                 opacity: 1;
             }
+        }
 
-            50% {
-                opacity: 0.7;
-            }
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: #ccc;
+            padding: 5px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: 0.3s;
+            margin: 0 3px;
+        }
+
+        .lang-btn:hover,
+        .lang-btn.active {
+            background: rgba(0, 240, 255, 0.2);
+            color: #fff;
+            font-weight: 700;
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 20px var(--neon-cyan);
+            text-shadow: 0 0 5px #fff;
         }
 
         .back-btn {
@@ -109,113 +140,197 @@
             align-items: center;
             gap: 10px;
             padding: 10px 20px;
-            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 240, 255, 0.3);
             border-radius: 25px;
             transition: 0.3s;
         }
 
         .back-btn:hover {
-            background: var(--beta-gradient);
-            border-color: var(--beta-purple);
+            background: rgba(0, 240, 255, 0.1);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 25px var(--neon-cyan);
         }
 
-        /* Hero */
+        /* Liquid Glass Hero */
         .hero {
             text-align: center;
-            padding: 80px 20px 60px;
-            background: var(--beta-gradient);
+            padding: 100px 20px 120px;
             position: relative;
-            overflow: hidden;
         }
 
         .hero::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><circle cx="3" cy="3" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
-            opacity: 0.3;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(188, 19, 254, 0.25), transparent 70%);
+            filter: blur(80px);
+            z-index: -1;
+            animation: hero-glow 4s infinite alternate;
         }
 
-        .hero-content {
+        @keyframes hero-glow {
+            from {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.6;
+            }
+
+            to {
+                transform: translate(-50%, -50%) scale(1.1);
+                opacity: 1;
+            }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 50px rgba(188, 19, 254, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            padding: 60px 40px;
+            max-width: 900px;
+            margin: 0 auto;
             position: relative;
-            z-index: 1;
+            overflow: hidden;
+            transition: 0.5s;
+        }
+
+        .glass-card:hover {
+            box-shadow: 0 0 80px rgba(0, 240, 255, 0.4), inset 0 0 30px rgba(0, 240, 255, 0.1);
+            border-color: rgba(0, 240, 255, 0.4);
+        }
+
+        /* Shine Check Effect */
+        .glass-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, 0.1) 50%,
+                    rgba(255, 255, 255, 0) 100%);
+            transform: skewX(-25deg);
+            animation: shine 5s infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                left: -100%;
+            }
+
+            20% {
+                left: 200%;
+            }
+
+            100% {
+                left: 200%;
+            }
         }
 
         .hero-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            animation: float 3s ease-in-out infinite;
+            font-size: 5rem;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 0 25px rgba(255, 0, 85, 0.8));
+            animation: float 4s ease-in-out infinite;
         }
 
         @keyframes float {
 
             0%,
             100% {
-                transform: translateY(0);
+                transform: translateY(0) rotate(0deg);
             }
 
             50% {
-                transform: translateY(-20px);
+                transform: translateY(-15px) rotate(5deg);
             }
         }
 
         .hero-title {
-            font-size: 3rem;
+            font-size: 4rem;
             font-weight: 900;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow:
+                0 0 10px rgba(255, 255, 255, 0.8),
+                0 0 20px rgba(188, 19, 254, 0.8),
+                0 0 40px rgba(0, 240, 255, 0.8),
+                0 0 80px rgba(0, 240, 255, 0.5);
+            letter-spacing: -2px;
         }
 
         .hero-subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
+            font-size: 1.3rem;
+            color: #e0e0e0;
             max-width: 700px;
             margin: 0 auto;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
-        /* Content */
+        /* Sections */
         .container {
             max-width: 1100px;
-            margin: -40px auto 80px;
+            margin: -60px auto 80px;
             padding: 0 20px;
             position: relative;
             z-index: 2;
         }
 
         .section {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
+            background: rgba(10, 15, 40, 0.7);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(0, 240, 255, 0.1);
             border-radius: 20px;
             padding: 40px;
             margin-bottom: 30px;
-            backdrop-filter: blur(20px);
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+            transition: 0.3s;
+        }
+
+        .section:hover {
+            border-color: rgba(0, 240, 255, 0.3);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.1);
         }
 
         .section h2 {
-            font-size: 1.8rem;
-            color: var(--beta-purple);
-            margin-bottom: 20px;
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 30px;
             display: flex;
             align-items: center;
             gap: 15px;
+            text-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
+        }
+
+        .section h2 i {
+            color: var(--neon-cyan);
+            filter: drop-shadow(0 0 10px var(--neon-cyan));
         }
 
         .section h3 {
             font-size: 1.3rem;
             color: var(--neon-cyan);
             margin: 30px 0 15px;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
         }
 
         .section p {
-            color: #ddd;
+            color: #dbe4f0;
             margin-bottom: 15px;
+            font-size: 1.05rem;
         }
 
         .section ul {
             margin-left: 20px;
-            color: #bbb;
+            color: #dbe4f0;
         }
 
         .section ul li {
@@ -223,60 +338,157 @@
             line-height: 1.8;
         }
 
+        /* Boxes */
         .highlight-box {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-            border: 1px solid rgba(102, 126, 234, 0.3);
+            background: linear-gradient(135deg, rgba(188, 19, 254, 0.1) 0%, rgba(102, 126, 234, 0.1) 100%);
+            border: 1px solid rgba(188, 19, 254, 0.4);
             border-radius: 15px;
             padding: 25px;
             margin: 25px 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(188, 19, 254, 0.1);
+        }
+
+        .highlight-box:hover {
+            box-shadow: 0 0 30px rgba(188, 19, 254, 0.3);
+        }
+
+        .highlight-box::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--neon-purple);
+            box-shadow: 0 0 15px var(--neon-purple);
         }
 
         .warning-box {
-            background: linear-gradient(135deg, rgba(255, 165, 0, 0.1) 0%, rgba(255, 70, 93, 0.1) 100%);
-            border: 1px solid rgba(255, 165, 0, 0.3);
+            background: rgba(255, 70, 93, 0.08);
+            border: 1px solid rgba(255, 70, 93, 0.4);
             border-radius: 15px;
             padding: 25px;
             margin: 25px 0;
+            position: relative;
+            box-shadow: 0 0 20px rgba(255, 70, 93, 0.1);
         }
 
+        .warning-box:hover {
+            box-shadow: 0 0 30px rgba(255, 70, 93, 0.2);
+        }
+
+        .warning-box h3 {
+            color: #ff465d !important;
+            text-shadow: 0 0 10px rgba(255, 70, 93, 0.5);
+        }
+
+        /* Benefits Grid */
         .benefits-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
         }
 
         .benefit-card {
-            background: rgba(0, 243, 255, 0.05);
-            border: 1px solid rgba(0, 243, 255, 0.2);
-            border-radius: 12px;
-            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px 20px;
             text-align: center;
-            transition: 0.3s;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
         }
 
         .benefit-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(0, 240, 255, 0.05);
             border-color: var(--neon-cyan);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3), inset 0 0 10px rgba(0, 240, 255, 0.1);
         }
 
         .benefit-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 15px var(--neon-cyan));
         }
 
         .benefit-title {
             font-weight: 700;
-            color: var(--neon-cyan);
+            color: #fff;
             margin-bottom: 10px;
+            font-size: 1.2rem;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
         }
 
-        .footer {
+        /* Footer */
+        .status-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #FF9800, #F57C00);
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin: 0 10px;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(255, 152, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: pulse-orange 2s infinite;
+        }
+
+        @keyframes pulse-orange {
+            0% {
+                box-shadow: 0 0 10px rgba(255, 152, 0, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 25px rgba(255, 152, 0, 0.8);
+            }
+
+            100% {
+                box-shadow: 0 0 10px rgba(255, 152, 0, 0.4);
+            }
+        }
+
+        .footer-links {
             text-align: center;
-            padding: 40px 20px;
-            border-top: 1px solid var(--border);
+            margin-top: 80px;
+            border-top: 1px solid rgba(0, 240, 255, 0.2);
+            padding-top: 50px;
+            padding-bottom: 50px;
+            background: linear-gradient(to bottom, transparent, rgba(0, 240, 255, 0.05));
+        }
+
+        .footer-links a {
             color: #888;
+            text-decoration: none;
+            margin: 0 12px;
+            transition: 0.3s;
             font-size: 0.9rem;
+            position: relative;
+        }
+
+        .footer-links a:hover {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 15px var(--neon-cyan);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+
+            .glass-card {
+                padding: 40px 20px;
+            }
+
+            .section {
+                padding: 25px;
+            }
         }
     </style>
 </head>
@@ -289,17 +501,37 @@
             <img src="cyberex-logo.png" alt="CyberEx">
             <span class="beta-badge">BETA</span>
         </a>
-        <a href="index.html" class="back-btn">
-            <i class="fas fa-arrow-left"></i> Ana Sayfaya Dön
-        </a>
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <div>
+                <button class="lang-btn active" onclick="switchLang('tr')">TR</button>
+                <button class="lang-btn" onclick="switchLang('en')">EN</button>
+            </div>
+            <a href="index.html" class="back-btn tr-text">
+                <i class="fas fa-arrow-left"></i> Ana Sayfaya Dön
+            </a>
+            <a href="index.html" class="back-btn en-text" style="display:none;">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+        </div>
     </nav>
 
     <!-- Hero -->
     <header class="hero">
-        <div class="hero-content">
-            <div class="hero-icon">🚀</div>
-            <h1 class="hero-title">Beta Test Programı</h1>
-            <p class="hero-subtitle">CyberEx'in geleceğini şekillendiren erken katılımcılara hoş geldiniz!</p>
+        <div class="glass-card">
+            <div class="hero-content">
+                <div class="hero-icon">🚀</div>
+                <h1 class="hero-title tr-text">Beta Test Programı</h1>
+                <h1 class="hero-title en-text" style="display:none;">Beta Test Program</h1>
+
+                <p class="hero-subtitle tr-text">
+                    CyberEx’in geleceğini şekillendiren erken katılımcılara hoş geldiniz! <br>
+                    <span style="color: var(--neon-cyan); font-weight: 600;">Sınırlı Kontenjan - Özel Ödüller</span>
+                </p>
+                <p class="hero-subtitle en-text" style="display:none;">
+                    Welcome to the early adopters shaping the future of CyberEx! <br>
+                    <span style="color: var(--neon-cyan); font-weight: 600;">Limited Spots - Exclusive Rewards</span>
+                </p>
+            </div>
         </div>
     </header>
 
@@ -308,43 +540,71 @@
 
         <!-- Welcome Section -->
         <section class="section">
-            <h2><i class="fas fa-rocket"></i> Hoş Geldiniz!</h2>
-            <p>
-                CyberEx Beta Test Programı'na katıldığınız için teşekkür ederiz! Erken katılımcı olarak, platformumuzu
-                şekillendirmeye ve Türkiye'nin en gelişmiş kripto para borsasını birlikte inşa etmeye yardımcı
-                oluyorsunuz.
-            </p>
+            <h2><i class="fas fa-rocket"></i> <span class="tr-text">Hoş Geldiniz!</span><span class="en-text"
+                    style="display:none;">Welcome!</span></h2>
+            <div class="tr-text">
+                <p>
+                    CyberEx Beta Test Programı'na katıldığınız için teşekkür ederiz! Erken katılımcı olarak,
+                    platformumuzu
+                    şekillendirmeye ve Türkiye'nin en gelişmiş kripto para borsasını birlikte inşa etmeye yardımcı
+                    oluyorsunuz.
+                </p>
+            </div>
+            <div class="en-text" style="display:none;">
+                <p>
+                    Thank you for joining the CyberEx Beta Test Program! As an early adopter, you are helping to shape
+                    our platform and build Turkey's most advanced cryptocurrency exchange together.
+                </p>
+            </div>
         </section>
 
         <!-- Beta Status -->
         <section class="section">
-            <h2><i class="fas fa-certificate"></i> Düzenleyici Durum</h2>
+            <h2><i class="fas fa-certificate"></i> <span class="tr-text">Düzenleyici Durum</span><span class="en-text"
+                    style="display:none;">Regulatory Status</span></h2>
 
             <div class="highlight-box">
-                <h3>📋 SPK Lisans Başvurusu</h3>
-                <p><strong>CyberEx Technology Inc.</strong> şu anda <strong>BETA test aşamasında</strong> faaliyet
-                    göstermektedir.</p>
-                <p>
-                    SPK (Sermaye Piyasası Kurulu) lisans başvuru sürecimiz <strong style="color: #4CAF50;">aktif olarak
-                        devam etmektedir</strong> ve <strong>Q2 2026</strong> hedefiyle tam düzenleyici uyum
-                    sağlanacaktır.
-                </p>
+                <h3>📋 <span class="tr-text">SPK Lisans Başvurusu</span><span class="en-text" style="display:none;">SPK
+                        License Application</span></h3>
+                <div class="tr-text">
+                    <p><strong>CyberEx Technology Inc.</strong> şu anda <strong>BETA test aşamasında</strong> faaliyet
+                        göstermektedir.</p>
+                    <p>
+                        SPK (Sermaye Piyasası Kurulu) lisans başvuru sürecimiz <strong style="color: #4CAF50;">aktif
+                            olarak devam etmektedir</strong> ve <strong>Q2 2026</strong> hedefiyle tam düzenleyici uyum
+                        sağlanacaktır.
+                    </p>
+                </div>
+                <div class="en-text" style="display:none;">
+                    <p><strong>CyberEx Technology Inc.</strong> is currently operating in <strong>BETA testing
+                            phase</strong>.</p>
+                    <p>
+                        Our SPK (Capital Markets Board) license application process is <strong
+                            style="color: #4CAF50;">actively ongoing</strong> and full regulatory compliance is targeted
+                        by <strong>Q2 2026</strong>.
+                    </p>
+                </div>
             </div>
 
             <div class="benefits-grid">
                 <div class="benefit-card">
                     <div class="benefit-icon">⚖️</div>
-                    <div class="benefit-title">Lisans Durumu</div>
-                    <div>SPK Başvurusu Devam Ediyor</div>
+                    <div class="benefit-title tr-text">Lisans Durumu</div>
+                    <div class="benefit-title en-text" style="display:none;">License Status</div>
+                    <div class="tr-text">SPK Başvurusu Devam Ediyor</div>
+                    <div class="en-text" style="display:none;">SPK Application Ongoing</div>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">🛡️</div>
-                    <div class="benefit-title">Güvenlik</div>
-                    <div>Kurumsal Seviye Korumalı</div>
+                    <div class="benefit-title tr-text">Güvenlik</div>
+                    <div class="benefit-title en-text" style="display:none;">Security</div>
+                    <div class="tr-text">Kurumsal Seviye Korumalı</div>
+                    <div class="en-text" style="display:none;">Enterprise Grade Protected</div>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">🎯</div>
-                    <div class="benefit-title">Hedef</div>
+                    <div class="benefit-title tr-text">Hedef</div>
+                    <div class="benefit-title en-text" style="display:none;">Target</div>
                     <div>Q2 2026</div>
                 </div>
             </div>
@@ -352,92 +612,202 @@
 
         <!-- Benefits -->
         <section class="section">
-            <h2><i class="fas fa-gift"></i> Erken Katılımcı Avantajları</h2>
-            <p>Beta tester olarak aşağıdaki avantajlardan yararlanırsınız:</p>
-
-            <ul>
-                <li>✅ <strong>Erken Erişim:</strong> Yeni özelliklere ilk siz ulaşırsınız</li>
-                <li>✅ <strong>Öncelikli Destek:</strong> 24/7 özel destek hattı</li>
-                <li>✅ <strong>Özel Ödüller ve Bonuslar:</strong> Beta kullanıcılarına özel kampanyalar</li>
-                <li>✅ <strong>Komisyon İndirimleri:</strong> Erken katılımcılar için fee avantajları</li>
-                <li>✅ <strong>Geri Bildirim Kanalı:</strong> Öneriniz dinlenir ve hızla değerlendirilir</li>
-                <li>✅ <strong>VIP Statü:</strong> Resmi lansmanda özel avantajlar</li>
-            </ul>
+            <h2><i class="fas fa-gift"></i> <span class="tr-text">Erken Katılımcı Avantajları</span><span
+                    class="en-text" style="display:none;">Early Adopter Benefits</span></h2>
+            <div class="tr-text">
+                <p>Beta tester olarak aşağıdaki avantajlardan yararlanırsınız:</p>
+                <ul>
+                    <li>✅ <strong>Erken Erişim:</strong> Yeni özelliklere ilk siz ulaşırsınız</li>
+                    <li>✅ <strong>Öncelikli Destek:</strong> 24/7 özel destek hattı</li>
+                    <li>✅ <strong>Özel Ödüller ve Bonuslar:</strong> Beta kullanıcılarına özel kampanyalar</li>
+                    <li>✅ <strong>Komisyon İndirimleri:</strong> Erken katılımcılar için fee avantajları</li>
+                    <li>✅ <strong>Geri Bildirim Kanalı:</strong> Öneriniz dinlenir ve hızla değerlendirilir</li>
+                    <li>✅ <strong>VIP Statü:</strong> Resmi lansmanda özel avantajlar</li>
+                </ul>
+            </div>
+            <div class="en-text" style="display:none;">
+                <p>As a beta tester, you enjoy the following benefits:</p>
+                <ul>
+                    <li>✅ <strong>Early Access:</strong> You get first access to new features</li>
+                    <li>✅ <strong>Priority Support:</strong> 24/7 dedicated support line</li>
+                    <li>✅ <strong>Special Rewards & Bonuses:</strong> Campaigns exclusive to beta users</li>
+                    <li>✅ <strong>Fee Discounts:</strong> Fee advantages for early adopters</li>
+                    <li>✅ <strong>Feedback Channel:</strong> Your suggestions are heard and evaluated</li>
+                    <li>✅ <strong>VIP Status:</strong> Special advantages at official launch</li>
+                </ul>
+            </div>
         </section>
 
         <!-- Important Disclosures -->
         <section class="section">
-            <h2><i class="fas fa-exclamation-triangle"></i> Önemli Bilgilendirme</h2>
+            <h2><i class="fas fa-exclamation-triangle"></i> <span class="tr-text">Önemli Bilgilendirme</span><span
+                    class="en-text" style="display:none;">Important Information</span></h2>
 
             <div class="warning-box">
-                <h3>⚠️ Beta Test Koşulları</h3>
-                <p><strong>Lütfen Dikkatle Okuyun:</strong></p>
-                <ul>
-                    <li>Platform <strong>aktif geliştirme aşamasındadır</strong></li>
-                    <li>Özellikler önceden haber verilmeden değişebilir</li>
-                    <li>Ara sıra <strong>teknik sorunlar</strong> yaşanabilir</li>
-                    <li>Beta ortam olduğundan, nadir durumlarda <strong>veri senkronizasyon gecikmeleri</strong>
-                        olabilir</li>
-                </ul>
+                <h3>⚠️ <span class="tr-text">Beta Test Koşulları</span><span class="en-text" style="display:none;">Beta
+                        Test Terms</span></h3>
+                <div class="tr-text">
+                    <p><strong>Lütfen Dikkatle Okuyun:</strong></p>
+                    <ul>
+                        <li>Platform <strong>aktif geliştirme aşamasındadır</strong></li>
+                        <li>Özellikler önceden haber verilmeden değişebilir</li>
+                        <li>Ara sıra <strong>teknik sorunlar</strong> yaşanabilir</li>
+                        <li>Beta ortam olduğundan, nadir durumlarda <strong>veri senkronizasyon gecikmeleri</strong>
+                            olabilir</li>
+                    </ul>
+                </div>
+                <div class="en-text" style="display:none;">
+                    <p><strong>Please Read Carefully:</strong></p>
+                    <ul>
+                        <li>Platform is in <strong>active development phase</strong></li>
+                        <li>Features may change without prior notice</li>
+                        <li>Occasional <strong>technical issues</strong> may occur</li>
+                        <li>As a beta environment, rare <strong>data sync delays</strong> may happen</li>
+                    </ul>
+                </div>
             </div>
 
-            <h3>🔐 Güvenlik Taahhütlerimiz</h3>
-            <p>Beta aşamasında olsak da, güvenliğinizden asla taviz vermiyoruz:</p>
-            <ul>
-                <li>✅ <strong>Military-Grade Encryption</strong> (AES-256) ile veri koruması</li>
-                <li>✅ <strong>24/7 Güvenlik İzleme</strong> sistemi aktif</li>
-                <li>✅ Düzenli <strong>güvenlik denetimleri</strong></li>
-                <li>✅ Bug Bounty Programı ($50-$2000 ödüller)</li>
-                <li>✅ Multi-Factor Authentication (MFA)</li>
-                <li>✅ Cold Storage ile fon koruması</li>
-            </ul>
+            <h3>🔐 <span class="tr-text">Güvenlik Taahhütlerimiz</span><span class="en-text" style="display:none;">Our
+                    Security Commitments</span></h3>
+            <div class="tr-text">
+                <p>Beta aşamasında olsak da, güvenliğinizden asla taviz vermiyoruz:</p>
+                <ul>
+                    <li>✅ <strong>Military-Grade Encryption</strong> (AES-256) ile veri koruması</li>
+                    <li>✅ <strong>24/7 Güvenlik İzleme</strong> sistemi aktif</li>
+                    <li>✅ Düzenli <strong>güvenlik denetimleri</strong></li>
+                    <li>✅ Bug Bounty Programı ($50-$2000 ödüller)</li>
+                    <li>✅ Multi-Factor Authentication (MFA)</li>
+                    <li>✅ Cold Storage ile fon koruması</li>
+                </ul>
+            </div>
+            <div class="en-text" style="display:none;">
+                <p>Even though we are in beta, we never compromise on your security:</p>
+                <ul>
+                    <li>✅ Data protection with <strong>Military-Grade Encryption</strong> (AES-256)</li>
+                    <li>✅ <strong>24/7 Security Monitoring</strong> system active</li>
+                    <li>✅ Regular <strong>security audits</strong></li>
+                    <li>✅ Bug Bounty Program ($50-$2000 rewards)</li>
+                    <li>✅ Multi-Factor Authentication (MFA)</li>
+                    <li>✅ Fund protection with Cold Storage</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Terms & Confidentiality (New) -->
+        <section class="section">
+            <h2><i class="fas fa-file-contract"></i> <span class="tr-text">Yasal Sorumluluklar</span><span
+                    class="en-text" style="display:none;">Legal Responsibilities</span></h2>
+
+            <div class="highlight-box">
+                <h3>💡 <span class="tr-text">Fikri Mülkiyet & Geri Bildirim</span><span class="en-text"
+                        style="display:none;">Intellectual Property & Feedback</span></h3>
+                <div class="tr-text">
+                    <p>
+                        Beta programı kapsamında sağladığınız her türlü geri bildirim, öneri, fikir veya iyileştirme
+                        talebi
+                        tamamen <strong>CyberEx Technology Inc.</strong> mülkiyetine geçer. Kullanıcılar bu öneriler
+                        üzerinde herhangi bir hak, telif veya tazminat talep edemez.
+                    </p>
+                </div>
+                <div class="en-text" style="display:none;">
+                    <p>
+                        Any feedback, suggestions, ideas, or improvement requests provided within the scope of the Beta
+                        program
+                        become the sole property of <strong>CyberEx Technology Inc.</strong> Users cannot claim any
+                        rights,
+                        copyrights, or compensation for these suggestions.
+                    </p>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <h3>🤫 <span class="tr-text">Gizlilik (Confidentiality)</span><span class="en-text"
+                        style="display:none;">Confidentiality</span></h3>
+                <div class="tr-text">
+                    <p>
+                        Beta süresince eriştiğiniz henüz yayınlanmamış özellikler, ekran tasarımları ve performans
+                        verileri
+                        <strong>"Ticari Sır"</strong> niteliğindedir.
+                    </p>
+                    <ul>
+                        <li>Ekran görüntüsü paylaşımı izne tabidir</li>
+                        <li>Halka açık olmayan özellikleri üçüncü taraflarla paylaşmak yasaktır</li>
+                    </ul>
+                </div>
+                <div class="en-text" style="display:none;">
+                    <p>
+                        Unreleased features, screen designs, and performance data you access during the Beta period are
+                        considered <strong>"Trade Secrets"</strong>.
+                    </p>
+                    <ul>
+                        <li>Sharing screenshots is subject to permission</li>
+                        <li>Sharing non-public features with third parties is prohibited</li>
+                    </ul>
+                </div>
+            </div>
         </section>
 
         <!-- Risk Disclosure -->
         <section class="section">
-            <h2><i class="fas fa-shield-halved"></i> Risk Açıklaması</h2>
+            <h2><i class="fas fa-shield-halved"></i> <span class="tr-text">Risk Açıklaması</span><span class="en-text"
+                    style="display:none;">Risk Disclosure</span></h2>
 
             <div class="warning-box">
-                <h3>⚠️ Kripto Para Ticareti Riskleri</h3>
-                <p>
-                    Kripto para ticareti <strong>yüksek düzeyde risk</strong> içerir. Lütfen aşağıdaki hususları dikkate
-                    alınız:
-                </p>
-                <ul>
-                    <li>Yatırımınızın bir kısmını veya tamamını kaybedebilirsiniz</li>
-                    <li>Piyasa volatilitesi çok yüksektir</li>
-                    <li>Geçmiş performans gelecek kazançları garanti etmez</li>
-                    <li>Sadece <strong>kaybetmeyi göze alabileceğiniz</strong> tutarları yatırın</li>
-                </ul>
+                <h3>⚠️ <span class="tr-text">Kripto Para Ticareti Riskleri</span><span class="en-text"
+                        style="display:none;">Cryptocurrency Trading Risks</span></h3>
+                <div class="tr-text">
+                    <p>Kripto para ticareti <strong>yüksek düzeyde risk</strong> içerir. Lütfen aşağıdaki hususları
+                        dikkate alınız:</p>
+                    <ul>
+                        <li>Yatırımınızın bir kısmını veya tamamını kaybedebilirsiniz</li>
+                        <li>Piyasa volatilitesi çok yüksektir</li>
+                        <li>Geçmiş performans gelecek kazançları garanti etmez</li>
+                        <li>Sadece <strong>kaybetmeyi göze alabileceğiniz</strong> tutarları yatırın</li>
+                    </ul>
+                </div>
+                <div class="en-text" style="display:none;">
+                    <p>Cryptocurrency trading involves <strong>high level of risk</strong>. Please consider the
+                        following:</p>
+                    <ul>
+                        <li>You may lose some or all of your investment</li>
+                        <li>Market volatility is very high</li>
+                        <li>Past performance does not guarantee future gains</li>
+                        <li>Only invest amounts you <strong>can afford to lose</strong></li>
+                    </ul>
+                </div>
             </div>
-
-            <h3>🚫 CyberEx Sorumluluk Reddi</h3>
-            <p><strong>Kullanarak kabul ettiğiniz hususlar:</strong></p>
-            <ul>
-                <li>Platformu <strong>kendi riskinizle</strong> kullanıyorsunuz</li>
-                <li>CyberEx, <strong>piyasa kayıplarından sorumlu değildir</strong></li>
-                <li>Platform <strong>finansal tavsiye sunmaz</strong></li>
-                <li>Beta ortamındaki <strong>teknik sorunlardan</strong> doğacak kayıplardan sorumlu değiliz</li>
-                <li>Blockchain gecikmelerinden sorumlu değiliz</li>
-            </ul>
         </section>
 
         <!-- User Rights -->
         <section class="section">
-            <h2><i class="fas fa-user-shield"></i> Kullanıcı Haklarınız</h2>
-            <p>Beta tester olarak aşağıdaki haklara sahipsiniz:</p>
-            <ul>
-                <li>✅ İstediğiniz zaman programdan <strong>çıkma hakkı</strong></li>
-                <li>✅ Verilerinizi <strong>dışa aktarma</strong> hakkı</li>
-                <li>✅ Hesap <strong>silme</strong> hakkı</li>
-                <li>✅ Destek ekibine <strong>ulaşma</strong> hakkı</li>
-                <li>✅ Gizlilik ve güvenlik politikalarını <strong>inceleme</strong> hakkı</li>
-            </ul>
+            <h2><i class="fas fa-user-shield"></i> <span class="tr-text">Kullanıcı Haklarınız</span><span
+                    class="en-text" style="display:none;">Your User Rights</span></h2>
+            <div class="tr-text">
+                <p>Beta tester olarak aşağıdaki haklara sahipsiniz:</p>
+                <ul>
+                    <li>✅ İstediğiniz zaman programdan <strong>çıkma hakkı</strong></li>
+                    <li>✅ Verilerinizi <strong>dışa aktarma</strong> hakkı</li>
+                    <li>✅ Hesap <strong>silme</strong> hakkı</li>
+                    <li>✅ Destek ekibine <strong>ulaşma</strong> hakkı</li>
+                    <li>✅ Gizlilik ve güvenlik politikalarını <strong>inceleme</strong> hakkı</li>
+                </ul>
+            </div>
+            <div class="en-text" style="display:none;">
+                <p>As a beta tester, you have the following rights:</p>
+                <ul>
+                    <li>✅ Right to <strong>leave</strong> the program at any time</li>
+                    <li>✅ Right to <strong>export</strong> your data</li>
+                    <li>✅ Right to <strong>delete</strong> your account</li>
+                    <li>✅ Right to <strong>contact</strong> support team</li>
+                    <li>✅ Right to <strong>review</strong> privacy and security policies</li>
+                </ul>
+            </div>
         </section>
 
         <!-- Support -->
         <section class="section">
-            <h2><i class="fas fa-headset"></i> Destek & İletişim</h2>
+            <h2><i class="fas fa-headset"></i> <span class="tr-text">Destek & İletişim</span><span class="en-text"
+                    style="display:none;">Support & Contact</span></h2>
 
             <div class="benefits-grid">
                 <div class="benefit-card">
@@ -448,65 +818,110 @@
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">💬</div>
-                    <div class="benefit-title">Canlı Chat</div>
-                    <div>24/7 Uygulama İçi</div>
+                    <div class="benefit-title tr-text">Canlı Chat</div>
+                    <div class="benefit-title en-text" style="display:none;">Live Chat</div>
+                    <div class="tr-text">24/7 Uygulama İçi</div>
+                    <div class="en-text" style="display:none;">24/7 In-App</div>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">🎫</div>
-                    <div class="benefit-title">Destek Talebi</div>
-                    <a href="ticket.html" style="color: var(--neon-cyan); text-decoration: none;">Ticket Oluştur</a>
+                    <div class="benefit-title tr-text">Destek Talebi</div>
+                    <div class="benefit-title en-text" style="display:none;">Support Ticket</div>
+                    <a href="help.html" class="tr-text" style="color: var(--neon-cyan); text-decoration: none;">Ticket
+                        Oluştur</a>
+                    <a href="help.html" class="en-text"
+                        style="color: var(--neon-cyan); text-decoration: none; display:none;">Create Ticket</a>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">🐛</div>
-                    <div class="benefit-title">Bug Bildirimi</div>
+                    <div class="benefit-title tr-text">Bug Bildirimi</div>
+                    <div class="benefit-title en-text" style="display:none;">Bug Report</div>
                     <a href="mailto:security@cyberex.com.tr"
                         style="color: var(--neon-cyan); text-decoration: none;">security@cyberex.com.tr</a>
                 </div>
             </div>
         </section>
 
-        <!-- Legal Links -->
-        <section class="section">
-            <h2><i class="fas fa-file-contract"></i> Yasal Belgeler</h2>
-            <p>Daha fazla bilgi için lütfen aşağıdaki belgeleri inceleyin:</p>
-            <ul>
-                <li>📄 <a href="terms.html" style="color: var(--neon-cyan);">Kullanım Şartları</a></li>
-                <li>🔒 <a href="privacy.html" style="color: var(--neon-cyan);">Gizlilik Politikası</a></li>
-                <li>⚠️ <a href="risk.html" style="color: var(--neon-cyan);">Risk Bildirimi</a></li>
-                <li>⚖️ <a href="legal.html" style="color: var(--neon-cyan);">Yasal Uyarı</a></li>
-            </ul>
-        </section>
-
-        <!-- Governing Law -->
-        <section class="section">
-            <h2><i class="fas fa-gavel"></i> Yasal Çerçeve</h2>
-            <p>
-                <strong>Geçerli Hukuk:</strong> Türkiye Cumhuriyeti Yasaları<br>
-                <strong>Yetki:</strong> Türkiye Cumhuriyeti Mahkemeleri<br>
-                <strong>Düzenleyici Otorite:</strong> SPK (Sermaye Piyasası Kurulu)<br>
-                <strong>Veri Koruma:</strong> KVKK Uyumlu
-            </p>
-        </section>
-
         <!-- Thank You -->
         <section class="section" style="text-align: center; background: var(--beta-gradient);">
-            <h2 style="color: #fff;"><i class="fas fa-heart"></i> Teşekkürler!</h2>
-            <p style="color: #fff; font-size: 1.1rem;">
-                CyberEx Beta Test Programı'na katıldığınız için teşekkür ederiz!<br>
-                Geri bildirimleriniz bizim için çok değerli.
-            </p>
+            <h2 style="color: #fff;"><i class="fas fa-heart"></i> <span class="tr-text">Teşekkürler!</span><span
+                    class="en-text" style="display:none;">Thank You!</span></h2>
+            <div class="tr-text">
+                <p style="color: #fff; font-size: 1.1rem;">
+                    CyberEx Beta Test Programı'na katıldığınız için teşekkür ederiz!<br>
+                    Geri bildirimleriniz bizim için çok değerli.
+                </p>
+            </div>
+            <div class="en-text" style="display:none;">
+                <p style="color: #fff; font-size: 1.1rem;">
+                    Thank you for joining the CyberEx Beta Test Program!<br>
+                    Your feedback is very valuable to us.
+                </p>
+            </div>
         </section>
 
     </main>
 
     <!-- Footer -->
-    <footer class="footer">
-        <p>© 2024-2026 CyberEx Technology Inc. All Rights Reserved.</p>
-        <p style="margin-top: 10px;">
-            <strong>Son Güncelleme:</strong> 25 Ocak 2026 |
-            <strong>Versiyon:</strong> BETA v1.3.9
+    <div class="footer-links">
+        <p class="tr-text" style="color: #666; margin-bottom: 20px;">
+            © 2024-2026 CyberEx Teknoloji A.Ş. | Son Güncelleme: 26 Ocak 2026<br>
+            <span class="status-badge">BETA TEST</span>
+            <span class="status-badge" style="background: linear-gradient(135deg, #4CAF50, #2E7D32);">SPK LİSANS
+                SÜRECİ</span>
         </p>
-    </footer>
+        <p class="en-text" style="color: #666; margin-bottom: 20px; display:none;">
+            © 2024-2026 CyberEx Technology Inc. | Last Updated: January 26, 2026<br>
+            <span class="status-badge">BETA TEST</span>
+            <span class="status-badge" style="background: linear-gradient(135deg, #4CAF50, #2E7D32);">SPK LICENSE
+                PENDING</span>
+        </p>
+
+        <p class="tr-text">
+            <a href="index.html">Ana Sayfa</a> |
+            <a href="terms.html">Kullanım Şartları</a> |
+            <a href="legal.html">Yasal Uyarı</a> |
+            <a href="privacy.html">Gizlilik Politikası</a> |
+            <a href="kvkk.html">KVKK Metni</a> |
+            <a href="security.html">Güvenlik Raporu</a> |
+            <a href="risk.html">Risk Bildirimi</a> |
+            <a href="cookie-policy.html">Çerez Politikası</a> |
+            <a href="disclaimer.html">Beta Koşulları</a>
+        </p>
+        <p class="en-text" style="display:none;">
+            <a href="index.html">Home</a> |
+            <a href="terms.html">Terms of Service</a> |
+            <a href="legal.html">Legal Notice</a> |
+            <a href="privacy.html">Privacy Policy</a> |
+            <a href="kvkk.html">KVKK Notice</a> |
+            <a href="security.html">Security Report</a> |
+            <a href="risk.html">Risk Disclosure</a> |
+            <a href="cookie-policy.html">Cookie Policy</a> |
+            <a href="disclaimer.html">Beta Terms</a>
+        </p>
+    </div>
+
+    <script>
+        function switchLang(lang) {
+            if (lang === 'tr') {
+                document.querySelectorAll('.tr-text').forEach(el => el.style.display = '');
+                document.querySelectorAll('.en-text').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.lang-btn')[0].classList.add('active');
+                document.querySelectorAll('.lang-btn')[1].classList.remove('active');
+            } else {
+                document.querySelectorAll('.tr-text').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.en-text').forEach(el => el.style.display = '');
+                document.querySelectorAll('.lang-btn')[0].classList.remove('active');
+                document.querySelectorAll('.lang-btn')[1].classList.add('active');
+            }
+            localStorage.setItem('lang', lang);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('lang') || 'tr';
+            if (savedLang === 'en') switchLang('en');
+        });
+    </script>
 
 </body>
 

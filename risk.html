@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Risk Bildirimi | CyberEx - Kripto Para Ticaret Riskleri</title>
+    <title>Risk Bildirimi | Risk Disclosure | CyberEx</title>
 
     <!-- SEO -->
     <meta name="description"
@@ -60,6 +60,26 @@
 
         .nav-logo {
             height: 35px;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: 0.3s;
+            margin: 0 3px;
+        }
+
+        .lang-btn:hover,
+        .lang-btn.active {
+            background: var(--neon-red);
+            color: #fff;
+            font-weight: 700;
+            border-color: var(--neon-red);
         }
 
         .container {
@@ -172,11 +192,25 @@
         .footer-links a {
             color: #00f0ff;
             text-decoration: none;
-            margin: 0 15px;
+            margin: 0 10px;
+            font-size: 0.9rem;
+            transition: 0.3s;
         }
 
         .footer-links a:hover {
             text-decoration: underline;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #FF9800, #F57C00);
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin: 0 10px;
+            color: #fff;
         }
     </style>
 </head>
@@ -184,293 +218,656 @@
 <body>
     <nav class="navbar">
         <a href="index.html"><img src="cyberex-logo.png" alt="CyberEx" class="nav-logo"></a>
-        <div style="font-weight: 800; color: var(--neon-red); letter-spacing: 1px;">⚠️ RİSK BİLDİRİMİ</div>
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <div style="font-weight: 800; color: var(--neon-red); letter-spacing: 1px;">
+                <span class="tr-text">⚠️ RİSK BİLDİRİMİ</span>
+                <span class="en-text" style="display:none;">⚠️ RISK DISCLOSURE</span>
+            </div>
+            <div>
+                <button class="lang-btn active" onclick="switchLang('tr')">TR</button>
+                <button class="lang-btn" onclick="switchLang('en')">EN</button>
+            </div>
+        </div>
     </nav>
 
     <div class="container">
-        <h1>⚠️ Risk Bildirimi</h1>
+        <h1 class="tr-text">⚠️ Risk Bildirimi</h1>
+        <h1 class="en-text" style="display:none;">⚠️ Risk Disclosure</h1>
+
         <div class="meta">
-            <strong>Belge Türü:</strong> Yasal Risk Açıklaması ve Y atırımcı Uyarısı<br>
-            <strong>Son Güncelleme:</strong> 26 Ocak 2026<br>
-            <strong>Geçerlilik:</strong> Tüm CyberEx Platform Kullanıcıları
+            <span class="tr-text">
+                <strong>Belge Türü:</strong> Yasal Risk Açıklaması ve Yatırımcı Uyarısı<br>
+                <strong>Son Güncelleme:</strong> 26 Ocak 2026<br>
+                <strong>Geçerlilik:</strong> Tüm CyberEx Platform Kullanıcıları
+            </span>
+            <span class="en-text" style="display:none;">
+                <strong>Document Type:</strong> Legal Risk Fact Sheet and Investor Warning<br>
+                <strong>Last Updated:</strong> January 26, 2026<br>
+                <strong>Validity:</strong> All CyberEx Platform Users
+            </span>
         </div>
 
         <!-- CRITICAL WARNING -->
         <div class="critical-warning">
-            <h2>🚨 KRİTİK UYARI 🚨</h2>
-            <p style="font-size: 1.4rem; margin: 20px 0;">
+            <h2 class="tr-text">🚨 KRİTİK UYARI 🚨</h2>
+            <h2 class="en-text" style="display:none;">🚨 CRITICAL WARNING 🚨</h2>
+
+            <p class="tr-text" style="font-size: 1.4rem; margin: 20px 0;">
                 <strong>KRİPTO PARA TİCARETİ SON DERECE YÜKSEK RİSK İÇERİR!</strong>
             </p>
-            <p>
+            <p class="en-text" style="font-size: 1.4rem; margin: 20px 0; display:none;">
+                <strong>CRYPTOCURRENCY TRADING INVOLVES EXTREMELY HIGH RISK!</strong>
+            </p>
+
+            <p class="tr-text">
                 Yatırımınızın %100'ünü kaybedebilirsiniz. Sadece kaybetmeyi göze alabileceğiniz tutarları yatırın.
+            </p>
+            <p class="en-text" style="display:none;">
+                You may lose 100% of your investment. Invest only amounts you can afford to lose.
             </p>
         </div>
 
         <!-- Beta Notice -->
         <div class="info-box">
-            <h3 style="color: #667eea;">🚀 Beta Program Durumu</h3>
-            <p>
-                CyberEx şu anda <strong>BETA test aşamasındadır</strong>. SPK lisans başvurusu devam etmektedir (Q2 2026
-                hedefi).
-                Beta kullanıcılar erken erişim avantajlarından yararlanır ancak platform özellikleri değişebilir.
-                Detaylar: <a href="disclaimer.html" style="color: #00f0ff;">Beta Koşulları</a>
-            </p>
+            <h3 style="color: #667eea; margin-top: 0;" class="tr-text">🚀 Beta Program Durumu</h3>
+            <h3 style="color: #667eea; margin-top: 0; display:none;" class="en-text">🚀 Beta Program Status</h3>
+
+            <div class="tr-text">
+                <p>
+                    CyberEx şu anda <strong>BETA test aşamasındadır</strong>. SPK lisans başvurusu devam etmektedir (Q2
+                    2026 hedefi).
+                    Beta kullanıcılar erken erişim avantajlarından yararlanır ancak platform özellikleri değişebilir.
+                    Detaylar: <a href="disclaimer.html" style="color: #00f0ff;">Beta Koşulları</a>
+                </p>
+            </div>
+            <div class="en-text" style="display:none;">
+                <p>
+                    CyberEx is currently in <strong>BETA testing phase</strong>. SPK license application is ongoing
+                    (Target Q2 2026).
+                    Beta users enjoy early access benefits but platform features may change.
+                    Details: <a href="disclaimer.html" style="color: #00f0ff;">Beta Terms</a>
+                </p>
+            </div>
         </div>
 
-        <!-- 1. GENEL RİSK AÇIKLAMASI -->
-        <h2>1. GENEL RİSK AÇIKLAMASI</h2>
-        <p>
-            Bu Risk Bildirimi, <strong>kripto para ve dijital varlık ticaretinin doğasında bulunan riskleri</strong>
-            açıklamaktadır. CyberEx platformunu kullanmadan önce bu belgeyi dikkatlice okumanız ve anlamanız kritik
-            öneme sahiptir.
-        </p>
-        <p><strong>Temel Riskler:</strong></p>
-        <ul>
-            <li>✘ <strong>Tam Sermaye Kaybı Riski:</strong> Yatırımınızın tamamını kaybedebilirsiniz</li>
-            <li>✘ <strong>Yüksek Volatilite:</strong> Fiyatlar saatler/dakikalar içinde %50+ değişebilir</li>
-            <li>✘ <strong>Likidite Riski:</strong> Varlıklarınızı satamayabilir veya istediğiniz fiyattan çıkış
-                yapamayabilirsiniz</li>
-            <li>✘ <strong>Karşı Taraf Riski:</strong> Platform veya üçüncü tarafların iflası</li>
-            <li>✘ <strong>Düzenleyici Risk:</strong> Ani yasaklar veya kısıtlamalar</li>
-            <li>✘ <strong>Teknolojik Risk:</strong> Hack, hırsızlık, sistem arızaları</li>
-        </ul>
+        <!-- 1. GENERAL RISK -->
+        <h2 class="tr-text">1. GENEL RİSK AÇIKLAMASI</h2>
+        <h2 class="en-text" style="display:none;">1. GENERAL RISK DISCLOSURE</h2>
 
-        <!-- 2. PİYASA RİSKLERİ -->
-        <h2>2. PİYASA RİSKLERİ</h2>
-        <h3>2.1. Ekstrem Volatilite</h3>
-        <p>
-            Kripto para piyasasının volatilitesi, geleneksel finansal piyasalardan <strong>50-100 kat daha
-                yüksektir.</strong>
-        </p>
-        <div class="warning-box">
-            <p><strong>Gerçek Örnekler:</strong></p>
+        <div class="tr-text">
+            <p>
+                Bu Risk Bildirimi, <strong>kripto para ve dijital varlık ticaretinin doğasında bulunan riskleri</strong>
+                açıklamaktadır. CyberEx platformunu kullanmadan önce bu belgeyi dikkatlice okumanız ve anlamanız kritik
+                öneme sahiptir.
+            </p>
+            <p><strong>Temel Riskler:</strong></p>
             <ul>
-                <li>Bitcoin 2021'de $69,000'den $15,000'e düştü (-%78)</li>
-                <li>Bazı altcoinler %90-99 değer kaybetti</li>
-                <li>Günlük %20-30 dalgalanmalar normaldir</li>
+                <li>✘ <strong>Tam Sermaye Kaybı Riski:</strong> Yatırımınızın tamamını kaybedebilirsiniz</li>
+                <li>✘ <strong>Yüksek Volatilite:</strong> Fiyatlar saatler/dakikalar içinde %50+ değişebilir</li>
+                <li>✘ <strong>Likidite Riski:</strong> Varlıklarınızı satamayabilir veya istediğiniz fiyattan çıkış
+                    yapamayabilirsiniz</li>
+                <li>✘ <strong>Karşı Taraf Riski:</strong> Platform veya üçüncü tarafların iflası</li>
+                <li>✘ <strong>Düzenleyici Risk:</strong> Ani yasaklar veya kısıtlamalar</li>
+                <li>✘ <strong>Teknolojik Risk:</strong> Hack, hırsızlık, sistem arızaları</li>
             </ul>
         </div>
 
-        <h3>2.2. Likidite Riski</h3>
-        <p>Düşük hacimli varlıklarda:</p>
-        <ul>
-            <li>Satış yapmak zor olabilir</li>
-            <li>Spread (alış-satış farkı) çok yüksek olabilir</li>
-            <li>Büyük emirler fiyatı önemli ölçüde etkileyebilir</li>
-            <li>"Flash crash" (ani çöküş) riski vardır</li>
-        </ul>
-
-        <h3>2.3. Piyasa Manipülasyonu</h3>
-        <p>Kripto piyasaları manipülasyona açıktır:</p>
-        <ul>
-            <li><strong>Pump and Dump:</strong> Koordineli fiyat manipülasyonu</li>
-            <li><strong>Wash Trading:</strong> Sahte işlem hacmi yaratma</li>
-            <li><strong>Spoofing:</strong> Sahte emir yerleştirme</li>
-            <li><strong>Whale (Balina) Hareketleri:</strong> Büyük yatırımcıların piyasa etkisi</li>
-        </ul>
-
-        <!-- 3. OPERASYONEL RİSKLER -->
-        <h2>3. OPERASYONEL VE TEKNOLOJİK RİSKLER</h2>
-        <h3>3.1. Siber Güvenlik Riskleri</h3>
-        <p>Dijital varlıklar sürekli tehdit altındadır:</p>
-        <ul>
-            <li>🔒 Hesap hacklenmesi riski</li>
-            <li>🔒 Phishing saldırıları</li>
-            <li>🔒 Kötü amaçlı yazılım (malware)</li>
-            <li>🔒 SIM swap saldırıları</li>
-            <li>🔒 Man-in-the-middle saldırıları</li>
-        </ul>
-        <p><strong>Önlem:</strong> 2FA kullanın, şifrenizi kimseyle paylaşmayın, güvenli internet kullanın.</p>
-
-        <h3>3.2. Platform Riskleri</h3>
-        <ul>
-            <li>Teknik arızalar ve sistem kesintileri</li>
-            <li>İşlem gecikmeler i</li>
-            <li>Yanlış fiyat görüntülenmesi</li>
-            <li>API hataları</li>
-            <li>Bakım dönemlerinde erişim engeli</li>
-        </ul>
-
-        <h3>3.3. Blockchain Riskleri</h3>
-        <p>Blockchain ağlarında:</p>
-        <ul>
-            <li><strong>Geri Dönülemez İşlemler:</strong> Yanlış adrese gönderilen varlıklar kaybolur</li>
-            <li><strong>Network Conges tion:</strong> Yüksek gas fees ve gecikmeler</li>
-            <li><strong>Fork Riski:</strong> Blockchain bölünmeleri</li>
-            <li><strong>51% Saldırısı:</strong> Bazı küçük coinlerde mümkün</li>
-        </ul>
-
-        <!-- 4. DÜZENLEYİCİ RİSKLER -->
-        <h2>4. YASAL VE DÜZENLEYİCİ RİSKLER</h2>
-        <h3>4.1. Belirsiz Yasal Durum</h3>
-        <p>
-            Kripto para düzenlemeleri <strong>ülkeden ülkeye farklılık gösterir</strong> ve hızla değişmektedir:
-        </p>
-        <ul>
-            <li>Ani yasaklar uygulanabilir (Çin örneği)</li>
-            <li>Vergilendirme kuralları değişebilir</li>
-            <li>KYC/AML gereksinimleri artabilir</li>
-            <li>Bazı coinler "security" olarak sınıflandırılabilir</li>
-        </ul>
-
-        <h3>4.2. Türkiye'de Durum</h3>
-        <p>
-            CyberEx, <strong>SPK lisans başvurusu</strong> aşamasındadır (Q2 2026 hedefi). Lisans alınana kadar beta
-            test modunda hizmet verilmektedir. Düzenleyici çerçeve netleşene kadar belirsizlikler mevcuttur.
-        </p>
-
-        <!-- 5. VERGİ YÜKÜMLÜLÜĞÜ -->
-        <h2>5. VERGİ VE MUHASEBE RİSKLERİ</h2>
-        <p>
-            <strong>Kripto kazançlar vergiye tabidir.</strong> Kullanıcılar:
-        </p>
-        <ul>
-            <li>Kendi vergi yükümlülüklerini yerine getirmekle sorumludur</li>
-            <li>Her işlemi kayıt altında tutmalıdır</li>
-            <li>Profesyonel vergi danışmanı ile görüşmelidir</li>
-            <li>Vergi kaçırma suçtur ve ağır yaptırımları vardır</li>
-        </ul>
-
-        <!-- 6. ÖZEL RİSK ÇEŞITLERI -->
-        <h2>6. ÖZEL RİSK ÇEŞITLERI</h2>
-
-        <h3>6.1. Stablecoin Riski</h3>
-        <div class="warning-box">
+        <div class="en-text" style="display:none;">
             <p>
-                Stablecoinler "stabil" değildir! UST/Luna çöküşü örneğinde görüldüğü gibi, algoritmik stablecoinler
-                çökebilir.
-                USDT/USDC gibi fiat-backed stablecoinler de rezerv sorunları yaşayabilir.
+                This Risk Disclosure explains the <strong>inherent risks of cryptocurrency and digital asset
+                    trading</strong>.
+                It is critically important that you read and understand this document carefully before using the CyberEx
+                platform.
+            </p>
+            <p><strong>Key Risks:</strong></p>
+            <ul>
+                <li>✘ <strong>Risk of Total Capital Loss:</strong> You may lose your entire investment</li>
+                <li>✘ <strong>High Volatility:</strong> Prices can change by 50%+ within hours/minutes</li>
+                <li>✘ <strong>Liquidity Risk:</strong> You may not be able to sell assets or exit at desired price</li>
+                <li>✘ <strong>Counterparty Risk:</strong> Bankruptcy of platform or third parties</li>
+                <li>✘ <strong>Regulatory Risk:</strong> Sudden bans or restrictions</li>
+                <li>✘ <strong>Technological Risk:</strong> Hacks, theft, system failures</li>
+            </ul>
+        </div>
+
+        <!-- 2. MARKET RISKS -->
+        <h2 class="tr-text">2. PİYASA RİSKLERİ</h2>
+        <h2 class="en-text" style="display:none;">2. MARKET RISKS</h2>
+
+        <div class="tr-text">
+            <h3>2.1. Ekstrem Volatilite</h3>
+            <p>
+                Kripto para piyasasının volatilitesi, geleneksel finansal piyasalardan <strong>50-100 kat daha
+                    yüksektir.</strong>
+            </p>
+            <div class="warning-box">
+                <p><strong>Gerçek Örnekler:</strong></p>
+                <ul>
+                    <li>Bitcoin 2021'de $69,000'den $15,000'e düştü (-%78)</li>
+                    <li>Bazı altcoinler %90-99 değer kaybetti</li>
+                    <li>Günlük %20-30 dalgalanmalar normaldir</li>
+                </ul>
+            </div>
+
+            <h3>2.2. Likidite Riski</h3>
+            <p>Düşük hacimli varlıklarda:</p>
+            <ul>
+                <li>Satış yapmak zor olabilir</li>
+                <li>Spread (alış-satış farkı) çok yüksek olabilir</li>
+                <li>Büyük emirler fiyatı önemli ölçüde etkileyebilir</li>
+                <li>"Flash crash" (ani çöküş) riski vardır</li>
+            </ul>
+
+            <h3>2.3. Piyasa Manipülasyonu</h3>
+            <p>Kripto piyasaları manipülasyona açıktır:</p>
+            <ul>
+                <li><strong>Pump and Dump:</strong> Koordineli fiyat manipülasyonu</li>
+                <li><strong>Wash Trading:</strong> Sahte işlem hacmi yaratma</li>
+                <li><strong>Spoofing:</strong> Sahte emir yerleştirme</li>
+                <li><strong>Whale (Balina) Hareketleri:</strong> Büyük yatırımcıların piyasa etkisi</li>
+            </ul>
+        </div>
+
+        <div class="en-text" style="display:none;">
+            <h3>2.1. Extreme Volatility</h3>
+            <p>
+                The volatility of the cryptocurrency market is <strong>50-100 times higher</strong> than traditional
+                financial markets.
+            </p>
+            <div class="warning-box">
+                <p><strong>Real Examples:</strong></p>
+                <ul>
+                    <li>Bitcoin dropped from $69,000 to $15,000 in 2021 (-78%)</li>
+                    <li>Some altcoins lost 90-99% value</li>
+                    <li>Daily 20-30% fluctuations are normal</li>
+                </ul>
+            </div>
+
+            <h3>2.2. Liquidity Risk</h3>
+            <p>In low volume assets:</p>
+            <ul>
+                <li>Selling might be difficult</li>
+                <li>Spread (buy-sell difference) can be very high</li>
+                <li>Large orders can significantly impact price</li>
+                <li>Risk of "Flash crash" exists</li>
+            </ul>
+
+            <h3>2.3. Market Manipulation</h3>
+            <p>Crypto markets are open to manipulation:</p>
+            <ul>
+                <li><strong>Pump and Dump:</strong> Coordinated price manipulation</li>
+                <li><strong>Wash Trading:</strong> Creating fake volume</li>
+                <li><strong>Spoofing:</strong> Placing fake orders</li>
+                <li><strong>Whale Movements:</strong> Market impact of large investors</li>
+            </ul>
+        </div>
+
+        <!-- 3. OPERATIONAL RISKS -->
+        <h2 class="tr-text">3. OPERASYONEL VE TEKNOLOJİK RİSKLER</h2>
+        <h2 class="en-text" style="display:none;">3. OPERATIONAL AND TECHNOLOGICAL RISKS</h2>
+
+        <div class="tr-text">
+            <h3>3.1. Siber Güvenlik Riskleri</h3>
+            <p>Dijital varlıklar sürekli tehdit altındadır:</p>
+            <ul>
+                <li>🔒 Hesap hacklenmesi riski</li>
+                <li>🔒 Phishing saldırıları</li>
+                <li>🔒 Kötü amaçlı yazılım (malware)</li>
+                <li>🔒 SIM swap saldırıları</li>
+                <li>🔒 Man-in-the-middle saldırıları</li>
+            </ul>
+            <p><strong>Önlem:</strong> 2FA kullanın, şifrenizi kimseyle paylaşmayın, güvenli internet kullanın.</p>
+
+            <h3>3.2. Platform Riskleri</h3>
+            <ul>
+                <li>Teknik arızalar ve sistem kesintileri</li>
+                <li>İşlem gecikmeleri</li>
+                <li>Yanlış fiyat görüntülenmesi</li>
+                <li>API hataları</li>
+                <li>Bakım dönemlerinde erişim engeli</li>
+            </ul>
+
+            <h3>3.3. Blockchain Riskleri</h3>
+            <p>Blockchain ağlarında:</p>
+            <ul>
+                <li><strong>Geri Dönülemez İşlemler:</strong> Yanlış adrese gönderilen varlıklar kaybolur</li>
+                <li><strong>Network Congestion:</strong> Yüksek gas fees ve gecikmeler</li>
+                <li><strong>Fork Riski:</strong> Blockchain bölünmeleri</li>
+                <li><strong>51% Saldırısı:</strong> Bazı küçük coinlerde mümkün</li>
+            </ul>
+        </div>
+
+        <div class="en-text" style="display:none;">
+            <h3>3.1. Cybersecurity Risks</h3>
+            <p>Digital assets are under constant threat:</p>
+            <ul>
+                <li>🔒 Account hacking risk</li>
+                <li>🔒 Phishing attacks</li>
+                <li>🔒 Malware</li>
+                <li>🔒 SIM swap attacks</li>
+                <li>🔒 Man-in-the-middle attacks</li>
+            </ul>
+            <p><strong>Precaution:</strong> Use 2FA, never share your password, use secure internet.</p>
+
+            <h3>3.2. Platform Risks</h3>
+            <ul>
+                <li>Technical failures and system outages</li>
+                <li>Transaction delays</li>
+                <li>Incorrect price display</li>
+                <li>API errors</li>
+                <li>Access blocking during maintenance</li>
+            </ul>
+
+            <h3>3.3. Blockchain Risks</h3>
+            <p>In blockchain networks:</p>
+            <ul>
+                <li><strong>Irreversible Transactions:</strong> Assets sent to wrong address are lost</li>
+                <li><strong>Network Congestion:</strong> High gas fees and delays</li>
+                <li><strong>Fork Risk:</strong> Blockchain splits</li>
+                <li><strong>51% Attack:</strong> Possible in some small coins</li>
+            </ul>
+        </div>
+
+        <!-- 4. REGULATORY RISKS -->
+        <h2 class="tr-text">4. YASAL VE DÜZENLEYİCİ RİSKLER</h2>
+        <h2 class="en-text" style="display:none;">4. LEGAL AND REGULATORY RISKS</h2>
+
+        <div class="tr-text">
+            <h3>4.1. Belirsiz Yasal Durum</h3>
+            <p>
+                Kripto para düzenlemeleri <strong>ülkeden ülkeye farklılık gösterir</strong> ve hızla değişmektedir:
+            </p>
+            <ul>
+                <li>Ani yasaklar uygulanabilir (Çin örneği)</li>
+                <li>Vergilendirme kuralları değişebilir</li>
+                <li>KYC/AML gereksinimleri artabilir</li>
+                <li>Bazı coinler "security" olarak sınıflandırılabilir</li>
+            </ul>
+
+            <h3>4.2. Türkiye'de Durum</h3>
+            <p>
+                CyberEx, <strong>SPK lisans başvurusu</strong> aşamasındadır (Q2 2026 hedefi). Lisans alınana kadar beta
+                test modunda hizmet verilmektedir. Düzenleyici çerçeve netleşene kadar belirsizlikler mevcuttur.
             </p>
         </div>
 
-        <h3>6.2. DeFi Riskleri</h3>
-        <ul>
-            <li><strong>Smart Contract Hataları:</strong> Kod açıkları</li>
-            <li><strong>Impermanent Loss:</strong> Likidite havuzlarında kayıp</li>
-            <li><strong>Rug Pull:</strong> Geliştirici ekibin kaçması</li>
-            <li><strong>Flash Loan Saldırıları</strong></li>
-        </ul>
-
-        <h3>6.3. NFT Riskleri</h3>
-        <ul>
-            <li>Spekülatif balonlar</li>
-            <li>Likidite neredeyse yok</li>
-            <li>Telif hakkı sorunları</li>
-            <li>Metadata kaybolabilir</li>
-        </ul>
-
-        <!-- 7. PSİKOLOJİK RİSKLER -->
-        <h2>7. PSİKOLOJİK VE DAVRANIŞSAL RİSKLER</h2>
-        <p>Yatırımcılar şu psikolojik hatalar yapabilir:</p>
-        <ul>
-            <li><strong>FOMO (Fear of Missing Out):</strong> Tepede alış yapma</li>
-            <li><strong>FUD (Fear, Uncertainty, Doubt):</strong> Panik satış</li>
-            <li><strong>Overtrading:</strong> Aşırı işlem yapma</li>
-            <li><strong>Revenge Trading:</strong> Kaybı telafi etmeye çalışma</li>
-            <li><strong>Confirmation Bias:</strong> Sadece destekleyen bilgileri görme</li>
-        </ul>
-
-        <!-- 8. KALDIRAÇLI İŞLEM RİSKLERİ -->
-        <h2>8. KALDIRAÇLI İŞLEM (LEVERAGE) RİSKLERİ</h2>
-        <div class="critical-warning" style="margin: 30px 0;">
-            <h2 style="font-size: 1.5rem;">⚠️ KALDIRAÇ KULLANIMI SON DERECE TEHLİKELİDİR</h2>
+        <div class="en-text" style="display:none;">
+            <h3>4.1. Uncertain Legal Status</h3>
             <p>
+                Cryptocurrency regulations <strong>vary from country to country</strong> and are changing rapidly:
+            </p>
+            <ul>
+                <li>Sudden bans may be applied (China example)</li>
+                <li>Taxation rules may change</li>
+                <li>KYC/AML requirements may increase</li>
+                <li>Some coins may be classified as "securities"</li>
+            </ul>
+
+            <h3>4.2. Situation in Turkey</h3>
+            <p>
+                CyberEx is in <strong>SPK license application</strong> stage (Target Q2 2026). Service is provided in
+                beta test mode until license is obtained. Uncertainties exist until regulatory framework becomes clear.
+            </p>
+        </div>
+
+        <!-- 5. TAX RISKS -->
+        <h2 class="tr-text">5. VERGİ VE MUHASEBE RİSKLERİ</h2>
+        <h2 class="en-text" style="display:none;">5. TAX AND ACCOUNTING RISKS</h2>
+
+        <div class="tr-text">
+            <p>
+                <strong>Kripto kazançlar vergiye tabidir.</strong> Kullanıcılar:
+            </p>
+            <ul>
+                <li>Kendi vergi yükümlülüklerini yerine getirmekle sorumludur</li>
+                <li>Her işlemi kayıt altında tutmalıdır</li>
+                <li>Profesyonel vergi danışmanı ile görüşmelidir</li>
+                <li>Vergi kaçırma suçtur ve ağır yaptırımları vardır</li>
+            </ul>
+        </div>
+        <div class="en-text" style="display:none;">
+            <p>
+                <strong>Crypto gains are subject to tax.</strong> Users:
+            </p>
+            <ul>
+                <li>Are responsible for fulfilling their own tax obligations</li>
+                <li>Must keep records of every transaction</li>
+                <li>Should consult with a professional tax advisor</li>
+                <li>Tax evasion is a crime and has heavy sanctions</li>
+            </ul>
+        </div>
+
+        <!-- 6. SPECIAL RISKS -->
+        <h2 class="tr-text">6. ÖZEL RİSK ÇEŞITLERI</h2>
+        <h2 class="en-text" style="display:none;">6. SPECIAL RISK TYPES</h2>
+
+        <div class="tr-text">
+            <h3>6.1. Stablecoin Riski</h3>
+            <div class="warning-box">
+                <p>
+                    Stablecoinler "stabil" değildir! UST/Luna çöküşü örneğinde görüldüğü gibi, algoritmik stablecoinler
+                    çökebilir.
+                    USDT/USDC gibi fiat-backed stablecoinler de rezerv sorunları yaşayabilir.
+                </p>
+            </div>
+
+            <h3>6.2. DeFi Riskleri</h3>
+            <ul>
+                <li><strong>Smart Contract Hataları:</strong> Kod açıkları</li>
+                <li><strong>Impermanent Loss:</strong> Likidite havuzlarında kayıp</li>
+                <li><strong>Rug Pull:</strong> Geliştirici ekibin kaçması</li>
+                <li><strong>Flash Loan Saldırıları</strong></li>
+            </ul>
+
+            <h3>6.3. NFT Riskleri</h3>
+            <ul>
+                <li>Spekülatif balonlar</li>
+                <li>Likidite neredeyse yok</li>
+                <li>Telif hakkı sorunları</li>
+                <li>Metadata kaybolabilir</li>
+            </ul>
+        </div>
+
+        <div class="en-text" style="display:none;">
+            <h3>6.1. Stablecoin Risk</h3>
+            <div class="warning-box">
+                <p>
+                    Stablecoins are not "stable"! As seen in UST/Luna crash, algorithmic stablecoins can collapse.
+                    Fiat-backed stablecoins like USDT/USDC may also experience reserve issues.
+                </p>
+            </div>
+
+            <h3>6.2. DeFi Risks</h3>
+            <ul>
+                <li><strong>Smart Contract Errors:</strong> Code vulnerabilities</li>
+                <li><strong>Impermanent Loss:</strong> Loss in liquidity pools</li>
+                <li><strong>Rug Pull:</strong> Developer team running away</li>
+                <li><strong>Flash Loan Attacks</strong></li>
+            </ul>
+
+            <h3>6.3. NFT Risks</h3>
+            <ul>
+                <li>Speculative bubbles</li>
+                <li>Almost no liquidity</li>
+                <li>Copyright issues</li>
+                <li>Metadata can be lost</li>
+            </ul>
+        </div>
+
+        <!-- 7. PSYCHOLOGICAL RISKS -->
+        <h2 class="tr-text">7. PSİKOLOJİK VE DAVRANIŞSAL RİSKLER</h2>
+        <h2 class="en-text" style="display:none;">7. PSYCHOLOGICAL AND BEHAVIORAL RISKS</h2>
+
+        <div class="tr-text">
+            <p>Yatırımcılar şu psikolojik hatalar yapabilir:</p>
+            <ul>
+                <li><strong>FOMO (Fear of Missing Out):</strong> Tepede alış yapma</li>
+                <li><strong>FUD (Fear, Uncertainty, Doubt):</strong> Panik satış</li>
+                <li><strong>Overtrading:</strong> Aşırı işlem yapma</li>
+                <li><strong>Revenge Trading:</strong> Kaybı telafi etmeye çalışma</li>
+                <li><strong>Confirmation Bias:</strong> Sadece destekleyen bilgileri görme</li>
+            </ul>
+        </div>
+        <div class="en-text" style="display:none;">
+            <p>Investors can make the following psychological mistakes:</p>
+            <ul>
+                <li><strong>FOMO (Fear of Missing Out):</strong> Buying at the top</li>
+                <li><strong>FUD (Fear, Uncertainty, Doubt):</strong> Panic selling</li>
+                <li><strong>Overtrading:</strong> Trading excessively</li>
+                <li><strong>Revenge Trading:</strong> Trying to recover losses</li>
+                <li><strong>Confirmation Bias:</strong> Seeing only supporting information</li>
+            </ul>
+        </div>
+
+        <!-- 8. LEVERAGE RISKS -->
+        <h2 class="tr-text">8. KALDIRAÇLI İŞLEM (LEVERAGE) RİSKLERİ</h2>
+        <h2 class="en-text" style="display:none;">8. LEVERAGED TRADING RISKS</h2>
+
+        <div class="critical-warning" style="margin: 30px 0;">
+            <h2 style="font-size: 1.5rem;" class="tr-text">⚠️ KALDIRAÇ KULLANIMI SON DERECE TEHLİKELİDİR</h2>
+            <h2 style="font-size: 1.5rem; display:none;" class="en-text">⚠️ LEVERAGE USAGE IS EXTREMELY DANGEROUS</h2>
+
+            <p class="tr-text">
                 Yüksek kaldıraç kullanımı (10x, 50x, 100x) sermayenizin <strong>anlık olarak yok olmasına</strong> neden
                 olabilir.
             </p>
+            <p class="en-text" style="display:none;">
+                High leverage usage (10x, 50x, 100x) can cause your capital to be <strong>instantly wiped out</strong>.
+            </p>
         </div>
-        <p><strong>Leverage Riskleri:</strong></p>
-        <ul>
-            <li>Liquidation (tasfiye) riski çok yüksek</li>
-            <li>Küçük fiyat hareketleri büyük kayıplara yol açar</li>
-            <li>Funding fees maliyeti artırır</li>
-            <li>%95+ yatırımcı leverage'da kaybeder</li>
-        </ul>
-        <p><strong>Tavsiye:</strong> Deneyimsizseniz kaldıraç kullanmayın.</p>
 
-        <!-- 9. CYBEREX SORUMLULUK REDDİ -->
-        <h2>9. CYBEREX SORUMLULUK REDDİ</h2>
-        <p><strong>CyberEx Platform, aşağıdaki durumlardan SORUMLU DEĞİLDİR:</strong></p>
-        <ol>
-            <li>Piyasa fiyat hareketlerinden doğan kayıplar</li>
-            <li>Kullanıcının yanlış kararlarından kaynaklanan zararlar</li>
-            <li>Blockchain ağlarındaki gecikmeler ve sorunlar</li>
-            <li>Üçüncü taraf hizmet sağlayıcılarının hataları</li>
-            <li>Hacker saldırıları (kullanıcının kendi cihazına)</li>
-            <li>İnternet kesintisi veya sistem arızaları</li>
-            <li>Düzenleyici değişiklikler</li>
-            <li>Force majeure (doğal afet, savaş vb.)</li>
-        </ol>
+        <div class="tr-text">
+            <p><strong>Leverage Riskleri:</strong></p>
+            <ul>
+                <li>Liquidation (tasfiye) riski çok yüksek</li>
+                <li>Küçük fiyat hareketleri büyük kayıplara yol açar</li>
+                <li>Funding fees maliyeti artırır</li>
+                <li>%95+ yatırımcı leverage'da kaybeder</li>
+            </ul>
+            <p><strong>Tavsiye:</strong> Deneyimsizseniz kaldıraç kullanmayın.</p>
+        </div>
+        <div class="en-text" style="display:none;">
+            <p><strong>Leverage Risks:</strong></p>
+            <ul>
+                <li>Very high liquidation risk</li>
+                <li>Small price movements lead to huge losses</li>
+                <li>Funding fees increase cost</li>
+                <li>95%+ investors lose in leverage</li>
+            </ul>
+            <p><strong>Advice:</strong> Do not use leverage if inexperienced.</p>
+        </div>
 
-        <p><strong>Platform Taahhütleri:</strong></p>
-        <ul>
-            <li>✅ Güvenlik sistemleri sürekli güncellenir</li>
-            <li>✅ Kullanıcı fonları cold storage'da korunur</li>
-            <li>✅ Düzenleyici uyum için çalışılır</li>
-            <li>✅ Şeffaf işlem kayıtları tutulur</li>
-        </ul>
+        <!-- 9. DISCLAIMER -->
+        <h2 class="tr-text">9. CYBEREX SORUMLULUK REDDİ</h2>
+        <h2 class="en-text" style="display:none;">9. CYBEREX DISCLAIMER</h2>
 
-        <!-- 10. YATIRIMCI SORUMLULUKLARI -->
-        <h2>10. YATIRIMCI SORUMLULUKLARI VE TAVSİYELER</h2>
-        <h3>10.1. Kendi Araştırmanızı Yapın (DYOR)</h3>
-        <p>
-            <strong>CyberEx finansal tavsiye vermez.</strong> Her yatırım kararı sizin sorumluluğunuzdadır. Lütfen:
-        </p>
-        <ul>
-            <li>Yatırım yapmadan önce kapsamlı araştırma yapın</li>
-            <li>Projenin whitepaper'ını okuyun</li>
-            <li>Ekibi ve ortakları araştırın</li>
-            <li>Teknik analizleri inceleyin</li>
-            <li>Profesyonel danışman ile görüşün</li>
-        </ul>
+        <div class="tr-text">
+            <p><strong>CyberEx Platform, aşağıdaki durumlardan SORUMLU DEĞİLDİR:</strong></p>
+            <ol>
+                <li>Piyasa fiyat hareketlerinden doğan kayıplar</li>
+                <li>Kullanıcının yanlış kararlarından kaynaklanan zararlar</li>
+                <li>Blockchain ağlarındaki gecikmeler ve sorunlar</li>
+                <li>Üçüncü taraf hizmet sağlayıcılarının hataları</li>
+                <li>Hacker saldırıları (kullanıcının kendi cihazına)</li>
+                <li>İnternet kesintisi veya sistem arızaları</li>
+                <li>Düzenleyici değişiklikler</li>
+                <li>Force majeure (doğal afet, savaş vb.)</li>
+            </ol>
 
-        <h3>10.2. Risk Yönetimi İlkeleri</h3>
-        <ol>
-            <li><strong>Diversifikasyon:</strong> Tüm yumurtaları bir sepete koymayın</li>
-            <li><strong>Stop-Loss Kullanın:</strong> Kayıplarınızı sınırlayın</li>
-            <li><strong>Pozisyon Boyutlandırma:</strong> Her işlemde sermayenizin küçük bir kısmını riske atın</li>
-            <li><strong>Duygusal Kararlardan Kaçının</strong></li>
-            <li><strong>Acele Etmeyin:</strong> FOMO'ya kapılmayın</li>
-        </ol>
+            <p><strong>Platform Taahhütleri:</strong></p>
+            <ul>
+                <li>✅ Güvenlik sistemleri sürekli güncellenir</li>
+                <li>✅ Kullanıcı fonları cold storage'da korunur</li>
+                <li>✅ Düzenleyici uyum için çalışılır</li>
+                <li>✅ Şeffaf işlem kayıtları tutulur</li>
+            </ul>
+        </div>
 
-        <h3>10.3. Güvenlik Tavsiyeleri</h3>
-        <ul>
-            <li>🔐 Güçlü şifre kullanın (12+ karakter, karışık)</li>
-            <li>🔐 2FA'yı mutlaka aktif edin</li>
-            <li>🔐 Şifrenizi kimseyle paylaşmayın</li>
-            <li>🔐 Phishing linklerine tıklamayın</li>
-            <li>🔐 Açık Wi-Fi'den işlem yapmayın</li>
-            <li>🔐 Büyük meblağları cold wallet'ta tutun</li>
-        </ul>
+        <div class="en-text" style="display:none;">
+            <p><strong>CyberEx Platform is NOT RESPONSIBLE for:</strong></p>
+            <ol>
+                <li>Losses arising from market price movements</li>
+                <li>Damages caused by user's wrong decisions</li>
+                <li>Delays and issues in blockchain networks</li>
+                <li>Errors of third party service providers</li>
+                <li>Hacker attacks (on user's own device)</li>
+                <li>Internet outage or system failures</li>
+                <li>Regulatory changes</li>
+                <li>Force majeure (natural disaster, war etc.)</li>
+            </ol>
 
-        <!-- 11. SONUÇ VE KABUL BEYANI -->
-        <h2>11. SONUÇ VE KABUL BEYANI</h2>
-        <div class="critical-warning">
-            <h2 style="font-size: 1.3rem;">ONAY VE KABUL</h2>
+            <p><strong>Platform Commitments:</strong></p>
+            <ul>
+                <li>✅ Security systems are constantly updated</li>
+                <li>✅ User funds are protected in cold storage</li>
+                <li>✅ Working towards regulatory compliance</li>
+                <li>✅ Transparent transaction records are kept</li>
+            </ul>
+        </div>
+
+        <!-- 10. INVESTOR RESPONSIBILITIES -->
+        <h2 class="tr-text">10. YATIRIMCI SORUMLULUKLARI VE TAVSİYELER</h2>
+        <h2 class="en-text" style="display:none;">10. INVESTOR RESPONSIBILITIES AND ADVICE</h2>
+
+        <div class="tr-text">
+            <h3>10.1. Kendi Araştırmanızı Yapın (DYOR)</h3>
             <p>
-                CyberEx platformunu kullanarak, <strong>bu Risk Bildirimini okuduğunuzu, anladığınızı ve tüm riskleri
-                    kabul ettiğinizi</strong> beyan edersiniz.
+                <strong>CyberEx finansal tavsiye vermez.</strong> Her yatırım kararı sizin sorumluluğunuzdadır. Lütfen:
             </p>
-            <p style="margin-top: 20px;">
-                Kripto para ticaretinin son derece riskli olduğunu, yatırımlarınızın tamamını kaybedebileceğinizi ve tüm
-                işlemlerin kendi sorumluluğunuzda olduğunu kabul edersiniz.
+            <ul>
+                <li>Yatırım yapmadan önce kapsamlı araştırma yapın</li>
+                <li>Projenin whitepaper'ını okuyun</li>
+                <li>Ekibi ve ortakları araştırın</li>
+                <li>Teknik analizleri inceleyin</li>
+                <li>Profesyonel danışman ile görüşün</li>
+            </ul>
+
+            <h3>10.2. Risk Yönetimi İlkeleri</h3>
+            <ol>
+                <li><strong>Diversifikasyon:</strong> Tüm yumurtaları bir sepete koymayın</li>
+                <li><strong>Stop-Loss Kullanın:</strong> Kayıplarınızı sınırlayın</li>
+                <li><strong>Pozisyon Boyutlandırma:</strong> Her işlemde sermayenizin küçük bir kısmını riske atın</li>
+                <li><strong>Duygusal Kararlardan Kaçının</strong></li>
+                <li><strong>Acele Etmeyin:</strong> FOMO'ya kapılmayın</li>
+            </ol>
+
+            <h3>10.3. Güvenlik Tavsiyeleri</h3>
+            <ul>
+                <li>🔐 Güçlü şifre kullanın (12+ karakter, karışık)</li>
+                <li>🔐 2FA'yı mutlaka aktif edin</li>
+                <li>🔐 Şifrenizi kimseyle paylaşmayın</li>
+                <li>🔐 Phishing linklerine tıklamayın</li>
+                <li>🔐 Açık Wi-Fi'den işlem yapmayın</li>
+                <li>🔐 Büyük meblağları cold wallet'ta tutun</li>
+            </ul>
+        </div>
+
+        <div class="en-text" style="display:none;">
+            <h3>10.1. Do Your Own Research (DYOR)</h3>
+            <p>
+                <strong>CyberEx does not provide financial advice.</strong> Every investment decision is your
+                responsibility. Please:
             </p>
+            <ul>
+                <li>Conduct comprehensive research before investing</li>
+                <li>Read the project's whitepaper</li>
+                <li>Research the team and partners</li>
+                <li>Examine technical analysis</li>
+                <li>Consult a professional advisor</li>
+            </ul>
+
+            <h3>10.2. Risk Management Principles</h3>
+            <ol>
+                <li><strong>Diversification:</strong> Don't put all eggs in one basket</li>
+                <li><strong>Use Stop-Loss:</strong> Limit your losses</li>
+                <li><strong>Position Sizing:</strong> Risk a small portion of capital per trade</li>
+                <li><strong>Avoid Emotional Decisions</strong></li>
+                <li><strong>Don't Rush:</strong> Don't fall for FOMO</li>
+            </ol>
+
+            <h3>10.3. Security Recommendations</h3>
+            <ul>
+                <li>🔐 Use strong password (12+ chars, mixed)</li>
+                <li>🔐 Must activate 2FA</li>
+                <li>🔐 Never share your password</li>
+                <li>🔐 Don't click phishing links</li>
+                <li>🔐 Don't trade on Public Wi-Fi</li>
+                <li>🔐 Keep large amounts in cold wallet</li>
+            </ul>
+        </div>
+
+        <!-- 11. CONCLUSION -->
+        <h2 class="tr-text">11. SONUÇ VE KABUL BEYANI</h2>
+        <h2 class="en-text" style="display:none;">11. CONCLUSION AND DECLARATION OF ACCEPTANCE</h2>
+
+        <div class="critical-warning">
+            <h2 style="font-size: 1.3rem;" class="tr-text">ONAY VE KABUL</h2>
+            <h2 style="font-size: 1.3rem; display:none;" class="en-text">APPROVAL AND ACCEPTANCE</h2>
+
+            <div class="tr-text">
+                <p>
+                    CyberEx platformunu kullanarak, <strong>bu Risk Bildirimini okuduğunuzu, anladığınızı ve tüm
+                        riskleri
+                        kabul ettiğinizi</strong> beyan edersiniz.
+                </p>
+                <p style="margin-top: 20px;">
+                    Kripto para ticaretinin son derece riskli olduğunu, yatırımlarınızın tamamını kaybedebileceğinizi ve
+                    tüm
+                    işlemlerin kendi sorumluluğunuzda olduğunu kabul edersiniz.
+                </p>
+            </div>
+            <div class="en-text" style="display:none;">
+                <p>
+                    By using the CyberEx platform, you declare that you have <strong>read, understood and accepted all
+                        risks in this Risk Disclosure</strong>.
+                </p>
+                <p style="margin-top: 20px;">
+                    You accept that cryptocurrency trading is extremely risky, you may lose all your investments, and
+                    all transactions are your own responsibility.
+                </p>
+            </div>
         </div>
 
         <div class="footer-links">
-            <p style="color: #666; margin-bottom: 20px;">
-                © 2024-2026 CyberEx Teknoloji A.Ş. | Son Güncelleme: 26 Ocak 2026
+            <p class="tr-text" style="color: #666; margin-bottom: 20px;">
+                © 2024-2026 CyberEx Teknoloji A.Ş. | Son Güncelleme: 26 Ocak 2026<br>
+                <span class="status-badge">BETA v1.3.9</span>
+                <span class="status-badge" style="background: linear-gradient(135deg, #FF9800, #F57C00);">SPK LİSANS
+                    SÜRECİ</span>
             </p>
-            <p>
+            <p class="en-text" style="color: #666; margin-bottom: 20px; display:none;">
+                © 2024-2026 CyberEx Technology Inc. | Last Updated: January 26, 2026<br>
+                <span class="status-badge">BETA v1.3.9</span>
+                <span class="status-badge" style="background: linear-gradient(135deg, #FF9800, #F57C00);">SPK LICENSE
+                    PENDING</span>
+            </p>
+
+            <p class="tr-text">
                 <a href="index.html">Ana Sayfa</a> |
                 <a href="terms.html">Kullanım Şartları</a> |
                 <a href="legal.html">Yasal Uyarı</a> |
-                <a href="privacy.html">Gizlilik</a> |
-                <a href="disclaimer.html">Beta Koşulları</a> |
-                <a href="kvkk.html">KVKK</a>
+                <a href="privacy.html">Gizlilik Politikası</a> |
+                <a href="kvkk.html">KVKK Metni</a> |
+                <a href="security.html">Güvenlik Raporu</a> |
+                <a href="risk.html">Risk Bildirimi</a> |
+                <a href="cookie-policy.html">Çerez Politikası</a> |
+                <a href="disclaimer.html">Beta Koşulları</a>
+            </p>
+            <p class="en-text" style="display:none;">
+                <a href="index.html">Home</a> |
+                <a href="terms.html">Terms of Service</a> |
+                <a href="legal.html">Legal Notice</a> |
+                <a href="privacy.html">Privacy Policy</a> |
+                <a href="kvkk.html">KVKK Notice</a> |
+                <a href="security.html">Security Report</a> |
+                <a href="risk.html">Risk Disclosure</a> |
+                <a href="cookie-policy.html">Cookie Policy</a> |
+                <a href="disclaimer.html">Beta Terms</a>
             </p>
         </div>
     </div>
+
+    <script>
+        function switchLang(lang) {
+            if (lang === 'tr') {
+                document.querySelectorAll('.tr-text').forEach(el => el.style.display = '');
+                document.querySelectorAll('.en-text').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.lang-btn')[0].classList.add('active');
+                document.querySelectorAll('.lang-btn')[1].classList.remove('active');
+            } else {
+                document.querySelectorAll('.tr-text').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.en-text').forEach(el => el.style.display = '');
+                document.querySelectorAll('.lang-btn')[0].classList.remove('active');
+                document.querySelectorAll('.lang-btn')[1].classList.add('active');
+            }
+            localStorage.setItem('lang', lang);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('lang') || 'tr';
+            if (savedLang === 'en') switchLang('en');
+        });
+    </script>
 </body>
 
 </html>

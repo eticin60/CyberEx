@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gizlilik Politikası | CyberEx - Veri Gizliliği ve Güvenliği</title>
+    <title>Gizlilik Politikası | Privacy Policy | CyberEx</title>
 
     <!-- SEO -->
     <meta name="description"
@@ -57,6 +57,26 @@
 
         .nav-logo {
             height: 35px;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: 0.3s;
+            margin: 0 3px;
+        }
+
+        .lang-btn:hover,
+        .lang-btn.active {
+            background: var(--neon-blue);
+            color: #fff;
+            font-weight: 700;
+            border-color: var(--neon-blue);
         }
 
         .container {
@@ -138,7 +158,25 @@
         .footer-links a {
             color: var(--neon-cyan);
             text-decoration: none;
-            margin: 0 15px;
+            margin: 0 10px;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin: 0 10px;
+            color: #fff;
         }
     </style>
 </head>
@@ -146,288 +184,526 @@
 <body>
     <nav class="navbar">
         <a href="index.html"><img src="cyberex-logo.png" alt="CyberEx" class="nav-logo"></a>
-        <div style="font-weight: 800; color: var(--neon-blue); letter-spacing: 1px;">🔐 GİZLİLİK POLİTİKASI</div>
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <div style="font-weight: 800; color: var(--neon-blue); letter-spacing: 1px;">
+                <span class="tr-text">🔐 GİZLİLİK POLİTİKASI</span>
+                <span class="en-text" style="display:none;">🔐 PRIVACY POLICY</span>
+            </div>
+            <div>
+                <button class="lang-btn active" onclick="switchLang('tr')">TR</button>
+                <button class="lang-btn" onclick="switchLang('en')">EN</button>
+            </div>
+        </div>
     </nav>
 
     <div class="container">
-        <h1>Gizlilik Politikası</h1>
+        <h1 class="tr-text">Gizlilik Politikası</h1>
+        <h1 class="en-text" style="display:none;">Privacy Policy</h1>
+
         <div class="meta">
-            <strong>Yürürlük Tarihi:</strong> 26 Ocak 2026<br>
-            <strong>Son Güncelleme:</strong> 26 Ocak 2026<br>
-            <strong>Kapsam:</strong> CyberEx Platform (Web + Mobil)
+            <span class="tr-text">
+                <strong>Yürürlük Tarihi:</strong> 26 Ocak 2026<br>
+                <strong>Son Güncelleme:</strong> 26 Ocak 2026<br>
+                <strong>Kapsam:</strong> CyberEx Platform (Web + Mobil)
+            </span>
+            <span class="en-text" style="display:none;">
+                <strong>Effective Date:</strong> January 26, 2026<br>
+                <strong>Last Updated:</strong> January 26, 2026<br>
+                <strong>Scope:</strong> CyberEx Platform (Web + Mobile)
+            </span>
         </div>
 
-        <!-- Giriş -->
+        <!-- Introduction -->
         <div class="info-box">
-            <h3 style="color: var(--neon-blue); margin-top: 0;">📋 Gizliliğiniz Bizim Önceliğimiz</h3>
-            <p>
+            <h3 style="color: var(--neon-blue); margin-top: 0;" class="tr-text">📋 Gizliliğiniz Bizim Önceliğimiz</h3>
+            <h3 style="color: var(--neon-blue); margin-top: 0; display:none;" class="en-text">📋 Your Privacy is Our
+                Priority</h3>
+
+            <p class="tr-text">
                 CyberEx Teknoloji A.Ş. olarak, kullanıcılarımızın gizliliğini ve kişisel verilerini korumayı en üst
                 düzeyde önemsiyoruz.
                 Bu Gizlilik Politikası, kişisel bilgilerinizin nasıl toplandığını, kullanıldığını, saklandığını ve
                 korunduğunu açıklar.
             </p>
+            <p class="en-text" style="display:none;">
+                At CyberEx Technology Inc., we prioritize the protection of our users' privacy and personal data at the
+                highest level.
+                This Privacy Policy explains how your personal information is collected, used, stored, and protected.
+            </p>
         </div>
 
-        <!-- 1. KAPSAM -->
-        <h2>1. POLİTİKANIN KAPSAMI VE KABUL</h2>
-        <p>
-            Bu Gizlilik Politikası, CyberEx Platform'u (website ve mobil uygulama) kullanan tüm kullanıcılar için
-            geçerlidir.
-        </p>
-        <p>
-            Platform'u kullanarak, bu Gizlilik Politikasını <strong>okuduğunuzu, anladığınızı ve kabul
-                ettiğinizi</strong> beyan edersiniz.
-        </p>
+        <!-- 1. SCOPE -->
+        <h2 class="tr-text">1. POLİTİKANIN KAPSAMI VE KABUL</h2>
+        <h2 class="en-text" style="display:none;">1. SCOPE AND ACCEPTANCE OF POLICY</h2>
 
-        <!-- 2. TOPLANAN VERİLER -->
-        <h2>2. TOPLANAN KİŞİSEL VERİLER</h2>
-        <h3>2.1. Doğrudan Sizden Toplanan Veriler</h3>
-        <p>Kayıt ve kullanım sırasında bizimle paylaştığınız bilgiler:</p>
-        <ul>
-            <li>👤 <strong>Kimlik Bilgileri:</strong> Ad, soyad, T.C. kimlik numarası, doğum tarihi, fotoğraf (KYC için)
-            </li>
-            <li>📧 <strong>İletişim Bilgileri:</strong> E-posta, telefon numarası, adres</li>
-            <li>🏦 <strong>Finansal Bilgiler:</strong> Banka hesabı, ödeme yöntemleri</li>
-            <li>🔐 <strong>Hesap Bilgileri:</strong> Kullanıcı adı, şifre (hashlenmiş)</li>
-        </ul>
-
-        <h3>2.2. Otomatik Olarak Toplanan Veriler</h3>
-        <p>Platform kullanımınız sırasında otomatik toplanan teknik veriler:</p>
-        <ul>
-            <li>🌐 <strong>Cihaz Bilgisi:</strong> IP adresi, işletim sistemi, tarayıcı türü, cihaz ID</li>
-            <li>📊 <strong>Kullanım Verileri:</strong> Tıklama verileri, sayfa görüntüleme, oturum süresi</li>
-            <li>📍 <strong>Konum Bilgisi:</strong> Ülke, şehir (IP bazlı, hassas konum yok)</li>
-            <li>🕒 <strong>Log Kayıtları:</strong> Giriş zamanları, işlem geçmişi, hata logları</li>
-        </ul>
-
-        <h3>2.3. İşlem Verileri</h3>
-        <ul>
-            <li>💱 Kripto alım-satım emirleri</li>
-            <li>💳 Para yatırma/çekme işlemleri</li>
-            <li>🔗 Cüzdan adresleri</li>
-            <li>📈 İşlem geçmişi ve hacmi</li>
-        </ul>
-
-        <!-- 3. VERİ KULLANIM AMAÇLARI -->
-        <h2>3. VERİLERİN KULLANIM AMAÇLARI</h2>
-        <p>Toplanan kişisel verileriniz şu amaçlarla kullanılır:</p>
-
-        <h3>3.1. Hizmet Sunumu</h3>
-        <ul>
-            <li>✅ Hesabınızı oluşturma ve yönetme</li>
-            <li>✅ Kripto para işlemlerini gerçekleştirme</li>
-            <li>✅ Müşteri destek hizmeti sağlama</li>
-            <li>✅ Platform özelliklerini kişiselleştirme</li>
-        </ul>
-
-        <h3>3.2. Güvenlik ve Uyumluluk</h3>
-        <ul>
-            <li>🛡️ Fraud (dolandırıcılık) önleme ve tespit</li>
-            <li>🛡️ KYC/AML (Müşterini Tanı / Kara para aklama önleme) prosedürleri</li>
-            <li>🛡️ Güvenlik tehditlerine karşı koruma</li>
-            <li>🛡️ Yasal düzenlemelere uyum (MASAK, SPK vb.)</li>
-        </ul>
-
-        <h3>3.3. İletişim ve Bilgilendirme</h3>
-        <ul>
-            <li>📨 İşlem bildirimleri (e-posta, SMS)</li>
-            <li>📨 Güvenlik uyarıları</li>
-            <li>📨 Platform güncellemeleri</li>
-            <li>📨 Pazarlama iletişimi (onaylıysanız)</li>
-        </ul>
-
-        <h3>3.4. Hizmet İyileştirme</h3>
-        <ul>
-            <li>📊 Kullanıcı deneyimi analizi</li>
-            <li>📊 Platform performansı optimizasyonu</li>
-            <li>📊 Yeni özellikler geliştirme</li>
-            <li>📊 A/B testleri</li>
-        </ul>
-
-        <!-- 4. VERİ PAYLAŞIMI -->
-        <h2>4. KİŞİSEL VERİLERİN PAYLAŞIMI</h2>
-        <h3>4.1. Üçüncü Taraflarla Paylaşım</h3>
-        <p>Verileriniz, yalnızca gerekli durumlarda ve sınırlı kapsamda şu taraflarla paylaşılır:</p>
-
-        <div class="info-box">
-            <p><strong>Veri Paylaşılan Taraflar:</strong></p>
-            <ul>
-                <li>🏛️ <strong>Kamu Kurumları:</strong> MASAK, SPK, Vergi Dairesi (yasal zorunluluk)</li>
-                <li>💼 <strong>Hizmet Sağlayıcılar:</strong> Cloud hosting, KYC doğrulama, ödeme işlemcileri</li>
-                <li>⚖️ <strong>Hukuk ve Denetim:</strong> Yasal süreçlerde avukatlar, denetçiler</li>
-                <li>🔐 <strong>Güvenlik Firmaları:</strong> SOC, penetrasyon testi hizmetleri</li>
-            </ul>
-        </div>
-
-        <h3>4.2. Veri Paylaşım Prensipleri</h3>
-        <ul>
-            <li>📌 <strong>Minimum Veri:</strong> Yalnızca gerekli veriler paylaşılır</li>
-            <li>📌 <strong>Gizlilik Anlaşmaları:</strong> Tüm 3. taraflarla NDA imzalanır</li>
-            <li>📌 <strong>Güvenli Transfer:</strong> Veriler şifreli olarak aktarılır</li>
-            <li>📌 <strong>Denetim:</strong> 3. taraf erişimleri loglanır ve denetlenir</li>
-        </ul>
-
-        <h3>4.3. Yurtdışı Veri Aktarımı</h3>
-        <p>
-            Cloud altyapımız nedeniyle verileriniz <strong>ABD ve Avrupa</strong> sunucularında saklanabilir.
-            Tüm yurtdışı aktarımlar <strong>GDPR ve KVKK</strong> standartlarına uygundur.
-        </p>
-
-        <!-- 5. VERİ GÜVENLİĞİ -->
-        <h2>5. VERİ GÜVENLİĞİ ÖNLEMLER İ</h2>
-        <p>Kişisel verilerinizin güvenliğini sağlamak için çok katmanlı güvenlik önlemleri alıyoruz:</p>
-
-        <h3>5.1. Teknik Önlemler</h3>
-        <ul>
-            <li>🔒 <strong>AES-256 bit şifreleme</strong> (askeri seviye)</li>
-            <li>🔒 <strong>SSL/TLS 1.3</strong> güvenli bağlantı</li>
-            <li>🔒 <strong>Multi-factor authentication (MFA)</strong></li>
-            <li>🔒 <strong>Firewall ve IDS/IPS</strong> sistemleri</li>
-            <li>🔒 <strong>DDoS koruması</strong></li>
-            <li>🔒 <strong>Düzenli penetrasyon testleri</strong></li>
-        </ul>
-
-        <h3>5.2. Organizasyonel Önlemler</h3>
-        <ul>
-            <li>👥 Personel eğitimleri ve gizlilik taahhütnameleri</li>
-            <li>👥 Rol bazlı erişim kontrolü (RBAC)</li>
-            <li>👥 24/7 güvenlik izleme (SOC)</li>
-            <li>👥 Olay müdahale planı</li>
-        </ul>
-
-        <p>Detaylar için: <a href="security.html" style="color: #00f0ff;">Güvenlik Raporu</a></p>
-
-        <!-- 6. VERİ SAKLAMA -->
-        <h2>6. VERİ SAKLAMA VE SİLME</h2>
-        <h3>6.1. Saklama Süreleri</h3>
-        <ul>
-            <li>📅 <strong>Aktif Hesaplar:</strong> Hesap aktif olduğu sürece + yasal saklama süreleri</li>
-            <li>📅 <strong>KYC Belgeleri:</strong> 8 yıl (MASAK gereksinimi)</li>
-            <li>📅 <strong>İşlem Kayıtları:</strong> 10 yıl (Vergi Usul Kanunu)</li>
-            <li>📅 <strong>Log Kayıtları:</strong> 2 yıl (güvenlik amaçlı)</li>
-        </ul>
-
-        <h3>6.2. Veri Silme</h3>
-        <p>Yasal saklama süreleri sona erdiğinde:</p>
-        <ul>
-            <li>🗑️ Veriler kalıcı olarak silinir</li>
-            <li>🗑️ Geri dönüş mümkün olmayacak şekilde imha edilir</li>
-            <li>🗑️ Anonim hale getirilir (istatistiksel analiz için)</li>
-        </ul>
-
-        <!-- 7. HAKLARINIZ -->
-        <h2>7. KİŞİSEL VERİ SAHİBİ HAKLARI</h2>
-        <p>KVKK ve GDPR kapsamında aşağıdaki haklara sahipsiniz:</p>
-
-        <div class="info-box">
-            <h3 style="color: var(--neon-blue); margin-top: 0;">📋 Veri Sahipliği Hakları</h3>
-            <ul>
-                <li>✔️ <strong>Bilgi Edinme:</strong> Verilerinizin işlenip işlenmediğini öğrenme</li>
-                <li>✔️ <strong>Erişim:</strong> İşlenen verilere erişim talep etme</li>
-                <li>✔️ <strong>Düzeltme:</strong> Yanlış/eksik verileri düzeltme</li>
-                <li>✔️ <strong>Silme:</strong> Verilerin silinmesini isteme ("unutulma hakkı")</li>
-                <li>✔️ <strong>İtiraz:</strong> Otomatik işleme itiraz etme</li>
-                <li>✔️ <strong>Taşınabilirlik:</strong> Verilerinizi yapılandırılmış formatta alma</li>
-                <li>✔️ <strong>Pazarlama Reddi:</strong> Pazarlama iletilerinden çıkma</li>
-            </ul>
-        </div>
-
-        <h3>7.1. Hak Kullanımı</h3>
-        <p>Haklarınızı kullanmak için:</p>
-        <ul>
-            <li>📧 E-posta: privacy@cyberex.com.tr</li>
-            <li>🌐 Online form: Hesap ayarları > Veri hakları</li>
-            <li>📝 Yazılı başvuru: CyberEx A.Ş., Maslak/İstanbul</li>
-        </ul>
-        <p><strong>Yanıt süresi:</strong> 30 gün (ücretsiz)</p>
-
-        <!-- 8. ÇEREZLER -->
-        <h2>8. ÇEREZ KULLANIMI</h2>
-        <p>CyberEx, kullanıcı deneyimini iyileştirmek için çerezler kullanır:</p>
-
-        <h3>8.1. Çerez Türleri</h3>
-        <ul>
-            <li>🍪 <strong>Zorunlu Çerezler:</strong> Platform işlevselliği için gerekli</li>
-            <li>🍪 <strong>Performans Çerezleri:</strong> Analitik ve performans izleme</li>
-            <li>🍪 <strong>İşlevsellik Çerezleri:</strong> Tercihlerinizi hatırlama</li>
-            <li>🍪 <strong>Pazarlama Çerezleri:</strong> Kişiselleştirilmiş içerik (onaylıysanız)</li>
-        </ul>
-
-        <p>Çerez ayarlarınızı tarayıcınızdan yönetebilirsiniz.</p>
-        <p>Detaylar: <a href="cookie-policy.html" style="color: #00f0ff;">Çerez Politikası</a></p>
-
-        <!-- 9. ÇOCUKLARIN GİZLİLİĞİ -->
-        <h2>9. ÇOCUKLARIN GİZLİLİĞİ</h2>
-        <p>
-            CyberEx, <strong>18 yaşın altındaki bireylere hizmet vermemektedir.</strong>
-            18 yaşından küçük bir kullanıcının kayıt olduğunu tespit edersek, hesabı derhal kapatır ve verilerini
-            sileriz.
-        </p>
-
-        <!-- 10. DEĞİŞİKLİKLER -->
-        <h2>10. GİZLİLİK POLİTİKASI DEĞİŞİKLİKLERİ</h2>
-        <p>
-            Bu Gizlilik Politikası zaman zaman güncellenebilir. Önemli değişiklikler olduğunda:
-        </p>
-        <ul>
-            <li>📢 Platform'da bildirim gösterilir</li>
-            <li>📢 E-posta ile bilgilendirilirsiniz</li>
-            <li>📢 Yeni politika 30 gün sonra yürürlüğe girer</li>
-        </ul>
-        <p>Güncellemeleri düzenli kontrol etmenizi öneririz.</p>
-
-        <!-- 11. İLETİŞİM -->
-        <h2>11. İLETİŞİM VE SORULAR</h2>
-        <p>Gizlilik konusundaki sorularınız veya endişeleriniz için:</p>
-
-        <div class="info-box">
-            <h3 style="color: var(--neon-blue); margin-top: 0;">📞 İletişim Bilgileri</h3>
+        <div class="tr-text">
             <p>
-                <strong>Veri Koruma Sorumlusu:</strong> privacy@cyberex.com.tr<br>
-                <strong>Genel Destek:</strong> support@cyberex.com.tr<br>
-                <strong>Adres:</strong> CyberEx Teknoloji A.Ş., Maslak Mahallesi, Sarıyer/İstanbul<br>
-                <strong>Website:</strong> https://cyberex.com.tr
+                Bu Gizlilik Politikası, CyberEx Platform'u (website ve mobil uygulama) kullanan tüm kullanıcılar için
+                geçerlidir.
+            </p>
+            <p>
+                Platform'u kullanarak, bu Gizlilik Politikasını <strong>okuduğunuzu, anladığınızı ve kabul
+                    ettiğinizi</strong> beyan edersiniz.
+            </p>
+        </div>
+        <div class="en-text" style="display:none;">
+            <p>
+                This Privacy Policy applies to all users using the CyberEx Platform (website and mobile application).
+            </p>
+            <p>
+                By using the Platform, you declare that you have <strong>read, understood, and accepted</strong> this
+                Privacy Policy.
             </p>
         </div>
 
-        <!-- 12. ULUSLARARASI TRANSFERLERİ -->
-        <h2>12. ULUSLARARASI VERİ TRANSFERLERİ</h2>
-        <p>
-            Verileriniz, hizmet sağlayıcılarımız aracılığıyla Avrupa Ekonomik Alanı (EEA) dışındaki ülkelere
-            aktarılabilir.
-            Bu durumlarda:
-        </p>
-        <ul>
-            <li>🌍 AB Standart Sözleşme Maddeleri kullanılır</li>
-            <li>🌍 GDPR Madde 46 uyarınca uygun güvenceler sağlanır</li>
-            <li>🌍 Veri işleyiciler ile veri işleme anlaşmaları imzalanır</li>
-        </ul>
+        <!-- 2. COLLECTED DATA -->
+        <h2 class="tr-text">2. TOPLANAN KİŞİSEL VERİLER</h2>
+        <h2 class="en-text" style="display:none;">2. COLLECTED PERSONAL DATA</h2>
 
-        <!-- SONUÇ -->
-        <div class="info-box" style="margin-top: 50px;">
-            <h3 style="color: var(--neon-blue); margin-top: 0;">🔐 Gizliliğiniz İçin Taahhütümüz</h3>
-            <p style="margin: 0;">
-                CyberEx, veri gizliliğini ciddiye alır ve en yüksek standartlarda koruma sağlamak için sürekli çaba
-                gösterir.
-                Gizliliğiniz bizim önceliğimizdir ve bu taahhüdümüzden asla taviz vermeyiz.
+        <div class="tr-text">
+            <h3>2.1. Doğrudan Sizden Toplanan Veriler</h3>
+            <p>Kayıt ve kullanım sırasında bizimle paylaştığınız bilgiler:</p>
+            <ul>
+                <li>👤 <strong>Kimlik Bilgileri:</strong> Ad, soyad, T.C. kimlik numarası, doğum tarihi, fotoğraf (KYC
+                    için)</li>
+                <li>📧 <strong>İletişim Bilgileri:</strong> E-posta, telefon numarası, adres</li>
+                <li>🏦 <strong>Finansal Bilgiler:</strong> Banka hesabı, ödeme yöntemleri</li>
+                <li>🔐 <strong>Hesap Bilgileri:</strong> Kullanıcı adı, şifre (hashlenmiş)</li>
+            </ul>
+
+            <h3>2.2. Otomatik Olarak Toplanan Veriler</h3>
+            <p>Platform kullanımınız sırasında otomatik toplanan teknik veriler:</p>
+            <ul>
+                <li>🌐 <strong>Cihaz Bilgisi:</strong> IP adresi, işletim sistemi, tarayıcı türü, cihaz ID</li>
+                <li>📊 <strong>Kullanım Verileri:</strong> Tıklama verileri, sayfa görüntüleme, oturum süresi</li>
+                <li>📍 <strong>Konum Bilgisi:</strong> Ülke, şehir (IP bazlı, hassas konum yok)</li>
+                <li>🕒 <strong>Log Kayıtları:</strong> Giriş zamanları, işlem geçmişi, hata logları</li>
+            </ul>
+
+            <h3>2.3. İşlem Verileri</h3>
+            <ul>
+                <li>💱 Kripto alım-satım emirleri</li>
+                <li>💳 Para yatırma/çekme işlemleri</li>
+                <li>🔗 Cüzdan adresleri</li>
+                <li>📈 İşlem geçmişi ve hacmi</li>
+            </ul>
+        </div>
+
+        <div class="en-text" style="display:none;">
+            <h3>2.1. Data Collected Directly From You</h3>
+            <p>Information you share with us during registration and use:</p>
+            <ul>
+                <li>👤 <strong>Identity Information:</strong> Name, surname, national ID number, date of birth, photo
+                    (for KYC)</li>
+                <li>📧 <strong>Contact Information:</strong> Email, phone number, address</li>
+                <li>🏦 <strong>Financial Information:</strong> Bank account, payment methods</li>
+                <li>🔐 <strong>Account Information:</strong> Username, password (hashed)</li>
+            </ul>
+
+            <h3>2.2. Automatically Collected Data</h3>
+            <p>Technical data collected automatically during your use of the Platform:</p>
+            <ul>
+                <li>🌐 <strong>Device Information:</strong> IP address, operating system, browser type, device ID</li>
+                <li>📊 <strong>Usage Data:</strong> Click data, page views, session duration</li>
+                <li>📍 <strong>Location Information:</strong> Country, city (IP based, no precise location)</li>
+                <li>🕒 <strong>Log Records:</strong> Login times, transaction history, error logs</li>
+            </ul>
+
+            <h3>2.3. Transaction Data</h3>
+            <ul>
+                <li>💱 Crypto buy/sell orders</li>
+                <li>💳 Deposit/withdrawal transactions</li>
+                <li>🔗 Wallet addresses</li>
+                <li>📈 Transaction history and volume</li>
+            </ul>
+        </div>
+
+        <!-- 3. DATA USE PURPOSES -->
+        <h2 class="tr-text">3. VERİLERİN KULLANIM AMAÇLARI</h2>
+        <h2 class="en-text" style="display:none;">3. PURPOSES OF DATA USE</h2>
+
+        <div class="tr-text">
+            <p>Toplanan kişisel verileriniz şu amaçlarla kullanılır:</p>
+
+            <h3>3.1. Hizmet Sunumu</h3>
+            <ul>
+                <li>✅ Hesabınızı oluşturma ve yönetme</li>
+                <li>✅ Kripto para işlemlerini gerçekleştirme</li>
+                <li>✅ Müşteri destek hizmeti sağlama</li>
+                <li>✅ Platform özelliklerini kişiselleştirme</li>
+            </ul>
+
+            <h3>3.2. Güvenlik ve Uyumluluk</h3>
+            <ul>
+                <li>🛡️ Fraud (dolandırıcılık) önleme ve tespit</li>
+                <li>🛡️ KYC/AML (Müşterini Tanı / Kara para aklama önleme) prosedürleri</li>
+                <li>🛡️ Güvenlik tehditlerine karşı koruma</li>
+                <li>🛡️ Yasal düzenlemelere uyum (MASAK, SPK vb.)</li>
+            </ul>
+
+            <h3>3.3. İletişim ve Bilgilendirme</h3>
+            <ul>
+                <li>📨 İşlem bildirimleri (e-posta, SMS)</li>
+                <li>📨 Güvenlik uyarıları</li>
+                <li>📨 Platform güncellemeleri</li>
+                <li>📨 Pazarlama iletişimi (onaylıysanız)</li>
+            </ul>
+        </div>
+
+        <div class="en-text" style="display:none;">
+            <p>Your collected personal data is used for the following purposes:</p>
+
+            <h3>3.1. Service Provision</h3>
+            <ul>
+                <li>✅ Creating and managing your account</li>
+                <li>✅ Executing cryptocurrency transactions</li>
+                <li>✅ Providing customer support services</li>
+                <li>✅ Personalizing platform features</li>
+            </ul>
+
+            <h3>3.2. Security and Compliance</h3>
+            <ul>
+                <li>🛡️ Fraud prevention and detection</li>
+                <li>🛡️ KYC/AML (Know Your Customer / Anti-Money Laundering) procedures</li>
+                <li>🛡️ Protection against security threats</li>
+                <li>🛡️ Compliance with legal regulations (MASAK, SPK, etc.)</li>
+            </ul>
+
+            <h3>3.3. Communication and Notification</h3>
+            <ul>
+                <li>📨 Transaction notifications (email, SMS)</li>
+                <li>📨 Security alerts</li>
+                <li>📨 Platform updates</li>
+                <li>📨 Marketing communication (if consented)</li>
+            </ul>
+        </div>
+
+        <!-- 4. DATA SHARING -->
+        <h2 class="tr-text">4. KİŞİSEL VERİLERİN PAYLAŞIMI</h2>
+        <h2 class="en-text" style="display:none;">4. SHARING OF PERSONAL DATA</h2>
+
+        <div class="tr-text">
+            <h3>4.1. Üçüncü Taraflarla Paylaşım</h3>
+            <p>Verileriniz, yalnızca gerekli durumlarda ve sınırlı kapsamda şu taraflarla paylaşılır:</p>
+
+            <div class="info-box">
+                <p><strong>Veri Paylaşılan Taraflar:</strong></p>
+                <ul>
+                    <li>🏛️ <strong>Kamu Kurumları:</strong> MASAK, SPK, Vergi Dairesi (yasal zorunluluk)</li>
+                    <li>💼 <strong>Hizmet Sağlayıcılar:</strong> Cloud hosting, KYC doğrulama, ödeme işlemcileri</li>
+                    <li>⚖️ <strong>Hukuk ve Denetim:</strong> Yasal süreçlerde avukatlar, denetçiler</li>
+                    <li>🔐 <strong>Güvenlik Firmaları:</strong> SOC, penetrasyon testi hizmetleri</li>
+                </ul>
+            </div>
+
+            <h3>4.2. Veri Paylaşım Prensipleri</h3>
+            <ul>
+                <li>📌 <strong>Minimum Veri:</strong> Yalnızca gerekli veriler paylaşılır</li>
+                <li>📌 <strong>Gizlilik Anlaşmaları:</strong> Tüm 3. taraflarla NDA imzalanır</li>
+                <li>📌 <strong>Güvenli Transfer:</strong> Veriler şifreli olarak aktarılır</li>
+                <li>📌 <strong>Denetim:</strong> 3. taraf erişimleri loglanır ve denetlenir</li>
+            </ul>
+        </div>
+
+        <div class="en-text" style="display:none;">
+            <h3>4.1. Sharing with Third Parties</h3>
+            <p>Your data is shared with the following parties only when necessary and to a limited extent:</p>
+
+            <div class="info-box">
+                <p><strong>Parties Data is Shared With:</strong></p>
+                <ul>
+                    <li>🏛️ <strong>Public Institutions:</strong> MASAK, SPK, Tax Office (legal obligation)</li>
+                    <li>💼 <strong>Service Providers:</strong> Cloud hosting, KYC verification, payment processors</li>
+                    <li>⚖️ <strong>Legal and Audit:</strong> Lawyers, auditors in legal processes</li>
+                    <li>🔐 <strong>Security Firms:</strong> SOC, penetration testing services</li>
+                </ul>
+            </div>
+
+            <h3>4.2. Data Sharing Principles</h3>
+            <ul>
+                <li>📌 <strong>Minimum Data:</strong> Only necessary data is shared</li>
+                <li>📌 <strong>Non-Disclosure Agreements:</strong> NDAs are signed with all 3rd parties</li>
+                <li>📌 <strong>Secure Transfer:</strong> Data is transferred encrypted</li>
+                <li>📌 <strong>Audit:</strong> 3rd party access is logged and audited</li>
+            </ul>
+        </div>
+
+        <!-- 5. DATA SECURITY -->
+        <h2 class="tr-text">5. VERİ GÜVENLİĞİ ÖNLEMLERİ</h2>
+        <h2 class="en-text" style="display:none;">5. DATA SECURITY MEASURES</h2>
+
+        <div class="tr-text">
+            <p>Kişisel verilerinizin güvenliğini sağlamak için çok katmanlı güvenlik önlemleri alıyoruz:</p>
+            <ul>
+                <li>🔒 <strong>AES-256 bit şifreleme</strong> (askeri seviye)</li>
+                <li>🔒 <strong>SSL/TLS 1.3</strong> güvenli bağlantı</li>
+                <li>🔒 <strong>Multi-factor authentication (MFA)</strong></li>
+                <li>🔒 <strong>Firewall ve IDS/IPS</strong> sistemleri</li>
+                <li>🔒 <strong>Düzenli penetrasyon testleri</strong></li>
+            </ul>
+            <p>Detaylar için: <a href="security.html" style="color: #00f0ff;">Güvenlik Raporu</a></p>
+        </div>
+
+        <div class="en-text" style="display:none;">
+            <p>We take multi-layered security measures to ensure the security of your personal data:</p>
+            <ul>
+                <li>🔒 <strong>AES-256 bit encryption</strong> (military grade)</li>
+                <li>🔒 <strong>SSL/TLS 1.3</strong> secure connection</li>
+                <li>🔒 <strong>Multi-factor authentication (MFA)</strong></li>
+                <li>🔒 <strong>Firewall and IDS/IPS</strong> systems</li>
+                <li>🔒 <strong>Regular penetration tests</strong></li>
+            </ul>
+            <p>For details: <a href="security.html" style="color: #00f0ff;">Security Report</a></p>
+        </div>
+
+        <!-- 6. DATA RETENTION -->
+        <h2 class="tr-text">6. VERİ SAKLAMA VE SİLME</h2>
+        <h2 class="en-text" style="display:none;">6. DATA RETENTION AND DELETION</h2>
+
+        <div class="tr-text">
+            <h3>6.1. Saklama Süreleri</h3>
+            <ul>
+                <li>📅 <strong>Aktif Hesaplar:</strong> Hesap aktif olduğu sürece + yasal saklama süreleri</li>
+                <li>📅 <strong>KYC Belgeleri:</strong> 8 yıl (MASAK gereksinimi)</li>
+                <li>📅 <strong>İşlem Kayıtları:</strong> 10 yıl (Vergi Usul Kanunu)</li>
+                <li>📅 <strong>Log Kayıtları:</strong> 2 yıl (güvenlik amaçlı)</li>
+            </ul>
+
+            <h3>6.2. Veri Silme</h3>
+            <p>Yasal saklama süreleri sona erdiğinde:</p>
+            <ul>
+                <li>🗑️ Veriler kalıcı olarak silinir</li>
+                <li>🗑️ Geri dönüş mümkün olmayacak şekilde imha edilir</li>
+                <li>🗑️ Anonim hale getirilir (istatistiksel analiz için)</li>
+            </ul>
+        </div>
+
+        <div class="en-text" style="display:none;">
+            <h3>6.1. Retention Periods</h3>
+            <ul>
+                <li>📅 <strong>Active Accounts:</strong> As long as account is active + legal retention periods</li>
+                <li>📅 <strong>KYC Documents:</strong> 8 years (MASAK requirement)</li>
+                <li>📅 <strong>Transaction Records:</strong> 10 years (Tax Procedure Law)</li>
+                <li>📅 <strong>Log Records:</strong> 2 years (for security purposes)</li>
+            </ul>
+
+            <h3>6.2. Data Deletion</h3>
+            <p>When legal retention periods expire:</p>
+            <ul>
+                <li>🗑️ Data is permanently deleted</li>
+                <li>🗑️ Destroyed in a non-recoverable manner</li>
+                <li>🗑️ Anonymized (for statistical analysis)</li>
+            </ul>
+        </div>
+
+        <!-- 7. YOUR RIGHTS -->
+        <h2 class="tr-text">7. KİŞİSEL VERİ SAHİBİ HAKLARI</h2>
+        <h2 class="en-text" style="display:none;">7. RIGHTS OF DATA SUBJECT</h2>
+
+        <div class="tr-text">
+            <p>KVKK ve GDPR kapsamında aşağıdaki haklara sahipsiniz:</p>
+
+            <div class="info-box">
+                <h3 style="color: var(--neon-blue); margin-top: 0;">📋 Veri Sahipliği Hakları</h3>
+                <ul>
+                    <li>✔️ <strong>Bilgi Edinme:</strong> Verilerinizin işlenip işlenmediğini öğrenme</li>
+                    <li>✔️ <strong>Erişim:</strong> İşlenen verilere erişim talep etme</li>
+                    <li>✔️ <strong>Düzeltme:</strong> Yanlış/eksik verileri düzeltme</li>
+                    <li>✔️ <strong>Silme:</strong> Verilerin silinmesini isteme ("unutulma hakkı")</li>
+                    <li>✔️ <strong>İtiraz:</strong> Otomatik işleme itiraz etme</li>
+                    <li>✔️ <strong>Taşınabilirlik:</strong> Verilerinizi yapılandırılmış formatta alma</li>
+                </ul>
+            </div>
+
+            <h3>7.1. Hak Kullanımı</h3>
+            <p>Haklarınızı kullanmak için:</p>
+            <ul>
+                <li>📧 E-posta: privacy@cyberex.com.tr</li>
+                <li>🌐 Online form: Hesap ayarları > Veri hakları</li>
+            </ul>
+            <p><strong>Yanıt süresi:</strong> 30 gün (ücretsiz)</p>
+        </div>
+
+        <div class="en-text" style="display:none;">
+            <p>Under KVKK and GDPR you have the following rights:</p>
+
+            <div class="info-box">
+                <h3 style="color: var(--neon-blue); margin-top: 0;">📋 Data Ownership Rights</h3>
+                <ul>
+                    <li>✔️ <strong>Right to Information:</strong> Learning whether your data is processed</li>
+                    <li>✔️ <strong>Access:</strong> Requesting access to processed data</li>
+                    <li>✔️ <strong>Correction:</strong> Correcting inaccurate/incomplete data</li>
+                    <li>✔️ <strong>Deletion:</strong> Requesting deletion of data ("right to be forgotten")</li>
+                    <li>✔️ <strong>Objection:</strong> Objecting to automated processing</li>
+                    <li>✔️ <strong>Portability:</strong> Receiving your data in a structured format</li>
+                </ul>
+            </div>
+
+            <h3>7.1. Exercise of Rights</h3>
+            <p>To exercise your rights:</p>
+            <ul>
+                <li>📧 Email: privacy@cyberex.com.tr</li>
+                <li>🌐 Online form: Account settings > Data rights</li>
+            </ul>
+            <p><strong>Response time:</strong> 30 days (free of charge)</p>
+        </div>
+
+        <!-- 8. COOKIES -->
+        <h2 class="tr-text">8. ÇEREZ KULLANIMI</h2>
+        <h2 class="en-text" style="display:none;">8. COOKIE USAGE</h2>
+
+        <div class="tr-text">
+            <p>CyberEx, kullanıcı deneyimini iyileştirmek için çerezler kullanır:</p>
+            <ul>
+                <li>🍪 <strong>Zorunlu Çerezler:</strong> Platform işlevselliği için gerekli</li>
+                <li>🍪 <strong>Performans Çerezleri:</strong> Analitik ve performans izleme</li>
+                <li>🍪 <strong>İşlevsellik Çerezleri:</strong> Tercihlerinizi hatırlama</li>
+            </ul>
+            <p>Detaylar: <a href="cookie-policy.html" style="color: #00f0ff;">Çerez Politikası</a></p>
+        </div>
+
+        <div class="en-text" style="display:none;">
+            <p>CyberEx uses cookies to improve user experience:</p>
+            <ul>
+                <li>🍪 <strong>Essential Cookies:</strong> Necessary for platform functionality</li>
+                <li>🍪 <strong>Performance Cookies:</strong> Analytics and performance monitoring</li>
+                <li>🍪 <strong>Functionality Cookies:</strong> Remembering your preferences</li>
+            </ul>
+            <p>Details: <a href="cookie-policy.html" style="color: #00f0ff;">Cookie Policy</a></p>
+        </div>
+
+        <!-- 9. CHILDREN -->
+        <h2 class="tr-text">9. ÇOCUKLARIN GİZLİLİĞİ</h2>
+        <h2 class="en-text" style="display:none;">9. CHILDREN'S PRIVACY</h2>
+
+        <div class="tr-text">
+            <p>
+                CyberEx, <strong>18 yaşın altındaki bireylere hizmet vermemektedir.</strong>
+                18 yaşından küçük bir kullanıcının kayıt olduğunu tespit edersek, hesabı derhal kapatır ve verilerini
+                sileriz.
+            </p>
+        </div>
+        <div class="en-text" style="display:none;">
+            <p>
+                CyberEx <strong>does not provide services to individuals under the age of 18.</strong>
+                If we discover that a user under 18 has registered, we will immediately close their account and delete
+                their data.
             </p>
         </div>
 
+        <!-- 10. CHANGES -->
+        <h2 class="tr-text">10. GİZLİLİK POLİTİKASI DEĞİŞİKLİKLERİ</h2>
+        <h2 class="en-text" style="display:none;">10. CHANGES TO PRIVACY POLICY</h2>
+
+        <div class="tr-text">
+            <p>
+                Bu Gizlilik Politikası zaman zaman güncellenebilir. Önemli değişiklikler olduğunda:
+            </p>
+            <ul>
+                <li>📢 Platform'da bildirim gösterilir</li>
+                <li>📢 E-posta ile bilgilendirilirsiniz</li>
+                <li>📢 Yeni politika 30 gün sonra yürürlüğe girer</li>
+            </ul>
+        </div>
+        <div class="en-text" style="display:none;">
+            <p>
+                This Privacy Policy may be updated from time to time. When significant changes occur:
+            </p>
+            <ul>
+                <li>📢 Notification will be shown on the Platform</li>
+                <li>📢 You will be informed via email</li>
+                <li>📢 New policy will be effective after 30 days</li>
+            </ul>
+        </div>
+
+        <!-- 11. CONTACT -->
+        <h2 class="tr-text">11. İLETİŞİM VE SORULAR</h2>
+        <h2 class="en-text" style="display:none;">11. CONTACT AND QUESTIONS</h2>
+
+        <div class="tr-text">
+            <div class="info-box">
+                <h3 style="color: var(--neon-blue); margin-top: 0;">📞 İletişim Bilgileri</h3>
+                <p>
+                    <strong>Veri Koruma Sorumlusu:</strong> privacy@cyberex.com.tr<br>
+                    <strong>Genel Destek:</strong> support@cyberex.com.tr<br>
+                    <strong>Adres:</strong> CyberEx Teknoloji A.Ş., Maslak Mahallesi, Sarıyer/İstanbul<br>
+                    <strong>Website:</strong> https://cyberex.com.tr
+                </p>
+            </div>
+        </div>
+        <div class="en-text" style="display:none;">
+            <div class="info-box">
+                <h3 style="color: var(--neon-blue); margin-top: 0;">📞 Contact Information</h3>
+                <p>
+                    <strong>Data Protection Officer:</strong> privacy@cyberex.com.tr<br>
+                    <strong>General Support:</strong> support@cyberex.com.tr<br>
+                    <strong>Address:</strong> CyberEx Technology Inc., Maslak, Sarıyer/Istanbul<br>
+                    <strong>Website:</strong> https://cyberex.com.tr
+                </p>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
         <div class="footer-links">
-            <p style="color: #666; margin-bottom: 20px;">
-                © 2024-2026 CyberEx Teknoloji A.Ş. | Son Güncelleme: 26 Ocak 2026
+            <p class="tr-text" style="color: #666; margin-bottom: 20px;">
+                © 2024-2026 CyberEx Teknoloji A.Ş. | Son Güncelleme: 26 Ocak 2026<br>
+                <span class="status-badge">BETA v1.3.9</span>
+                <span class="status-badge" style="background: linear-gradient(135deg, #FF9800, #F57C00);">SPK LİSANS
+                    SÜRECİ</span>
             </p>
-            <p>
+            <p class="en-text" style="color: #666; margin-bottom: 20px; display:none;">
+                © 2024-2026 CyberEx Technology Inc. | Last Updated: January 26, 2026<br>
+                <span class="status-badge">BETA v1.3.9</span>
+                <span class="status-badge" style="background: linear-gradient(135deg, #FF9800, #F57C00);">SPK LICENSE
+                    PENDING</span>
+            </p>
+
+            <p class="tr-text">
                 <a href="index.html">Ana Sayfa</a> |
                 <a href="terms.html">Kullanım Şartları</a> |
                 <a href="legal.html">Yasal Uyarı</a> |
+                <a href="privacy.html">Gizlilik Politikası</a> |
+                <a href="kvkk.html">KVKK Metni</a> |
+                <a href="security.html">Güvenlik Raporu</a> |
                 <a href="risk.html">Risk Bildirimi</a> |
-                <a href="kvkk.html">KVKK</a> |
-                <a href="security.html">Güvenlik</a> |
+                <a href="cookie-policy.html">Çerez Politikası</a> |
                 <a href="disclaimer.html">Beta Koşulları</a>
+            </p>
+            <p class="en-text" style="display:none;">
+                <a href="index.html">Home</a> |
+                <a href="terms.html">Terms of Service</a> |
+                <a href="legal.html">Legal Notice</a> |
+                <a href="privacy.html">Privacy Policy</a> |
+                <a href="kvkk.html">KVKK Notice</a> |
+                <a href="security.html">Security Report</a> |
+                <a href="risk.html">Risk Disclosure</a> |
+                <a href="cookie-policy.html">Cookie Policy</a> |
+                <a href="disclaimer.html">Beta Terms</a>
             </p>
         </div>
     </div>
+
+    <script>
+        function switchLang(lang) {
+            if (lang === 'tr') {
+                document.querySelectorAll('.tr-text').forEach(el => el.style.display = '');
+                document.querySelectorAll('.en-text').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.lang-btn')[0].classList.add('active');
+                document.querySelectorAll('.lang-btn')[1].classList.remove('active');
+            } else {
+                document.querySelectorAll('.tr-text').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.en-text').forEach(el => el.style.display = '');
+                document.querySelectorAll('.lang-btn')[0].classList.remove('active');
+                document.querySelectorAll('.lang-btn')[1].classList.add('active');
+            }
+            localStorage.setItem('lang', lang);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('lang') || 'tr';
+            if (savedLang === 'en') switchLang('en');
+        });
+    </script>
 </body>
 
 </html>

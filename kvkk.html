@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KVKK Aydınlatma Metni | CyberEx - Kişisel Verilerin Korunması</title>
+    <title>KVKK Aydınlatma Metni | KVKK Notice | CyberEx</title>
 
     <!-- SEO -->
     <meta name="description"
@@ -57,6 +57,26 @@
 
         .nav-logo {
             height: 35px;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: 0.3s;
+            margin: 0 3px;
+        }
+
+        .lang-btn:hover,
+        .lang-btn.active {
+            background: var(--neon-purple);
+            color: #fff;
+            font-weight: 700;
+            border-color: var(--neon-purple);
         }
 
         .container {
@@ -138,7 +158,13 @@
         .footer-links a {
             color: var(--neon-cyan);
             text-decoration: none;
-            margin: 0 15px;
+            margin: 0 10px;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
         }
 
         table {
@@ -152,6 +178,7 @@
             border: 1px solid var(--border);
             padding: 15px;
             text-align: left;
+            color: #b0c4de;
         }
 
         th {
@@ -159,255 +186,574 @@
             color: #fff;
             font-weight: 700;
         }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin: 0 10px;
+            color: #fff;
+        }
     </style>
 </head>
 
 <body>
     <nav class="navbar">
         <a href="index.html"><img src="cyberex-logo.png" alt="CyberEx" class="nav-logo"></a>
-        <div style="font-weight: 800; color: var(--neon-purple); letter-spacing: 1px;">🔒 KVKK AYDINLATMA METNİ</div>
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <div style="font-weight: 800; color: var(--neon-purple); letter-spacing: 1px;">
+                <span class="tr-text">🔒 KVKK AYDINLATMA METNİ</span>
+                <span class="en-text" style="display:none;">🔒 KVKK NOTICE</span>
+            </div>
+            <div>
+                <button class="lang-btn active" onclick="switchLang('tr')">TR</button>
+                <button class="lang-btn" onclick="switchLang('en')">EN</button>
+            </div>
+        </div>
     </nav>
 
     <div class="container">
-        <h1>KVKK Aydınlatma Metni</h1>
+        <h1 class="tr-text">KVKK Aydınlatma Metni</h1>
+        <h1 class="en-text" style="display:none;">KVKK Clarification Text</h1>
+
         <div class="meta">
-            <strong>Veri Sorumlusu:</strong> CyberEx Teknoloji Anonim Şirketi<br>
-            <strong>Yasal Dayanak:</strong> 6698 sayılı Kişisel Verilerin Korunması Kanunu<br>
-            <strong>Son Güncelleme:</strong> 26 Ocak 2026
+            <span class="tr-text">
+                <strong>Veri Sorumlusu:</strong> CyberEx Teknoloji Anonim Şirketi<br>
+                <strong>Yasal Dayanak:</strong> 6698 sayılı Kişisel Verilerin Korunması Kanunu<br>
+                <strong>Son Güncelleme:</strong> 26 Ocak 2026
+            </span>
+            <span class="en-text" style="display:none;">
+                <strong>Data Controller:</strong> CyberEx Technology Inc.<br>
+                <strong>Legal Basis:</strong> Law No. 6698 on Protection of Personal Data<br>
+                <strong>Last Updated:</strong> January 26, 2026
+            </span>
         </div>
 
-        <!-- Giriş -->
+        <!-- Introduction -->
         <div class="info-box">
-            <h3 style="color: var(--neon-purple); margin-top: 0;">📋 Kişisel Verilerin Korunması Hakkında Bilgilendirme
-            </h3>
-            <p>
+            <h3 class="tr-text" style="color: var(--neon-purple); margin-top: 0;">📋 Kişisel Verilerin Korunması
+                Hakkında Bilgilendirme</h3>
+            <h3 class="en-text" style="color: var(--neon-purple); margin-top: 0; display:none;">📋 Information on
+                Protection of Personal Data</h3>
+
+            <p class="tr-text">
                 6698 sayılı <strong>Kişisel Verilerin Korunması Kanunu</strong> ("KVKK") uyarınca,
                 kişisel verilerinizin işlenmesine ilişkin sizi bilgilendirmek amacıyla bu aydınlatma metni
                 hazırlanmıştır.
             </p>
+            <p class="en-text" style="display:none;">
+                This clarification text has been prepared to inform you about the processing of your personal data
+                pursuant to the
+                <strong>Law No. 6698 on Protection of Personal Data</strong> ("KVKK").
+            </p>
         </div>
 
-        <!-- 1. VERİ SORUMLUSU -->
-        <h2>1. VERİ SORUMLUSU KİMLİĞİ</h2>
-        <p>
-            <strong>Ticaret Unvanı:</strong> CyberEx Teknoloji Anonim Şirketi<br>
-            <strong>Merkez Adresi:</strong> Maslak Mahallesi, Sarıyer, İstanbul, Türkiye<br>
-            <strong>E-posta:</strong> privacy@cyberex.com.tr<br>
-            <strong>KEP Adresi:</strong> cyberex@hs03.kep.tr (planlanan)
-        </p>
+        <!-- 1. DATA CONTROLLER -->
+        <h2 class="tr-text">1. VERİ SORUMLUSU KİMLİĞİ</h2>
+        <h2 class="en-text" style="display:none;">1. IDENTITY OF DATA CONTROLLER</h2>
 
-        <!-- 2. TOPLANAN KİŞİSEL VERİLER -->
-        <h2>2. TOPLANAN KİŞİSEL VERİLER VE İŞLENME AMAÇLARI</h2>
+        <div class="tr-text">
+            <p>
+                <strong>Ticaret Unvanı:</strong> CyberEx Teknoloji Anonim Şirketi<br>
+                <strong>Merkez Adresi:</strong> Maslak Mahallesi, Sarıyer, İstanbul, Türkiye<br>
+                <strong>E-posta:</strong> privacy@cyberex.com.tr<br>
+                <strong>KEP Adresi:</strong> cyberex@hs03.kep.tr (planlanan)
+            </p>
+        </div>
+        <div class="en-text" style="display:none;">
+            <p>
+                <strong>Trade Name:</strong> CyberEx Technology Inc.<br>
+                <strong>Headquarters:</strong> Maslak, Sarıyer, Istanbul, Turkey<br>
+                <strong>Email:</strong> privacy@cyberex.com.tr<br>
+                <strong>KEP Address:</strong> cyberex@hs03.kep.tr (planned)
+            </p>
+        </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Veri Kategorisi</th>
-                    <th>Veri Örnekleri</th>
-                    <th>İşlenme Amacı</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Kimlik Bilgileri</strong></td>
-                    <td>Ad, Soyad, TC Kimlik No, Doğum Tarihi, Cinsiyet</td>
-                    <td>Kullanıcı kaydı, KYC prosedürü, yasal yükümlülük</td>
-                </tr>
-                <tr>
-                    <td><strong>İletişim Bilgileri</strong></td>
-                    <td>E-posta, Telefon, Adres</td>
-                    <td>İletişim, bilgilendirme, hesap doğrulama</td>
-                </tr>
-                <tr>
-                    <td><strong>Finansal Veriler</strong></td>
-                    <td>Banka hesabı, işlem geçmişi, bakiye</td>
-                    <td>Para yatırma/çekme, işlem takibi, raporlama</td>
-                </tr>
-                <tr>
-                    <td><strong>İşlem Verileri</strong></td>
-                    <td>Alım-satım emirleri, cüzdan adresleri</td>
-                    <td>Platform hizmeti sunumu, işlem güvenliği</td>
-                </tr>
-                <tr>
-                    <td><strong>Teknik Veriler</strong></td>
-                    <td>IP adresi, cihaz bilgisi, log kayıtları</td>
-                    <td>Güvenlik, fraud önleme, sistem performansı</td>
-                </tr>
-            </tbody>
-        </table>
+        <!-- 2. COLLECTED DATA -->
+        <h2 class="tr-text">2. TOPLANAN KİŞİSEL VERİLER VE İŞLENME AMAÇLARI</h2>
+        <h2 class="en-text" style="display:none;">2. PROCESSED PERSONAL DATA AND PURPOSES</h2>
 
-        <!-- 3. YASAL DAYANAK -->
-        <h2>3. KİŞİSEL VERİLERİN İŞLENMESİNİN YASAL DAYANAĞI</h2>
-        <p>Kişisel verileriniz, KVKK'nın 5. ve 6. maddelerinde belirtilen aşağıdaki hukuki sebeplere dayanılarak
-            işlenmektedir:</p>
-        <ul>
-            <li>✅ <strong>Açık rızanız:</strong> Platform kaydı sırasında alınan onay</li>
-            <li>✅ <strong>Kanunlarda açıkça öngörülmesi:</strong> AML/KYC yasal yükümlülükler</li>
-            <li>✅ <strong>Sözleşmenin kurulması/ifası:</strong> Kullanım Şartları çerçevesinde hizmet sunumu</li>
-            <li>✅ <strong>Hukuki yükümlülüğün yerine getirilmesi:</strong> MASAK bildirimi, vergi vb.</li>
-            <li>✅ <strong>Meşru menfaatimiz:</strong> Güvenlik, fraud önleme, hizmet iyileştirme</li>
-        </ul>
+        <div class="tr-text">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Veri Kategorisi</th>
+                        <th>Veri Örnekleri</th>
+                        <th>İşlenme Amacı</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Kimlik Bilgileri</strong></td>
+                        <td>Ad, Soyad, TC Kimlik No, Doğum Tarihi, Cinsiyet</td>
+                        <td>Kullanıcı kaydı, KYC prosedürü, yasal yükümlülük</td>
+                    </tr>
+                    <tr>
+                        <td><strong>İletişim Bilgileri</strong></td>
+                        <td>E-posta, Telefon, Adres</td>
+                        <td>İletişim, bilgilendirme, hesap doğrulama</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Finansal Veriler</strong></td>
+                        <td>Banka hesabı, işlem geçmişi, bakiye</td>
+                        <td>Para yatırma/çekme, işlem takibi, raporlama</td>
+                    </tr>
+                    <tr>
+                        <td><strong>İşlem Verileri</strong></td>
+                        <td>Alım-satım emirleri, cüzdan adresleri</td>
+                        <td>Platform hizmeti sunumu, işlem güvenliği</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Teknik Veriler</strong></td>
+                        <td>IP adresi, cihaz bilgisi, log kayıtları</td>
+                        <td>Güvenlik, fraud önleme, sistem performansı</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-        <!-- 4. VERİ AKTARIMI -->
-        <h2>4. KİŞİSEL VERİLERİN AKTARILMASI</h2>
-        <h3>4.1. Yurtiçi Aktarım</h3>
-        <p>Kişisel verileriniz, aşağıdaki taraflara aktarılabilir:</p>
-        <ul>
-            <li>🏛️ <strong>Kamu Kurum ve Kuruluşları:</strong> MASAK, SPK, Vergi Dairesi (yasal zorunluluk)</li>
-            <li>💼 <strong>Hizmet Sağlayıcılar:</strong> Cloud server, SMS/Email, KYC doğrulama</li>
-            <li>🔐 <strong>Güvenlik Firmaları:</strong> Penetrasyon testi, SOC hizmeti</li>
-            <li>⚖️ <strong>Hukuk Danışmanları:</strong> Yasal süreçlerde</li>
-        </ul>
+        <div class="en-text" style="display:none;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data Category</th>
+                        <th>Data Examples</th>
+                        <th>Processing Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Identity Info</strong></td>
+                        <td>Name, Surname, ID No, Date of Birth, Gender</td>
+                        <td>User registration, KYC, legal obligation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Contact Info</strong></td>
+                        <td>Email, Phone, Address</td>
+                        <td>Communication, notification, verification</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Financial Data</strong></td>
+                        <td>Bank account, history, balance</td>
+                        <td>Deposit/withdraw, tracking, reporting</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Transaction Data</strong></td>
+                        <td>Trade orders, wallet addresses</td>
+                        <td>Service provision, transaction security</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Technical Data</strong></td>
+                        <td>IP address, device info, logs</td>
+                        <td>Security, fraud prevention, performance</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-        <h3>4.2. Yurtdışı Aktarım</h3>
-        <p>
-            Verileriniz, <strong>yeterli korumaya sahip ülkeler</strong> veya <strong>yeterli korumayı taahhüt eden
-                yurtdışı veri sorumlularına</strong> aktarılabilir:
-        </p>
-        <ul>
-            <li>☁️ Cloud sunucular (AWS/Google Cloud - ABD/Avrupa)</li>
-            <li>📧 Email servisleri (GDPR uyumlu)</li>
-        </ul>
-        <p><strong>Taahhüt:</strong> Tüm yurtdışı aktarımlar KVKK ve GDPR kurallarına uygun yapılır.</p>
+        <!-- 3. LEGAL BASIS -->
+        <h2 class="tr-text">3. KİŞİSEL VERİLERİN İŞLENMESİNİN YASAL DAYANAĞI</h2>
+        <h2 class="en-text" style="display:none;">3. LEGAL BASIS FOR PROCESSING</h2>
 
-        <!-- 5. VERİ TOPLAMA YÖNTEMLERİ -->
-        <h2>5. KİŞİSEL VERİLERİN TOPLANMA YÖNTEMİ</h2>
-        <p>Kişisel verileriniz aşağıdaki yollarla toplanmaktadır:</p>
-        <ol>
-            <li><strong>Dijital Ortamda:</strong> Website, mobil uygulama, API</li>
-            <li><strong>Kayıt Formları:</strong> Kullanıcı kaydı, KYC formu</li>
-            <li><strong>İşlem Kayıtları:</strong> Platform kullanımı sırasında otomatik</li>
-            <li><strong>Müşteri Hizmetleri:</strong> Destek talepleri, şikayetler</li>
-            <li><strong>Üçüncü Taraflar:</strong> KYC doğrulama servisleri</li>
-        </ol>
-
-        <!-- 6. HAKLARINIZ -->
-        <h2>6. KİŞİSEL VERİ SAHİBİ OLARAK HAKLARINIZ</h2>
-        <p>KVKK'nın 11. maddesi gereğince, aşağıdaki haklara sahipsiniz:</p>
-
-        <div class="info-box">
-            <h3 style="color: var(--neon-purple); margin-top: 0;">📋 İlgili Kişi Hakları</h3>
+        <div class="tr-text">
+            <p>Kişisel verileriniz, KVKK'nın 5. ve 6. maddelerinde belirtilen aşağıdaki hukuki sebeplere dayanılarak
+                işlenmektedir:</p>
             <ul>
-                <li>✔️ Kişisel verilerinizin işlenip işlenmediğini <strong>öğrenme</strong></li>
-                <li>✔️ İşlenmişse buna ilişkin <strong>bilgi talep etme</strong></li>
-                <li>✔️ İşlenme amacını ve amacına uygun kullanılıp kullanılmadığını <strong>öğrenme</strong></li>
-                <li>✔️ Yurt içi/dışında aktarıldığı 3. kişileri <strong>bilme</strong></li>
-                <li>✔️ Eksik veya yanlış işlenmişse <strong>düzeltilmesini isteme</strong></li>
-                <li>✔️ KVKK'ya uygun koşullarda <strong>silinmesini/yok edilmesini isteme</strong></li>
-                <li>✔️ Düzeltme/silme işlemlerinin 3. kişilere <strong>bildirilmesini isteme</strong></li>
-                <li>✔️ Münhasıran otomatik sistemlerle analiz edilmesi nedeniyle aleyhine sonuç çıkmasına <strong>itiraz
-                        etme</strong></li>
-                <li>✔️ Kanuna aykırı işleme nedeniyle zarar görmüşse <strong>zararın giderilmesini talep etme</strong>
-                </li>
+                <li>✅ <strong>Açık rızanız:</strong> Platform kaydı sırasında alınan onay</li>
+                <li>✅ <strong>Kanunlarda açıkça öngörülmesi:</strong> AML/KYC yasal yükümlülükler</li>
+                <li>✅ <strong>Sözleşmenin kurulması/ifası:</strong> Kullanım Şartları çerçevesinde hizmet sunumu</li>
+                <li>✅ <strong>Hukuki yükümlülüğün yerine getirilmesi:</strong> MASAK bildirimi, vergi vb.</li>
+                <li>✅ <strong>Meşru menfaatimiz:</strong> Güvenlik, fraud önleme, hizmet iyileştirme</li>
+            </ul>
+        </div>
+        <div class="en-text" style="display:none;">
+            <p>Your personal data is processed based on the following legal grounds specified in Articles 5 and 6 of
+                KVKK:</p>
+            <ul>
+                <li>✅ <strong>Explicit consent:</strong> Approval obtained during registration</li>
+                <li>✅ <strong>Explicitly stipulated in laws:</strong> AML/KYC legal obligations</li>
+                <li>✅ <strong>Establishment/performance of contract:</strong> Service provision under Terms</li>
+                <li>✅ <strong>Compliance with legal obligation:</strong> MASAK reporting, tax etc.</li>
+                <li>✅ <strong>Legitimate interest:</strong> Security, fraud prevention, improvement</li>
             </ul>
         </div>
 
-        <!-- 7. HAK KULLANIMI -->
-        <h2>7. HAKLARINIZI NASIL KULLANABİLİRSİNİZ?</h2>
-        <p>Yukarıdaki haklarınızı kullanmak için <strong>başvuru yöntemleri:</strong></p>
+        <!-- 4. DATA TRANSFER -->
+        <h2 class="tr-text">4. KİŞİSEL VERİLERİN AKTARILMASI</h2>
+        <h2 class="en-text" style="display:none;">4. TRANSFER OF PERSONAL DATA</h2>
 
-        <h3>Başvuru Kanalları:</h3>
-        <ul>
-            <li>📧 <strong>E-posta:</strong> privacy@cyberex.com.tr</li>
-            <li>📝 <strong>Yazılı Başvuru:</strong> "CyberEx Teknoloji A.Ş. - KVKK Başvurusu" Maslak, İstanbul</li>
-            <li>🌐 <strong>Online Form:</strong> Website üzerinden başvuru formu (yakında)</li>
-        </ul>
+        <div class="tr-text">
+            <h3>4.1. Yurtiçi Aktarım</h3>
+            <p>Kişisel verileriniz, aşağıdaki taraflara aktarılabilir:</p>
+            <ul>
+                <li>🏛️ <strong>Kamu Kurum ve Kuruluşları:</strong> MASAK, SPK, Vergi Dairesi (yasal zorunluluk)</li>
+                <li>💼 <strong>Hizmet Sağlayıcılar:</strong> Cloud server, SMS/Email, KYC doğrulama</li>
+                <li>🔐 <strong>Güvenlik Firmaları:</strong> Penetrasyon testi, SOC hizmeti</li>
+                <li>⚖️ <strong>Hukuk Danışmanları:</strong> Yasal süreçlerde</li>
+            </ul>
 
-        <h3>Başvuru Gereksinimleri:</h3>
-        <p>Başvurunuzda mutlaka:</p>
-        <ol>
-            <li>Ad, soyad ve imza</li>
-            <li>T.C. kimlik numarası</li>
-            <li>Tebligata esas yerleşim yeri veya iş yeri adresi</li>
-            <li>E-posta adresi, telefon numarası (varsa)</li>
-            <li>Başvuru konusu (açık ve anlaşılır)</li>
-        </ol>
+            <h3>4.2. Yurtdışı Aktarım</h3>
+            <p>
+                Verileriniz, <strong>yeterli korumaya sahip ülkeler</strong> veya <strong>yeterli korumayı taahhüt eden
+                    yurtdışı veri sorumlularına</strong> aktarılabilir:
+            </p>
+            <ul>
+                <li>☁️ Cloud sunucular (AWS/Google Cloud - ABD/Avrupa)</li>
+                <li>📧 Email servisleri (GDPR uyumlu)</li>
+            </ul>
+            <p><strong>Taahhüt:</strong> Tüm yurtdışı aktarımlar KVKK ve GDPR kurallarına uygun yapılır.</p>
+        </div>
 
-        <h3>Yanıt Süresi:</h3>
-        <p>
-            Başvurularınız <strong>30 gün içinde</strong> ücretsiz olarak yanıtlanır.
-            Ancak işlemin ayrıca bir maliyeti gerektirmesi hâlinde, Kişisel Verileri Koruma Kurulu tarafından belirlenen
-            tarifedeki ücret alınabilir.
-        </p>
+        <div class="en-text" style="display:none;">
+            <h3>4.1. Domestic Transfer</h3>
+            <p>Your personal data may be transferred to:</p>
+            <ul>
+                <li>🏛️ <strong>Public Institutions:</strong> MASAK, SPK, Tax Office (legal obligation)</li>
+                <li>💼 <strong>Service Providers:</strong> Cloud server, SMS/Email, KYC verification</li>
+                <li>🔐 <strong>Security Firms:</strong> Penetration testing, SOC service</li>
+                <li>⚖️ <strong>Legal Advisors:</strong> In legal proceedings</li>
+            </ul>
 
-        <!-- 8. VERİ GÜVENLİĞİ -->
-        <h2>8. KİŞİSEL VERİLERİN GÜVENLİĞİ</h2>
-        <p>CyberEx, kişisel verilerinizin güvenliğini sağlamak için:</p>
-        <ul>
-            <li>🔐 <strong>AES-256 bit şifreleme</strong> kullanır</li>
-            <li>🔐 <strong>SSL/TLS</strong> ile güvenli veri iletimi sağlar</li>
-            <li>🔐 <strong>Penetrasyon testleri</strong> düzenli yapar</li>
-            <li>🔐 <strong>Erişim kontrolü</strong> ve yetkilendirme uygular</li>
-            <li>🔐 <strong>Log kayıtları</strong> tutar ve izler</li>
-            <li>🔐 <strong>Personel eğitimi</strong> verir</li>
-            <li>🔐 <strong>Veri minimizasyonu</strong> prensibi uygular</li>
-        </ul>
-        <p>Detaylar: <a href="security.html" style="color: #00f0ff;">Güvenlik Raporu</a></p>
+            <h3>4.2. International Transfer</h3>
+            <p>
+                Your data may be transferred to <strong>countries with adequate protection</strong> or <strong>foreign
+                    data controllers undertaking adequate protection</strong>:
+            </p>
+            <ul>
+                <li>☁️ Cloud servers (AWS/Google Cloud - USA/Europe)</li>
+                <li>📧 Email services (GDPR compliant)</li>
+            </ul>
+            <p><strong>Commitment:</strong> All international transfers comply with KVKK and GDPR rules.</p>
+        </div>
 
-        <!-- 9. VERİ SAKLAMA SÜRESİ -->
-        <h2>9. KİŞİSEL VERİLERİN SAKLANMA SÜRESİ</h2>
-        <p>Kişisel verileriniz:</p>
-        <ul>
-            <li>📅 <strong>İşlem kayıtları:</strong> Vergi Usul Kanunu gereği 10 yıl</li>
-            <li>📅 <strong>KYC belgeleri:</strong> MASAK düzenlemeleri gereği 8 yıl</li>
-            <li>📅 <strong>İletişim kayıtları:</strong> Hizmet süresi + 1 yıl</li>
-            <li>📅 <strong>Log kayıtları:</strong> Güvenlik amaçlı 2 yıl</li>
-        </ul>
-        <p>
-            Yasal saklama süreleri sona erdikten sonra verileriniz <strong>silinir, yok edilir veya anonim hale
-                getirilir.</strong>
-        </p>
+        <!-- 5. COLLECTION METHOD -->
+        <h2 class="tr-text">5. KİŞİSEL VERİLERİN TOPLANMA YÖNTEMİ</h2>
+        <h2 class="en-text" style="display:none;">5. METHOD OF PERSONAL DATA COLLECTION</h2>
 
-        <!-- 10. ÇEREZLER (COOKIES) -->
-        <h2>10. ÇEREZ POLİTİKASI</h2>
-        <p>
-            CyberEx website'inde <strong>çerezler (cookies)</strong> kullanılmaktadır. Çerez kullanımı ve türleri
-            hakkında detaylı bilgi için:
-        </p>
-        <p>👉 <a href="cookie-policy.html" style="color: #00f0ff;">Çerez Politikası</a></p>
+        <div class="tr-text">
+            <p>Kişisel verileriniz aşağıdaki yollarla toplanmaktadır:</p>
+            <ol>
+                <li><strong>Dijital Ortamda:</strong> Website, mobil uygulama, API</li>
+                <li><strong>Kayıt Formları:</strong> Kullanıcı kaydı, KYC formu</li>
+                <li><strong>İşlem Kayıtları:</strong> Platform kullanımı sırasında otomatik</li>
+                <li><strong>Müşteri Hizmetleri:</strong> Destek talepleri, şikayetler</li>
+                <li><strong>Üçüncü Taraflar:</strong> KYC doğrulama servisleri</li>
+            </ol>
+        </div>
+        <div class="en-text" style="display:none;">
+            <p>Your personal data is collected via:</p>
+            <ol>
+                <li><strong>Digital Environment:</strong> Website, mobile app, API</li>
+                <li><strong>Forms:</strong> Registration, KYC forms</li>
+                <li><strong>Transaction Logs:</strong> Automatically during platform use</li>
+                <li><strong>Customer Support:</strong> Tickets, complaints</li>
+                <li><strong>Third Parties:</strong> KYC verification services</li>
+            </ol>
+        </div>
 
-        <!-- 11. DEĞİŞİKLİKLER -->
-        <h2>11. AYDINLATMA METNİ DEĞİŞİKLİKLERİ</h2>
-        <p>
-            Bu aydınlatma metni, yasal değişiklikler veya iş süreçlerindeki güncellemeler nedeniyle değiştirilebilir.
-            Değişiklikler website'de yayımlandığında yürürlüğe girer ve kayıtlı e-posta adresinize bildirim gönderilir.
-        </p>
+        <!-- 6. YOUR RIGHTS -->
+        <h2 class="tr-text">6. KİŞİSEL VERİ SAHİBİ OLARAK HAKLARINIZ</h2>
+        <h2 class="en-text" style="display:none;">6. YOUR RIGHTS AS DATA SUBJECT</h2>
 
-        <!-- 12. İLETİŞİM -->
-        <h2>12. İLETİŞİM BİLGİLERİ</h2>
-        <p>
-            KVKK veya kişisel verilerinizle ilgili sorularınız için:
-        </p>
-        <p>
-            📧 <strong>E-posta:</strong> privacy@cyberex.com.tr<br>
-            📍 <strong>Adres:</strong> CyberEx Teknoloji A.Ş., Maslak Mahallesi, Sarıyer/İstanbul<br>
-            📞 <strong>Telefon:</strong> +90 (XXX) XXX XX XX (yakında)<br>
-            🌐 <strong>Website:</strong> https://cyberex.com.tr
-        </p>
+        <div class="tr-text">
+            <p>KVKK'nın 11. maddesi gereğince, aşağıdaki haklara sahipsiniz:</p>
 
-        <!-- Sonuç -->
+            <div class="info-box">
+                <h3 style="color: var(--neon-purple); margin-top: 0;">📋 İlgili Kişi Hakları</h3>
+                <ul>
+                    <li>✔️ Kişisel verilerinizin işlenip işlenmediğini <strong>öğrenme</strong></li>
+                    <li>✔️ İşlenmişse buna ilişkin <strong>bilgi talep etme</strong></li>
+                    <li>✔️ İşlenme amacını ve amacına uygun kullanılıp kullanılmadığını <strong>öğrenme</strong></li>
+                    <li>✔️ Yurt içi/dışında aktarıldığı 3. kişileri <strong>bilme</strong></li>
+                    <li>✔️ Eksik veya yanlış işlenmişse <strong>düzeltilmesini isteme</strong></li>
+                    <li>✔️ KVKK'ya uygun koşullarda <strong>silinmesini/yok edilmesini isteme</strong></li>
+                    <li>✔️ Düzeltme/silme işlemlerinin 3. kişilere <strong>bildirilmesini isteme</strong></li>
+                    <li>✔️ Münhasıran otomatik sistemlerle analiz edilmesi nedeniyle aleyhine sonuç çıkmasına
+                        <strong>itiraz etme</strong>
+                    </li>
+                    <li>✔️ Kanuna aykırı işleme nedeniyle zarar görmüşse <strong>zararın giderilmesini talep
+                            etme</strong></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="en-text" style="display:none;">
+            <p>Pursuant to Article 11 of KVKK, you have the following rights:</p>
+
+            <div class="info-box">
+                <h3 style="color: var(--neon-purple); margin-top: 0;">📋 Rights of Data Subject</h3>
+                <ul>
+                    <li>✔️ To <strong>learn</strong> whether your personal data is processed</li>
+                    <li>✔️ To <strong>request information</strong> if it has been processed</li>
+                    <li>✔️ To <strong>learn</strong> the purpose of processing and if used appropriately</li>
+                    <li>✔️ To <strong>know</strong> the third parties to whom data is transferred</li>
+                    <li>✔️ To <strong>request correction</strong> of incomplete or incorrect data</li>
+                    <li>✔️ To <strong>request deletion/destruction</strong> under KVKK conditions</li>
+                    <li>✔️ To <strong>request notification</strong> of corrections/deletions to third parties</li>
+                    <li>✔️ To <strong>object</strong> to results against you based solely on automated systems</li>
+                    <li>✔️ To <strong>claim compensation</strong> for damages due to unlawful processing</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 7. APPLICATION -->
+        <h2 class="tr-text">7. HAKLARINIZI NASIL KULLANABİLİRSİNİZ?</h2>
+        <h2 class="en-text" style="display:none;">7. HOW TO EXERCISE YOUR RIGHTS?</h2>
+
+        <div class="tr-text">
+            <h3>Başvuru Kanalları:</h3>
+            <ul>
+                <li>📧 <strong>E-posta:</strong> privacy@cyberex.com.tr</li>
+                <li>📝 <strong>Yazılı Başvuru:</strong> "CyberEx Teknoloji A.Ş. - KVKK Başvurusu" Maslak, İstanbul</li>
+                <li>🌐 <strong>Online Form:</strong> Website üzerinden başvuru formu (yakında)</li>
+            </ul>
+
+            <h3>Başvuru Gereksinimleri:</h3>
+            <p>Başvurunuzda mutlaka:</p>
+            <ol>
+                <li>Ad, soyad ve imza</li>
+                <li>T.C. kimlik numarası</li>
+                <li>Tebligata esas yerleşim yeri veya iş yeri adresi</li>
+                <li>E-posta adresi, telefon numarası (varsa)</li>
+                <li>Başvuru konusu (açık ve anlaşılır)</li>
+            </ol>
+
+            <h3>Yanıt Süresi:</h3>
+            <p>
+                Başvurularınız <strong>30 gün içinde</strong> ücretsiz olarak yanıtlanır.
+                Ancak işlemin ayrıca bir maliyeti gerektirmesi hâlinde, Kişisel Verileri Koruma Kurulu tarafından
+                belirlenen
+                tarifedeki ücret alınabilir.
+            </p>
+        </div>
+
+        <div class="en-text" style="display:none;">
+            <h3>Application Channels:</h3>
+            <ul>
+                <li>📧 <strong>Email:</strong> privacy@cyberex.com.tr</li>
+                <li>📝 <strong>Written:</strong> "CyberEx Teknoloji A.Ş. - KVKK Application" Maslak, Istanbul</li>
+                <li>🌐 <strong>Online Form:</strong> Application form via website (soon)</li>
+            </ul>
+
+            <h3>Application Requirements:</h3>
+            <p>Your application must include:</p>
+            <ol>
+                <li>Name, surname and signature</li>
+                <li>National ID number</li>
+                <li>Address for notification</li>
+                <li>Email address, phone number (if any)</li>
+                <li>Subject of application (clear and understandable)</li>
+            </ol>
+
+            <h3>Response Time:</h3>
+            <p>
+                Your applications will be answered <strong>within 30 days</strong> free of charge.
+                However, if the process requires an additional cost, the fee in the tariff determined by the Personal
+                Data Protection Board may be charged.
+            </p>
+        </div>
+
+        <!-- 8. DATA SECURITY -->
+        <h2 class="tr-text">8. KİŞİSEL VERİLERİN GÜVENLİĞİ</h2>
+        <h2 class="en-text" style="display:none;">8. DATA SECURITY</h2>
+
+        <div class="tr-text">
+            <p>CyberEx, kişisel verilerinizin güvenliğini sağlamak için:</p>
+            <ul>
+                <li>🔐 <strong>AES-256 bit şifreleme</strong> kullanır</li>
+                <li>🔐 <strong>SSL/TLS</strong> ile güvenli veri iletimi sağlar</li>
+                <li>🔐 <strong>Penetrasyon testleri</strong> düzenli yapar</li>
+                <li>🔐 <strong>Erişim kontrolü</strong> ve yetkilendirme uygular</li>
+                <li>🔐 <strong>Log kayıtları</strong> tutar ve izler</li>
+                <li>🔐 <strong>Personel eğitimi</strong> verir</li>
+                <li>🔐 <strong>Veri minimizasyonu</strong> prensibi uygular</li>
+            </ul>
+        </div>
+        <div class="en-text" style="display:none;">
+            <p>To ensure personal data security, CyberEx:</p>
+            <ul>
+                <li>🔐 Uses <strong>AES-256 bit encryption</strong></li>
+                <li>🔐 Ensures secure transmission via <strong>SSL/TLS</strong></li>
+                <li>🔐 Performs regular <strong>penetration tests</strong></li>
+                <li>🔐 Implements <strong>access control</strong> and authorization</li>
+                <li>🔐 Keeps and monitors <strong>log records</strong></li>
+                <li>🔐 Provides <strong>staff training</strong></li>
+                <li>🔐 Applies <strong>data minimization</strong> principle</li>
+            </ul>
+        </div>
+
+        <!-- 9. RETENTION PERIOD -->
+        <h2 class="tr-text">9. KİŞİSEL VERİLERİN SAKLANMA SÜRESİ</h2>
+        <h2 class="en-text" style="display:none;">9. DATA RETENTION PERIOD</h2>
+
+        <div class="tr-text">
+            <p>Kişisel verileriniz:</p>
+            <ul>
+                <li>📅 <strong>İşlem kayıtları:</strong> Vergi Usul Kanunu gereği 10 yıl</li>
+                <li>📅 <strong>KYC belgeleri:</strong> MASAK düzenlemeleri gereği 8 yıl</li>
+                <li>📅 <strong>İletişim kayıtları:</strong> Hizmet süresi + 1 yıl</li>
+                <li>📅 <strong>Log kayıtları:</strong> Güvenlik amaçlı 2 yıl</li>
+            </ul>
+            <p>
+                Yasal saklama süreleri sona erdikten sonra verileriniz <strong>silinir, yok edilir veya anonim hale
+                    getirilir.</strong>
+            </p>
+        </div>
+        <div class="en-text" style="display:none;">
+            <p>Your personal data:</p>
+            <ul>
+                <li>📅 <strong>Transaction records:</strong> 10 years (Tax Law)</li>
+                <li>📅 <strong>KYC documents:</strong> 8 years (MASAK regulations)</li>
+                <li>📅 <strong>Communication logs:</strong> Service period + 1 year</li>
+                <li>📅 <strong>Log records:</strong> 2 years (Security purposes)</li>
+            </ul>
+            <p>
+                After legal retention periods expire, your data is <strong>deleted, destroyed or anonymized.</strong>
+            </p>
+        </div>
+
+        <!-- 10. COOKIES -->
+        <h2 class="tr-text">10. ÇEREZ POLİTİKASI</h2>
+        <h2 class="en-text" style="display:none;">10. COOKIE POLICY</h2>
+
+        <div class="tr-text">
+            <p>
+                CyberEx website'inde <strong>çerezler (cookies)</strong> kullanılmaktadır. Çerez kullanımı ve türleri
+                hakkında detaylı bilgi için:
+            </p>
+            <p>👉 <a href="cookie-policy.html" style="color: #00f0ff;">Çerez Politikası</a></p>
+        </div>
+        <div class="en-text" style="display:none;">
+            <p>
+                <strong>Cookies</strong> are used on the CyberEx website. For detailed information about cookie usage:
+            </p>
+            <p>👉 <a href="cookie-policy.html" style="color: #00f0ff;">Cookie Policy</a></p>
+        </div>
+
+        <!-- 11. CHANGES -->
+        <h2 class="tr-text">11. AYDINLATMA METNİ DEĞİŞİKLİKLERİ</h2>
+        <h2 class="en-text" style="display:none;">11. CHANGES TO NOTICE</h2>
+
+        <div class="tr-text">
+            <p>
+                Bu aydınlatma metni, yasal değişiklikler veya iş süreçlerindeki güncellemeler nedeniyle
+                değiştirilebilir.
+                Değişiklikler website'de yayımlandığında yürürlüğe girer ve kayıtlı e-posta adresinize bildirim
+                gönderilir.
+            </p>
+        </div>
+        <div class="en-text" style="display:none;">
+            <p>
+                This clarification text may be changed due to legal amendments or business process updates.
+                Changes take effect when published on the website and a notification is sent to your registered email.
+            </p>
+        </div>
+
+        <!-- 12. CONTACT -->
+        <h2 class="tr-text">12. İLETİŞİM BİLGİLERİ</h2>
+        <h2 class="en-text" style="display:none;">12. CONTACT INFORMATION</h2>
+
+        <div class="tr-text">
+            <p>KVKK veya kişisel verilerinizle ilgili sorularınız için:</p>
+            <p>
+                📧 <strong>E-posta:</strong> privacy@cyberex.com.tr<br>
+                📍 <strong>Adres:</strong> CyberEx Teknoloji A.Ş., Maslak Mahallesi, Sarıyer/İstanbul<br>
+                📞 <strong>Telefon:</strong> +90 (XXX) XXX XX XX (yakında)<br>
+                🌐 <strong>Website:</strong> https://cyberex.com.tr
+            </p>
+        </div>
+        <div class="en-text" style="display:none;">
+            <p>For questions regarding KVKK or your personal data:</p>
+            <p>
+                📧 <strong>Email:</strong> privacy@cyberex.com.tr<br>
+                📍 <strong>Address:</strong> CyberEx Technology Inc., Maslak, Sarıyer/Istanbul<br>
+                📞 <strong>Phone:</strong> +90 (XXX) XXX XX XX (soon)<br>
+                🌐 <strong>Website:</strong> https://cyberex.com.tr
+            </p>
+        </div>
+
+        <!-- Conclusion -->
         <div class="info-box" style="margin-top: 50px;">
-            <h3 style="color: var(--neon-purple); margin-top: 0;">🔒 Gizliliğiniz Bizim Önceliğimiz</h3>
-            <p style="margin: 0;">
+            <h3 class="tr-text" style="color: var(--neon-purple); margin-top: 0;">🔒 Gizliliğiniz Bizim Önceliğimiz</h3>
+            <p class="tr-text" style="margin: 0;">
                 CyberEx, kişisel verilerinizin korunmasını en üst düzeyde önemser ve KVKK ile GDPR gerekliliklerine tam
                 uyum sağlar.
                 Verilerinizin güvenliği konusundaki taahhütümüz kesindir.
             </p>
+
+            <h3 class="en-text" style="color: var(--neon-purple); margin-top: 0; display:none;">🔒 Your Privacy is Our
+                Priority</h3>
+            <p class="en-text" style="margin: 0; display:none;">
+                CyberEx prioritizes the protection of your personal data at the highest level and fully complies with
+                KVKK and GDPR requirements.
+                Our commitment to the security of your data is absolute.
+            </p>
         </div>
 
         <div class="footer-links">
-            <p style="color: #666; margin-bottom: 20px;">
-                © 2024-2026 CyberEx Teknoloji A.Ş. | Son Güncelleme: 26 Ocak 2026
+            <p class="tr-text" style="color: #666; margin-bottom: 20px;">
+                © 2024-2026 CyberEx Teknoloji A.Ş. | Son Güncelleme: 26 Ocak 2026<br>
+                <span class="status-badge">BETA v1.3.9</span>
+                <span class="status-badge" style="background: linear-gradient(135deg, #FF9800, #F57C00);">SPK LİSANS
+                    SÜRECİ</span>
             </p>
-            <p>
+            <p class="en-text" style="color: #666; margin-bottom: 20px; display:none;">
+                © 2024-2026 CyberEx Technology Inc. | Last Updated: January 26, 2026<br>
+                <span class="status-badge">BETA v1.3.9</span>
+                <span class="status-badge" style="background: linear-gradient(135deg, #FF9800, #F57C00);">SPK LICENSE
+                    PENDING</span>
+            </p>
+
+            <p class="tr-text">
                 <a href="index.html">Ana Sayfa</a> |
                 <a href="terms.html">Kullanım Şartları</a> |
-                <a href="privacy.html">Gizlilik Politikası</a> |
                 <a href="legal.html">Yasal Uyarı</a> |
+                <a href="privacy.html">Gizlilik Politikası</a> |
+                <a href="kvkk.html">KVKK Metni</a> |
+                <a href="security.html">Güvenlik Raporu</a> |
+                <a href="risk.html">Risk Bildirimi</a> |
+                <a href="cookie-policy.html">Çerez Politikası</a> |
                 <a href="disclaimer.html">Beta Koşulları</a>
+            </p>
+            <p class="en-text" style="display:none;">
+                <a href="index.html">Home</a> |
+                <a href="terms.html">Terms of Service</a> |
+                <a href="legal.html">Legal Notice</a> |
+                <a href="privacy.html">Privacy Policy</a> |
+                <a href="kvkk.html">KVKK Notice</a> |
+                <a href="security.html">Security Report</a> |
+                <a href="risk.html">Risk Disclosure</a> |
+                <a href="cookie-policy.html">Cookie Policy</a> |
+                <a href="disclaimer.html">Beta Terms</a>
             </p>
         </div>
     </div>
+
+    <script>
+        function switchLang(lang) {
+            if (lang === 'tr') {
+                document.querySelectorAll('.tr-text').forEach(el => el.style.display = '');
+                document.querySelectorAll('.en-text').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.lang-btn')[0].classList.add('active');
+                document.querySelectorAll('.lang-btn')[1].classList.remove('active');
+            } else {
+                document.querySelectorAll('.tr-text').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.en-text').forEach(el => el.style.display = '');
+                document.querySelectorAll('.lang-btn')[0].classList.remove('active');
+                document.querySelectorAll('.lang-btn')[1].classList.add('active');
+            }
+            localStorage.setItem('lang', lang);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('lang') || 'tr';
+            if (savedLang === 'en') switchLang('en');
+        });
+    </script>
 </body>
 
 </html>

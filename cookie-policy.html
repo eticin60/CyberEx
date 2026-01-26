@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Çerez Politikası | CyberEx - Cookie Policy</title>
+    <title>Çerez Politikası | Cookie Policy | CyberEx</title>
 
     <!-- SEO -->
     <meta name="description"
@@ -57,6 +57,26 @@
 
         .nav-logo {
             height: 35px;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: 0.3s;
+            margin: 0 3px;
+        }
+
+        .lang-btn:hover,
+        .lang-btn.active {
+            background: var(--neon-orange);
+            color: #fff;
+            font-weight: 700;
+            border-color: var(--neon-orange);
         }
 
         .container {
@@ -138,7 +158,13 @@
         .footer-links a {
             color: var(--neon-cyan);
             text-decoration: none;
-            margin: 0 15px;
+            margin: 0 10px;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
         }
 
         table {
@@ -152,6 +178,7 @@
             border: 1px solid var(--border);
             padding: 15px;
             text-align: left;
+            color: #b0c4de;
         }
 
         th {
@@ -159,277 +186,625 @@
             color: #fff;
             font-weight: 700;
         }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #FF9800, #F57C00);
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin: 0 10px;
+            color: #fff;
+        }
     </style>
 </head>
 
 <body>
     <nav class="navbar">
         <a href="index.html"><img src="cyberex-logo.png" alt="CyberEx" class="nav-logo"></a>
-        <div style="font-weight: 800; color: var(--neon-orange); letter-spacing: 1px;">🍪 ÇEREZ POLİTİKASI</div>
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <div style="font-weight: 800; color: var(--neon-orange); letter-spacing: 1px;">
+                <span class="tr-text">🍪 ÇEREZ POLİTİKASI</span>
+                <span class="en-text" style="display:none;">🍪 COOKIE POLICY</span>
+            </div>
+            <div>
+                <button class="lang-btn active" onclick="switchLang('tr')">TR</button>
+                <button class="lang-btn" onclick="switchLang('en')">EN</button>
+            </div>
+        </div>
     </nav>
 
     <div class="container">
-        <h1>Çerez Politikası</h1>
+        <h1 class="tr-text">Çerez Politikası</h1>
+        <h1 class="en-text" style="display:none;">Cookie Policy</h1>
+
         <div class="meta">
-            <strong>Son Güncelleme:</strong> 26 Ocak 2026<br>
-            <strong>Kapsam:</strong> cyberex.com.tr ve alt alan adları
+            <span class="tr-text">
+                <strong>Son Güncelleme:</strong> 26 Ocak 2026<br>
+                <strong>Kapsam:</strong> cyberex.com.tr ve alt alan adları
+            </span>
+            <span class="en-text" style="display:none;">
+                <strong>Last Updated:</strong> January 26, 2026<br>
+                <strong>Scope:</strong> cyberex.com.tr and subdomains
+            </span>
         </div>
 
-        <!-- Giriş -->
+        <!-- Introduction -->
         <div class="info-box">
-            <h3 style="color: var(--neon-orange); margin-top: 0;">🍪 Çerezler Hakkında</h3>
-            <p>
+            <h3 class="tr-text" style="color: var(--neon-orange); margin-top: 0;">🍪 Çerezler Hakkında</h3>
+            <h3 class="en-text" style="color: var(--neon-orange); margin-top: 0; display:none;">🍪 About Cookies</h3>
+
+            <p class="tr-text">
                 CyberEx, website'imizi ziyaretiniz sırasında deneyiminizi iyileştirmek için çerezler kullanmaktadır.
                 Bu politika, hangi çerezlerin kullanıldığını, neden kullanıldığını ve nasıl yönetebileceğinizi açıklar.
             </p>
+            <p class="en-text" style="display:none;">
+                CyberEx uses cookies to improve your experience during your visit to our website.
+                This policy explains which cookies are used, why they are used, and how you can manage them.
+            </p>
         </div>
 
-        <!-- 1. ÇEREZ NEDİR? -->
-        <h2>1. ÇEREZ (COOKIE) NEDİR?</h2>
-        <p>
-            Çerezler, bir web sitesini ziyaret ettiğinizde cihazınıza (bilgisayar, telefon, tablet) kaydedilen
-            <strong>küçük metin dosyalarıdır</strong>. Çerezler, website'nin düzgün çalışması, kullanıcı deneyiminin
-            iyileştirilmesi ve analitik veri toplanması için kullanılır.
-        </p>
+        <!-- 1. WHAT IS COOKIE -->
+        <h2 class="tr-text">1. ÇEREZ (COOKIE) NEDİR?</h2>
+        <h2 class="en-text" style="display:none;">1. WHAT IS A COOKIE?</h2>
 
-        <!-- 2. ÇEREZ TÜRLERİ -->
-        <h2>2. CYBEREX TARAFINDAN KULLANILAN ÇEREZ TÜRLERİ</h2>
+        <div class="tr-text">
+            <p>
+                Çerezler, bir web sitesini ziyaret ettiğinizde cihazınıza (bilgisayar, telefon, tablet) kaydedilen
+                <strong>küçük metin dosyalarıdır</strong>. Çerezler, website'nin düzgün çalışması, kullanıcı deneyiminin
+                iyileştirilmesi ve analitik veri toplanması için kullanılır.
+            </p>
+        </div>
+        <div class="en-text" style="display:none;">
+            <p>
+                Cookies are <strong>small text files</strong> saved to your device (computer, phone, tablet) when you
+                visit a website.
+                Cookies are used for the proper functioning of the website, improving user experience, and collecting
+                analytical data.
+            </p>
+        </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Çerez Türü</th>
-                    <th>Amaç</th>
-                    <th>Süre</th>
-                    <th>Onay Gerekli mi?</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Zorunlu Çerezler</strong></td>
-                    <td>Website'nin çalışması için gerekli (oturum yönetimi, güvenlik)</td>
-                    <td>Oturum / 1 yıl</td>
-                    <td>❌ Hayır</td>
-                </tr>
-                <tr>
-                    <td><strong>Performans Çerezleri</strong></td>
-                    <td>Sayfa performansı ve hata takibi</td>
-                    <td>1 yıl</td>
-                    <td>✅ Evet</td>
-                </tr>
-                <tr>
-                    <td><strong>İşlevsellik Çerezleri</strong></td>
-                    <td>Tercihlerinizi hatırlama (dil, tema)</td>
-                    <td>1 yıl</td>
-                    <td>✅ Evet</td>
-                </tr>
-                <tr>
-                    <td><strong>Analitik Çerezler</strong></td>
-                    <td>Kullanım istatistikleri (Google Analytics)</td>
-                    <td>2 yıl</td>
-                    <td>✅ Evet</td>
-                </tr>
-                <tr>
-                    <td><strong>Pazarlama Çerezleri</strong></td>
-                    <td>Kişiselleştirilmiş reklamlar</td>
-                    <td>1 yıl</td>
-                    <td>✅ Evet</td>
-                </tr>
-            </tbody>
-        </table>
+        <!-- 2. TYPES OF COOKIES -->
+        <h2 class="tr-text">2. CYBEREX TARAFINDAN KULLANILAN ÇEREZ TÜRLERİ</h2>
+        <h2 class="en-text" style="display:none;">2. TYPES OF COOKIES USED BY CYBEREX</h2>
 
-        <!-- 3. ZORUNLU ÇEREZLER -->
-        <h2>3. ZORUNLU ÇEREZLER</h2>
-        <p>Bu çerezler, website'nin temel işlevlerini sağlamak için zorunludur ve kapatılamaz:</p>
+        <div class="tr-text">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Çerez Türü</th>
+                        <th>Amaç</th>
+                        <th>Süre</th>
+                        <th>Onay Gerekli mi?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Zorunlu Çerezler</strong></td>
+                        <td>Website'nin çalışması için gerekli (oturum yönetimi, güvenlik)</td>
+                        <td>Oturum / 1 yıl</td>
+                        <td>❌ Hayır</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Performans Çerezleri</strong></td>
+                        <td>Sayfa performansı ve hata takibi</td>
+                        <td>1 yıl</td>
+                        <td>✅ Evet</td>
+                    </tr>
+                    <tr>
+                        <td><strong>İşlevsellik Çerezleri</strong></td>
+                        <td>Tercihlerinizi hatırlama (dil, tema)</td>
+                        <td>1 yıl</td>
+                        <td>✅ Evet</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Analitik Çerezler</strong></td>
+                        <td>Kullanım istatistikleri (Google Analytics)</td>
+                        <td>2 yıl</td>
+                        <td>✅ Evet</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pazarlama Çerezleri</strong></td>
+                        <td>Kişiselleştirilmiş reklamlar</td>
+                        <td>1 yıl</td>
+                        <td>✅ Evet</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-        <h3>3.1. Oturum Yönetimi</h3>
-        <ul>
-            <li>🔐 <strong>session_id:</strong> Kullanıcı oturumunu tanımlar</li>
-            <li>🔐 <strong>csrf_token:</strong> CSRF saldırılarına karşı koruma</li>
-            <li>🔐 <strong>auth_token:</strong> Kimlik doğrulama tokeni</li>
-        </ul>
 
-        <h3>3.2. Güvenlik</h3>
-        <ul>
-            <li>🛡️ <strong>security_check:</strong> Bot koruması</li>
-            <li>🛡️ <strong>rate_limit:</strong> İstek sınırlama</li>
-        </ul>
+        <div class="en-text" style="display:none;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cookie Type</th>
+                        <th>Purpose</th>
+                        <th>Duration</th>
+                        <th>Consent Required?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Strictly Necessary</strong></td>
+                        <td>Necessary for website to function (session, security)</td>
+                        <td>Session / 1 year</td>
+                        <td>❌ No</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Performance Cookies</strong></td>
+                        <td>Page performance and error tracking</td>
+                        <td>1 year</td>
+                        <td>✅ Yes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Functional Cookies</strong></td>
+                        <td>Remembering preferences (language, theme)</td>
+                        <td>1 year</td>
+                        <td>✅ Yes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Analytics Cookies</strong></td>
+                        <td>Usage statistics (Google Analytics)</td>
+                        <td>2 years</td>
+                        <td>✅ Yes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Marketing Cookies</strong></td>
+                        <td>Personalized ads</td>
+                        <td>1 year</td>
+                        <td>✅ Yes</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-        <h3>3.3. Platform İşlevselliği</h3>
-        <ul>
-            <li>⚙️ <strong>lang_pref:</strong> Dil tercihi (TR/EN)</li>
-            <li>⚙️ <strong>cookie_consent:</strong> Çerez onay durumu</li>
-        </ul>
+        <!-- 3. STRICTLY NECESSARY -->
+        <h2 class="tr-text">3. ZORUNLU ÇEREZLER</h2>
+        <h2 class="en-text" style="display:none;">3. STRICTLY NECESSARY COOKIES</h2>
 
-        <!-- 4. PERFORMANS ÇEREZLER -->
-        <h2>4. PERFORMANS VE ANALİTİK ÇEREZLER</h2>
-        <p>Website performansını izlemek ve iyileştirmek için kullanılır:</p>
+        <div class="tr-text">
+            <p>Bu çerezler, website'nin temel işlevlerini sağlamak için zorunludur ve kapatılamaz:</p>
 
-        <h3>4.1. Google Analytics</h3>
-        <ul>
-            <li>📊 <strong>_ga:</strong> Kullanıcıları ayırt eder (2 yıl)</li>
-            <li>📊 <strong>_gid:</strong> Kullanıcıları ayırt eder (24 saat)</li>
-            <li>📊 <strong>_gat:</strong> İstek hızını sınırlar (1 dakika)</li>
-        </ul>
-
-        <h3>4.2. Cloudflare</h3>
-        <ul>
-            <li>☁️ <strong>__cfduid:</strong> DDoS koruması ve performans</li>
-        </ul>
-
-        <!-- 5. İŞLEVSELLİK ÇEREZLER -->
-        <h2>5. İŞLEVSELLİK ÇEREZLER</h2>
-        <p>Kullanıcı deneyimini kişiselleştirmek için:</p>
-        <ul>
-            <li>🎨 <strong>theme_mode:</strong> Karanlık/Aydınlık tema tercihi</li>
-            <li>💱 <strong>currency_pref:</strong> Para birimi tercihi (TRY/USD/EUR)</li>
-            <li>🔔 <strong>notification_settings:</strong> Bildirim tercihleri</li>
-        </ul>
-
-        <!-- 6. PAZARLAMA ÇEREZLER -->
-        <h2>6. PAZARLAMA VE REKLAı ÇEREZLERİ</h2>
-        <p>
-            Kişiselleştirilmiş içerik ve reklam göstermek için kullanılır.
-            <strong>Sadece açık onayınız ile aktif olur.</strong>
-        </p>
-        <ul>
-            <li>📢 Google Ads çerezleri</li>
-            <li>📢 Facebook Pixel</li>
-            <li>📢 Twitter Analytics</li>
-        </ul>
-
-        <!-- 7. ÜÇÜNCÜ TARAF ÇEREZLER -->
-        <h2>7. ÜÇÜNCÜ TARAF HİZMETLERİ VE ÇEREZLERİ</h2>
-        <p>CyberEx, aşağıdaki üçüncü taraf hizmetlerini kullanır:</p>
-
-        <h3>7.1. Analitik Hizmetleri</h3>
-        <ul>
-            <li>🔍 <strong>Google Analytics:</strong> Website kullanım istatistikleri</li>
-            <li>🔍 <strong>Hotjar:</strong> Kullanıcı davranış analizi (opsiyonel)</li>
-        </ul>
-
-        <h3>7.2. Güvenlik Hizmetleri</h3>
-        <ul>
-            <li>🛡️ <strong>Cloudflare:</strong> DDoS koruması ve CDN</li>
-            <li>🛡️ <strong>reCAPTCHA:</strong> Bot koruması</li>
-        </ul>
-
-        <h3>7.3. İletişim Hizmetleri</h3>
-        <ul>
-            <li>💬 <strong>Intercom/Zendesk:</strong> Canlı destek (potansiyel)</li>
-        </ul>
-
-        <p>
-            <strong>Not:</strong> Üçüncü taraf çerezlerin gizlilik politikaları kendi sağlayıcıları tarafından
-            yönetilir.
-        </p>
-
-        <!-- 8. ÇEREZ YÖNETİMİ -->
-        <h2>8. ÇEREZLERİ NASIL YÖNETEBİLİRSİNİZ?</h2>
-
-        <h3>8.1. Tarayıcı Ayarları</h3>
-        <p>Çoğu tarayıcı, çerezleri yönetmenize izin verir:</p>
-
-        <div class="info-box">
-            <p><strong>Tarayıcı Bazlı Çerez Ayarları:</strong></p>
+            <h3>3.1. Oturum Yönetimi</h3>
             <ul>
-                <li>🌐 <strong>Google Chrome:</strong> Ayarlar > Gizlilik ve Güvenlik > Çerezler</li>
-                <li>🌐 <strong>Firefox:</strong> Seçenekler > Gizlilik ve Güvenlik > Çerezler ve Site Verileri</li>
-                <li>🌐 <strong>Safari:</strong> Tercihler > Gizlilik > Çerezleri ve website verilerini yönet</li>
-                <li>🌐 <strong>Edge:</strong> Ayarlar > Gizlilik, arama ve hizmetler > Çerezler</li>
+                <li>🔐 <strong>session_id:</strong> Kullanıcı oturumunu tanımlar</li>
+                <li>🔐 <strong>csrf_token:</strong> CSRF saldırılarına karşı koruma</li>
+                <li>🔐 <strong>auth_token:</strong> Kimlik doğrulama tokeni</li>
+            </ul>
+
+            <h3>3.2. Güvenlik</h3>
+            <ul>
+                <li>🛡️ <strong>security_check:</strong> Bot koruması</li>
+                <li>🛡️ <strong>rate_limit:</strong> İstek sınırlama</li>
+            </ul>
+
+            <h3>3.3. Platform İşlevselliği</h3>
+            <ul>
+                <li>⚙️ <strong>lang_pref:</strong> Dil tercihi (TR/EN)</li>
+                <li>⚙️ <strong>cookie_consent:</strong> Çerez onay durumu</li>
             </ul>
         </div>
 
-        <h3>8.2. CyberEx Çerez Tercihleri</h3>
-        <p>
-            Website'de çerez banner'ından tercihlerinizi yönetebilirsiniz:
-        </p>
-        <ul>
-            <li>⚙️ "Çerez Ayarları" butonuna tıklayın</li>
-            <li>⚙️ İstediğiniz çerez kategorilerini seçin</li>
-            <li>⚙️ "Kaydet" butonuyla onaylayın</li>
-        </ul>
+        <div class="en-text" style="display:none;">
+            <p>These cookies are essential to provide the basic functions of the website and cannot be turned off:</p>
 
-        <h3>8.3. Tüm Çerezleri Reddetme</h3>
-        <p>
-            Zorunlu çerezler dışındaki tüm çerezleri reddedebilirsiniz. Ancak bu durumda:
-        </p>
-        <ul>
-            <li>⚠️ Bazı özellikler çalışmayabilir</li>
-            <li>⚠️ Tercihleriniz hatırlanmayabilir</li>
-            <li>⚠️ Website yavaşlayabilir</li>
-        </ul>
+            <h3>3.1. Session Management</h3>
+            <ul>
+                <li>🔐 <strong>session_id:</strong> Identifies user session</li>
+                <li>🔐 <strong>csrf_token:</strong> Protection against CSRF attacks</li>
+                <li>🔐 <strong>auth_token:</strong> Authentication token</li>
+            </ul>
 
-        <!-- 9. MOBİL UYGULAMA -->
-        <h2>9. MOBİL UYGULAMA VE YEREL DEPOLAMA</h2>
-        <p>
-            CyberEx mobil uygulaması, çerez yerine <strong>yerel depolama (local storage)</strong> kullanır.
-            Amaçlar benzerdir:
-        </p>
-        <ul>
-            <li>📱 Oturum yönetimi</li>
-            <li>📱 Kullanıcı tercihleri</li>
-            <li>📱 Cache yönetimi</li>
-        </ul>
-        <p>Mobil uygulama ayarlarından yönetebilirsiniz: Ayarlar > Gizlilik > Verileri Temizle</p>
+            <h3>3.2. Security</h3>
+            <ul>
+                <li>🛡️ <strong>security_check:</strong> Bot protection</li>
+                <li>🛡️ <strong>rate_limit:</strong> Request limiting</li>
+            </ul>
 
-        <!-- 10. YASAL DAYANAK -->
-        <h2>10. YASAL DAYANAK VE HAKLARINIZ</h2>
-        <p>
-            Çerez kullanımımız, <strong>KVKK (6698 sayılı Kanun)</strong> ve <strong>GDPR (Avrupa Genel Veri Koruma
-                Yönetmeliği)</strong>
-            uyarınca gerçekleştirilmektedir.
-        </p>
+            <h3>3.3. Platform Functionality</h3>
+            <ul>
+                <li>⚙️ <strong>lang_pref:</strong> Language preference (TR/EN)</li>
+                <li>⚙️ <strong>cookie_consent:</strong> Cookie consent status</li>
+            </ul>
+        </div>
 
-        <h3>10.1. Haklarınız</h3>
-        <ul>
-            <li>✔️ Hangi çerezlerin kullanıldığını öğrenme</li>
-            <li>✔️ Çerezleri kabul/reddetme</li>
-            <li>✔️ Onayınızı geri çekme</li>
-            <li>✔️ Çerez verilerinizin silinmesini talep etme</li>
-        </ul>
+        <!-- 4. PERFORMANCE COOKIES -->
+        <h2 class="tr-text">4. PERFORMANS VE ANALİTİK ÇEREZLER</h2>
+        <h2 class="en-text" style="display:none;">4. PERFORMANCE AND ANALYTICS COOKIES</h2>
 
-        <p>Detaylar için: <a href="kvkk.html" style="color: #00f0ff;">KVKK Aydınlatma Metni</a></p>
+        <div class="tr-text">
+            <p>Website performansını izlemek ve iyileştirmek için kullanılır:</p>
 
-        <!-- 11. DEĞİŞİKLİKLER -->
-        <h2>11. POLİTİKA DEĞİŞİKLİKLERİ</h2>
-        <p>
-            Bu Çerez Politikası zaman zaman güncellenebilir. Önemli değişiklikler olduğunda website'de
-            bildirim yapılır ve e-posta gönderilir.
-        </p>
+            <h3>4.1. Google Analytics</h3>
+            <ul>
+                <li>📊 <strong>_ga:</strong> Kullanıcıları ayırt eder (2 yıl)</li>
+                <li>📊 <strong>_gid:</strong> Kullanıcıları ayırt eder (24 saat)</li>
+                <li>📊 <strong>_gat:</strong> İstek hızını sınırlar (1 dakika)</li>
+            </ul>
 
-        <!-- 12. İLETİŞİM -->
-        <h2>12. İLETİŞİM</h2>
-        <p>Çerez politikası hakkında sorularınız için:</p>
-        <p>
-            📧 <strong>E-posta:</strong> privacy@cyberex.com.tr<br>
-            🌐 <strong>Website:</strong> https://cyberex.com.tr<br>
-            📍 <strong>Adres:</strong> CyberEx Teknoloji A.Ş., Maslak/İstanbul
-        </p>
+            <h3>4.2. Cloudflare</h3>
+            <ul>
+                <li>☁️ <strong>__cfduid:</strong> DDoS koruması ve performans</li>
+            </ul>
+        </div>
 
-        <!-- SONUÇ -->
+        <div class="en-text" style="display:none;">
+            <p>Used to monitor and improve website performance:</p>
+
+            <h3>4.1. Google Analytics</h3>
+            <ul>
+                <li>📊 <strong>_ga:</strong> Distinguishes users (2 years)</li>
+                <li>📊 <strong>_gid:</strong> Distinguishes users (24 hours)</li>
+                <li>📊 <strong>_gat:</strong> Limits request rate (1 minute)</li>
+            </ul>
+
+            <h3>4.2. Cloudflare</h3>
+            <ul>
+                <li>☁️ <strong>__cfduid:</strong> DDoS protection and performance</li>
+            </ul>
+        </div>
+
+        <!-- 5. FUNCTIONAL COOKIES -->
+        <h2 class="tr-text">5. İŞLEVSELLİK ÇEREZLER</h2>
+        <h2 class="en-text" style="display:none;">5. FUNCTIONAL COOKIES</h2>
+
+        <div class="tr-text">
+            <p>Kullanıcı deneyimini kişiselleştirmek için:</p>
+            <ul>
+                <li>🎨 <strong>theme_mode:</strong> Karanlık/Aydınlık tema tercihi</li>
+                <li>💱 <strong>currency_pref:</strong> Para birimi tercihi (TRY/USD/EUR)</li>
+                <li>🔔 <strong>notification_settings:</strong> Bildirim tercihleri</li>
+            </ul>
+        </div>
+        <div class="en-text" style="display:none;">
+            <p>To personalize the user experience:</p>
+            <ul>
+                <li>🎨 <strong>theme_mode:</strong> Dark/Light theme preference</li>
+                <li>💱 <strong>currency_pref:</strong> Currency preference (TRY/USD/EUR)</li>
+                <li>🔔 <strong>notification_settings:</strong> Notification preferences</li>
+            </ul>
+        </div>
+
+        <!-- 6. MARKETING COOKIES -->
+        <h2 class="tr-text">6. PAZARLAMA VE REKLAM ÇEREZLERİ</h2>
+        <h2 class="en-text" style="display:none;">6. MARKETING AND ADVERTISING COOKIES</h2>
+
+        <div class="tr-text">
+            <p>
+                Kişiselleştirilmiş içerik ve reklam göstermek için kullanılır.
+                <strong>Sadece açık onayınız ile aktif olur.</strong>
+            </p>
+            <ul>
+                <li>📢 Google Ads çerezleri</li>
+                <li>📢 Facebook Pixel</li>
+                <li>📢 Twitter Analytics</li>
+            </ul>
+        </div>
+        <div class="en-text" style="display:none;">
+            <p>
+                Used to show personalized content and ads.
+                <strong>Only active with your explicit consent.</strong>
+            </p>
+            <ul>
+                <li>📢 Google Ads cookies</li>
+                <li>📢 Facebook Pixel</li>
+                <li>📢 Twitter Analytics</li>
+            </ul>
+        </div>
+
+        <!-- 7. THIRD PARTY -->
+        <h2 class="tr-text">7. ÜÇÜNCÜ TARAF HİZMETLERİ VE ÇEREZLERİ</h2>
+        <h2 class="en-text" style="display:none;">7. THIRD PARTY SERVICES AND COOKIES</h2>
+
+        <div class="tr-text">
+            <p>CyberEx, aşağıdaki üçüncü taraf hizmetlerini kullanır:</p>
+
+            <h3>7.1. Analitik Hizmetleri</h3>
+            <ul>
+                <li>🔍 <strong>Google Analytics:</strong> Website kullanım istatistikleri</li>
+                <li>🔍 <strong>Hotjar:</strong> Kullanıcı davranış analizi (opsiyonel)</li>
+            </ul>
+
+            <h3>7.2. Güvenlik Hizmetleri</h3>
+            <ul>
+                <li>🛡️ <strong>Cloudflare:</strong> DDoS koruması ve CDN</li>
+                <li>🛡️ <strong>reCAPTCHA:</strong> Bot koruması</li>
+            </ul>
+
+            <h3>7.3. İletişim Hizmetleri</h3>
+            <ul>
+                <li>💬 <strong>Intercom/Zendesk:</strong> Canlı destek (potansiyel)</li>
+            </ul>
+
+            <p>
+                <strong>Not:</strong> Üçüncü taraf çerezlerin gizlilik politikaları kendi sağlayıcıları tarafından
+                yönetilir.
+            </p>
+        </div>
+
+        <div class="en-text" style="display:none;">
+            <p>CyberEx uses the following third-party services:</p>
+
+            <h3>7.1. Analytics Services</h3>
+            <ul>
+                <li>🔍 <strong>Google Analytics:</strong> Website usage statistics</li>
+                <li>🔍 <strong>Hotjar:</strong> User behavior analysis (optional)</li>
+            </ul>
+
+            <h3>7.2. Security Services</h3>
+            <ul>
+                <li>🛡️ <strong>Cloudflare:</strong> DDoS protection and CDN</li>
+                <li>🛡️ <strong>reCAPTCHA:</strong> Bot protection</li>
+            </ul>
+
+            <h3>7.3. Communication Services</h3>
+            <ul>
+                <li>💬 <strong>Intercom/Zendesk:</strong> Live support (potential)</li>
+            </ul>
+
+            <p>
+                <strong>Note:</strong> Privacy policies of third-party cookies are managed by their own providers.
+            </p>
+        </div>
+
+        <!-- 8. COOKIE MANAGEMENT -->
+        <h2 class="tr-text">8. ÇEREZLERİ NASIL YÖNETEBİLİRSİNİZ?</h2>
+        <h2 class="en-text" style="display:none;">8. HOW CAN YOU MANAGE COOKIES?</h2>
+
+        <div class="tr-text">
+            <h3>8.1. Tarayıcı Ayarları</h3>
+            <p>Çoğu tarayıcı, çerezleri yönetmenize izin verir:</p>
+
+            <div class="info-box">
+                <p><strong>Tarayıcı Bazlı Çerez Ayarları:</strong></p>
+                <ul>
+                    <li>🌐 <strong>Google Chrome:</strong> Ayarlar > Gizlilik ve Güvenlik > Çerezler</li>
+                    <li>🌐 <strong>Firefox:</strong> Seçenekler > Gizlilik ve Güvenlik > Çerezler ve Site Verileri</li>
+                    <li>🌐 <strong>Safari:</strong> Tercihler > Gizlilik > Çerezleri ve website verilerini yönet</li>
+                    <li>🌐 <strong>Edge:</strong> Ayarlar > Gizlilik, arama ve hizmetler > Çerezler</li>
+                </ul>
+            </div>
+
+            <h3>8.2. CyberEx Çerez Tercihleri</h3>
+            <p>
+                Website'de çerez banner'ından tercihlerinizi yönetebilirsiniz:
+            </p>
+            <ul>
+                <li>⚙️ "Çerez Ayarları" butonuna tıklayın</li>
+                <li>⚙️ İstediğiniz çerez kategorilerini seçin</li>
+                <li>⚙️ "Kaydet" butonuyla onaylayın</li>
+            </ul>
+
+            <h3>8.3. Tüm Çerezleri Reddetme</h3>
+            <p>
+                Zorunlu çerezler dışındaki tüm çerezleri reddedebilirsiniz. Ancak bu durumda:
+            </p>
+            <ul>
+                <li>⚠️ Bazı özellikler çalışmayabilir</li>
+                <li>⚠️ Tercihleriniz hatırlanmayabilir</li>
+                <li>⚠️ Website yavaşlayabilir</li>
+            </ul>
+        </div>
+
+        <div class="en-text" style="display:none;">
+            <h3>8.1. Browser Settings</h3>
+            <p>Most browsers allow you to manage cookies:</p>
+
+            <div class="info-box">
+                <p><strong>Browser Based Cookie Settings:</strong></p>
+                <ul>
+                    <li>🌐 <strong>Google Chrome:</strong> Settings > Privacy and Security > Cookies</li>
+                    <li>🌐 <strong>Firefox:</strong> Options > Privacy and Security > Cookies and Site Data</li>
+                    <li>🌐 <strong>Safari:</strong> Preferences > Privacy > Manage cookies and website data</li>
+                    <li>🌐 <strong>Edge:</strong> Settings > Privacy, search and services > Cookies</li>
+                </ul>
+            </div>
+
+            <h3>8.2. CyberEx Cookie Preferences</h3>
+            <p>
+                You can manage your preferences from the cookie banner on the website:
+            </p>
+            <ul>
+                <li>⚙️ Click "Cookie Settings" button</li>
+                <li>⚙️ Select desired cookie categories</li>
+                <li>⚙️ Confirm with "Save" button</li>
+            </ul>
+
+            <h3>8.3. Rejecting All Cookies</h3>
+            <p>
+                You can reject all cookies except strictly necessary ones. However, in this case:
+            </p>
+            <ul>
+                <li>⚠️ Some features may not work</li>
+                <li>⚠️ Your preferences may not be remembered</li>
+                <li>⚠️ Website may slow down</li>
+            </ul>
+        </div>
+
+        <!-- 9. MOBILE APP -->
+        <h2 class="tr-text">9. MOBİL UYGULAMA VE YEREL DEPOLAMA</h2>
+        <h2 class="en-text" style="display:none;">9. MOBILE APP AND LOCAL STORAGE</h2>
+
+        <div class="tr-text">
+            <p>
+                CyberEx mobil uygulaması, çerez yerine <strong>yerel depolama (local storage)</strong> kullanır.
+                Amaçlar benzerdir:
+            </p>
+            <ul>
+                <li>📱 Oturum yönetimi</li>
+                <li>📱 Kullanıcı tercihleri</li>
+                <li>📱 Cache yönetimi</li>
+            </ul>
+            <p>Mobil uygulama ayarlarından yönetebilirsiniz: Ayarlar > Gizlilik > Verileri Temizle</p>
+        </div>
+        <div class="en-text" style="display:none;">
+            <p>
+                CyberEx mobile app uses <strong>local storage</strong> instead of cookies.
+                Purposes are similar:
+            </p>
+            <ul>
+                <li>📱 Session management</li>
+                <li>📱 User preferences</li>
+                <li>📱 Cache management</li>
+            </ul>
+            <p>You can manage via mobile app settings: Settings > Privacy > Clear Data</p>
+        </div>
+
+        <!-- 10. LEGAL BASIS -->
+        <h2 class="tr-text">10. YASAL DAYANAK VE HAKLARINIZ</h2>
+        <h2 class="en-text" style="display:none;">10. LEGAL BASIS AND YOUR RIGHTS</h2>
+
+        <div class="tr-text">
+            <p>
+                Çerez kullanımımız, <strong>KVKK (6698 sayılı Kanun)</strong> ve <strong>GDPR (Avrupa Genel Veri Koruma
+                    Yönetmeliği)</strong> uyarınca gerçekleştirilmektedir.
+            </p>
+
+            <h3>10.1. Haklarınız</h3>
+            <ul>
+                <li>✔️ Hangi çerezlerin kullanıldığını öğrenme</li>
+                <li>✔️ Çerezleri kabul/reddetme</li>
+                <li>✔️ Onayınızı geri çekme</li>
+                <li>✔️ Çerez verilerinizin silinmesini talep etme</li>
+            </ul>
+
+            <p>Detaylar için: <a href="kvkk.html" style="color: #00f0ff;">KVKK Aydınlatma Metni</a></p>
+        </div>
+
+        <div class="en-text" style="display:none;">
+            <p>
+                Our cookie usage is carried out in accordance with <strong>KVKK (Law No. 6698)</strong> and <strong>GDPR
+                    (General Data Protection Regulation)</strong>.
+            </p>
+
+            <h3>10.1. Your Rights</h3>
+            <ul>
+                <li>✔️ To learn which cookies are used</li>
+                <li>✔️ To accept/reject cookies</li>
+                <li>✔️ To withdraw your consent</li>
+                <li>✔️ To request deletion of your cookie data</li>
+            </ul>
+
+            <p>For details: <a href="kvkk.html" style="color: #00f0ff;">KVKK Clarification Text</a></p>
+        </div>
+
+        <!-- 11. CHANGES -->
+        <h2 class="tr-text">11. POLİTİKA DEĞİŞİKLİKLERİ</h2>
+        <h2 class="en-text" style="display:none;">11. POLICY CHANGES</h2>
+
+        <div class="tr-text">
+            <p>
+                Bu Çerez Politikası zaman zaman güncellenebilir. Önemli değişiklikler olduğunda website'de
+                bildirim yapılır ve e-posta gönderilir.
+            </p>
+        </div>
+        <div class="en-text" style="display:none;">
+            <p>
+                This Cookie Policy may be updated from time to time. When significant changes occur, a notification will
+                be made on the website and an email sent.
+            </p>
+        </div>
+
+        <!-- 12. CONTACT -->
+        <h2 class="tr-text">12. İLETİŞİM</h2>
+        <h2 class="en-text" style="display:none;">12. CONTACT</h2>
+
+        <div class="tr-text">
+            <p>Çerez politikası hakkında sorularınız için:</p>
+            <p>
+                📧 <strong>E-posta:</strong> privacy@cyberex.com.tr<br>
+                🌐 <strong>Website:</strong> https://cyberex.com.tr<br>
+                📍 <strong>Adres:</strong> CyberEx Teknoloji A.Ş., Maslak/İstanbul
+            </p>
+        </div>
+        <div class="en-text" style="display:none;">
+            <p>For questions about cookie policy:</p>
+            <p>
+                📧 <strong>Email:</strong> privacy@cyberex.com.tr<br>
+                🌐 <strong>Website:</strong> https://cyberex.com.tr<br>
+                📍 <strong>Address:</strong> CyberEx Technology Inc., Maslak/Istanbul
+            </p>
+        </div>
+
+        <!-- Conclusion -->
         <div class="info-box" style="margin-top: 50px;">
-            <h3 style="color: var(--neon-orange); margin-top: 0;">🍪 Çerez Kullanımında Şeffaflık</h3>
-            <p style="margin: 0;">
+            <h3 class="tr-text" style="color: var(--neon-orange); margin-top: 0;">🍪 Çerez Kullanımında Şeffaflık</h3>
+            <p class="tr-text" style="margin: 0;">
                 CyberEx, çerez kullanımında tam şeffaflık ilkesine bağlıdır.
                 Verilerinizin nasıl kullanıldığını her zaman bilmelisiniz ve kontrol edebilmelisiniz.
+            </p>
+
+            <h3 class="en-text" style="color: var(--neon-orange); margin-top: 0; display:none;">🍪 Transparency in
+                Cookie Usage</h3>
+            <p class="en-text" style="margin: 0; display:none;">
+                CyberEx is committed to full transparency in cookie usage.
+                You should always know how your data is used and be able to control it.
             </p>
         </div>
 
         <div class="footer-links">
-            <p style="color: #666; margin-bottom: 20px;">
-                © 2024-2026 CyberEx Teknoloji A.Ş. | Son Güncelleme: 26 Ocak 2026
+            <p class="tr-text" style="color: #666; margin-bottom: 20px;">
+                © 2024-2026 CyberEx Teknoloji A.Ş. | Son Güncelleme: 26 Ocak 2026<br>
+                <span class="status-badge">BETA v1.3.9</span>
+                <span class="status-badge" style="background: linear-gradient(135deg, #FF9800, #F57C00);">SPK LİSANS
+                    SÜRECİ</span>
             </p>
-            <p>
+            <p class="en-text" style="color: #666; margin-bottom: 20px; display:none;">
+                © 2024-2026 CyberEx Technology Inc. | Last Updated: January 26, 2026<br>
+                <span class="status-badge">BETA v1.3.9</span>
+                <span class="status-badge" style="background: linear-gradient(135deg, #FF9800, #F57C00);">SPK LICENSE
+                    PENDING</span>
+            </p>
+
+            <p class="tr-text">
                 <a href="index.html">Ana Sayfa</a> |
                 <a href="terms.html">Kullanım Şartları</a> |
-                <a href="privacy.html">Gizlilik Politikası</a> |
-                <a href="kvkk.html">KVKK</a> |
                 <a href="legal.html">Yasal Uyarı</a> |
+                <a href="privacy.html">Gizlilik Politikası</a> |
+                <a href="kvkk.html">KVKK Metni</a> |
+                <a href="security.html">Güvenlik Raporu</a> |
+                <a href="risk.html">Risk Bildirimi</a> |
+                <a href="cookie-policy.html">Çerez Politikası</a> |
                 <a href="disclaimer.html">Beta Koşulları</a>
+            </p>
+            <p class="en-text" style="display:none;">
+                <a href="index.html">Home</a> |
+                <a href="terms.html">Terms of Service</a> |
+                <a href="legal.html">Legal Notice</a> |
+                <a href="privacy.html">Privacy Policy</a> |
+                <a href="kvkk.html">KVKK Notice</a> |
+                <a href="security.html">Security Report</a> |
+                <a href="risk.html">Risk Disclosure</a> |
+                <a href="cookie-policy.html">Cookie Policy</a> |
+                <a href="disclaimer.html">Beta Terms</a>
             </p>
         </div>
     </div>
+
+    <script>
+        function switchLang(lang) {
+            if (lang === 'tr') {
+                document.querySelectorAll('.tr-text').forEach(el => el.style.display = '');
+                document.querySelectorAll('.en-text').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.lang-btn')[0].classList.add('active');
+                document.querySelectorAll('.lang-btn')[1].classList.remove('active');
+            } else {
+                document.querySelectorAll('.tr-text').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.en-text').forEach(el => el.style.display = '');
+                document.querySelectorAll('.lang-btn')[0].classList.remove('active');
+                document.querySelectorAll('.lang-btn')[1].classList.add('active');
+            }
+            localStorage.setItem('lang', lang);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('lang') || 'tr';
+            if (savedLang === 'en') switchLang('en');
+        });
+    </script>
 </body>
 
 </html>

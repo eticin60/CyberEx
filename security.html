@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Güvenlik Raporu | CyberEx - Güvenlik Önlemleri ve Protokoller</title>
+    <title>Güvenlik Raporu | Security Report | CyberEx</title>
 
     <!-- SEO -->
     <meta name="description"
@@ -61,6 +61,26 @@
 
         .nav-logo {
             height: 35px;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: 0.3s;
+            margin: 0 3px;
+        }
+
+        .lang-btn:hover,
+        .lang-btn.active {
+            background: var(--neon-green);
+            color: #fff;
+            font-weight: 700;
+            border-color: var(--neon-green);
         }
 
         .container {
@@ -165,11 +185,25 @@
         .footer-links a {
             color: var(--neon-cyan);
             text-decoration: none;
-            margin: 0 15px;
+            margin: 0 10px;
+            font-size: 0.9rem;
+            transition: 0.3s;
         }
 
         .footer-links a:hover {
             text-decoration: underline;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin: 0 10px;
+            color: #fff;
         }
 
         .security-grid {
@@ -203,350 +237,749 @@
 <body>
     <nav class="navbar">
         <a href="index.html"><img src="cyberex-logo.png" alt="CyberEx" class="nav-logo"></a>
-        <div style="font-weight: 800; color: var(--neon-green); letter-spacing: 1px;">🛡️ GÜVENLİK RAPORU</div>
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <div style="font-weight: 800; color: var(--neon-green); letter-spacing: 1px;">
+                <span class="tr-text">🛡️ GÜVENLİK RAPORU</span>
+                <span class="en-text" style="display:none;">🛡️ SECURITY REPORT</span>
+            </div>
+            <div>
+                <button class="lang-btn active" onclick="switchLang('tr')">TR</button>
+                <button class="lang-btn" onclick="switchLang('en')">EN</button>
+            </div>
+        </div>
     </nav>
 
     <div class="container">
-        <h1>🛡️ Güvenlik Raporu</h1>
+        <h1 class="tr-text">🛡️ Güvenlik Raporu</h1>
+        <h1 class="en-text" style="display:none;">🛡️ Security Report</h1>
+
         <div class="meta">
-            <strong>Belge Türü:</strong> Güvenlik Protokolleri ve Teknik Altyapı Raporu<br>
-            <strong>Son Güncelleme:</strong> 26 Ocak 2026<br>
-            <strong>Kapsam:</strong> CyberEx Platform Güvenlik Mimarisi
+            <span class="tr-text">
+                <strong>Belge Türü:</strong> Güvenlik Protokolleri ve Teknik Altyapı Raporu<br>
+                <strong>Son Güncelleme:</strong> 26 Ocak 2026<br>
+                <strong>Kapsam:</strong> CyberEx Platform Güvenlik Mimarisi
+            </span>
+            <span class="en-text" style="display:none;">
+                <strong>Document Type:</strong> Security Protocols and Technical Infrastructure Report<br>
+                <strong>Last Updated:</strong> January 26, 2026<br>
+                <strong>Scope:</strong> CyberEx Platform Security Architecture
+            </span>
         </div>
 
         <!-- Security Badge -->
         <div class="security-badge">
-            <h2>🔒 ENTERPRİSE GRADE SECURITY</h2>
-            <p style="color: #fff; font-size: 1.1rem; margin: 0;">
-                Askeri Seviye Şifreleme | 24/7 İzleme | Multi-Layer Protection
-            </p>
+            <h2>🔒 ENTERPRISE GRADE SECURITY</h2>
+            <div class="tr-text">
+                <p style="color: #fff; font-size: 1.1rem; margin: 0;">
+                    Askeri Seviye Şifreleme | 24/7 İzleme | Multi-Layer Protection
+                </p>
+            </div>
+            <div class="en-text" style="display:none;">
+                <p style="color: #fff; font-size: 1.1rem; margin: 0;">
+                    Military Grade Encryption | 24/7 Monitoring | Multi-Layer Protection
+                </p>
+            </div>
         </div>
 
         <!-- Beta Notice -->
         <div class="info-box">
-            <h3 style="color: #667eea;">🚀 Beta Program Güvenlik Durumu</h3>
+            <h3 style="color: #667eea; margin-top: 0;" class="tr-text">🚀 Beta Program Güvenlik Durumu</h3>
+            <h3 style="color: #667eea; margin-top: 0; display:none;" class="en-text">🚀 Beta Program Security Status
+            </h3>
+
+            <div class="tr-text">
+                <p>
+                    CyberEx BETA aşamasında olmasına rağmen, <strong>güvenlikten asla taviz vermiyoruz</strong>.
+                    Tüm güvenlik protokolleri tam kapasiteyle aktif. SPK lisans süreci: Q2 2026 hedefi.
+                    Detaylar: <a href="disclaimer.html" style="color: #00f0ff;">Beta Koşulları</a>
+                </p>
+            </div>
+            <div class="en-text" style="display:none;">
+                <p>
+                    Although CyberEx is in BETA phase, <strong>we never compromise on security</strong>.
+                    All security protocols are fully active. SPK license target: Q2 2026.
+                    Details: <a href="disclaimer.html" style="color: #00f0ff;">Beta Terms</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- 1. PHILOSOPHY -->
+        <h2 class="tr-text">1. GÜVENLİK FELSEFEMİZ</h2>
+        <h2 class="en-text" style="display:none;">1. SECURITY PHILOSOPHY</h2>
+
+        <div class="tr-text">
             <p>
-                CyberEx BETA aşamasında olmasına rağmen, <strong>güvenlikten asla taviz vermiyoruz</strong>.
-                Tüm güvenlik protokolleri tam kapasiteyle aktif. SPK lisans süreci: Q2 2026 hedefi.
-                Detaylar: <a href="disclaimer.html" style="color: #00f0ff;">Beta Koşulları</a>
+                CyberEx'te güvenlik, <strong>sonradan eklenen bir özellik değil, temel tasarım ilkesidir.</strong>
+                "Security by Design" yaklaşımıyla, her sistemimiz güvenlik öncelikli olarak inşa edilmiştir.
+            </p>
+            <div class="feature-box">
+                <p><strong>Temel İlkeler:</strong></p>
+                <ul>
+                    <li>✅ <strong>Defense in Depth:</strong> Çok katmanlı güvenlik</li>
+                    <li>✅ <strong>Zero Trust Architecture:</strong> Hiçbir şeye varsayılan güven yok</li>
+                    <li>✅ <strong>Least Privilege:</strong> Minimum yetki prensibi</li>
+                    <li>✅ <strong>Continuous Monitoring:</strong> Sürekli izleme</li>
+                    <li>✅ <strong>Incident Response:</strong> Hızlı müdahale ekibi</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="en-text" style="display:none;">
+            <p>
+                At CyberEx, security is <strong>not an afterthought, but a core design principle.</strong>
+                With "Security by Design" approach, every system is built security-first.
+            </p>
+            <div class="feature-box">
+                <p><strong>Core Principles:</strong></p>
+                <ul>
+                    <li>✅ <strong>Defense in Depth:</strong> Multi-layered security</li>
+                    <li>✅ <strong>Zero Trust Architecture:</strong> No default trust</li>
+                    <li>✅ <strong>Least Privilege:</strong> Minimum authority principle</li>
+                    <li>✅ <strong>Continuous Monitoring:</strong> 24/7 monitoring</li>
+                    <li>✅ <strong>Incident Response:</strong> Rapid response team</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 2. ENCRYPTION -->
+        <h2 class="tr-text">2. ŞİFRELEME VE VERİ GÜVENLİĞİ</h2>
+        <h2 class="en-text" style="display:none;">2. ENCRYPTION AND DATA SECURITY</h2>
+
+        <div class="tr-text">
+            <h3>2.1. End-to-End Encryption</h3>
+            <p>
+                Tüm hassas veriler <strong>AES-256 bit şifreleme</strong> ile korunmaktadır. Bu, NSA'nın top secret
+                dökümanlar için kullandığı standarttır.
+            </p>
+        </div>
+        <div class="en-text" style="display:none;">
+            <h3>2.1. End-to-End Encryption</h3>
+            <p>
+                All sensitive data is protected by <strong>AES-256 bit encryption</strong>. This is the standard used by
+                NSA for top secret documents.
             </p>
         </div>
 
-        <!-- 1. GÜVENLİK FELSEFESİ -->
-        <h2>1. GÜVENLİK FELSEFEMİZ</h2>
-        <p>
-            CyberEx'te güvenlik, <strong>sonradan eklenen bir özellik değil, temel tasarım ilkesidir.</strong>
-            "Security by Design" yaklaşımıyla, her sistemimiz güvenlik öncelikli olarak inşa edilmiştir.
-        </p>
-        <div class="feature-box">
-            <p><strong>Temel İlkeler:</strong></p>
-            <ul>
-                <li>✅ <strong>Defense in Depth:</strong> Çok katmanlı güvenlik</li>
-                <li>✅ <strong>Zero Trust Architecture:</strong> Hiçbir şeye varsayılan güven yok</li>
-                <li>✅ <strong>Least Privilege:</strong> Minimum yetki prensibi</li>
-                <li>✅ <strong>Continuous Monitoring:</strong> Sürekli izleme</li>
-                <li>✅ <strong>Incident Response:</strong> Hızlı müdahale ekibi</li>
-            </ul>
-        </div>
-
-        <!-- 2. ŞİFRELEME VE VERİ GÜVENLİĞİ -->
-        <h2>2. ŞİFRELEME VE VERİ GÜVENLİĞİ</h2>
-        <h3>2.1. End-to-End Encryption</h3>
-        <p>
-            Tüm hassas veriler <strong>AES-256 bit şifreleme</strong> ile korunmaktadır. Bu, NSA'nın top secret
-            dökümanlar için kullandığı standarttır.
-        </p>
         <div class="security-grid">
             <div class="security-card">
                 <i class="fas fa-lock"></i>
                 <h4 style="color: #fff; margin-bottom: 10px;">AES-256 Encryption</h4>
-                <p style="font-size: 0.9rem; color: #888;">Askeri seviye şifreleme</p>
+                <p style="font-size: 0.9rem; color: #888;" class="tr-text">Askeri seviye şifreleme</p>
+                <p style="font-size: 0.9rem; color: #888; display:none;" class="en-text">Military grade encryption</p>
             </div>
             <div class="security-card">
                 <i class="fas fa-shield-halved"></i>
                 <h4 style="color: #fff; margin-bottom: 10px;">SSL/TLS 1.3</h4>
-                <p style="font-size: 0.9rem; color: #888;">En güncel güvenli bağlantı</p>
+                <p style="font-size: 0.9rem; color: #888;" class="tr-text">En güncel güvenli bağlantı</p>
+                <p style="font-size: 0.9rem; color: #888; display:none;" class="en-text">Latest secure connection</p>
             </div>
             <div class="security-card">
                 <i class="fas fa-key"></i>
                 <h4 style="color: #fff; margin-bottom: 10px;">RSA-4096</h4>
-                <p style="font-size: 0.9rem; color: #888;">Asimetrik şifreleme</p>
+                <p style="font-size: 0.9rem; color: #888;" class="tr-text">Asimetrik şifreleme</p>
+                <p style="font-size: 0.9rem; color: #888; display:none;" class="en-text">Asymmetric encryption</p>
             </div>
         </div>
 
-        <h3>2.2. Data at Rest & In Transit</h3>
-        <ul>
-            <li><strong>At Rest:</strong> Veritabanlarında tüm veriler şifreli saklanır</li>
-            <li><strong>In Transit:</strong> Tüm iletişim HTTPS/TLS ile şifrelenir</li>
-            <li><strong>Backup:</strong> Yedekler de şifrelenmiş olarak saklanır</li>
-        </ul>
-
-        <!-- 3. CÜZDAN GÜVENLİĞİ -->
-        <h2>3. CÜZDAN GÜVENLİĞİ VE FON KORUMASI</h2>
-        <h3>3.1. Cold Storage (Soğuk Cüzdan)</h3>
-        <p>
-            Kullanıcı fonlarının <strong>%95'i cold storage'da</strong> offline olarak saklanır. Bu cüzdanlar internete
-            bağlı olmadığı için hack saldırılarına karşı tamamen güvenlidir.
-        </p>
-        <div class="feature-box">
-            <p><strong>Cold Storage Özellikleri:</strong></p>
+        <div class="tr-text">
+            <h3>2.2. Data at Rest & In Transit</h3>
             <ul>
-                <li>🔒 Offline hardware wallets kullanılır</li>
-                <li>🔒 Fiziksel kasalarda saklanır</li>
-                <li>🔒 Coğrafi olarak dağıtılmış lokasyonlar</li>
-                <li>🔒 24/7 fiziksel güvenlik</li>
-                <li>🔒 Multi-signature (çoklu imza) gereksinimi</li>
+                <li><strong>At Rest:</strong> Veritabanlarında tüm veriler şifreli saklanır</li>
+                <li><strong>In Transit:</strong> Tüm iletişim HTTPS/TLS ile şifrelenir</li>
+                <li><strong>Backup:</strong> Yedekler de şifrelenmiş olarak saklanır</li>
+            </ul>
+        </div>
+        <div class="en-text" style="display:none;">
+            <h3>2.2. Data at Rest & In Transit</h3>
+            <ul>
+                <li><strong>At Rest:</strong> All data is stored encrypted in databases</li>
+                <li><strong>In Transit:</strong> All communication is encrypted via HTTPS/TLS</li>
+                <li><strong>Backup:</strong> Backups are also stored encrypted</li>
             </ul>
         </div>
 
-        <h3>3.2. Hot Wallet Security</h3>
-        <p>Günlük işlemler için gereken fonlar (%5) hot wallet'ta tutulur ve:</p>
-        <ul>
-            <li>Multi-sig (3-of-5) ile korunur</li>
-            <li>Rate limiting uygulanır</li>
-            <li>Anomali tespit sistemi izler</li>
-            <li>Günlük çekim limitleri vardır</li>
-        </ul>
+        <!-- 3. WALLET SECURITY -->
+        <h2 class="tr-text">3. CÜZDAN GÜVENLİĞİ VE FON KORUMASI</h2>
+        <h2 class="en-text" style="display:none;">3. WALLET SECURITY AND FUND PROTECTION</h2>
 
-        <h3>3.3. Multi-Signature Wallets</h3>
-        <p>
-            Tüm büyük işlemler <strong>multi-signature</strong> gerektirir. Tek bir kişi veya cihaz ele geçirilse bile,
-            fonlara erişim mümkün değildir.
-        </p>
+        <div class="tr-text">
+            <h3>3.1. Cold Storage (Soğuk Cüzdan)</h3>
+            <p>
+                Kullanıcı fonlarının <strong>%95'i cold storage'da</strong> offline olarak saklanır. Bu cüzdanlar
+                internete
+                bağlı olmadığı için hack saldırılarına karşı tamamen güvenlidir.
+            </p>
+            <div class="feature-box">
+                <p><strong>Cold Storage Özellikleri:</strong></p>
+                <ul>
+                    <li>🔒 Offline hardware wallets kullanılır</li>
+                    <li>🔒 Fiziksel kasalarda saklanır</li>
+                    <li>🔒 Coğrafi olarak dağıtılmış lokasyonlar</li>
+                    <li>🔒 24/7 fiziksel güvenlik</li>
+                    <li>🔒 Multi-signature (çoklu imza) gereksinimi</li>
+                </ul>
+            </div>
+        </div>
 
-        <!-- 4. KULLANICI GÜVENLİĞİ -->
-        <h2>4. KULLANICI HESAP GÜVENLİĞİ</h2>
-        <h3>4.1. Multi-Factor Authentication (MFA)</h3>
-        <p>CyberEx, güçlü 2FA sistemi sunar:</p>
-        <ul>
-            <li><strong>TOTP (Time-based):</strong> Google Authenticator, Authy</li>
-            <li><strong>SMS (Yedek):</strong> Telefon doğrulaması</li>
-            <li><strong>Email Verification:</strong> E-posta onayı</li>
-            <li><strong>Biometric:</strong> Mobil uygulamada parmak izi/yüz tanıma</li>
-        </ul>
+        <div class="en-text" style="display:none;">
+            <h3>3.1. Cold Storage</h3>
+            <p>
+                <strong>95% of user funds</strong> are stored offline in cold storage. These wallets are completely safe
+                against hacks as they are not connected to the internet.
+            </p>
+            <div class="feature-box">
+                <p><strong>Cold Storage Features:</strong></p>
+                <ul>
+                    <li>🔒 Offline hardware wallets used</li>
+                    <li>🔒 Stored in physical vaults</li>
+                    <li>🔒 Geographically distributed locations</li>
+                    <li>🔒 24/7 physical security</li>
+                    <li>🔒 Multi-signature requirement</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tr-text">
+            <h3>3.2. Hot Wallet Security</h3>
+            <p>Günlük işlemler için gereken fonlar (%5) hot wallet'ta tutulur ve:</p>
+            <ul>
+                <li>Multi-sig (3-of-5) ile korunur</li>
+                <li>Rate limiting uygulanır</li>
+                <li>Anomali tespit sistemi izler</li>
+                <li>Günlük çekim limitleri vardır</li>
+            </ul>
+
+            <h3>3.3. Multi-Signature Wallets</h3>
+            <p>
+                Tüm büyük işlemler <strong>multi-signature</strong> gerektirir. Tek bir kişi veya cihaz ele geçirilse
+                bile,
+                fonlara erişim mümkün değildir.
+            </p>
+        </div>
+
+        <div class="en-text" style="display:none;">
+            <h3>3.2. Hot Wallet Security</h3>
+            <p>Funds required for daily transactions (5%) are kept in hot wallets and:</p>
+            <ul>
+                <li>Protected by Multi-sig (3-of-5)</li>
+                <li>Rate limiting applied</li>
+                <li>Monitored by anomaly detection system</li>
+                <li>Daily withdrawal limits exist</li>
+            </ul>
+
+            <h3>3.3. Multi-Signature Wallets</h3>
+            <p>
+                All large transactions require <strong>multi-signature</strong>. Even if a single person or device is
+                compromised, funds cannot be accessed.
+            </p>
+        </div>
+
+        <!-- 4. USER SECURITY -->
+        <h2 class="tr-text">4. KULLANICI HESAP GÜVENLİĞİ</h2>
+        <h2 class="en-text" style="display:none;">4. USER ACCOUNT SECURITY</h2>
+
+        <div class="tr-text">
+            <h3>4.1. Multi-Factor Authentication (MFA)</h3>
+            <p>CyberEx, güçlü 2FA sistemi sunar:</p>
+            <ul>
+                <li><strong>TOTP (Time-based):</strong> Google Authenticator, Authy</li>
+                <li><strong>SMS (Yedek):</strong> Telefon doğrulaması</li>
+                <li><strong>Email Verification:</strong> E-posta onayı</li>
+                <li><strong>Biometric:</strong> Mobil uygulamada parmak izi/yüz tanıma</li>
+            </ul>
+        </div>
+        <div class="en-text" style="display:none;">
+            <h3>4.1. Multi-Factor Authentication (MFA)</h3>
+            <p>CyberEx offers a strong 2FA system:</p>
+            <ul>
+                <li><strong>TOTP (Time-based):</strong> Google Authenticator, Authy</li>
+                <li><strong>SMS (Backup):</strong> Phone verification</li>
+                <li><strong>Email Verification:</strong> Email confirmation</li>
+                <li><strong>Biometric:</strong> Fingerprint/FaceID on mobile app</li>
+            </ul>
+        </div>
 
         <h3>4.2. Login Security</h3>
         <div class="security-grid">
             <div class="security-card">
                 <i class="fas fa-user-shield"></i>
                 <h4 style="color: #fff; margin-bottom: 10px;">Rate Limiting</h4>
-                <p style="font-size: 0.9rem; color: #888;">Brute force saldırı koruması</p>
+                <p style="font-size: 0.9rem; color: #888;" class="tr-text">Brute force saldırı koruması</p>
+                <p style="font-size: 0.9rem; color: #888; display:none;" class="en-text">Brute force protection</p>
             </div>
             <div class="security-card">
                 <i class="fas fa-globe"></i>
                 <h4 style="color: #fff; margin-bottom: 10px;">IP Whitelist</h4>
-                <p style="font-size: 0.9rem; color: #888;">Güvenilir IP tanımlama</p>
+                <p style="font-size: 0.9rem; color: #888;" class="tr-text">Güvenilir IP tanımlama</p>
+                <p style="font-size: 0.9rem; color: #888; display:none;" class="en-text">Trusted IP definition</p>
             </div>
             <div class="security-card">
                 <i class="fas fa-bell"></i>
                 <h4 style="color: #fff; margin-bottom: 10px;">Login Alerts</h4>
-                <p style="font-size: 0.9rem; color: #888;">Şüpheli giriş bildirimleri</p>
+                <p style="font-size: 0.9rem; color: #888;" class="tr-text">Şüpheli giriş bildirimleri</p>
+                <p style="font-size: 0.9rem; color: #888; display:none;" class="en-text">Suspicious login alerts</p>
             </div>
         </div>
 
-        <h3>4.3. Session Management</h3>
-        <ul>
-            <li>Auto-logout (otomatik çıkış) özelliği</li>
-            <li>Device fingerprinting (cihaz tanıma)</li>
-            <li>Concurrent session kontrolü</li>
-            <li>Suspicious activity detection</li>
-        </ul>
-
-        <!-- 5. NETWORK GÜVENLİĞİ -->
-        <h2>5. NETWORK VE ALTYAPI GÜVENLİĞİ</h2>
-        <h3>5.1. DDoS Protection</h3>
-        <p>
-            Platform, <strong>Cloudflare Enterprise</strong> DDoS koruması altındadır. Multi-Gbps saldırılar bile
-            filtrele nir.
-        </p>
-
-        <h3>5.2. Web Application Firewall (WAF)</h3>
-        <p>WAF katmanında filtrelenen tehditler:</p>
-        <ul>
-            <li>SQL Injection saldırıları</li>
-            <li>Cross-Site Scripting (XSS)</li>
-            <li>Cross-Site Request Forgery (CSRF)</li>
-            <li>Remote Code Execution (RCE)</li>
-            <li>Bot trafiği</li>
-        </ul>
-
-        <h3>5.3. Infrastructure Security</h3>
-        <ul>
-            <li><strong>Cloud Provider:</strong> AWS/Google Cloud (enterprise tier)</li>
-            <li><strong>Load Balancers:</strong> Redundant ve şifreli</li>
-            <li><strong>Database:</strong> Encrypted, replicated, backed up</li>
-            <li><strong>API Gateway:</strong> Rate-limited ve authenticated</li>
-        </ul>
-
-        <!-- 6. UYGULAMA GÜVENLİĞİ -->
-        <h2>6. UYGULAMA VE KOD GÜVENLİĞİ</h2>
-        <h3>6.1. Secure Development Lifecycle</h3>
-        <p>Geliştirme sürecimiz:</p>
-        <ol>
-            <li><strong>Security Requirements:</strong> Her özellik güvenlik gereksinimleriyle başlar</li>
-            <li><strong>Secure Coding:</strong> OWASP standartlarına uyum</li>
-            <li><strong>Code Review:</strong> Peer review + security review</li>
-            <li><strong>Static Analysis:</strong> Otomatik güvenlik taraması</li>
-            <li><strong>Penetration Testing:</strong> Yayın öncesi pen-test</li>
-        </ol>
-
-        <h3>6.2. Dependency Management</h3>
-        <ul>
-            <li>Tüm kütüphaneler düzenli güncellenir</li>
-            <li>Known vulnerabilities otomatik taranır (Snyk, Dependabot)</li>
-            <li>Zero-day patch hızla uygulanır</li>
-        </ul>
-
-        <!-- 7. İZLEME VE LOGGING -->
-        <h2>7. 24/7 İZLEME VE GÜVENLIK OPERASYONLARI</h2>
-        <h3>7.1. Security Operations Center (SOC)</h3>
-        <p>
-            CyberEx, <strong>24/7 güvenlik izleme</strong> yapar. Uzman güvenlik ekibi sürekli sistem loglarını analiz
-            eder.
-        </p>
-        <div class="feature-box">
-            <p><strong>İzlenen Metrikler:</strong></p>
+        <div class="tr-text">
+            <h3>4.3. Session Management</h3>
             <ul>
-                <li>🔍 Login attempts & anomalies</li>
-                <li>🔍 Withdrawal patterns</li>
-                <li>🔍 API usage & abuse</li>
-                <li>🔍 Network traffic anomalies</li>
-                <li>🔍 Database access patterns</li>
-                <li>🔍 System health & performance</li>
+                <li>Auto-logout (otomatik çıkış) özelliği</li>
+                <li>Device fingerprinting (cihaz tanıma)</li>
+                <li>Concurrent session kontrolü</li>
+                <li>Suspicious activity detection</li>
+            </ul>
+        </div>
+        <div class="en-text" style="display:none;">
+            <h3>4.3. Session Management</h3>
+            <ul>
+                <li>Auto-logout feature</li>
+                <li>Device fingerprinting</li>
+                <li>Concurrent session control</li>
+                <li>Suspicious activity detection</li>
             </ul>
         </div>
 
-        <h3>7.2. Incident Response</h3>
-        <p>Güvenlik olayı tespit edildiğinde:</p>
-        <ol>
-            <li><strong>Detection:</strong> Anında tespit (< 1 dakika)</li>
-            <li><strong>Alert:</strong> SOC ekibi uyarılır</li>
-            <li><strong>Analysis:</strong> Tehdit analizi yapılır</li>
-            <li><strong>Containment:</strong> Tehdit izole edilir</li>
-            <li><strong>Eradication:</strong> Tehdit ortadan kaldırılır</li>
-            <li><strong>Recovery:</strong> Sistem normale döndürülür</li>
-            <li><strong>Post-Mortem:</strong> Olay incelenir, önlemler güçlendirilir</li>
-        </ol>
+        <!-- 5. NETWORK SECURITY -->
+        <h2 class="tr-text">5. NETWORK VE ALTYAPI GÜVENLİĞİ</h2>
+        <h2 class="en-text" style="display:none;">5. NETWORK AND INFRASTRUCTURE SECURITY</h2>
 
-        <!-- 8. PENETRASYON TESTLERİ -->
-        <h2>8. PENETRASYON TESTLERİ VE DENETİMLER</h2>
-        <h3>8.1. Bağımsız Güvenlik Denetimleri</h3>
-        <p>
-            CyberEx, <strong>üç ayda bir</strong> bağımsız güvenlik firmaları tarafından penetrasyon testine tabi
-            tutulur.
-        </p>
-        <ul>
-            <li>Web application pentest</li>
-            <li>Mobile app pentest</li>
-            <li>API security testing</li>
-            <li>Blockchain security audit</li>
-            <li>Social engineering tests</li>
-        </ul>
-
-        <h3>8.2. Bug Bounty Programı</h3>
-        <div class="feature-box">
-            <p><strong>Güvenlik Araştırmacılarını Davet Ediyoruz!</strong></p>
+        <div class="tr-text">
+            <h3>5.1. DDoS Protection</h3>
             <p>
-                CyberEx Bug Bounty programı ile güvenlik açığı bulan araştırmacılar <strong>$50 - $2,000</strong>
-                arasında ödül kazanabilir.
+                Platform, <strong>Cloudflare Enterprise</strong> DDoS koruması altındadır. Multi-Gbps saldırılar bile
+                filtrelenir.
             </p>
-            <p>Detaylar: <a href="bug_bounty.html" style="color: #00f0ff;">Bug Bounty</a></p>
+
+            <h3>5.2. Web Application Firewall (WAF)</h3>
+            <p>WAF katmanında filtrelenen tehditler:</p>
+            <ul>
+                <li>SQL Injection saldırıları</li>
+                <li>Cross-Site Scripting (XSS)</li>
+                <li>Cross-Site Request Forgery (CSRF)</li>
+                <li>Remote Code Execution (RCE)</li>
+                <li>Bot trafiği</li>
+            </ul>
+
+            <h3>5.3. Infrastructure Security</h3>
+            <ul>
+                <li><strong>Cloud Provider:</strong> AWS/Google Cloud (enterprise tier)</li>
+                <li><strong>Load Balancers:</strong> Redundant ve şifreli</li>
+                <li><strong>Database:</strong> Encrypted, replicated, backed up</li>
+                <li><strong>API Gateway:</strong> Rate-limited ve authenticated</li>
+            </ul>
         </div>
 
-        <!-- 9. COMPLIANCE & STANDARDS -->
-        <h2>9. UYUMLULUK VE STANDARTLAR</h2>
-        <h3>9.1. Güvenlik Standartları</h3>
-        <p>CyberEx, aşağıdaki güvenlik standartlarına uyum sağlar:</p>
-        <ul>
-            <li>✅ <strong>ISO 27001:</strong> Bilgi Güvenliği Yönetim Sistemi (hedefleniyor)</li>
-            <li>✅ <strong>SOC 2 Type II:</strong> Security, Availability, Confidentiality (plan)</li>
-            <li>✅ <strong>PCI DSS:</strong> Ödeme kartı güvenliği (kripto kart için)</li>
-            <li>✅ <strong>GDPR:</strong> Veri koruma standartları</li>
-            <li>✅ <strong>KVKK:</strong> Türkiye veri koruma kanunu</li>
-        </ul>
+        <div class="en-text" style="display:none;">
+            <h3>5.1. DDoS Protection</h3>
+            <p>
+                The Platform is under <strong>Cloudflare Enterprise</strong> DDoS protection. Even Multi-Gbps attacks
+                are filtered.
+            </p>
 
-        <h3>9.2. KYC/AML Uyumluluğu</h3>
-        <p>
-            CyberEx, MASAK ve FATF standartlarına uygun <strong>Know Your Customer (KYC)</strong> ve <strong>Anti-Money
-                Laundering (AML)</strong> prosedürleri uygular.
-        </p>
+            <h3>5.2. Web Application Firewall (WAF)</h3>
+            <p>Threats filtered at WAF layer:</p>
+            <ul>
+                <li>SQL Injection attacks</li>
+                <li>Cross-Site Scripting (XSS)</li>
+                <li>Cross-Site Request Forgery (CSRF)</li>
+                <li>Remote Code Execution (RCE)</li>
+                <li>Bot traffic</li>
+            </ul>
 
-        <!-- 10. KULLANICI GÜVENLİK TAVSİYELERİ -->
-        <h2>10. KULLANICI GÜVENLİK TAVSİYELERİ</h2>
-        <p>CyberEx maksimum güvenlik sağlar, ancak kullanıcılar da sorumludur:</p>
+            <h3>5.3. Infrastructure Security</h3>
+            <ul>
+                <li><strong>Cloud Provider:</strong> AWS/Google Cloud (enterprise tier)</li>
+                <li><strong>Load Balancers:</strong> Redundant and encrypted</li>
+                <li><strong>Database:</strong> Encrypted, replicated, backed up</li>
+                <li><strong>API Gateway:</strong> Rate-limited and authenticated</li>
+            </ul>
+        </div>
+
+        <!-- 6. APP SECURITY -->
+        <h2 class="tr-text">6. UYGULAMA VE KOD GÜVENLİĞİ</h2>
+        <h2 class="en-text" style="display:none;">6. APPLICATION AND CODE SECURITY</h2>
+
+        <div class="tr-text">
+            <h3>6.1. Secure Development Lifecycle</h3>
+            <p>Geliştirme sürecimiz:</p>
+            <ol>
+                <li><strong>Security Requirements:</strong> Her özellik güvenlik gereksinimleriyle başlar</li>
+                <li><strong>Secure Coding:</strong> OWASP standartlarına uyum</li>
+                <li><strong>Code Review:</strong> Peer review + security review</li>
+                <li><strong>Static Analysis:</strong> Otomatik güvenlik taraması</li>
+                <li><strong>Penetration Testing:</strong> Yayın öncesi pen-test</li>
+            </ol>
+
+            <h3>6.2. Dependency Management</h3>
+            <ul>
+                <li>Tüm kütüphaneler düzenli güncellenir</li>
+                <li>Known vulnerabilities otomatik taranır (Snyk, Dependabot)</li>
+                <li>Zero-day patch hızla uygulanır</li>
+            </ul>
+        </div>
+
+        <div class="en-text" style="display:none;">
+            <h3>6.1. Secure Development Lifecycle</h3>
+            <p>Our development process:</p>
+            <ol>
+                <li><strong>Security Requirements:</strong> Every feature starts with security requirements</li>
+                <li><strong>Secure Coding:</strong> Compliance with OWASP standards</li>
+                <li><strong>Code Review:</strong> Peer review + security review</li>
+                <li><strong>Static Analysis:</strong> Automated security scanning</li>
+                <li><strong>Penetration Testing:</strong> Pre-release pentest</li>
+            </ol>
+
+            <h3>6.2. Dependency Management</h3>
+            <ul>
+                <li>All libraries are updated regularly</li>
+                <li>Known vulnerabilities scanned automatically (Snyk, Dependabot)</li>
+                <li>Zero-day patches applied rapidly</li>
+            </ul>
+        </div>
+
+        <!-- 7. MONITORING -->
+        <h2 class="tr-text">7. 24/7 İZLEME VE GÜVENLIK OPERASYONLARI</h2>
+        <h2 class="en-text" style="display:none;">7. 24/7 MONITORING AND SECURITY OPERATIONS</h2>
+
+        <div class="tr-text">
+            <h3>7.1. Security Operations Center (SOC)</h3>
+            <p>
+                CyberEx, <strong>24/7 güvenlik izleme</strong> yapar. Uzman güvenlik ekibi sürekli sistem loglarını
+                analiz eder.
+            </p>
+            <div class="feature-box">
+                <p><strong>İzlenen Metrikler:</strong></p>
+                <ul>
+                    <li>🔍 Login attempts & anomalies</li>
+                    <li>🔍 Withdrawal patterns</li>
+                    <li>🔍 API usage & abuse</li>
+                    <li>🔍 Network traffic anomalies</li>
+                    <li>🔍 Database access patterns</li>
+                    <li>🔍 System health & performance</li>
+                </ul>
+            </div>
+
+            <h3>7.2. Incident Response</h3>
+            <p>Güvenlik olayı tespit edildiğinde:</p>
+            <ol>
+                <li><strong>Detection:</strong> Anında tespit (< 1 dakika)</li>
+                <li><strong>Alert:</strong> SOC ekibi uyarılır</li>
+                <li><strong>Analysis:</strong> Tehdit analizi yapılır</li>
+                <li><strong>Containment:</strong> Tehdit izole edilir</li>
+                <li><strong>Eradication:</strong> Tehdit ortadan kaldırılır</li>
+                <li><strong>Recovery:</strong> Sistem normale döndürülür</li>
+                <li><strong>Post-Mortem:</strong> Olay incelenir, önlemler güçlendirilir</li>
+            </ol>
+        </div>
+
+        <div class="en-text" style="display:none;">
+            <h3>7.1. Security Operations Center (SOC)</h3>
+            <p>
+                CyberEx performs <strong>24/7 security monitoring</strong>. Expert security team continuously analyzes
+                system logs.
+            </p>
+            <div class="feature-box">
+                <p><strong>Monitored Metrics:</strong></p>
+                <ul>
+                    <li>🔍 Login attempts & anomalies</li>
+                    <li>🔍 Withdrawal patterns</li>
+                    <li>🔍 API usage & abuse</li>
+                    <li>🔍 Network traffic anomalies</li>
+                    <li>🔍 Database access patterns</li>
+                    <li>🔍 System health & performance</li>
+                </ul>
+            </div>
+
+            <h3>7.2. Incident Response</h3>
+            <p>When a security incident is detected:</p>
+            <ol>
+                <li><strong>Detection:</strong> Instant detection (< 1 minute)</li>
+                <li><strong>Alert:</strong> SOC team notified</li>
+                <li><strong>Analysis:</strong> Threat analysis conducted</li>
+                <li><strong>Containment:</strong> Threat isolated</li>
+                <li><strong>Eradication:</strong> Threat eliminated</li>
+                <li><strong>Recovery:</strong> System restored to normal</li>
+                <li><strong>Post-Mortem:</strong> Incident reviewed, measures strengthened</li>
+            </ol>
+        </div>
+
+        <!-- 8. PENTESTS -->
+        <h2 class="tr-text">8. PENETRASYON TESTLERİ VE DENETİMLER</h2>
+        <h2 class="en-text" style="display:none;">8. PENETRATION TESTS AND AUDITS</h2>
+
+        <div class="tr-text">
+            <h3>8.1. Bağımsız Güvenlik Denetimleri</h3>
+            <p>
+                CyberEx, <strong>üç ayda bir</strong> bağımsız güvenlik firmaları tarafından penetrasyon testine tabi
+                tutulur.
+            </p>
+            <ul>
+                <li>Web application pentest</li>
+                <li>Mobile app pentest</li>
+                <li>API security testing</li>
+                <li>Blockchain security audit</li>
+                <li>Social engineering tests</li>
+            </ul>
+
+            <h3>8.2. Bug Bounty Programı</h3>
+            <div class="feature-box">
+                <p><strong>Güvenlik Araştırmacılarını Davet Ediyoruz!</strong></p>
+                <p>
+                    CyberEx Bug Bounty programı ile güvenlik açığı bulan araştırmacılar <strong>$50 - $2,000</strong>
+                    arasında ödül kazanabilir.
+                </p>
+                <p>Detaylar: <a href="bug_bounty.html" style="color: #00f0ff;">Bug Bounty</a></p>
+            </div>
+        </div>
+
+        <div class="en-text" style="display:none;">
+            <h3>8.1. Independent Security Audits</h3>
+            <p>
+                CyberEx undergoes penetration testing by independent security firms <strong>quarterly</strong>.
+            </p>
+            <ul>
+                <li>Web application pentest</li>
+                <li>Mobile app pentest</li>
+                <li>API security testing</li>
+                <li>Blockchain security audit</li>
+                <li>Social engineering tests</li>
+            </ul>
+
+            <h3>8.2. Bug Bounty Program</h3>
+            <div class="feature-box">
+                <p><strong>We Invite Security Researchers!</strong></p>
+                <p>
+                    With CyberEx Bug Bounty program, researchers finding vulnerabilities can earn rewards between
+                    <strong>$50 - $2,000</strong>.
+                </p>
+                <p>Details: <a href="bug_bounty.html" style="color: #00f0ff;">Bug Bounty</a></p>
+            </div>
+        </div>
+
+        <!-- 9. COMPLIANCE -->
+        <h2 class="tr-text">9. UYUMLULUK VE STANDARTLAR</h2>
+        <h2 class="en-text" style="display:none;">9. COMPLIANCE AND STANDARDS</h2>
+
+        <div class="tr-text">
+            <h3>9.1. Güvenlik Standartları</h3>
+            <p>CyberEx, aşağıdaki güvenlik standartlarına uyum sağlar:</p>
+            <ul>
+                <li>✅ <strong>ISO 27001:</strong> Bilgi Güvenliği Yönetim Sistemi (hedefleniyor)</li>
+                <li>✅ <strong>SOC 2 Type II:</strong> Security, Availability, Confidentiality (plan)</li>
+                <li>✅ <strong>PCI DSS:</strong> Ödeme kartı güvenliği (kripto kart için)</li>
+                <li>✅ <strong>GDPR:</strong> Veri koruma standartları</li>
+                <li>✅ <strong>KVKK:</strong> Türkiye veri koruma kanunu</li>
+            </ul>
+
+            <h3>9.2. KYC/AML Uyumluluğu</h3>
+            <p>
+                CyberEx, MASAK ve FATF standartlarına uygun <strong>Know Your Customer (KYC)</strong> ve
+                <strong>Anti-Money
+                    Laundering (AML)</strong> prosedürleri uygular.
+            </p>
+        </div>
+
+        <div class="en-text" style="display:none;">
+            <h3>9.1. Security Standards</h3>
+            <p>CyberEx complies with the following security standards:</p>
+            <ul>
+                <li>✅ <strong>ISO 27001:</strong> Information Security Management System (targeted)</li>
+                <li>✅ <strong>SOC 2 Type II:</strong> Security, Availability, Confidentiality (planned)</li>
+                <li>✅ <strong>PCI DSS:</strong> Payment card security (for crypto card)</li>
+                <li>✅ <strong>GDPR:</strong> Data protection standards</li>
+                <li>✅ <strong>KVKK:</strong> Turkish data protection law</li>
+            </ul>
+
+            <h3>9.2. KYC/AML Compliance</h3>
+            <p>
+                CyberEx implements <strong>Know Your Customer (KYC)</strong> and <strong>Anti-Money Laundering
+                    (AML)</strong> procedures compliant with MASAK and FATF standards.
+            </p>
+        </div>
+
+        <!-- 10. USER RECOMMENDATIONS -->
+        <h2 class="tr-text">10. KULLANICI GÜVENLİK TAVSİYELERİ</h2>
+        <h2 class="en-text" style="display:none;">10. USER SECURITY RECOMMENDATIONS</h2>
+
+        <div class="tr-text">
+            <p>CyberEx maksimum güvenlik sağlar, ancak kullanıcılar da sorumludur:</p>
+        </div>
+        <div class="en-text" style="display:none;">
+            <p>CyberEx provides maximum security, but users are also responsible:</p>
+        </div>
 
         <div class="security-grid">
             <div class="security-card">
                 <i class="fas fa-mobile-alt"></i>
-                <h4 style="color: #fff; margin-bottom: 10px;">2FA Kullanın</h4>
-                <p style="font-size: 0.9rem; color: #888;">Mutlaka açın!</p>
+                <h4 style="color: #fff; margin-bottom: 10px;" class="tr-text">2FA Kullanın</h4>
+                <p style="font-size: 0.9rem; color: #888;" class="tr-text">Mutlaka açın!</p>
+
+                <h4 style="color: #fff; margin-bottom: 10px; display:none;" class="en-text">Use 2FA</h4>
+                <p style="font-size: 0.9rem; color: #888; display:none;" class="en-text">Must enable!</p>
             </div>
             <div class="security-card">
                 <i class="fas fa-fingerprint"></i>
-                <h4 style="color: #fff; margin-bottom: 10px;">Güçlü Şifre</h4>
-                <p style="font-size: 0.9rem; color: #888;">12+ karakter, karışık</p>
+                <h4 style="color: #fff; margin-bottom: 10px;" class="tr-text">Güçlü Şifre</h4>
+                <p style="font-size: 0.9rem; color: #888;" class="tr-text">12+ karakter, karışık</p>
+
+                <h4 style="color: #fff; margin-bottom: 10px; display:none;" class="en-text">Strong Password</h4>
+                <p style="font-size: 0.9rem; color: #888; display:none;" class="en-text">12+ chars, mixed</p>
             </div>
             <div class="security-card">
                 <i class="fas fa-fish"></i>
-                <h4 style="color: #fff; margin-bottom: 10px;">Phishing'e Dikkat</h4>
-                <p style="font-size: 0.9rem; color: #888;">Şüpheli linklere tıklamayın</p>
+                <h4 style="color: #fff; margin-bottom: 10px;" class="tr-text">Phishing'e Dikkat</h4>
+                <p style="font-size: 0.9rem; color: #888;" class="tr-text">Şüpheli linklere tıklamayın</p>
+
+                <h4 style="color: #fff; margin-bottom: 10px; display:none;" class="en-text">Beware of Phishing</h4>
+                <p style="font-size: 0.9rem; color: #888; display:none;" class="en-text">Don't click suspicious links
+                </p>
             </div>
         </div>
 
-        <h3>10.1. Güvenlik Kontrol Listesi</h3>
-        <ul>
-            <li>✔️ 2FA aktif</li>
-            <li>✔️ Benzersiz, güçlü şifre</li>
-            <li>✔️ Email doğrulaması açık</li>
-            <li>✔️ Withdrawal whitelist kullanın</li>
-            <li>✔️ Güvenli cihazdan giriş yapın</li>
-            <li>✔️ Açık Wi-Fi'den kaçının</li>
-            <li>✔️ Antivirus güncel</li>
-            <li>✔️ Büyük meblağları cold wallet'a çekin</li>
-        </ul>
+        <div class="tr-text">
+            <h3>10.1. Güvenlik Kontrol Listesi</h3>
+            <ul>
+                <li>✔️ 2FA aktif</li>
+                <li>✔️ Benzersiz, güçlü şifre</li>
+                <li>✔️ Email doğrulaması açık</li>
+                <li>✔️ Withdrawal whitelist kullanın</li>
+                <li>✔️ Güvenli cihazdan giriş yapın</li>
+                <li>✔️ Açık Wi-Fi'den kaçının</li>
+                <li>✔️ Antivirus güncel</li>
+                <li>✔️ Büyük meblağları cold wallet'a çekin</li>
+            </ul>
+        </div>
+        <div class="en-text" style="display:none;">
+            <h3>10.1. Security Checklist</h3>
+            <ul>
+                <li>✔️ 2FA active</li>
+                <li>✔️ Unique, strong password</li>
+                <li>✔️ Email verification on</li>
+                <li>✔️ Use withdrawal whitelist</li>
+                <li>✔️ Login from secure device</li>
+                <li>✔️ Avoid public Wi-Fi</li>
+                <li>✔️ Antivirus updated</li>
+                <li>✔️ Withdraw large amounts to cold wallet</li>
+            </ul>
+        </div>
 
-        <!-- 11. GÜVENLIK RAPORU -->
-        <h2>11. OLAY RAPORLAMA VE İLETİŞİM</h2>
-        <h3>11.1. Güvenlik Açığı Bildirimi</h3>
-        <p>Güvenlik açığı keşfettiyseniz:</p>
-        <p>
-            📧 <strong>E-posta:</strong> security@cyberex.com.tr<br>
-            🔐 <strong>PGP Key:</strong> Şifreli iletişim için mevcut
-        </p>
-        <p><strong>Responsible Disclosure Policy:</strong> 90 gün içinde yanıt garantisi veriyoruz.</p>
+        <!-- 11. REPORTING -->
+        <h2 class="tr-text">11. OLAY RAPORLAMA VE İLETİŞİM</h2>
+        <h2 class="en-text" style="display:none;">11. INCIDENT REPORTING AND CONTACT</h2>
 
-        <h3>11.2. Kullanıcı Destek</h3>
-        <p>Güvenlikle ilgili sorularınız için:</p>
-        <ul>
-            <li>💬 Canlı destek (24/7)</li>
-            <li>📧 support@cyberex.com.tr</li>
-            <li>📱 Mobil uygulama destek</li>
-        </ul>
+        <div class="tr-text">
+            <h3>11.1. Güvenlik Açığı Bildirimi</h3>
+            <p>Güvenlik açığı keşfettiyseniz:</p>
+            <p>
+                📧 <strong>E-posta:</strong> security@cyberex.com.tr<br>
+                🔐 <strong>PGP Key:</strong> Şifreli iletişim için mevcut
+            </p>
+            <p><strong>Responsible Disclosure Policy:</strong> 90 gün içinde yanıt garantisi veriyoruz.</p>
 
-        <!-- SONUÇ -->
+            <h3>11.2. Kullanıcı Destek</h3>
+            <p>Güvenlikle ilgili sorularınız için:</p>
+            <ul>
+                <li>💬 Canlı destek (24/7)</li>
+                <li>📧 support@cyberex.com.tr</li>
+                <li>📱 Mobil uygulama destek</li>
+            </ul>
+        </div>
+
+        <div class="en-text" style="display:none;">
+            <h3>11.1. Vulnerability Reporting</h3>
+            <p>If you discovered a security vulnerability:</p>
+            <p>
+                📧 <strong>Email:</strong> security@cyberex.com.tr<br>
+                🔐 <strong>PGP Key:</strong> Available for encrypted communication
+            </p>
+            <p><strong>Responsible Disclosure Policy:</strong> We guarantee response within 90 days.</p>
+
+            <h3>11.2. User Support</h3>
+            <p>For security related questions:</p>
+            <ul>
+                <li>💬 Live support (24/7)</li>
+                <li>📧 support@cyberex.com.tr</li>
+                <li>📱 Mobile app support</li>
+            </ul>
+        </div>
+
+        <!-- CONCLUSION -->
         <div class="security-badge" style="margin-top: 60px;">
-            <h2>🛡️ Güvenliğiniz Bizim Önceliğimiz</h2>
-            <p style="color: #fff; margin: 0;">
+            <h2 class="tr-text">🛡️ Güvenliğiniz Bizim Önceliğimiz</h2>
+            <p class="tr-text" style="color: #fff; margin: 0;">
                 CyberEx, kullanıcı güvenliğini her şeyin üstünde tutar. Sürekli gelişen tehditler karşısında,
                 güvenlik sistemlerimizi sürekli güncelliyor ve güçlendiriyoruz.
             </p>
+
+            <h2 class="en-text" style="display:none;">🛡️ Your Security is Our Priority</h2>
+            <p class="en-text" style="color: #fff; margin: 0; display:none;">
+                CyberEx places user security above all. In the face of evolving threats, we continuously update and
+                strengthen our security systems.
+            </p>
         </div>
 
+        <!-- FOOTER -->
         <div class="footer-links">
-            <p style="color: #666; margin-bottom: 20px;">
-                © 2024-2026 CyberEx Teknoloji A.Ş. | Son Güncelleme: 26 Ocak 2026
+            <p class="tr-text" style="color: #666; margin-bottom: 20px;">
+                © 2024-2026 CyberEx Teknoloji A.Ş. | Son Güncelleme: 26 Ocak 2026<br>
+                <span class="status-badge">BETA v1.3.9</span>
+                <span class="status-badge" style="background: linear-gradient(135deg, #FF9800, #F57C00);">SPK LİSANS
+                    SÜRECİ</span>
             </p>
-            <p>
+            <p class="en-text" style="color: #666; margin-bottom: 20px; display:none;">
+                © 2024-2026 CyberEx Technology Inc. | Last Updated: January 26, 2026<br>
+                <span class="status-badge">BETA v1.3.9</span>
+                <span class="status-badge" style="background: linear-gradient(135deg, #FF9800, #F57C00);">SPK LICENSE
+                    PENDING</span>
+            </p>
+
+            <p class="tr-text">
                 <a href="index.html">Ana Sayfa</a> |
                 <a href="terms.html">Kullanım Şartları</a> |
                 <a href="legal.html">Yasal Uyarı</a> |
+                <a href="privacy.html">Gizlilik Politikası</a> |
+                <a href="kvkk.html">KVKK Metni</a> |
+                <a href="security.html">Güvenlik Raporu</a> |
                 <a href="risk.html">Risk Bildirimi</a> |
-                <a href="privacy.html">Gizlilik</a> |
-                <a href="disclaimer.html">Beta Koşulları</a> |
-                <a href="bug_bounty.html">Bug Bounty</a>
+                <a href="cookie-policy.html">Çerez Politikası</a> |
+                <a href="disclaimer.html">Beta Koşulları</a>
+            </p>
+            <p class="en-text" style="display:none;">
+                <a href="index.html">Home</a> |
+                <a href="terms.html">Terms of Service</a> |
+                <a href="legal.html">Legal Notice</a> |
+                <a href="privacy.html">Privacy Policy</a> |
+                <a href="kvkk.html">KVKK Notice</a> |
+                <a href="security.html">Security Report</a> |
+                <a href="risk.html">Risk Disclosure</a> |
+                <a href="cookie-policy.html">Cookie Policy</a> |
+                <a href="disclaimer.html">Beta Terms</a>
             </p>
         </div>
     </div>
+
+    <script>
+        function switchLang(lang) {
+            if (lang === 'tr') {
+                document.querySelectorAll('.tr-text').forEach(el => el.style.display = '');
+                document.querySelectorAll('.en-text').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.lang-btn')[0].classList.add('active');
+                document.querySelectorAll('.lang-btn')[1].classList.remove('active');
+            } else {
+                document.querySelectorAll('.tr-text').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.en-text').forEach(el => el.style.display = '');
+                document.querySelectorAll('.lang-btn')[0].classList.remove('active');
+                document.querySelectorAll('.lang-btn')[1].classList.add('active');
+            }
+            localStorage.setItem('lang', lang);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('lang') || 'tr';
+            if (savedLang === 'en') switchLang('en');
+        });
+    </script>
 </body>
 
 </html>
