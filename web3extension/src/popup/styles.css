@@ -5,24 +5,30 @@
 }
 
 :root {
-  --primary: #00d4ff;
-  --primary-dark: #0099cc;
-  --primary-light: #33e0ff;
-  --secondary: #7c3aed;
-  --accent: #f59e0b;
-  --success: #10b981;
-  --danger: #ef4444;
+  --primary: #00f0ff;
+  /* CyberEx Neon Cyan */
+  --primary-dark: #00a0aa;
+  --primary-light: #80f7ff;
+  --secondary: #bc13fe;
+  /* CyberEx Neon Purple */
+  --accent: #ffd700;
+  /* CyberEx Gold */
+  --success: #00ff88;
+  --danger: #ff3366;
+  /* CyberEx Red */
   --warning: #f59e0b;
-  --bg-primary: #0a0a0f;
-  --bg-secondary: #111118;
+  --bg-primary: #0F172A;
+  /* Gradient Start Color */
+  --bg-secondary: #000000;
+  /* Gradient End Color */
   --bg-tertiary: #1a1a24;
   --text-primary: #ffffff;
   --text-secondary: #a0a0b0;
   --text-muted: #6b6b7a;
-  --border: rgba(0, 212, 255, 0.2);
-  --border-hover: rgba(0, 212, 255, 0.4);
-  --shadow: rgba(0, 212, 255, 0.1);
-  --shadow-glow: rgba(0, 212, 255, 0.3);
+  --border: rgba(0, 240, 255, 0.3);
+  --border-hover: rgba(0, 240, 255, 0.6);
+  --shadow: rgba(0, 240, 255, 0.1);
+  --shadow-glow: rgba(0, 240, 255, 0.4);
 }
 
 body {
@@ -30,7 +36,7 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--bg-primary);
+  background: var(--bg-secondary);
   color: var(--text-primary);
   width: 420px;
   min-height: 600px;
@@ -40,7 +46,7 @@ body {
 .app {
   width: 100%;
   min-height: 600px;
-  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  background: linear-gradient(180deg, #0F172A 0%, #000000 100%);
   position: relative;
 }
 
@@ -51,7 +57,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
+  background:
     radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
     radial-gradient(circle at 80% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
   pointer-events: none;
@@ -107,8 +113,13 @@ body {
 }
 
 @keyframes shine {
-  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
 }
 
 .logo h1 {
@@ -239,8 +250,17 @@ body {
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 0.5; transform: scale(1); }
-  50% { opacity: 0.8; transform: scale(1.1); }
+
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
 }
 
 .balance-label {
@@ -1468,6 +1488,7 @@ body {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -1491,11 +1512,11 @@ body {
   body {
     width: 100%;
   }
-  
+
   .action-buttons {
     grid-template-columns: 1fr;
   }
-  
+
   .mnemonic-words {
     grid-template-columns: repeat(2, 1fr);
   }

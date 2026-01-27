@@ -1,7 +1,7 @@
 {
   "name": "cyberex-wallet",
-  "version": "1.0.0",
-  "description": "CyberEx Wallet - Web3 Dijital Soğuk Cüzdan",
+  "version": "1.4.0",
+  "description": "CyberEx Web3 Wallet: Secure Multi-Chain Crypto Wallet & DEX Aggregator within the CyberEx Ecosystem.",
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack --mode development --watch",

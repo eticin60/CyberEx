@@ -62,37 +62,44 @@ export const SUPPORTED_NETWORKS: Record<string, Network> = {
     rpcUrl: 'https://rpc.ftm.tools',
     nativeCurrency: { name: 'FTM', symbol: 'FTM', decimals: 18 },
     blockExplorer: 'https://ftmscan.com'
+  },
+  base: {
+    chainId: 8453,
+    name: 'Base',
+    rpcUrl: 'https://mainnet.base.org',
+    nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+    blockExplorer: 'https://basescan.org'
   }
 };
 
 export class NetworkManager {
   private static readonly CURRENT_NETWORK_KEY = 'cyberex_current_network';
-  
+
   static async getCurrentNetwork(): Promise<Network> {
     const result = await chrome.storage.local.get(this.CURRENT_NETWORK_KEY);
     const networkKey = result[this.CURRENT_NETWORK_KEY] || 'ethereum';
     return SUPPORTED_NETWORKS[networkKey] || SUPPORTED_NETWORKS.ethereum;
   }
-  
+
   static async setCurrentNetwork(networkKey: string): Promise<void> {
     if (!SUPPORTED_NETWORKS[networkKey]) {
       throw new Error('Desteklenmeyen network');
     }
     await chrome.storage.local.set({ [this.CURRENT_NETWORK_KEY]: networkKey });
   }
-  
+
   static async getProvider(networkKey?: string): Promise<ethers.JsonRpcProvider> {
-    const network = networkKey 
-      ? SUPPORTED_NETWORKS[networkKey] 
+    const network = networkKey
+      ? SUPPORTED_NETWORKS[networkKey]
       : await this.getCurrentNetwork();
-    
+
     return new ethers.JsonRpcProvider(network.rpcUrl);
   }
-  
+
   static getAllNetworks(): Network[] {
     return Object.values(SUPPORTED_NETWORKS);
   }
-  
+
   static getNetworkByChainId(chainId: number): Network | null {
     return Object.values(SUPPORTED_NETWORKS).find(n => n.chainId === chainId) || null;
   }

@@ -3,6 +3,7 @@ import { Wallet } from '../../services/walletManager';
 import { NetworkManager } from '../../services/networkManager';
 import NetworkSelector from './NetworkSelector';
 import { ethers } from 'ethers';
+import { translations, getLanguage } from '../../localization/i18n';
 
 interface HomeProps {
   currentWallet: Wallet | null;
@@ -13,6 +14,8 @@ interface HomeProps {
 const Home: React.FC<HomeProps> = ({ currentWallet, onNavigate, onWalletChange }) => {
   const [balance, setBalance] = useState<string>('0.0');
   const [loading, setLoading] = useState(true);
+  const lang = getLanguage();
+  const t = translations[lang];
 
   useEffect(() => {
     loadBalance();
@@ -40,20 +43,20 @@ const Home: React.FC<HomeProps> = ({ currentWallet, onNavigate, onWalletChange }
       <div className="home-container">
         <div className="header">
           <div className="logo">
-            <div className="logo-icon">C</div>
-            <h1>CyberEx Wallet</h1>
+            <img src="https://cyberex.com.tr/cyberex-logo.png" alt="CyberEx" style={{ height: '40px', filter: 'drop-shadow(0 0 10px rgba(0,240,255,0.5))' }} />
+            <h1>{t.walletTitle}</h1>
           </div>
         </div>
         <div className="empty-state">
           <div className="empty-icon">🔐</div>
-          <h2>Cüzdan Bulunamadı</h2>
-          <p>Başlamak için bir cüzdan oluşturun veya içe aktarın</p>
+          <h2>{t.walletNotFound}</h2>
+          <p>{t.startText}</p>
           <div className="button-group">
             <button className="btn-primary" onClick={() => onNavigate('create')}>
-              Yeni Cüzdan Oluştur
+              {t.createWallet}
             </button>
             <button className="btn-secondary" onClick={() => onNavigate('import')}>
-              Cüzdan İçe Aktar
+              {t.importWallet}
             </button>
           </div>
         </div>
@@ -65,8 +68,8 @@ const Home: React.FC<HomeProps> = ({ currentWallet, onNavigate, onWalletChange }
     <div className="home-container">
       <div className="header">
         <div className="logo">
-          <div className="logo-icon">C</div>
-          <h1>CyberEx Wallet</h1>
+          <img src="https://cyberex.com.tr/cyberex-logo.png" alt="CyberEx" style={{ height: '32px', marginRight: '10px' }} />
+          <h1>{t.walletTitle}</h1>
         </div>
         <div className="header-actions">
           <button className="icon-btn" onClick={() => onNavigate('campaigns')}>
@@ -88,39 +91,39 @@ const Home: React.FC<HomeProps> = ({ currentWallet, onNavigate, onWalletChange }
       </div>
 
       <div className="balance-card">
-        <div className="balance-label">Bakiye</div>
+        <div className="balance-label">{t.balance}</div>
         <div className="balance-value">
           {loading ? '...' : `${balance} ETH`}
         </div>
         <button className="refresh-btn" onClick={loadBalance}>
-          🔄 Yenile
+          🔄 {t.refresh}
         </button>
       </div>
 
       <div className="action-buttons">
         <button className="action-btn" onClick={() => onNavigate('send')}>
           <div className="action-icon">📤</div>
-          <div className="action-label">Gönder</div>
+          <div className="action-label">{t.send}</div>
         </button>
         <button className="action-btn" onClick={() => onNavigate('receive')}>
           <div className="action-icon">📥</div>
-          <div className="action-label">Al</div>
+          <div className="action-label">{t.receive}</div>
         </button>
         <button className="action-btn" onClick={() => onNavigate('swap')}>
           <div className="action-icon">🔄</div>
-          <div className="action-label">Swap</div>
+          <div className="action-label">{t.swap}</div>
         </button>
         <button className="action-btn" onClick={() => onNavigate('leverage')}>
           <div className="action-icon">⚡</div>
-          <div className="action-label">Kaldıraç</div>
+          <div className="action-label">{t.leverage}</div>
         </button>
         <button className="action-btn" onClick={() => onNavigate('wallets')}>
           <div className="action-icon">👛</div>
-          <div className="action-label">Cüzdanlar</div>
+          <div className="action-label">{t.wallets}</div>
         </button>
         <button className="action-btn" onClick={() => onNavigate('campaigns')}>
           <div className="action-icon">🎁</div>
-          <div className="action-label">Kampanyalar</div>
+          <div className="action-label">{t.campaigns}</div>
         </button>
       </div>
     </div>

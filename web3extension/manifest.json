@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "CyberEx Wallet",
-  "version": "1.0.0",
-  "description": "Web3 Dijital Soğuk Cüzdan - Güvenli ve Modern Kripto Para Yönetimi",
+  "version": "1.4.0",
+  "description": "CyberEx Web3 Wallet: Secure Multi-Chain Crypto Wallet & DEX Aggregator within the CyberEx Ecosystem.",
   "permissions": [
     "storage",
     "activeTab",
@@ -32,16 +32,23 @@
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
       "run_at": "document_start"
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["inpage.js"],
-      "matches": ["<all_urls>"]
+      "resources": [
+        "inpage.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
     }
   ]
 }
-

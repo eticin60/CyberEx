@@ -1,184 +1,107 @@
-# CyberEx Wallet
+# <img src="https://cyberex.com.tr/cyberex-logo.png" height="40" valign="middle" /> CyberEx Web3 Wallet Extension
 
-Web3 Dijital Soğuk Cüzdan Eklentisi - Chrome, Edge, Opera için
+[![License](https://img.shields.io/badge/License-Proprietary-blue.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/Version-1.4.0-neon.svg)](CHANGELOG.md)
+[![Status](https://img.shields.io/badge/Status-Beta-orange.svg)](STATUS.md)
+[![Platform](https://img.shields.io/badge/Platform-Chrome%20%7C%20Edge%20%7C%20Brave-success.svg)]()
+[![CyberEx Ecosystem](https://img.shields.io/badge/CyberEx-Ecosystem-800080.svg)](https://cyberex.com.tr)
 
-## Özellikler
+**CyberEx Web3 Wallet** is a next-generation non-custodial browser extension designed for the **Web3 Financial Ecosystem**. It provides seamless access to 8+ blockchains, decentralized exchanges (DEXs), and leverage trading directly from your browser.
 
-### Temel Özellikler
-- 🔐 Güvenli cüzdan oluşturma ve yönetimi
-- 💸 Kripto para gönderme ve alma
-- 📱 QR kod desteği
-- 💾 Cüzdan yedekleme ve geri yükleme
-- 🌐 Web3 dApp entegrasyonu (MetaMask uyumlu)
-- 🎨 Modern ve kullanıcı dostu arayüz (Neon mavi tema)
-- 🔒 Soğuk cüzdan - Private key'ler cihazınızda saklanır
+> **Note:** This extension is part of the CyberEx Ecosystem and is designed to work in harmony with the CyberEx Android App and Spot Exchange.
 
-### Multi-Chain Desteği
-- 🌍 Ethereum, BSC, Polygon, Arbitrum, Optimism, Avalanche, Fantom
-- 🔄 Kolay network değiştirme
-- 💰 Her network için native coin desteği
+---
 
-### DEX Entegrasyonu
-- 🔄 Tüm DEX'lerden en iyi fiyatı bulma (Uniswap, PancakeSwap, 1inch, SushiSwap, Curve)
-- 📊 Fiyat karşılaştırma ve en iyi route seçimi
-- ⚡ Hızlı ve güvenli swap işlemleri
-- 💸 Her coin için özelleştirilebilir fee yönetimi
+## 🌍 Supported Networks (Multi-Chain)
 
-### Kaldıraçlı İşlemler
-- ⚡ Long/Short pozisyon açma
-- 📈 2x - 100x kaldıraç seçenekleri
-- 📊 Gerçek zamanlı PnL takibi
-- ⚠️ Liquidation uyarıları
-- 💼 Pozisyon yönetimi
+| Network | Chain ID | Native Asset | Explorer |
+|:---|:---:|:---:|:---|
+| **Ethereum** | 1 | ETH | Etherscan |
+| **BNB Chain** | 56 | BNB | BscScan |
+| **Polygon** | 137 | POL | PolygonScan |
+| **Arbitrum One** | 42161 | ETH | Arbiscan |
+| **Optimism** | 10 | ETH | Optimistic Etherscan |
+| **Avalanche C-Chain** | 43114 | AVAX | Snowtrace |
+| **Fantom** | 250 | FTM | FtmScan |
+| **Base** | 8453 | ETH | BaseScan |
 
-### Mini Borsa Özellikleri
-- 📊 Vadeli işlemler
-- 💼 Her cüzdan için ayrı deposit hesapları
-- 🔐 Güvenli fon yönetimi
-- 📈 İşlem geçmişi
+---
 
-### Kampanya & Duyuru Sistemi
-- 🎁 Promosyon kampanyaları
-- 📢 Duyuru yayınlama
-- 🎉 Etkinlik bildirimleri
-- ⚠️ Önemli uyarılar
+## 🚀 Key Features
 
-## Kurulum
+### 🔐 Security First (Non-Custodial)
+- **Local Key Storage:** Your Private Keys and Mnemonic Phrases are encrypted and stored **only on your device**.
+- **Cold Wallet Logic:** Operates like a cold wallet until you sign a transaction.
+- **Biometric Ready:** Prepared for integration with hardware authenticators.
 
-### 1. Bağımlılıkları Yükleyin
+### ⚡ Liquid Glass UI/UX
+- **Ecosystem Design:** Features the signature CyberEx "Liquid Glass" dark theme with Neon Cyan and Purple accents.
+- **Bilingual:** Full support for **Turkish (Türkçe)** and **English** languages.
+- **Real-Time Data:** Live price feeds and balance updates via RPC aggregation.
 
-```bash
-npm install
-```
+### 💹 Advanced Trading
+- **DEX Aggregator:** Finds the best swap rates across Uniswap, PancakeSwap, Curve, and more.
+- **Leverage Trading:** Access decentralized perpetual futures with up to 100x leverage.
+- **Gas Optimization:** Smart fee estimation to save on transaction costs.
 
-### 2. Icon Dosyalarını Oluşturun
+---
 
-Icon'ları otomatik oluşturmak için:
+## 🛠️ Installation (Developer Mode)
 
-```bash
-# SVG icon'ları oluştur
-npm run generate-icons
+Since this is a specialized financial tool, you can build and load it directly from source for maximum security auditability.
 
-# PNG icon'ları oluştur (sharp kütüphanesi gerekli)
-npm install sharp
-npm run generate-icons-png
-```
+### Prerequisites
+- Node.js v16+
+- npm or yarn
 
-Veya manuel olarak `src/icons/` klasörüne aşağıdaki boyutlarda icon dosyaları ekleyin:
-- `icon16.png` (16x16)
-- `icon32.png` (32x32)
-- `icon48.png` (48x48)
-- `icon128.png` (128x128)
+### Build Steps
 
-### 3. Projeyi Derleyin
+1.  **Clone the Repository**
+    ```bash
+    git clone https://github.com/eticin60/CyberEx
+    cd CyberEx/web3extension
+    ```
 
-```bash
-npm run build
-```
+2.  **Install Dependencies**
+    ```bash
+    npm install
+    ```
 
-Bu komut `dist` klasörünü oluşturur.
+3.  **Build the Extension**
+    ```bash
+    npm run build
+    ```
+    *This will create a `dist` folder containing the production-ready extension.*
 
-## Geliştirme
+4.  **Load into Chrome/Brave/Edge**
+    - Go to `chrome://extensions/`
+    - Enable **Developer mode** (top right toggle).
+    - Click **Load unpacked**.
+    - Select the `web3extension/dist` directory.
 
-Geliştirme modunda çalıştırmak için:
+---
 
-```bash
-npm run dev
-```
+## 🤝 Ecosystem Integration
 
-Bu komut watch mode'da çalışır ve değişiklikleri otomatik olarak derler.
+This extension is built to synchronize with the **CyberEx Android App** and **Web Platform**.
 
-## Tarayıcıya Yükleme
+- **Website:** [cyberex.com.tr](https://cyberex.com.tr)
+- **Android App:** [Play Store Link]
+- **Documentation:** [api.cyberex.com.tr](https://cyberex.com.tr/api-docs.html)
+- **GitHub:** [eticin60/CyberEx](https://github.com/eticin60/CyberEx)
 
-### Chrome / Edge / Opera
+---
 
-1. Tarayıcıda `chrome://extensions/` veya `edge://extensions/` adresine gidin
-2. Sağ üstteki **"Geliştirici modu"** toggle'ını açın
-3. **"Paketlenmemiş uzantı yükle"** veya **"Load unpacked"** butonuna tıklayın
-4. Proje klasöründeki `dist` klasörünü seçin
-5. CyberEx Wallet eklentisi yüklenecektir!
+## 📄 License
 
-## Kullanım
+**Copyright © 2026 CyberEx Technology Inc.**
 
-### İlk Kurulum
+This project is proprietary software. Unauthorized copying, modification, distribution, or use of this source code is strictly prohibited without express written permission from CyberEx Technology Inc.
 
-1. Eklentiyi açın
-2. **"Yeni Cüzdan Oluştur"** seçeneğine tıklayın
-3. Size verilen **12 kelimelik yedekleme ifadesini** güvenli bir yerde saklayın
-4. Cüzdanınız hazır!
+See [LICENSE](LICENSE) for details.
 
-### Cüzdan İçe Aktarma
+---
 
-1. **"Cüzdan İçe Aktar"** seçeneğine tıklayın
-2. Mnemonic phrase veya private key'inizi girin
-3. Cüzdanınız içe aktarılacaktır
-
-### İşlem Yapma
-
-- **Gönder**: ETH veya token göndermek için "Gönder" butonuna tıklayın
-- **Al**: QR kod veya adres paylaşarak para alın
-- **Swap**: Tüm DEX'lerden en iyi fiyatı bularak token değiştirme
-- **Kaldıraçlı İşlemler**: Long/Short pozisyon açarak kaldıraçlı trading yapın
-- **Network Değiştirme**: Farklı blockchain ağları arasında geçiş yapın
-
-### Web3 dApp'ler ile Kullanım
-
-CyberEx Wallet, MetaMask uyumlu Web3 provider sağlar. Web siteleri `window.ethereum` üzerinden cüzdanınıza erişebilir.
-
-## Güvenlik
-
-- ✅ Private key'ler asla sunucuya gönderilmez
-- ✅ Tüm işlemler yerel olarak yapılır
-- ✅ Mnemonic phrase güvenli şekilde saklanır
-- ✅ Cüzdan verileri tarayıcı storage'ında şifrelenmiş olarak tutulur
-- ⚠️ **ÖNEMLİ**: Yedekleme ifadenizi kimseyle paylaşmayın!
-- ⚠️ **ÖNEMLİ**: Private key'inizi asla paylaşmayın!
-
-## Teknik Detaylar
-
-- **Framework**: React + TypeScript
-- **Web3 Library**: ethers.js v6
-- **Build Tool**: Webpack
-- **Manifest**: Chrome Extension Manifest V3
-- **Blockchain**: Multi-chain (Ethereum, BSC, Polygon, Arbitrum, Optimism, Avalanche, Fantom)
-- **DEX Aggregator**: 1inch, Uniswap, PancakeSwap, SushiSwap entegrasyonu
-- **Fee Management**: Her coin için özelleştirilebilir fee sistemi
-
-## API Entegrasyonları
-
-### DEX API'leri
-- **1inch API**: En iyi fiyat bulma için
-- **Uniswap SDK**: Uniswap V3 entegrasyonu
-- **PancakeSwap API**: BSC üzerinde swap işlemleri
-
-### Fiyat API'leri
-- CoinGecko veya Binance API (kaldıraçlı işlemler için)
-
-## Güvenlik Özellikleri
-
-- 🔐 Private key'ler asla sunucuya gönderilmez
-- 🔒 Tüm işlemler yerel olarak imzalanır
-- 🛡️ Her cüzdan için ayrı deposit hesapları
-- ⚠️ Liquidation koruması
-- 🔑 Mnemonic phrase şifreleme
-
-## GitHub
-
-Proje GitHub'da: [CyberEx Wallet Extension](https://github.com/eticin60/CyberEx-Wallet-Extension)
-
-## Katkıda Bulunma
-
-1. Fork edin
-2. Feature branch oluşturun (`git checkout -b feature/AmazingFeature`)
-3. Commit edin (`git commit -m 'Add some AmazingFeature'`)
-4. Push edin (`git push origin feature/AmazingFeature`)
-5. Pull Request açın
-
-## Lisans
-
-MIT License - Detaylar için [LICENSE](LICENSE) dosyasına bakın.
-
-## Lisans
-
-Bu proje özel bir projedir.
-
+<div align="center">
+  <sub>Built with ❤️ by the CyberEx Dev Team. Powered by Google Gemini AI coding assistants.</sub>
+</div>
