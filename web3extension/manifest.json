@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "CyberEx Wallet",
-  "version": "1.4.0",
-  "description": "CyberEx Web3 Wallet: Secure Multi-Chain Crypto Wallet & DEX Aggregator within the CyberEx Ecosystem.",
+  "name": "CyberEx Cüzdan | Web3 & AI",
+  "version": "1.4.2",
+  "description": "CyberEx Ekosistemini keşfedin. Yapay zeka destekli alım satım, çoklu ağ yönetimi ve kurumsal düzeyde güvenlik. Merkeziyetsiz finansın geleceği burada.",
   "permissions": [
     "storage",
     "activeTab",

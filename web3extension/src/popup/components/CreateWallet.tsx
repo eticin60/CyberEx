@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { WalletManager } from '../../services/walletManager';
+import { translations, getLanguage } from '../../localization/i18n';
 
 interface CreateWalletProps {
   onNavigate: (view: string) => void;
@@ -11,6 +12,8 @@ const CreateWallet: React.FC<CreateWalletProps> = ({ onNavigate, onWalletCreated
   const [mnemonic, setMnemonic] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState<'form' | 'backup'>('form');
+  const lang = getLanguage();
+  const t = translations[lang];
 
   const handleCreate = async () => {
     setLoading(true);
@@ -40,18 +43,15 @@ const CreateWallet: React.FC<CreateWalletProps> = ({ onNavigate, onWalletCreated
       <div className="create-wallet-container">
         <div className="header">
           <button className="back-btn" onClick={() => onNavigate('home')}>
-            ← Geri
+            ← {t.back}
           </button>
-          <h2>Yedekleme Kelimeleri</h2>
+          <h2>{t.backupTitle}</h2>
         </div>
 
         <div className="backup-warning">
           <div className="warning-icon">⚠️</div>
-          <h3>ÖNEMLİ: Bu kelimeleri güvenli bir yerde saklayın!</h3>
-          <p>
-            Bu kelimeler cüzdanınızı geri yüklemek için gereklidir.
-            Kimseyle paylaşmayın ve güvenli bir yerde saklayın.
-          </p>
+          <h3>{t.backupWarningTitle}</h3>
+          <p>{t.backupWarningText}</p>
         </div>
 
         <div className="mnemonic-words">
@@ -65,10 +65,10 @@ const CreateWallet: React.FC<CreateWalletProps> = ({ onNavigate, onWalletCreated
 
         <div className="backup-actions">
           <button className="btn-secondary" onClick={() => navigator.clipboard.writeText(mnemonic)}>
-            📋 Kopyala
+            📋 {t.copyMnemonic}
           </button>
           <button className="btn-primary" onClick={handleBackupComplete}>
-            Yedekledim, Devam Et
+            {t.backupConfirm}
           </button>
         </div>
       </div>
@@ -79,26 +79,23 @@ const CreateWallet: React.FC<CreateWalletProps> = ({ onNavigate, onWalletCreated
     <div className="create-wallet-container">
       <div className="header">
         <button className="back-btn" onClick={() => onNavigate('home')}>
-          ← Geri
+          ← {t.back}
         </button>
-        <h2>Yeni Cüzdan Oluştur</h2>
+        <h2>{t.createWalletTitle}</h2>
       </div>
 
       <div className="form-group">
-        <label>Cüzdan Adı (Opsiyonel)</label>
+        <label>{t.walletNameLabel}</label>
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Örn: Ana Cüzdan"
+          placeholder={t.walletNamePlaceholder}
         />
       </div>
 
       <div className="info-box">
-        <p>
-          Yeni bir cüzdan oluşturulacak ve size 12 kelimelik bir yedekleme
-          ifadesi verilecektir. Bu ifadeyi mutlaka güvenli bir yerde saklayın.
-        </p>
+        <p>{t.walletCreateInfo}</p>
       </div>
 
       <div className="form-actions">
@@ -107,7 +104,7 @@ const CreateWallet: React.FC<CreateWalletProps> = ({ onNavigate, onWalletCreated
           onClick={handleCreate}
           disabled={loading}
         >
-          {loading ? 'Oluşturuluyor...' : 'Cüzdan Oluştur'}
+          {loading ? t.creating : t.createWallet}
         </button>
       </div>
     </div>

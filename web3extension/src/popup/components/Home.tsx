@@ -43,14 +43,16 @@ const Home: React.FC<HomeProps> = ({ currentWallet, onNavigate, onWalletChange }
       <div className="home-container">
         <div className="header">
           <div className="logo">
-            <img src="https://cyberex.com.tr/cyberex-logo.png" alt="CyberEx" style={{ height: '40px', filter: 'drop-shadow(0 0 10px rgba(0,240,255,0.5))' }} />
+            <img src="icons/icon128.png" alt="CyberEx" className="logo-img" style={{ height: '40px', filter: 'drop-shadow(0 0 10px rgba(0,240,255,0.5))' }} />
             <h1>{t.walletTitle}</h1>
           </div>
         </div>
         <div className="empty-state">
-          <div className="empty-icon">🔐</div>
-          <h2>{t.walletNotFound}</h2>
-          <p>{t.startText}</p>
+          <div className="empty-state-content">
+            <img src="icons/icon128.png" alt="CyberEx" className="empty-logo" style={{ width: '80px', height: '80px', marginBottom: '20px', filter: 'drop-shadow(0 0 20px rgba(0,240,255,0.3))' }} />
+            <h2>{t.walletNotFound}</h2>
+            <p>{t.startText}</p>
+          </div>
           <div className="button-group">
             <button className="btn-primary" onClick={() => onNavigate('create')}>
               {t.createWallet}
@@ -68,7 +70,7 @@ const Home: React.FC<HomeProps> = ({ currentWallet, onNavigate, onWalletChange }
     <div className="home-container">
       <div className="header">
         <div className="logo">
-          <img src="https://cyberex.com.tr/cyberex-logo.png" alt="CyberEx" style={{ height: '32px', marginRight: '10px' }} />
+          <img src="icons/icon128.png" alt="CyberEx" style={{ height: '32px', marginRight: '10px' }} />
           <h1>{t.walletTitle}</h1>
         </div>
         <div className="header-actions">
