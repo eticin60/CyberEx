@@ -215,6 +215,11 @@
             background: #9c27b0;
         }
 
+        .event-card.legal::before {
+            background: #00f3ff;
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+
         .event-card:hover {
             border-color: var(--neon-cyan);
             transform: translateX(5px);
@@ -269,6 +274,12 @@
         .badge-bugfix {
             background: rgba(156, 39, 176, 0.2);
             color: #9c27b0;
+        }
+
+        .badge-legal {
+            background: rgba(0, 243, 255, 0.2);
+            color: #00f3ff;
+            border: 1px solid rgba(0, 243, 255, 0.3);
         }
 
         .event-description {
@@ -404,6 +415,8 @@
         <div class="filter-tabs">
             <button class="filter-btn active" data-lang="tr">🔹 Tümü</button>
             <button class="filter-btn active" data-lang="en">🔹 All</button>
+            <button class="filter-btn" data-lang="tr">⚖️ Yasal</button>
+            <button class="filter-btn" data-lang="en">⚖️ Legal</button>
             <button class="filter-btn" data-lang="tr">🔴 Sorunlar</button>
             <button class="filter-btn" data-lang="en">🔴 Incidents</button>
             <button class="filter-btn" data-lang="tr">⚠️ Bakım</button>
@@ -421,15 +434,15 @@
             <div class="month-separator" data-lang="en">📅 February 2026</div>
 
             <!-- Event: MASAK Compliance -->
-            <div class="event-card incident">
+            <div class="event-card legal">
                 <div class="event-header">
                     <div class="event-title">
                         <h3 data-lang="tr">⚖️ MASAK Uyum ve Güvenlik Güncellemesi</h3>
                         <h3 data-lang="en">⚖️ MASAK Compliance and Security Update</h3>
                         <div class="event-date">8 Şubat 2026, 09:00 UTC+3</div>
                     </div>
-                    <span class="event-badge badge-incident" data-lang="tr">🔴 Yasal</span>
-                    <span class="event-badge badge-incident" data-lang="en">🔴 Legal</span>
+                    <span class="event-badge badge-legal" data-lang="tr">⚖️ Yasal</span>
+                    <span class="event-badge badge-legal" data-lang="en">⚖️ Legal</span>
                 </div>
                 <p class="event-description" data-lang="tr">
                     Şirketimizin uyum politikası ve MASAK düzenlemeleri kapsamında, CyberEx platformuna yapılan tüm
@@ -1113,6 +1126,8 @@
 
                 if (buttonText.includes('sorunlar') || buttonText.includes('incidents')) {
                     filterType = 'incident';
+                } else if (buttonText.includes('yasal') || buttonText.includes('legal')) {
+                    filterType = 'legal';
                 } else if (buttonText.includes('bakım') || buttonText.includes('maintenance')) {
                     filterType = 'maintenance';
                 } else if (buttonText.includes('güncelleme') || buttonText.includes('update')) {
