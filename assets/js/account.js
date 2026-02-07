@@ -1,6 +1,12 @@
 // Account Dashboard Controller
+// Ensure Firebase is initialized correctly
 const db = firebase.firestore();
 const auth = firebase.auth();
+
+function toggleProfileMenu() {
+    const dropdown = document.getElementById('profileDropdown');
+    dropdown.classList.toggle('active');
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     // Check Authentication
@@ -45,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function initDashboard(user) {
+    console.log("Dashboard initializing for:", user.email);
     // 1. Load User Profile Data
     loadUserProfile(user.uid);
 
@@ -65,7 +72,7 @@ async function initDashboard(user) {
  * Android loadUserData() mantığıyla profil verilerini getirir
  */
 function loadUserProfile(uid) {
-    const userDocRef = db.collection('users').document(uid);
+    const userDocRef = db.collection('users').doc(uid);
 
     userDocRef.onSnapshot((doc) => {
         if (doc.exists) {
@@ -383,8 +390,13 @@ function updateAvatarUI(avatarId) {
 
 async function handleLogout() {
     if (confirm("Çıkış yapmak istediğinize emin misiniz?")) {
-        await auth.signOut();
-        window.location.href = 'login.html';
+        try {
+            await auth.signOut();
+            window.location.href = 'login.html';
+        } catch (error) {
+            console.error("Logout error:", error);
+            alert("Çıkış yapılırken bir hata oluştu.");
+        }
     }
 }
 

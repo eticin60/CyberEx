@@ -230,6 +230,24 @@ class AuthManager {
 auth.onAuthStateChanged((user) => {
     console.log('Auth state changed:', user ? user.email : 'Not logged in');
 
+    // Update index.html navbar if we are on that page
+    const navAuthGroup = document.getElementById('navAuthGroup');
+    if (navAuthGroup) {
+        if (user) {
+            navAuthGroup.innerHTML = `
+                <a href="account.html" class="nav-btn-outline" style="background: rgba(0, 240, 255, 0.1);">
+                    <i class="fas fa-user-circle"></i> <span data-tr="HESABIM" data-en="ACCOUNT">HESABIM</span>
+                </a>
+            `;
+        } else {
+            // Restore default buttons if logged out
+            navAuthGroup.innerHTML = `
+                <a href="login.html" class="nav-btn-outline" style="border: none;" data-tr="GİRİŞ YAP" data-en="LOGIN">GİRİŞ YAP</a>
+                <a href="register.html" class="nav-btn-filled" data-tr="HEMEN KATIL" data-en="JOIN NOW">HEMEN KATIL</a>
+            `;
+        }
+    }
+
     // Dispatch custom event for auth state changes
     window.dispatchEvent(new CustomEvent('authStateChanged', { detail: { user } }));
 });
