@@ -3,13 +3,13 @@
    <!-- Ana Sayfa -->
    <url>
       <loc>https://cyberex.com.tr/</loc>
-      <lastmod>2026-01-23</lastmod>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>daily</changefreq>
       <priority>1.00</priority>
    </url>
    <url>
       <loc>https://cyberex.com.tr/index.html</loc>
-      <lastmod>2026-01-23</lastmod>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>daily</changefreq>
       <priority>1.00</priority>
    </url>
@@ -17,31 +17,31 @@
    <!-- Önemli Sayfalar -->
    <url>
       <loc>https://cyberex.com.tr/download.html</loc>
-      <lastmod>2026-01-23</lastmod>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.90</priority>
    </url>
    <url>
       <loc>https://cyberex.com.tr/how-it-works.html</loc>
-      <lastmod>2026-01-23</lastmod>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.80</priority>
    </url>
    <url>
       <loc>https://cyberex.com.tr/about.html</loc>
-      <lastmod>2026-01-23</lastmod>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.80</priority>
    </url>
    <url>
       <loc>https://cyberex.com.tr/fees.html</loc>
-      <lastmod>2026-01-23</lastmod>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.80</priority>
    </url>
    <url>
       <loc>https://cyberex.com.tr/limits.html</loc>
-      <lastmod>2026-01-23</lastmod>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.80</priority>
    </url>
@@ -49,31 +49,37 @@
    <!-- Destek ve İletişim -->
    <url>
       <loc>https://cyberex.com.tr/help.html</loc>
-      <lastmod>2026-01-23</lastmod>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.70</priority>
    </url>
    <url>
       <loc>https://cyberex.com.tr/ticket.html</loc>
-      <lastmod>2026-01-23</lastmod>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.70</priority>
    </url>
    <url>
       <loc>https://cyberex.com.tr/status.html</loc>
-      <lastmod>2026-01-25</lastmod>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>hourly</changefreq>
       <priority>0.70</priority>
    </url>
    <url>
+      <loc>https://cyberex.com.tr/status-history.html</loc>
+      <lastmod>2026-02-07</lastmod>
+      <changefreq>daily</changefreq>
+      <priority>0.65</priority>
+   </url>
+   <url>
       <loc>https://cyberex.com.tr/history.html</loc>
-      <lastmod>2026-01-25</lastmod>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>daily</changefreq>
       <priority>0.65</priority>
    </url>
    <url>
       <loc>https://cyberex.com.tr/brand-assets.html</loc>
-      <lastmod>2026-01-23</lastmod>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>yearly</changefreq>
       <priority>0.60</priority>
    </url>
@@ -81,19 +87,19 @@
    <!-- Web3 Ecosystem -->
    <url>
       <loc>https://cyberex.com.tr/web3wallet/</loc>
-      <lastmod>2026-01-25</lastmod>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.85</priority>
    </url>
    <url>
       <loc>https://cyberex.com.tr/web3extension/</loc>
-      <lastmod>2026-01-25</lastmod>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.85</priority>
    </url>
    <url>
       <loc>https://cyberex.com.tr/web3app/</loc>
-      <lastmod>2026-01-25</lastmod>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.85</priority>
    </url>
@@ -101,31 +107,31 @@
    <!-- Developer and Security -->
    <url>
       <loc>https://cyberex.com.tr/api.html</loc>
-      <lastmod>2026-01-23</lastmod>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.75</priority>
    </url>
    <url>
       <loc>https://cyberex.com.tr/api-docs.html</loc>
-      <lastmod>2026-01-23</lastmod>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.75</priority>
    </url>
    <url>
       <loc>https://cyberex.com.tr/security.html</loc>
-      <lastmod>2026-01-23</lastmod>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.80</priority>
    </url>
    <url>
       <loc>https://cyberex.com.tr/bug_bounty.html</loc>
-      <lastmod>2026-01-23</lastmod>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.70</priority>
    </url>
    <url>
       <loc>https://cyberex.com.tr/widgets.html</loc>
-      <lastmod>2026-01-23</lastmod>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.60</priority>
    </url>
@@ -133,31 +139,43 @@
    <!-- Yasal -->
    <url>
       <loc>https://cyberex.com.tr/privacy.html</loc>
-      <lastmod>2026-01-23</lastmod>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>yearly</changefreq>
       <priority>0.50</priority>
    </url>
    <url>
       <loc>https://cyberex.com.tr/terms.html</loc>
-      <lastmod>2026-01-23</lastmod>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>yearly</changefreq>
       <priority>0.50</priority>
    </url>
    <url>
       <loc>https://cyberex.com.tr/kvkk.html</loc>
-      <lastmod>2026-01-23</lastmod>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>yearly</changefreq>
       <priority>0.50</priority>
    </url>
    <url>
       <loc>https://cyberex.com.tr/risk.html</loc>
-      <lastmod>2026-01-23</lastmod>
+      <lastmod>2026-02-07</lastmod>
+      <changefreq>yearly</changefreq>
+      <priority>0.50</priority>
+   </url>
+   <url>
+      <loc>https://cyberex.com.tr/disclaimer.html</loc>
+      <lastmod>2026-02-07</lastmod>
+      <changefreq>yearly</changefreq>
+      <priority>0.50</priority>
+   </url>
+   <url>
+      <loc>https://cyberex.com.tr/cookie-policy.html</loc>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>yearly</changefreq>
       <priority>0.50</priority>
    </url>
    <url>
       <loc>https://cyberex.com.tr/legal.html</loc>
-      <lastmod>2026-01-23</lastmod>
+      <lastmod>2026-02-07</lastmod>
       <changefreq>yearly</changefreq>
       <priority>0.50</priority>
    </url>
