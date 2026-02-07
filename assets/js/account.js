@@ -3,13 +3,15 @@
  * Synchronized with Android implementation (Paths, KYC, VIP, Avatars)
  */
 
-auth.onAuthStateChanged(user => {
-    if (user) {
-        initDashboard(user);
-    } else {
-        window.location.href = 'login.html';
+// Close dropdown on click outside
+window.onclick = function (event) {
+    if (!event.target.closest('.user-profile-nav')) {
+        const dropdown = document.getElementById('profileDropdown');
+        if (dropdown && dropdown.classList.contains('active')) {
+            dropdown.classList.remove('active');
+        }
     }
-});
+}
 
 async function initDashboard(user) {
     console.log("Dashboard initializing for:", user.email);
@@ -86,18 +88,44 @@ function updateAvatarUI(avatarId) {
 }
 
 function loadWalletData(uid) {
-    db.collection('users').doc(uid).onSnapshot(doc => {
-        if (doc.exists) {
-            const data = doc.data();
-            const spot = data.spot_balance || 0;
-            const futures = data.futures_balance || 0;
-            const total = spot + futures;
+    let spotBal = 0;
+    let futuresBal = 0;
 
-            safeSetText('totalBalance', `$${total.toLocaleString(undefined, { minimumFractionDigits: 2 })}`);
-            safeSetText('spotBalance', `$${spot.toLocaleString(undefined, { minimumFractionDigits: 2 })}`);
-            safeSetText('futuresBalance', `$${futures.toLocaleString(undefined, { minimumFractionDigits: 2 })}`);
-        }
-    });
+    const updateUI = () => {
+        const total = spotBal + futuresBal;
+        safeSetText('totalBalance', total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        safeSetText('spotBalance', `$${spotBal.toLocaleString(undefined, { minimumFractionDigits: 2 })}`);
+        safeSetText('futuresBalance', `$${futuresBal.toLocaleString(undefined, { minimumFractionDigits: 2 })}`);
+    };
+
+    // Spot Balance: users/{uid}/wallet/usdt_balance
+    db.collection('users').doc(uid).collection('wallet').doc('usdt_balance')
+        .onSnapshot(doc => {
+            spotBal = doc.exists ? (doc.data().balance || 0) : 0;
+            updateUI();
+        });
+
+    // Futures Balance: users/{uid}/futures_wallet/usdt_balance
+    db.collection('users').doc(uid).collection('futures_wallet').doc('usdt_balance')
+        .onSnapshot(doc => {
+            futuresBal = doc.exists ? (doc.data().balance || 0) : 0;
+            updateUI();
+        });
+}
+
+function copyCyberId() {
+    const id = document.getElementById('cyberId').textContent;
+    if (id && id !== '---------') {
+        navigator.clipboard.writeText(id).then(() => {
+            alert("Cyber ID kopyalandı: " + id);
+        }).catch(err => {
+            console.error('Kopyalama hatası:', err);
+        });
+    }
+}
+
+function openAvatarModal() {
+    alert("Profil düzenleme yakında web sürümüne eklenecektir. Lütfen Android uygulamasını kullanın.");
 }
 
 function loadOpenPositions(uid) {
@@ -169,8 +197,8 @@ function loadDailyPnl(uid) {
 }
 
 function loadNotifications(uid) {
-    const list = document.getElementById('notificationList');
-    if (!list) return;
+    const container = document.getElementById('notificationsContainer');
+    if (!container) return;
 
     db.collection('users').doc(uid).collection('notifications')
         .orderBy('timestamp', 'desc')
@@ -194,7 +222,7 @@ function loadNotifications(uid) {
                     </div>
                 `;
             });
-            list.innerHTML = html;
+            container.innerHTML = html;
         });
 }
 
