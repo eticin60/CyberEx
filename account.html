@@ -36,6 +36,12 @@
             </a>
 
             <div class="user-profile-nav" id="userNav">
+                <!-- Notification Bell -->
+                <div class="nav-notification-bell" onclick="scrollToMessages()">
+                    <i class="fas fa-bell"></i>
+                    <span class="unread-badge" id="navUnreadCount" style="display: none;">0</span>
+                </div>
+
                 <div class="profile-summary" onclick="toggleProfileMenu()">
                     <span id="navUsername">Yükleniyor...</span>
                     <div class="avatar-circle" id="navAvatar">

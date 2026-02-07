@@ -56,6 +56,9 @@ async function initDashboard(user) {
 
     // 4. Load Notifications
     loadNotifications(user.uid);
+
+    // 5. Load Unread Count
+    loadUnreadCount(user.uid);
 }
 
 /**
@@ -327,6 +330,40 @@ async function selectAvatar(id) {
         closeModal();
     } catch (error) {
         console.error("Avatar güncellenirken hata:", error);
+    }
+}
+
+/**
+ * Okunmamış bildirim sayısını dinler
+ */
+function loadUnreadCount(uid) {
+    db.collection('users').doc(uid).collection('notifications')
+        .where('read', '==', false)
+        .onSnapshot(snapshot => {
+            const badge = document.getElementById('navUnreadCount');
+            const count = snapshot.size;
+
+            if (count > 0) {
+                badge.textContent = count > 9 ? '9+' : count;
+                badge.style.display = 'flex';
+                // Animasyon efekti
+                badge.style.animation = 'pulse 0.5s ease-in-out';
+                setTimeout(() => badge.style.animation = '', 500);
+            } else {
+                badge.style.display = 'none';
+            }
+        });
+}
+
+function scrollToMessages() {
+    const section = document.getElementById('messages');
+    if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Görsel efekt için yanıp söndürme
+        section.style.boxShadow = '0 0 30px var(--primary-neon)';
+        setTimeout(() => {
+            section.style.boxShadow = '';
+        }, 1500);
     }
 }
 
