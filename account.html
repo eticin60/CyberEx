@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberEx - Hesabım</title>
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/account.css">
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+</head>
+
+<body class="dashboard-page">
+    <!-- Background Animation Layer -->
+    <div class="stars-container"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- Navigation Overlay (Menu) -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="cyber-text">CYBER</span>EX
+            </a>
+
+            <div class="user-profile-nav" id="userNav">
+                <div class="profile-summary" onclick="toggleProfileMenu()">
+                    <span id="navUsername">Yükleniyor...</span>
+                    <div class="avatar-circle" id="navAvatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#wallet"><i class="fas fa-wallet"></i> Cüzdan</a>
+                    <a href="#messages"><i class="fas fa-envelope"></i> Mesajlar</a>
+                    <a href="#settings"><i class="fas fa-cog"></i> Ayarlar</a>
+                    <hr>
+                    <a href="#" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-content">
+        <div class="container">
+            <!-- Top Section: Profile Header -->
+            <section class="profile-header-card reveal">
+                <div class="profile-main-info">
+                    <div class="avatar-large-container">
+                        <div class="avatar-large" id="mainAvatar">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <button class="edit-avatar-btn" onclick="openAvatarModal()">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                    </div>
+                    <div class="profile-text">
+                        <h1 id="displayName">Kullanıcı Adı</h1>
+                        <p id="displayEmail">email@example.com</p>
+                        <div class="badges" id="badgeContainer">
+                            <!-- Badges will be injected here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <span class="label">Cyber ID</span>
+                        <div class="id-copy" onclick="copyCyberId()">
+                            <span id="cyberId">---------</span>
+                            <i class="far fa-copy"></i>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="label">VIP Seviyesi</span>
+                        <span class="value" id="vipLevel">Lvl 1</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="label">KYC Durumu</span>
+                        <span class="status-badge" id="kycStatus">Doğrulanmadı</span>
+                    </div>
+                </div>
+            </section>
+
+            <div class="dashboard-grid">
+                <!-- Left Column: Wallet & Positions -->
+                <div class="grid-left">
+                    <!-- Wallet Card -->
+                    <section class="card wallet-card reveal" id="wallet">
+                        <div class="card-header">
+                            <h2><i class="fas fa-wallet"></i> Cüzdan Özeti</h2>
+                            <a href="#" class="view-all">Tümü <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="balance-display">
+                            <span class="label">Toplam Varlık (USDT)</span>
+                            <div class="amount-row">
+                                <span class="currency">$</span>
+                                <span class="amount" id="totalBalance">0.00</span>
+                            </div>
+                            <div class="balance-split">
+                                <div class="split-item">
+                                    <span>Spot</span>
+                                    <strong id="spotBalance">$0.00</strong>
+                                </div>
+                                <div class="split-item">
+                                    <span>Futures</span>
+                                    <strong id="futuresBalance">$0.00</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pnl-summary" id="pnlSummary">
+                            <span>Günlük Kar/Zarar</span>
+                            <span class="pnl-value" id="dailyPnl">+$0.00 (0.00%)</span>
+                        </div>
+                    </section>
+
+                    <!-- Positions Card -->
+                    <section class="card positions-card reveal">
+                        <div class="card-header">
+                            <h2><i class="fas fa-chart-line"></i> Açık Pozisyonlar</h2>
+                            <span class="count-badge" id="positionCount">0</span>
+                        </div>
+                        <div class="positions-list" id="positionsContainer">
+                            <div class="empty-state">
+                                <i class="fas fa-stream"></i>
+                                <p>Açık pozisyon bulunamadı</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Right Column: Messages & Quick Settings -->
+                <div class="grid-right">
+                    <!-- Notifications Card -->
+                    <section class="card messages-card reveal" id="messages">
+                        <div class="card-header">
+                            <h2><i class="fas fa-bell"></i> Bildirimler</h2>
+                        </div>
+                        <div class="notifications-list" id="notificationsContainer">
+                            <!-- Notifications will be injected here -->
+                        </div>
+                    </section>
+
+                    <!-- Profile Settings Card -->
+                    <section class="card settings-card reveal" id="settings">
+                        <div class="card-header">
+                            <h2><i class="fas fa-user-edit"></i> Hesap Ayarları</h2>
+                        </div>
+                        <form id="settingsForm">
+                            <div class="form-group">
+                                <label>Telefon Numarası</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-phone"></i>
+                                    <input type="text" id="phoneInput" placeholder="+90 5xx ...">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Yeni Şifre</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" id="newPassword"
+                                        placeholder="Değiştirmek istemiyorsanız boş bırakın">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary full-width">
+                                <i class="fas fa-save"></i> Değişiklikleri Kaydet
+                            </button>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal: Position Close Confirmation -->
+    <div id="closeModal" class="modal">
+        <div class="modal-content">
+            <h3><i class="fas fa-exclamation-triangle"></i> Acil Pozisyon Kapatma</h3>
+            <p>Bu pozisyonu piyasa fiyatından kapatmak istediğinize emin misiniz?</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal()">İptal</button>
+                <button class="btn btn-danger" id="confirmCloseBtn">Evet, Kapat</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/account.js"></script>
+</body>
+
+</html>

@@ -16,6 +16,18 @@
 
    <!-- Önemli Sayfalar -->
    <url>
+      <loc>https://cyberex.com.tr/register.html</loc>
+      <lastmod>2026-02-08</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.95</priority>
+   </url>
+   <url>
+      <loc>https://cyberex.com.tr/login.html</loc>
+      <lastmod>2026-02-08</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.95</priority>
+   </url>
+   <url>
       <loc>https://cyberex.com.tr/download.html</loc>
       <lastmod>2026-02-07</lastmod>
       <changefreq>weekly</changefreq>
