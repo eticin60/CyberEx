@@ -182,6 +182,12 @@
       color: #fff;
     }
 
+    .disabled-link {
+      pointer-events: none !important;
+      cursor: default !important;
+      text-decoration: none !important;
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -221,19 +227,20 @@
 
     .navbar {
       position: fixed;
-      top: calc(35px + env(safe-area-inset-top, 0px));
-      left: 30px;
-      right: 30px;
-      z-index: 1500;
-      padding: 12px 30px;
+      top: 35px;
+      /* space for contact bar */
+      left: 0;
+      right: 0;
+      height: 80px;
+      padding: 0 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(0, 5, 15, 0.85);
-      backdrop-filter: blur(25px);
-      border: 1px solid var(--border);
-      border-radius: 60px;
-      margin-top: 10px;
+      background: rgba(0, 5, 16, 0.95);
+      border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+      backdrop-filter: blur(20px);
+      z-index: 1000;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
 
     .nav-logo-center {
@@ -2060,27 +2067,27 @@
     </a>
 
     <div class="nav-links">
-      <a href="javascript:void(0)" class="nav-link" style="cursor: default;"
+      <a href="#" class="nav-link disabled-link" onclick="return false;"
         data-tr="PİYASALAR <span class='nav-badge-soon'>YAKINDA</span>"
         data-en="MARKETS <span class='nav-badge-soon'>SOON</span>">
         PİYASALAR <span class="nav-badge-soon">YAKINDA</span>
       </a>
-      <a href="javascript:void(0)" class="nav-link" style="cursor: default;"
+      <a href="#" class="nav-link disabled-link" onclick="return false;"
         data-tr="CÜZDAN <span class='nav-badge-soon'>YAKINDA</span>"
         data-en="WALLET <span class='nav-badge-soon'>SOON</span>">
         CÜZDAN <span class="nav-badge-soon">YAKINDA</span>
       </a>
 
-      <a href=" download.html" class="nav-btn-filled" id="navDownloadBtn"
+      <a href="download.html" class="nav-btn-filled" id="navDownloadBtn"
         style="margin: 0 15px; background: #00f0ff; color: #000; padding: 12px 28px; border-radius: 50px; font-weight: 900; font-size: 1rem; box-shadow: 0 0 25px rgba(0, 240, 255, 0.5); text-transform: uppercase;"
         data-tr="UYGULAMA İNDİR" data-en="DOWNLOAD APP">UYGULAMA İNDİR</a>
 
-      <a href="javascript:void(0)" class="nav-link" style="cursor: default;"
+      <a href="#" class="nav-link disabled-link" onclick="return false;"
         data-tr="EKOSİSTEM <span class='nav-badge-soon'>YAKINDA</span>"
         data-en="ECOSYSTEM <span class='nav-badge-soon'>SOON</span>">
         EKOSİSTEM <span class="nav-badge-soon">YAKINDA</span>
       </a>
-      <a href="javascript:void(0)" class="nav-link" style="cursor: default;"
+      <a href="#" class="nav-link disabled-link" onclick="return false;"
         data-tr="DESTEK <span class='nav-badge-soon'>YAKINDA</span>"
         data-en="SUPPORT <span class='nav-badge-soon'>SOON</span>">
         DESTEK <span class="nav-badge-soon">YAKINDA</span>
@@ -2168,15 +2175,6 @@
 
         <div class="hero-text">
           <div class="logo-section">
-            <div class="hero-download-wrapper" style="display: flex; justify-content: center; margin-bottom: 2rem;">
-              <a href="download.html" class="nav-btn-filled"
-                style="background: #00f0ff; color: #000; padding: 15px 40px; border-radius: 50px; font-weight: 900; font-size: 1.1rem; box-shadow: 0 0 30px rgba(0, 240, 255, 0.6); text-transform: uppercase; text-decoration: none; transition: 0.3s; display: inline-block;"
-                onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 40px rgba(0, 240, 255, 0.8)'"
-                onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 30px rgba(0, 240, 255, 0.6)'"
-                data-tr="UYGULAMA İNDİR" data-en="DOWNLOAD APP">
-                UYGULAMA İNDİR
-              </a>
-            </div>
             <div class="logo-container">
               <div class="logo-glow-ring"></div>
               <div class="logo-wrap">

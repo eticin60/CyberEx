@@ -15,40 +15,117 @@ window.onclick = function (event) {
 
 async function initDashboard(user) {
     console.log("Dashboard initializing for:", user.email);
+
+    // Start background particles if canvas exists
+    initParticles();
+
     // Load components in parallel
     loadUserProfile(user.uid);
     loadWalletData(user.uid);
     loadOpenPositions(user.uid);
     loadDailyPnl(user.uid);
     loadNotifications(user.uid);
+
+    // Add form listener for settings
+    const settingsForm = document.getElementById('settingsForm');
+    if (settingsForm) {
+        settingsForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            updateSettings(user.uid);
+        });
+    }
 }
 
-function loadUserProfile(uid) {
-    db.collection('users').doc(uid).onSnapshot((doc) => {
+function initParticles() {
+    const canvas = document.getElementById('particles-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    const resize = () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    };
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2;
+            this.speedX = (Math.random() - 0.5) * 0.5;
+            this.speedY = (Math.random() - 0.5) * 0.5;
+            this.alpha = Math.random();
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.x > canvas.width) this.x = 0;
+            if (this.x < 0) this.x = canvas.width;
+            if (this.y > canvas.height) this.y = 0;
+            if (this.y < 0) this.y = canvas.height;
+        }
+        draw() {
+            ctx.fillStyle = `rgba(0, 240, 255, ${this.alpha})`;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < 100; i++) particles.push(new Particle());
+
+    const animate = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        requestAnimationFrame(animate);
+    };
+    animate();
+}
+
+async function loadUserProfile(uid) {
+    db.collection('users').doc(uid).onSnapshot(doc => {
         if (doc.exists) {
             const data = doc.data();
-
-            // Basic Info
-            safeSetText('navUsername', data.username || 'Kullanıcı');
             safeSetText('displayName', data.username || 'Kullanıcı');
-            safeSetText('displayEmail', data.email || '');
-            safeSetText('cyberId', data.publicId || 'Oluşturuluyor...');
+            safeSetText('displayEmail', data.email || '---');
+            safeSetText('cyberId', data.uid ? data.uid.substring(0, 10).toUpperCase() : '---------');
 
-            // VIP Level logic (Matching Android VIPLevelManager)
-            let vipLvlText = "Lvl 1";
-            if (data.admin) vipLvlText = "Elite";
-            else if (data.premium) vipLvlText = "Premium";
-            else if (data.vipLevel) vipLvlText = `Lvl ${data.vipLevel}`;
-            safeSetText('vipLevel', vipLvlText);
+            // VIP & Level Icons
+            const vip = data.vipLevel || 1;
+            const vipText = vip >= 5 ? 'GOLD VIP' : (vip >= 3 ? 'SILVER VIP' : 'STARTER');
+            const vipColor = vip >= 5 ? '#ffd700' : (vip >= 3 ? '#c0c0c0' : '#00f0ff');
 
-            // KYC Status logic
-            updateKycBadge(data.kycStatus);
+            const vipEl = document.getElementById('vipLevel');
+            if (vipEl) {
+                vipEl.innerHTML = `<i class="fas fa-crown" style="color: ${vipColor}"></i> ${vipText} (Lvl ${vip})`;
+            }
 
-            // Badges
-            renderBadges(data);
+            // KYC Status with Icon
+            const kyc = data.kycStatus || 'unverified';
+            const kycEl = document.getElementById('kycStatus');
+            if (kycEl) {
+                const isDone = kyc === 'verified';
+                kycEl.innerHTML = `<i class="fas ${isDone ? 'fa-check-circle' : 'fa-times-circle'}"></i> ${isDone ? 'Doğrulandı' : 'Doğrulanmadı'}`;
+                kycEl.className = `status-badge ${isDone ? 'status-verified' : 'status-unverified'}`;
+            }
 
-            // Avatar Sync
-            updateAvatarUI(data.avatarId || 0);
+            // Avatar
+            const avatarId = data.avatarId || 1;
+            const avatarContainer = document.getElementById('mainAvatar');
+            if (avatarContainer) {
+                avatarContainer.innerHTML = `<img src="assets/images/avatars/avatar_${avatarId}.png" onerror="this.src='assets/images/logo.png'">`;
+            }
+
+            // Pre-fill phone
+            const phoneInput = document.getElementById('phoneInput');
+            if (phoneInput && data.phone && !phoneInput.value) {
+                phoneInput.value = data.phone;
+            }
         }
     }, error => console.error("Profile sync error:", error));
 }
@@ -93,7 +170,13 @@ function loadWalletData(uid) {
 
     const updateUI = () => {
         const total = spotBal + futuresBal;
-        safeSetText('totalBalance', total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        // Accurate total balance display with 2 decimal places
+        const totalEl = document.getElementById('totalBalance');
+        if (totalEl) {
+            totalEl.style.fontSize = total > 100000 ? '1.8rem' : '2.5rem'; // Auto scale font
+            totalEl.innerText = total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
         safeSetText('spotBalance', `$${spotBal.toLocaleString(undefined, { minimumFractionDigits: 2 })}`);
         safeSetText('futuresBalance', `$${futuresBal.toLocaleString(undefined, { minimumFractionDigits: 2 })}`);
     };
@@ -101,16 +184,16 @@ function loadWalletData(uid) {
     // Spot Balance: users/{uid}/wallet/usdt_balance
     db.collection('users').doc(uid).collection('wallet').doc('usdt_balance')
         .onSnapshot(doc => {
-            spotBal = doc.exists ? (doc.data().balance || 0) : 0;
+            spotBal = doc.exists ? parseFloat(doc.data().balance || 0) : 0;
             updateUI();
-        });
+        }, err => console.error("Spot balance error:", err));
 
     // Futures Balance: users/{uid}/futures_wallet/usdt_balance
     db.collection('users').doc(uid).collection('futures_wallet').doc('usdt_balance')
         .onSnapshot(doc => {
-            futuresBal = doc.exists ? (doc.data().balance || 0) : 0;
+            futuresBal = doc.exists ? parseFloat(doc.data().balance || 0) : 0;
             updateUI();
-        });
+        }, err => console.error("Futures balance error:", err));
 }
 
 function copyCyberId() {
@@ -129,71 +212,96 @@ function openAvatarModal() {
 }
 
 function loadOpenPositions(uid) {
-    // Android path verification: users/{uid}/futures_wallet/open_positions/positions
-    const posRef = db.collection('users').doc(uid)
-        .collection('futures_wallet')
-        .doc('open_positions')
-        .collection('positions');
+    const list = document.getElementById('positionsContainer');
+    const countBadge = document.getElementById('positionCount');
+    if (!list) return;
 
-    posRef.onSnapshot(snapshot => {
-        const container = document.getElementById('positionsContainer');
-        if (!container) return;
-
-        const countBadge = document.getElementById('positionCount');
-        if (countBadge) countBadge.textContent = snapshot.size;
-
-        if (snapshot.empty) {
-            container.innerHTML = '<div class="empty-state"><i class="fas fa-stream"></i><p>Açık pozisyon bulunamadı</p></div>';
-            return;
-        }
-
-        let html = '';
-        snapshot.forEach(doc => {
-            const pos = doc.data();
-            const pnlColor = pos.pnl >= 0 ? '#00ff88' : '#ff3366';
-            html += `
-                <div class="position-item">
-                    <div class="pos-main">
-                        <span class="symbol">${pos.symbol}</span>
-                        <span class="type ${pos.direction?.toLowerCase()}">${pos.direction} x${pos.leverage}</span>
+    db.collection('users').doc(uid).collection('futures_wallet').doc('open_positions').collection('positions')
+        .onSnapshot(snapshot => {
+            if (snapshot.empty) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-stream"></i>
+                        <p>Açık pozisyon bulunamadı</p>
                     </div>
-                    <div class="pos-details">
-                        <div class="detail">
-                            <span class="lbl">Giriş</span>
-                            <span class="val">$${pos.entryPrice?.toFixed(2)}</span>
+                `;
+                if (countBadge) countBadge.innerText = '0';
+                return;
+            }
+
+            if (countBadge) countBadge.innerText = snapshot.size;
+
+            let html = '';
+            snapshot.forEach(doc => {
+                const p = doc.data();
+                const pnl = parseFloat(p.unrealizedPnl || 0);
+                const pnlPercent = parseFloat(p.pnlPercentage || 0);
+                const pnlClass = pnl >= 0 ? 'text-success' : 'text-danger';
+
+                html += `
+                    <div class="position-item glass-item">
+                        <div class="pos-top">
+                            <span class="symbol">${p.symbol || 'USDT'}</span>
+                            <span class="side ${p.side === 'LONG' ? 'side-buy' : 'side-sell'}">${p.side || 'LONG'} ${p.leverage || 1}x</span>
                         </div>
-                        <div class="detail">
-                            <span class="lbl">PNL</span>
-                            <span class="val" style="color: ${pnlColor}">${pos.pnl >= 0 ? '+' : ''}${pos.pnl?.toFixed(2)} (${pos.pnlPercent?.toFixed(2)}%)</span>
+                        <div class="pos-details">
+                            <div class="detail-row">
+                                <span>Giriş / Piyasa</span>
+                                <strong>$${parseFloat(p.entryPrice || 0).toLocaleString()} / $${parseFloat(p.markPrice || 0).toLocaleString()}</strong>
+                            </div>
+                            <div class="detail-row">
+                                <span>Büyüklük</span>
+                                <strong>${parseFloat(p.sizeInUsdt || 0).toFixed(2)} USDT</strong>
+                            </div>
+                            <div class="detail-row">
+                                <span>PNL</span>
+                                <strong class="${pnlClass}">$${pnl.toFixed(2)} (${pnlPercent.toFixed(2)}%)</strong>
+                            </div>
                         </div>
+                        <button class="btn-outline-danger" onclick="closePosition('${doc.id}')">Kapat</button>
                     </div>
-                    <button class="btn btn-close-mini" onclick="closePosition('${doc.id}')">
-                        <i class="fas fa-times"></i> KAPAT
-                    </button>
-                </div>
-            `;
-        });
-        container.innerHTML = html;
-    }, err => console.error("Positions listener error:", err));
+                `;
+            });
+            list.innerHTML = html;
+        }, err => console.error("Positions listener error:", err));
 }
 
 function loadDailyPnl(uid) {
-    const twentyFourHoursAgo = Date.now() - (24 * 60 * 60 * 1000);
-    const tradesRef = db.collection('users').doc(uid)
-        .collection('futures_wallet')
-        .doc('futures_history')
-        .collection('trade');
+    const pnlEl = document.getElementById('dailyPnl');
+    if (!pnlEl) return;
 
-    tradesRef.where('timestamp', '>=', twentyFourHoursAgo).onSnapshot(snapshot => {
-        let totalPnl = 0;
-        snapshot.forEach(doc => totalPnl += (doc.data().pnl || 0));
+    // Standard Android path for daily PNL
+    db.collection('users').doc(uid).collection('futures_wallet').doc('daily_stats')
+        .onSnapshot(doc => {
+            const data = doc.exists ? doc.data() : { pnl: 0, pnlPercent: 0 };
+            const pnl = data.pnl || 0;
+            const percent = data.pnlPercent || 0;
+            pnlEl.textContent = `${pnl >= 0 ? '+' : ''}$${pnl.toFixed(2)} (${percent.toFixed(2)}%)`;
+            pnlEl.className = `pnl-value ${pnl >= 0 ? 'text-success' : 'text-danger'}`;
+        });
+}
 
-        const pnlEl = document.getElementById('dailyPnl');
-        if (pnlEl) {
-            pnlEl.textContent = `${totalPnl >= 0 ? '+' : ''}${totalPnl.toFixed(2)} USDT`;
-            pnlEl.className = totalPnl >= 0 ? 'pnl-up' : 'pnl-down';
+async function updateSettings(uid) {
+    const phone = document.getElementById('phoneInput').value;
+    const newPass = document.getElementById('newPassword').value;
+
+    try {
+        const updates = {};
+        if (phone) updates.phone = phone;
+
+        if (Object.keys(updates).length > 0) {
+            await db.collection('users').doc(uid).update(updates);
         }
-    });
+
+        if (newPass) {
+            await firebase.auth().currentUser.updatePassword(newPass);
+        }
+
+        alert("Ayarlar başarıyla güncellendi!");
+    } catch (err) {
+        console.error("Update error:", err);
+        alert("Güncelleme sırasında bir hata oluştu: " + err.message);
+    }
 }
 
 function loadNotifications(uid) {
@@ -201,27 +309,28 @@ function loadNotifications(uid) {
     if (!container) return;
 
     db.collection('users').doc(uid).collection('notifications')
-        .orderBy('timestamp', 'desc')
-        .limit(10)
+        .orderBy('timestamp', 'desc').limit(20)
         .onSnapshot(snapshot => {
-            if (snapshot.empty) {
-                list.innerHTML = '<div class="no-data">Bildirim bulunmuyor.</div>';
-                return;
-            }
             let html = '';
-            snapshot.forEach(doc => {
-                const note = doc.data();
-                html += `
-                    <div class="notification-item ${note.read ? '' : 'unread'}">
-                        <div class="note-icon"><i class="fas fa-info-circle"></i></div>
-                        <div class="note-content">
-                            <p class="note-title">${note.title}</p>
-                            <p class="note-text">${note.message}</p>
-                            <span class="note-time">${new Date(note.timestamp).toLocaleTimeString()}</span>
+            if (snapshot.empty) {
+                html = '<div class="empty-state"><p>Henüz bildirim yok.</p></div>';
+            } else {
+                snapshot.forEach(doc => {
+                    const n = doc.data();
+                    const date = n.timestamp ? new Date(n.timestamp.seconds * 1000).toLocaleString() : '---';
+                    const typeIcon = n.type === 'trade' ? 'fa-exchange-alt' : (n.type === 'security' ? 'fa-shield-alt' : 'fa-info-circle');
+
+                    html += `
+                        <div class="notification-item ${n.read ? 'read' : 'unread'}">
+                            <div class="n-icon"><i class="fas ${typeIcon}"></i></div>
+                            <div class="n-body">
+                                <p>${n.message}</p>
+                                <span class="n-time">${date}</span>
+                            </div>
                         </div>
-                    </div>
-                `;
-            });
+                    `;
+                });
+            }
             container.innerHTML = html;
         });
 }
@@ -233,10 +342,27 @@ function safeSetText(id, text) {
 
 async function closePosition(posId) {
     if (confirm("Bu pozisyonu piyasa fiyatından kapatmak istediğinize emin misiniz?")) {
-        // In a real app, this calls an API or Cloud Function
-        // For CyberEx web, we update Firestore if local closing is allowed, 
-        // but typically this should be a backend call.
         console.log("Closing position:", posId);
         alert("Pozisyon kapatma isteği gönderildi.");
     }
 }
+
+// Global Initialization
+document.addEventListener('DOMContentLoaded', () => {
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            initDashboard(user);
+        } else {
+            console.log("User not logged in, redirecting...");
+            window.location.href = 'login.html';
+        }
+    });
+
+    // Mobile menu toggle logic if not in home-nav
+    const mobileBtn = document.querySelector('.mobile-menu-btn');
+    if (mobileBtn) {
+        mobileBtn.addEventListener('click', () => {
+            document.querySelector('.navbar').classList.toggle('mobile-open');
+        });
+    }
+});
