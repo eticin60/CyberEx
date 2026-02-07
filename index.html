@@ -1891,6 +1891,136 @@
       margin-top: 20px;
       width: 100%;
     }
+
+    /* Shared Nav Styles */
+    .user-profile-nav {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      cursor: pointer;
+    }
+
+    .profile-summary {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(0, 240, 255, 0.05);
+      border: 1px solid var(--border);
+      padding: 5px 15px;
+      border-radius: 30px;
+      transition: 0.3s;
+    }
+
+    .profile-summary:hover {
+      background: rgba(0, 240, 255, 0.1);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+    }
+
+    .avatar-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--neon-cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      overflow: hidden;
+    }
+
+    .avatar-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-dropdown {
+      position: absolute;
+      top: 50px;
+      right: 0;
+      width: 200px;
+      background: rgba(0, 5, 20, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 10px 0;
+      display: none;
+      flex-direction: column;
+      z-index: 2000;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .profile-dropdown.active {
+      display: flex;
+    }
+
+    .profile-dropdown a {
+      padding: 12px 20px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: 0.3s;
+    }
+
+    .profile-dropdown a:hover {
+      background: rgba(0, 240, 255, 0.1);
+      color: var(--neon-cyan);
+    }
+
+    .nav-notification-bell {
+      position: relative;
+      font-size: 1.2rem;
+      color: var(--muted);
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .nav-notification-bell:hover {
+      color: var(--neon-cyan);
+    }
+
+    .unread-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #ff3366;
+      color: #fff;
+      font-size: 0.6rem;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+    }
+
+    .nav-auth-buttons {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .btn-download-nav {
+      background: transparent;
+      border: 1px solid var(--neon-green);
+      color: var(--neon-green);
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .btn-download-nav:hover {
+      background: rgba(0, 255, 136, 0.1);
+      box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+    }
   </style>
 </head>
 
@@ -1918,45 +2048,28 @@
     </a>
 
     <div class="nav-links">
-      <a href="#markets" class="nav-link"
-        data-tr="Piyasalar <span style='font-size:0.65rem; opacity:0.6;'>YAKINDA</span>"
-        data-en="Markets <span style='font-size:0.65rem; opacity:0.6;'>SOON</span>">
-        Piyasalar <span style="font-size:0.65rem; opacity:0.6;">YAKINDA</span>
-      </a>
-      <a href="#wallet" class="nav-link" data-tr="Cüzdan <span style='font-size:0.65rem; opacity:0.6;'>YAKINDA</span>"
-        data-en="Wallet <span style='font-size:0.65rem; opacity:0.6;'>SOON</span>">
-        Cüzdan <span style="font-size:0.65rem; opacity:0.6;">YAKINDA</span>
-      </a>
-      <a href="#ecosystem" class="nav-link"
-        data-tr="Ekosistem <span style='font-size:0.65rem; opacity:0.6;'>YAKINDA</span>"
-        data-en="Ecosystem <span style='font-size:0.65rem; opacity:0.6;'>SOON</span>">
-        Ekosistem <span style="font-size:0.65rem; opacity:0.6;'>YAKINDA</span>
-      </a>
-      <a href=" help.html" class="nav-link"
-          data-tr="Destek <span style='font-size:0.65rem; opacity:0.6;'>YAKINDA</span>"
-          data-en="Support <span style='font-size:0.65rem; opacity:0.6;'>SOON</span>">
-          Destek <span style="font-size:0.65rem; opacity:0.6;'>YAKINDA</span>
-      </a>
-      <a href=" download.html" class="nav-btn-filled"
-            style="margin-left: 10px; background: var(--neon-cyan); color: #000; padding: 8px 16px; border-radius: 6px; font-weight: 800;"
-            data-tr="UYGULAMA İNDİR" data-en="DOWNLOAD APP">UYGULAMA İNDİR</a>
+      <a href="#markets" class="nav-link" data-tr="Piyasalar" data-en="Markets">Piyasalar</a>
+      <a href="#wallet" class="nav-link" data-tr="Cüzdan" data-en="Wallet">Cüzdan</a>
+      <a href="#ecosystem" class="nav-link" data-tr="Ekosistem" data-en="Ecosystem">Ekosistem</a>
+      <a href="help.html" class="nav-link" data-tr="Destek" data-en="Support">Destek</a>
     </div>
 
-    <div class=" nav-right-group">
-      <div class="nav-auth-links" id="navAuthGroup">
+    <div class="nav-right-group" id="userNav">
+      <!-- Managed by home-nav.js -->
+      <div class="nav-auth-links">
         <a href="login.html" class="nav-btn-outline" style="border: none;" data-tr="GİRİŞ YAP" data-en="LOGIN">GİRİŞ
           YAP</a>
         <a href="register.html" class="nav-btn-filled" data-tr="HEMEN KATIL" data-en="JOIN NOW">HEMEN KATIL</a>
       </div>
+    </div>
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="tr">TR</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
 
-      <div class="lang-switcher">
-        <button class="lang-btn active" data-lang="tr">TR</button>
-        <button class="lang-btn" data-lang="en">EN</button>
-      </div>
-
-      <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-        <i class="fas fa-bars"></i>
-      </button>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+      <i class="fas fa-bars"></i>
+    </button>
     </div>
   </nav>
 
@@ -2631,6 +2744,8 @@
   </div>
 
   <script src="github_utils.js"></script>
+  <script src="assets/js/firebase-config.js"></script>
+  <script src="assets/js/home-nav.js"></script>
   <script>
     // QR Code
     new QRCode(document.getElementById("qrcode"), { text: "https://github.com/eticin60/cyberex-update/raw/main/CyberEx-v1.4.1.apk", width: 120, height: 120 });

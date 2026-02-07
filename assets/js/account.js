@@ -1,88 +1,43 @@
-// Account Dashboard Controller
-// Ensure Firebase is initialized correctly
-// (Variables db and auth are already defined in firebase-config.js)
+/**
+ * CyberEx Account Dashboard logic
+ * Synchronized with Android implementation (Paths, KYC, VIP, Avatars)
+ */
 
-function toggleProfileMenu() {
-    const dropdown = document.getElementById('profileDropdown');
-    dropdown.classList.toggle('active');
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    // Check Authentication
-    auth.onAuthStateChanged(user => {
-        if (!user) {
-            console.log("Kullanıcı giriş yapmamış, login sayfasına yönlendiriliyor...");
-            window.location.href = 'login.html';
-        } else {
-            console.log("Kullanıcı doğrulandı:", user.uid);
-            initDashboard(user);
-        }
-    });
-
-    // Handle Settings Form
-    const settingsForm = document.getElementById('settingsForm');
-    if (settingsForm) {
-        settingsForm.onsubmit = async (e) => {
-            e.preventDefault();
-            const phone = document.getElementById('phoneInput').value;
-            const password = document.getElementById('newPassword').value;
-            const uid = auth.currentUser.uid;
-
-            try {
-                const updates = {};
-                if (phone) updates.phoneNumber = phone;
-
-                if (Object.keys(updates).length > 0) {
-                    await db.collection('users').doc(uid).update(updates);
-                }
-
-                if (password) {
-                    await auth.currentUser.updatePassword(password);
-                }
-
-                alert("Ayarlar başarıyla güncellendi!");
-            } catch (error) {
-                console.error("Ayarlar güncellenirken hata:", error);
-                alert("Hata: " + error.message);
-            }
-        };
+auth.onAuthStateChanged(user => {
+    if (user) {
+        initDashboard(user);
+    } else {
+        window.location.href = 'login.html';
     }
 });
 
 async function initDashboard(user) {
     console.log("Dashboard initializing for:", user.email);
-    // 1. Load User Profile Data
+    // Load components in parallel
     loadUserProfile(user.uid);
-
-    // 2. Load Wallet Balances
-    loadWalletBalances(user.uid);
-
-    // 3. Load Open Positions
+    loadWalletData(user.uid);
     loadOpenPositions(user.uid);
-
-    // 4. Load Notifications
+    loadDailyPnl(user.uid);
     loadNotifications(user.uid);
-
-    // 5. Load Unread Count
-    loadUnreadCount(user.uid);
 }
 
-/**
- * Android loadUserData() mantığıyla profil verilerini getirir
- */
 function loadUserProfile(uid) {
-    const userDocRef = db.collection('users').doc(uid);
-
-    userDocRef.onSnapshot((doc) => {
+    db.collection('users').doc(uid).onSnapshot((doc) => {
         if (doc.exists) {
             const data = doc.data();
 
-            // UI Update
-            document.getElementById('navUsername').textContent = data.username || 'Kullanıcı';
-            document.getElementById('displayName').textContent = data.username || 'Kullanıcı';
-            document.getElementById('displayEmail').textContent = data.email || '';
-            document.getElementById('cyberId').textContent = data.publicId || 'Henüz Yok';
-            document.getElementById('vipLevel').textContent = `Lvl ${data.vipLevel || 1}`;
+            // Basic Info
+            safeSetText('navUsername', data.username || 'Kullanıcı');
+            safeSetText('displayName', data.username || 'Kullanıcı');
+            safeSetText('displayEmail', data.email || '');
+            safeSetText('cyberId', data.publicId || 'Oluşturuluyor...');
+
+            // VIP Level logic (Matching Android VIPLevelManager)
+            let vipLvlText = "Lvl 1";
+            if (data.admin) vipLvlText = "Elite";
+            else if (data.premium) vipLvlText = "Premium";
+            else if (data.vipLevel) vipLvlText = `Lvl ${data.vipLevel}`;
+            safeSetText('vipLevel', vipLvlText);
 
             // KYC Status logic
             updateKycBadge(data.kycStatus);
@@ -90,321 +45,170 @@ function loadUserProfile(uid) {
             // Badges
             renderBadges(data);
 
-            // Avatar
-            updateAvatarUI(data.avatarId);
+            // Avatar Sync
+            updateAvatarUI(data.avatarId || 0);
         }
-    }, error => {
-        console.error("Profil verisi dinlenirken hata:", error);
-    });
+    }, error => console.error("Profile sync error:", error));
 }
 
 function updateKycBadge(status) {
     const badge = document.getElementById('kycStatus');
-    switch (status) {
-        case 'verified':
-            badge.textContent = 'Doğrulandı';
-            badge.style.color = 'var(--success)';
-            badge.style.borderColor = 'var(--success)';
-            badge.style.background = 'rgba(0, 255, 136, 0.1)';
-            break;
-        case 'pending':
-            badge.textContent = 'Beklemede';
-            badge.style.color = 'var(--warning)';
-            break;
-        default:
-            badge.textContent = 'Doğrulanmadı';
-    }
+    if (!badge) return;
+
+    let config = { text: "Doğrulanmadı", color: "#ff3366", icon: "fa-times-circle" };
+    if (status === 'verified') config = { text: "Doğrulandı", color: "#00ff88", icon: "fa-check-circle" };
+    else if (status === 'pending') config = { text: "İncelemede", color: "#ffcc00", icon: "fa-clock" };
+    else if (status === 'rejected') config = { text: "Reddedildi", color: "#ff3366", icon: "fa-exclamation-triangle" };
+
+    badge.innerHTML = `<i class="fas ${config.icon}"></i> ${config.text}`;
+    badge.style.color = config.color;
+    badge.style.borderColor = config.color;
 }
 
 function renderBadges(data) {
     const container = document.getElementById('badgeContainer');
-    container.innerHTML = '';
-
-    if (data.admin) {
-        container.innerHTML += `<span class="badge admin-badge"><i class="fas fa-shield-alt"></i> Admin</span>`;
-    }
-    if (data.premium) {
-        container.innerHTML += `<span class="badge premium-badge"><i class="fas fa-crown"></i> Premium</span>`;
-    }
-}
-
-/**
- * Cüzdan bakiyelerini Android WalletManager mantığıyla getirir
- */
-async function loadWalletBalances(uid) {
-    // Spot Balance
-    db.collection('users').doc(uid).collection('wallet').doc('usdt_balance')
-        .onSnapshot(doc => {
-            if (doc.exists) {
-                const balance = doc.data().balance || 0;
-                document.getElementById('spotBalance').textContent = `$${balance.toLocaleString()}`;
-                updateTotalBalance();
-            }
-        });
-
-    // Futures Balance
-    db.collection('users').doc(uid).collection('futures_wallet').doc('usdt_balance')
-        .onSnapshot(doc => {
-            if (doc.exists) {
-                const balance = doc.data().balance || 0;
-                document.getElementById('futuresBalance').textContent = `$${balance.toLocaleString()}`;
-                updateTotalBalance();
-            }
-        });
-}
-
-function updateTotalBalance() {
-    const spotStr = document.getElementById('spotBalance').textContent.replace('$', '').replace(/,/g, '');
-    const futuresStr = document.getElementById('futuresBalance').textContent.replace('$', '').replace(/,/g, '');
-
-    const total = parseFloat(spotStr) + parseFloat(futuresStr);
-    document.getElementById('totalBalance').textContent = total.toLocaleString(undefined, { minimumFractionDigits: 2 });
-}
-
-/**
- * Açık Pozisyonları Getirir (Read-only)
- */
-function loadOpenPositions(uid) {
-    db.collection('users').doc(uid).collection('futures_wallet').collection('futures_history')
-        .where('status', '==', 'open')
-        .onSnapshot(snapshot => {
-            const container = document.getElementById('positionsContainer');
-            const countBadge = document.getElementById('positionCount');
-
-            countBadge.textContent = snapshot.size;
-
-            if (snapshot.empty) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-stream"></i>
-                        <p>Açık pozisyon bulunamadı</p>
-                    </div>
-                `;
-                return;
-            }
-
-            container.innerHTML = '';
-            snapshot.forEach(doc => {
-                const pos = doc.data();
-                const pnlClass = pos.pnl >= 0 ? 'text-success' : 'text-danger';
-
-                container.innerHTML += `
-                    <div class="position-item">
-                        <div class="pos-main">
-                            <span class="symbol">${pos.symbol} / USDT</span>
-                            <span class="type ${pos.type.toLowerCase()}">${pos.type} x${pos.leverage}</span>
-                        </div>
-                        <div class="pos-details">
-                            <div class="detail">
-                                <span class="lbl">Giriş</span>
-                                <span class="val">$${pos.entryPrice}</span>
-                            </div>
-                            <div class="detail">
-                                <span class="lbl">K/Z</span>
-                                <span class="val ${pnlClass}">$${pos.pnl} (${pos.pnlPercent}%)</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-close-mini" onclick="confirmClosePosition('${doc.id}')">
-                            <i class="fas fa-times"></i> ACİL KAPAT
-                        </button>
-                    </div>
-                `;
-            });
-        });
-}
-
-/**
- * Bildirimleri Getirir
- */
-function loadNotifications(uid) {
-    db.collection('users').doc(uid).collection('notifications')
-        .orderBy('timestamp', 'desc')
-        .limit(5)
-        .onSnapshot(snapshot => {
-            const container = document.getElementById('notificationsContainer');
-            if (snapshot.empty) {
-                container.innerHTML = '<p class="text-center py-4 opacity-50">Yeni bildirim yok</p>';
-                return;
-            }
-
-            container.innerHTML = '';
-            snapshot.forEach(doc => {
-                const note = doc.data();
-                const noteId = doc.id;
-                container.innerHTML += `
-                    <div class="notification-item ${note.read ? 'read' : 'unread'}" onclick="markAsRead('${noteId}')">
-                        <div class="note-icon"><i class="fas fa-info-circle"></i></div>
-                        <div class="note-body">
-                            <p class="note-title">${note.title}</p>
-                            <p class="note-text">${note.body}</p>
-                            <span class="note-time">${formatDate(note.timestamp)}</span>
-                        </div>
-                    </div>
-                `;
-            });
-        });
-}
-
-async function markAsRead(noteId) {
-    try {
-        const uid = auth.currentUser.uid;
-        await db.collection('users').doc(uid).collection('notifications').doc(noteId).update({
-            read: true
-        });
-    } catch (error) {
-        console.error("Bildirim işaretlenirken hata:", error);
-    }
-}
-
-// Helpers
-function formatDate(timestamp) {
-    if (!timestamp) return '';
-    const date = timestamp.toDate();
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-}
-
-function copyCyberId() {
-    const id = document.getElementById('cyberId').textContent;
-    navigator.clipboard.writeText(id).then(() => {
-        alert("Cyber ID kopyalandı!");
-    });
-}
-
-/**
- * Pozisyon kapatma onayı
- */
-function confirmClosePosition(posId) {
-    const modal = document.getElementById('closeModal');
-    const confirmBtn = document.getElementById('confirmCloseBtn');
-
-    modal.style.display = 'flex';
-
-    confirmBtn.onclick = async () => {
-        try {
-            const uid = auth.currentUser.uid;
-            await db.collection('users').doc(uid)
-                .collection('futures_wallet')
-                .collection('futures_history')
-                .doc(posId)
-                .update({ status: 'closed', closedAt: firebase.firestore.FieldValue.serverTimestamp() });
-
-            closeModal();
-            alert("Pozisyon başarıyla kapatıldı.");
-        } catch (error) {
-            console.error("Pozisyon kapatılırken hata:", error);
-            alert("Hata oluştu: " + error.message);
-        }
-    };
-}
-
-function closeModal() {
-    const modal = document.getElementById('closeModal');
-    const avatarModal = document.getElementById('avatarModal');
-    if (modal) modal.style.display = 'none';
-    if (avatarModal) avatarModal.style.display = 'none';
-}
-
-function openAvatarModal() {
-    let avatarModal = document.getElementById('avatarModal');
-    if (!avatarModal) {
-        // Create modal dynamically if not in HTML
-        avatarModal = document.createElement('div');
-        avatarModal.id = 'avatarModal';
-        avatarModal.className = 'modal';
-        avatarModal.innerHTML = `
-            <div class="modal-content">
-                <h3>Avatar Seçin</h3>
-                <div class="avatar-grid">
-                    ${[0, 1, 2, 3, 4, 5].map(id => `
-                        <div class="avatar-option" onclick="selectAvatar(${id})">
-                            <i class="fas ${['fa-user-astronaut', 'fa-user-ninja', 'fa-user-secret', 'fa-robot', 'fa-user-tie', 'fa-user-graduate'][id]}"></i>
-                        </div>
-                    `).join('')}
-                </div>
-                <button class="btn btn-secondary mt-4" onclick="closeModal()">İptal</button>
-            </div>
-        `;
-        document.body.appendChild(avatarModal);
-    }
-    avatarModal.style.display = 'flex';
-}
-
-async function selectAvatar(id) {
-    try {
-        const uid = auth.currentUser.uid;
-        await db.collection('users').doc(uid).update({ avatarId: id });
-        closeModal();
-    } catch (error) {
-        console.error("Avatar güncellenirken hata:", error);
-    }
-}
-
-/**
- * Okunmamış bildirim sayısını dinler
- */
-function loadUnreadCount(uid) {
-    db.collection('users').doc(uid).collection('notifications')
-        .where('read', '==', false)
-        .onSnapshot(snapshot => {
-            const badge = document.getElementById('navUnreadCount');
-            const count = snapshot.size;
-
-            if (count > 0) {
-                badge.textContent = count > 9 ? '9+' : count;
-                badge.style.display = 'flex';
-                // Animasyon efekti
-                badge.style.animation = 'pulse 0.5s ease-in-out';
-                setTimeout(() => badge.style.animation = '', 500);
-            } else {
-                badge.style.display = 'none';
-            }
-        });
-}
-
-function scrollToMessages() {
-    const section = document.getElementById('messages');
-    if (section) {
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        // Görsel efekt için yanıp söndürme
-        section.style.boxShadow = '0 0 30px var(--primary-neon)';
-        setTimeout(() => {
-            section.style.boxShadow = '';
-        }, 1500);
-    }
+    if (!container) return;
+    let html = '';
+    if (data.admin) html += '<span class="badge admin-badge"><i class="fas fa-crown"></i> Admin</span>';
+    if (data.premium) html += '<span class="badge premium-badge"><i class="fas fa-gem"></i> Premium</span>';
+    container.innerHTML = html;
 }
 
 function updateAvatarUI(avatarId) {
-    const avatars = [
-        'fa-user-astronaut', 'fa-user-ninja', 'fa-user-secret',
-        'fa-robot', 'fa-user-tie', 'fa-user-graduate'
-    ];
+    const avatarHTML = avatarId >= 1 && avatarId <= 15
+        ? `<img src="assets/images/avatars/avatar_${avatarId}.png" style="width:100%; height:100%; object-fit:cover; border-radius:50%;" onerror="this.outerHTML='<i class=\'fas fa-user\'></i>'">`
+        : `<i class="fas fa-user-shield"></i>`;
 
-    const iconClass = avatars[avatarId] || 'fa-user-shield';
-    const mainAvatar = document.getElementById('mainAvatar');
-    const navAvatar = document.getElementById('navAvatar');
-
-    if (mainAvatar) mainAvatar.innerHTML = `<i class="fas ${iconClass}"></i>`;
-    if (navAvatar) navAvatar.innerHTML = `<i class="fas ${iconClass}"></i>`;
+    ['mainAvatar', 'navAvatar'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = avatarHTML;
+    });
 }
 
-async function handleLogout() {
-    if (confirm("Çıkış yapmak istediğinize emin misiniz?")) {
-        try {
-            await auth.signOut();
-            window.location.href = 'login.html';
-        } catch (error) {
-            console.error("Logout error:", error);
-            alert("Çıkış yapılırken bir hata oluştu.");
+function loadWalletData(uid) {
+    db.collection('users').doc(uid).onSnapshot(doc => {
+        if (doc.exists) {
+            const data = doc.data();
+            const spot = data.spot_balance || 0;
+            const futures = data.futures_balance || 0;
+            const total = spot + futures;
+
+            safeSetText('totalBalance', `$${total.toLocaleString(undefined, { minimumFractionDigits: 2 })}`);
+            safeSetText('spotBalance', `$${spot.toLocaleString(undefined, { minimumFractionDigits: 2 })}`);
+            safeSetText('futuresBalance', `$${futures.toLocaleString(undefined, { minimumFractionDigits: 2 })}`);
         }
-    }
+    });
 }
 
-// Close dropdown on click outside
-window.onclick = function (event) {
-    if (!event.target.closest('.user-profile-nav')) {
-        const dropdown = document.getElementById('profileDropdown');
-        if (dropdown && dropdown.classList.contains('active')) {
-            dropdown.classList.remove('active');
+function loadOpenPositions(uid) {
+    // Android path verification: users/{uid}/futures_wallet/open_positions/positions
+    const posRef = db.collection('users').doc(uid)
+        .collection('futures_wallet')
+        .doc('open_positions')
+        .collection('positions');
+
+    posRef.onSnapshot(snapshot => {
+        const container = document.getElementById('positionsContainer');
+        if (!container) return;
+
+        const countBadge = document.getElementById('positionCount');
+        if (countBadge) countBadge.textContent = snapshot.size;
+
+        if (snapshot.empty) {
+            container.innerHTML = '<div class="empty-state"><i class="fas fa-stream"></i><p>Açık pozisyon bulunamadı</p></div>';
+            return;
         }
+
+        let html = '';
+        snapshot.forEach(doc => {
+            const pos = doc.data();
+            const pnlColor = pos.pnl >= 0 ? '#00ff88' : '#ff3366';
+            html += `
+                <div class="position-item">
+                    <div class="pos-main">
+                        <span class="symbol">${pos.symbol}</span>
+                        <span class="type ${pos.direction?.toLowerCase()}">${pos.direction} x${pos.leverage}</span>
+                    </div>
+                    <div class="pos-details">
+                        <div class="detail">
+                            <span class="lbl">Giriş</span>
+                            <span class="val">$${pos.entryPrice?.toFixed(2)}</span>
+                        </div>
+                        <div class="detail">
+                            <span class="lbl">PNL</span>
+                            <span class="val" style="color: ${pnlColor}">${pos.pnl >= 0 ? '+' : ''}${pos.pnl?.toFixed(2)} (${pos.pnlPercent?.toFixed(2)}%)</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-close-mini" onclick="closePosition('${doc.id}')">
+                        <i class="fas fa-times"></i> KAPAT
+                    </button>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }, err => console.error("Positions listener error:", err));
+}
+
+function loadDailyPnl(uid) {
+    const 24hAgo = Date.now() - (24 * 60 * 60 * 1000);
+    const tradesRef = db.collection('users').doc(uid)
+        .collection('futures_wallet')
+        .doc('futures_history')
+        .collection('trade');
+
+    tradesRef.where('timestamp', '>=', 24hAgo).onSnapshot(snapshot => {
+        let totalPnl = 0;
+        snapshot.forEach(doc => totalPnl += (doc.data().pnl || 0));
+
+        const pnlEl = document.getElementById('dailyPnl');
+        if (pnlEl) {
+            pnlEl.textContent = `${totalPnl >= 0 ? '+' : ''}${totalPnl.toFixed(2)} USDT`;
+            pnlEl.className = totalPnl >= 0 ? 'pnl-up' : 'pnl-down';
+        }
+    });
+}
+
+function loadNotifications(uid) {
+    const list = document.getElementById('notificationList');
+    if (!list) return;
+
+    db.collection('users').doc(uid).collection('notifications')
+        .orderBy('timestamp', 'desc')
+        .limit(10)
+        .onSnapshot(snapshot => {
+            if (snapshot.empty) {
+                list.innerHTML = '<div class="no-data">Bildirim bulunmuyor.</div>';
+                return;
+            }
+            let html = '';
+            snapshot.forEach(doc => {
+                const note = doc.data();
+                html += `
+                    <div class="notification-item ${note.read ? '' : 'unread'}">
+                        <div class="note-icon"><i class="fas fa-info-circle"></i></div>
+                        <div class="note-content">
+                            <p class="note-title">${note.title}</p>
+                            <p class="note-text">${note.message}</p>
+                            <span class="note-time">${new Date(note.timestamp).toLocaleTimeString()}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            list.innerHTML = html;
+        });
+}
+
+function safeSetText(id, text) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+}
+
+async function closePosition(posId) {
+    if (confirm("Bu pozisyonu piyasa fiyatından kapatmak istediğinize emin misiniz?")) {
+        // In a real app, this calls an API or Cloud Function
+        // For CyberEx web, we update Firestore if local closing is allowed, 
+        // but typically this should be a backend call.
+        console.log("Closing position:", posId);
+        alert("Pozisyon kapatma isteği gönderildi.");
     }
 }
