@@ -54,8 +54,11 @@
                 radial-gradient(circle at 85% 30%, rgba(0, 240, 255, 0.25), transparent 40%);
             color: #fff;
             overflow-x: hidden;
+            width: 100vw;
             line-height: 1.8;
             min-height: 100vh;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         /* Navbar */
@@ -278,10 +281,12 @@
         /* Sections */
         .container {
             max-width: 1100px;
+            width: 100%;
             margin: -60px auto 80px;
-            padding: 0 20px;
+            padding: 0 15px;
             position: relative;
             z-index: 2;
+            overflow: hidden;
         }
 
         .section {
@@ -534,6 +539,7 @@
                 flex-direction: column;
                 gap: 15px;
                 padding: 15px;
+                width: 100%;
             }
 
             .nav-logo {
@@ -541,34 +547,83 @@
                 justify-content: center;
             }
 
+            .nav-logo img {
+                height: 30px;
+            }
+
             .hero {
-                padding: 60px 15px 80px;
+                padding: 40px 10px 60px;
+                width: 100%;
             }
 
             .hero-icon {
-                font-size: 3.5rem;
+                font-size: 3rem;
             }
 
             .hero-title {
-                font-size: 2rem;
+                font-size: 1.8rem;
+                width: 100%;
+                word-break: break-word;
             }
 
             .hero-subtitle {
-                font-size: 1rem;
+                font-size: 0.95rem;
+                width: 100%;
+            }
+
+            .glass-card {
+                padding: 30px 15px;
+                width: 100%;
+                margin: 0;
+            }
+
+            .container {
+                margin-top: -30px;
+                padding: 0 10px;
+                width: 100%;
+            }
+
+            .section {
+                padding: 20px 15px;
+                width: 100%;
+                margin-bottom: 20px;
             }
 
             .section h2 {
-                font-size: 1.4rem;
-                gap: 10px;
+                font-size: 1.3rem;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                width: 100%;
             }
 
             .benefit-card {
-                padding: 20px 15px;
+                padding: 20px 10px;
+                width: 100%;
+            }
+
+            .footer-links {
+                padding: 40px 15px;
             }
 
             .footer-links a {
                 display: inline-block;
-                margin: 5px 8px;
+                margin: 8px 10px;
+                font-size: 0.85rem;
+            }
+
+            .highlight-box,
+            .warning-box {
+                padding: 15px;
+                width: 100%;
+            }
+
+            .status-badge {
+                margin: 5px;
+                font-size: 0.75rem;
             }
         }
     </style>
