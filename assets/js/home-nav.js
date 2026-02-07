@@ -30,6 +30,10 @@ document.addEventListener('DOMContentLoaded', () => {
 async function renderUserNav(user) {
     const userNav = document.getElementById('userNav');
 
+    // Hide central Download button if logged in
+    const centralDownload = document.getElementById('navDownloadBtn');
+    if (centralDownload) centralDownload.style.display = 'none';
+
     // Fetch profile data for username and avatar
     const doc = await db.collection('users').doc(user.uid).get();
     const data = doc.exists ? doc.data() : {};
@@ -67,13 +71,15 @@ async function renderUserNav(user) {
 
 function renderGuestNav() {
     const userNav = document.getElementById('userNav');
+
+    // Show central Download button if guest
+    const centralDownload = document.getElementById('navDownloadBtn');
+    if (centralDownload) centralDownload.style.display = 'inline-block';
+
     userNav.innerHTML = `
         <div class="nav-auth-buttons">
-            <a href="https://cyberex.com.tr/CyberEx.apk" class="btn btn-download-nav">
-                <i class="fas fa-download"></i> Uygulamayı İndir
-            </a>
-            <a href="login.html" class="nav-link-login">Giriş Yap</a>
-            <a href="register.html" class="btn btn-primary-nav">Kayıt Ol</a>
+            <a href="login.html" class="nav-btn-outline" style="border: none;" data-tr="GİRİŞ YAP" data-en="LOGIN">GİRİŞ YAP</a>
+            <a href="register.html" class="nav-btn-filled" data-tr="HEMEN KATIL" data-en="JOIN NOW">HEMEN KATIL</a>
         </div>
     `;
 }

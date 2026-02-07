@@ -150,13 +150,13 @@ function loadOpenPositions(uid) {
 }
 
 function loadDailyPnl(uid) {
-    const 24hAgo = Date.now() - (24 * 60 * 60 * 1000);
+    const twentyFourHoursAgo = Date.now() - (24 * 60 * 60 * 1000);
     const tradesRef = db.collection('users').doc(uid)
         .collection('futures_wallet')
         .doc('futures_history')
         .collection('trade');
 
-    tradesRef.where('timestamp', '>=', 24hAgo).onSnapshot(snapshot => {
+    tradesRef.where('timestamp', '>=', twentyFourHoursAgo).onSnapshot(snapshot => {
         let totalPnl = 0;
         snapshot.forEach(doc => totalPnl += (doc.data().pnl || 0));
 
