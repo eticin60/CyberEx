@@ -26,4 +26,3 @@ chrome.tabs.onUpdated.addListener((
     // Gerekirse sayfa yüklendiğinde işlemler yapılabilir
   }
 });
-

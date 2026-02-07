@@ -12,13 +12,14 @@ const CreateWallet: React.FC<CreateWalletProps> = ({ onNavigate, onWalletCreated
   const [mnemonic, setMnemonic] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState<'form' | 'backup'>('form');
+  const [mnemonicLength, setMnemonicLength] = useState<12 | 24>(12);
   const lang = getLanguage();
   const t = translations[lang];
 
   const handleCreate = async () => {
     setLoading(true);
     try {
-      const wallet = await WalletManager.createWallet(name || undefined);
+      const wallet = await WalletManager.createWallet(name || undefined, mnemonicLength);
       if (wallet && wallet.mnemonic) {
         setMnemonic(wallet.mnemonic);
         setStep('backup');
@@ -96,6 +97,24 @@ const CreateWallet: React.FC<CreateWalletProps> = ({ onNavigate, onWalletCreated
 
       <div className="info-box">
         <p>{t.walletCreateInfo}</p>
+      </div>
+
+      <div className="form-group">
+        <label>{t.mnemonicLength}</label>
+        <div className="import-type-selector">
+          <button
+            className={`type-btn ${mnemonicLength === 12 ? 'active' : ''}`}
+            onClick={() => setMnemonicLength(12)}
+          >
+            {t.word12}
+          </button>
+          <button
+            className={`type-btn ${mnemonicLength === 24 ? 'active' : ''}`}
+            onClick={() => setMnemonicLength(24)}
+          >
+            {t.word24}
+          </button>
+        </div>
       </div>
 
       <div className="form-actions">

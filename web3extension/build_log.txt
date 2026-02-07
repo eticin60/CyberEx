@@ -1,0 +1,40 @@
+
+> cyberex-wallet@1.4.0 build
+> webpack --mode production
+
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+assets by status 2.22 MiB [1m[32m[cached][39m[22m 16 assets
+orphan modules 1.14 MiB [1m[33m[orphan][39m[22m 176 modules
+runtime modules 2.04 KiB 10 modules
+cacheable modules 2.45 MiB
+  javascript modules 2.29 MiB
+    modules by path [1m./node_modules/[39m[22m 345 KiB 57 modules
+    modules by path [1m./src/[39m[22m 1.96 MiB
+      modules by path [1m./src/popup/[39m[22m 1.03 MiB 2 modules
+      + 3 modules
+  optional modules 159 KiB [1m[33m[optional][39m[22m
+    [1m./node_modules/bip39/src/wordlists/czech.json[39m[22m 18.6 KiB [1m[33m[optional][39m[22m [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+    [1m./node_modules/bip39/src/wordlists/chinese_simplified.json[39m[22m 8.01 KiB [1m[33m[optional][39m[22m [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+    [1m./node_modules/bip39/src/wordlists/chinese_traditional.json[39m[22m 8.01 KiB [1m[33m[optional][39m[22m [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+    [1m./node_modules/bip39/src/wordlists/korean.json[39m[22m 17.7 KiB [1m[33m[optional][39m[22m [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+    + 6 modules
+
+[1m[31mERROR[39m[22m in [1mC:\Users\Onurcan DEM─░R\Desktop\Onurcan Demir Sayfa\CyberEx\web3extension\src\popup\components\Home.tsx[39m[22m
+[1m./src/popup/components/Home.tsx[39m[22m [1m[32m96:42-49[39m[22m
+[1m[tsl] [1m[31mERROR[39m[22m[1m in C:\Users\Onurcan DEM─░R\Desktop\Onurcan Demir Sayfa\CyberEx\web3extension\src\popup\components\Home.tsx(96,43)
+      TS2339: Property 'balance' does not exist on type '{ walletTitle: string; walletNotFound: string; startText: string; createWallet: string; importWallet: string; tokens: string; nfts: string; importToken: string; security: string; revealPrivateKey: string; ... 32 more ...; creating: string; } | { ...; }'.
+  Property 'balance' does not exist on type '{ walletTitle: string; walletNotFound: string; startText: string; createWallet: string; importWallet: string; tokens: string; nfts: string; importToken: string; security: string; revealPrivateKey: string; ... 32 more ...; creating: string; }'.[39m[22m
+ts-loader-default_e3b0c44298fc1c14
+ @ ./src/popup/App.tsx 3:0-37 39:55-59
+ @ ./src/popup/index.tsx 3:0-24 7:24-27
+
+[1m[31mERROR[39m[22m in [1mC:\Users\Onurcan DEM─░R\Desktop\Onurcan Demir Sayfa\CyberEx\web3extension\src\popup\components\Home.tsx[39m[22m
+[1m./src/popup/components/Home.tsx[39m[22m [1m[32m101:16-23[39m[22m
+[1m[tsl] [1m[31mERROR[39m[22m[1m in C:\Users\Onurcan DEM─░R\Desktop\Onurcan Demir Sayfa\CyberEx\web3extension\src\popup\components\Home.tsx(101,17)
+      TS2339: Property 'refresh' does not exist on type '{ walletTitle: string; walletNotFound: string; startText: string; createWallet: string; importWallet: string; tokens: string; nfts: string; importToken: string; security: string; revealPrivateKey: string; ... 32 more ...; creating: string; } | { ...; }'.
+  Property 'refresh' does not exist on type '{ walletTitle: string; walletNotFound: string; startText: string; createWallet: string; importWallet: string; tokens: string; nfts: string; importToken: string; security: string; revealPrivateKey: string; ... 32 more ...; creating: string; }'.[39m[22m
+ts-loader-default_e3b0c44298fc1c14
+ @ ./src/popup/App.tsx 3:0-37 39:55-59
+ @ ./src/popup/index.tsx 3:0-24 7:24-27
+
+webpack 5.103.0 compiled with [1m[31m2 errors[39m[22m in 7152 ms
