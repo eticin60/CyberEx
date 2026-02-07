@@ -91,7 +91,7 @@ function toggleProfileMenu() {
 
 function getAvatarHTML(id) {
     if (id >= 1 && id <= 15) {
-        return `<img src="assets/images/avatars/avatar_${id}.png" onerror="this.outerHTML='<i class=\'fas fa-user\'></i>'">`;
+        return `<img src="assets/avatar/avatar_${id}.png" onerror="this.outerHTML='<i class=\'fas fa-user\'></i>'">`;
     }
     return `<i class="fas fa-user"></i>`;
 }

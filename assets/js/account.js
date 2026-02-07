@@ -25,6 +25,7 @@ async function initDashboard(user) {
     loadOpenPositions(user.uid);
     loadDailyPnl(user.uid);
     loadNotifications(user.uid);
+    checkSecurityStatus(user.uid);
 
     // Add form listener for settings
     const settingsForm = document.getElementById('settingsForm');
@@ -93,12 +94,25 @@ async function loadUserProfile(uid) {
             const data = doc.data();
             safeSetText('displayName', data.username || 'Kullanıcı');
             safeSetText('displayEmail', data.email || '---');
-            safeSetText('cyberId', data.uid ? data.uid.substring(0, 10).toUpperCase() : '---------');
+            // Android uses publicId if available, else uid
+            const cId = data.publicId || data.uid || '---------';
+            safeSetText('cyberId', cId.length > 10 ? cId.substring(0, 10).toUpperCase() : cId.toUpperCase());
 
             // VIP & Level Icons
-            const vip = data.vipLevel || 1;
-            const vipText = vip >= 5 ? 'GOLD VIP' : (vip >= 3 ? 'SILVER VIP' : 'STARTER');
-            const vipColor = vip >= 5 ? '#ffd700' : (vip >= 3 ? '#c0c0c0' : '#00f0ff');
+            const vip = data.vipLevel || 0;
+            // Logic parity with Android: 0-1 Starter, 2-4 Silver, 5+ Gold
+            let vipText = 'STARTER';
+            let vipColor = '#00f0ff';
+            if (vip >= 5) {
+                vipText = 'GOLD VIP';
+                vipColor = '#ffd700';
+            } else if (vip >= 2) {
+                vipText = 'SILVER VIP';
+                vipColor = '#c0c0c0';
+            } else {
+                vipText = 'STARTER';
+                vipColor = '#00f0ff';
+            }
 
             const vipEl = document.getElementById('vipLevel');
             if (vipEl) {
@@ -106,19 +120,36 @@ async function loadUserProfile(uid) {
             }
 
             // KYC Status with Icon
+            // Android keys: "verified", "pending", "rejected", "unverified"
             const kyc = data.kycStatus || 'unverified';
             const kycEl = document.getElementById('kycStatus');
             if (kycEl) {
-                const isDone = kyc === 'verified';
-                kycEl.innerHTML = `<i class="fas ${isDone ? 'fa-check-circle' : 'fa-times-circle'}"></i> ${isDone ? 'Doğrulandı' : 'Doğrulanmadı'}`;
-                kycEl.className = `status-badge ${isDone ? 'status-verified' : 'status-unverified'}`;
+                let kycText = 'Doğrulanmadı';
+                let kycClass = 'status-unverified';
+                let kycIcon = 'fa-times-circle';
+
+                if (kyc === 'verified') {
+                    kycText = 'Doğrulanmadı'; // Label adjustment per user request if needed, but standard is Doğrulandı. 
+                    // Wait, user said "kyc doğru olmalı gerçek verileri". verified = Doğrulandı.
+                    kycText = 'Doğrulandı';
+                    kycClass = 'status-verified';
+                    kycIcon = 'fa-check-circle';
+                } else if (kyc === 'pending') {
+                    kycText = 'İnceleniyor';
+                    kycClass = 'status-unverified'; // Or specific pending class
+                    kycIcon = 'fa-clock';
+                }
+
+                kycEl.innerHTML = `<i class="fas ${kycIcon}"></i> ${kycText}`;
+                kycEl.className = `status-badge ${kycClass}`;
             }
 
-            // Avatar
+            // Avatar - Exact path: assets/avatar/avatar_X.png
             const avatarId = data.avatarId || 1;
             const avatarContainer = document.getElementById('mainAvatar');
             if (avatarContainer) {
-                avatarContainer.innerHTML = `<img src="assets/images/avatars/avatar_${avatarId}.png" onerror="this.src='assets/images/logo.png'">`;
+                // Ensure we use the exact specific path requested
+                avatarContainer.innerHTML = `<img src="assets/avatar/avatar_${avatarId}.png" style="width:100%; height:100%; object-fit:cover; border-radius:50%;" onerror="this.src='assets/images/logo.png'">`;
             }
 
             // Pre-fill phone
@@ -154,8 +185,9 @@ function renderBadges(data) {
 }
 
 function updateAvatarUI(avatarId) {
+    // Exact path: assets/avatar/
     const avatarHTML = avatarId >= 1 && avatarId <= 15
-        ? `<img src="assets/images/avatars/avatar_${avatarId}.png" style="width:100%; height:100%; object-fit:cover; border-radius:50%;" onerror="this.outerHTML='<i class=\'fas fa-user\'></i>'">`
+        ? `<img src="assets/avatar/avatar_${avatarId}.png" style="width:100%; height:100%; object-fit:cover; border-radius:50%;" onerror="this.outerHTML='<i class=\'fas fa-user\'></i>'">`
         : `<i class="fas fa-user-shield"></i>`;
 
     ['mainAvatar', 'navAvatar'].forEach(id => {
@@ -284,20 +316,54 @@ function loadDailyPnl(uid) {
 async function updateSettings(uid) {
     const phone = document.getElementById('phoneInput').value;
     const newPass = document.getElementById('newPassword').value;
+    const updates = {};
+    let securityChanged = false;
+    let changeReason = "";
 
     try {
-        const updates = {};
-        if (phone) updates.phone = phone;
+        // Phone Update Logic
+        const phoneInput = document.getElementById('phoneInput');
+        if (phone && !phoneInput.hasAttribute('readonly')) {
+            updates.phone = phone;
+            securityChanged = true;
+            changeReason = "Telefon numarası değişikliği";
+        }
+
+        // Password Update Logic
+        if (newPass) {
+            await firebase.auth().currentUser.updatePassword(newPass);
+            securityChanged = true;
+            changeReason = changeReason ? changeReason + " ve Şifre değişikliği" : "Şifre değişikliği";
+        }
 
         if (Object.keys(updates).length > 0) {
             await db.collection('users').doc(uid).update(updates);
         }
 
-        if (newPass) {
-            await firebase.auth().currentUser.updatePassword(newPass);
+        // Apply Security Block (Android Parity)
+        if (securityChanged) {
+            const now = Date.now();
+            const blockedUntil = now + (48 * 60 * 60 * 1000); // 48 hours
+
+            await db.collection('users').doc(uid).update({
+                withdrawalBlocked: true,
+                withdrawalBlockedUntil: blockedUntil,
+                withdrawalBlockReason: `${changeReason} nedeniyle 48 saat çekim engeli`,
+                lastSecurityChange: 'WEB_UPDATE',
+                lastSecurityChangeAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            alert(`Ayarlar güncellendi. ${changeReason} nedeniyle hesabınıza 48 saat çekim kısıtlaması uygulandı.`);
+        } else if (!securityChanged && Object.keys(updates).length > 0) {
+            alert("Bilgiler güncellendi.");
+        } else if (!securityChanged && Object.keys(updates).length === 0) {
+            // No changes
         }
 
-        alert("Ayarlar başarıyla güncellendi!");
+        // Clear password field
+        document.getElementById('newPassword').value = '';
+        if (phoneInput) phoneInput.setAttribute('readonly', 'true');
+
     } catch (err) {
         console.error("Update error:", err);
         alert("Güncelleme sırasında bir hata oluştu: " + err.message);
@@ -338,6 +404,58 @@ function loadNotifications(uid) {
 function safeSetText(id, text) {
     const el = document.getElementById(id);
     if (el) el.textContent = text;
+}
+
+function checkSecurityStatus(uid) {
+    db.collection('users').doc(uid).onSnapshot(doc => {
+        if (!doc.exists) return;
+        const data = doc.data();
+
+        // Android Key: withdrawalBlocked (bool), withdrawalBlockedUntil (long timestamp)
+        const isBlocked = data.withdrawalBlocked || false;
+        const blockedUntil = data.withdrawalBlockedUntil || 0;
+        const now = Date.now();
+
+        const banner = document.getElementById('securityBanner');
+
+        if (isBlocked && blockedUntil > now) {
+            if (banner) {
+                banner.style.display = 'flex';
+                const reason = data.withdrawalBlockReason || "Güvenlik değişikliği";
+                document.getElementById('securityReason').textContent = reason;
+
+                // Calculate remaining time
+                const remainingMs = blockedUntil - now;
+                const hours = Math.floor(remainingMs / (1000 * 60 * 60));
+                const minutes = Math.floor((remainingMs % (1000 * 60 * 60)) / (1000 * 60));
+
+                document.getElementById('securityTimer').textContent = `Kalan Süre: ${hours} sa ${minutes} dk`;
+            }
+        } else {
+            if (banner) banner.style.display = 'none';
+        }
+
+        // 2FA Status
+        const twoFa = data.twoFactorEnabled || false;
+        const twoFaBadge = document.getElementById('2faStatus');
+        if (twoFaBadge) {
+            twoFaBadge.textContent = twoFa ? 'Aktif' : 'Pasif';
+            twoFaBadge.className = `status-badge ${twoFa ? 'status-verified' : 'status-unverified'}`;
+        }
+
+    });
+}
+
+function togglePhoneEdit() {
+    const input = document.getElementById('phoneInput');
+    if (input.hasAttribute('readonly')) {
+        if (confirm("Telefon numarasını değiştirmek, güvenlik gereği 48 saat boyunca çekim işlemlerini kısıtlayacaktır. Devam etmek istiyor musunuz?")) {
+            input.removeAttribute('readonly');
+            input.focus();
+        }
+    } else {
+        input.setAttribute('readonly', 'true');
+    }
 }
 
 async function closePosition(posId) {

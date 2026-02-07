@@ -66,6 +66,16 @@
 
     <main class="dashboard-content">
         <div class="container">
+            <!-- Security Warning Banner (Hidden by default) -->
+            <div id="securityBanner" class="security-alert" style="display: none;">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div class="alert-content">
+                    <h4>Çekim İşlemleri Kısıtlandı</h4>
+                    <p id="securityReason">Güvenlik değişikliği nedeniyle 48 saat boyunca çekim yapamazsınız.</p>
+                    <span id="securityTimer" class="timer">Kalan Süre: --:--</span>
+                </div>
+            </div>
+
             <!-- Top Section: Profile Header -->
             <section class="profile-header-card reveal">
                 <div class="profile-main-info">
@@ -164,30 +174,36 @@
                         </div>
                     </section>
 
-                    <!-- Profile Settings Card -->
+                    <!-- Settings & Security Card -->
                     <section class="glass-card settings-card reveal" id="settings">
                         <div class="card-header">
-                            <h2><i class="fas fa-user-edit"></i> Hesap Ayarları</h2>
+                            <h2><i class="fas fa-user-shield"></i> Güvenlik & Ayarlar</h2>
                         </div>
-                        <form id="settingsForm">
+
+                        <form id="settingsForm" class="settings-form">
+                            <!-- Phone Number -->
                             <div class="form-group">
                                 <label>Telefon Numarası</label>
-                                <div class="input-with-icon">
+                                <div class="input-wrapper">
                                     <i class="fas fa-phone"></i>
-                                    <input type="text" id="phoneInput" placeholder="+90 5xx ...">
+                                    <input type="tel" id="phoneInput" placeholder="+90 555 000 0000" readonly>
+                                    <button type="button" class="btn-icon" onclick="togglePhoneEdit()"
+                                        title="Değiştir (48s Kısıtlama)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
                                 </div>
+                                <small class="info-text"><i class="fas fa-info-circle"></i> Değişiklik sonrası 48 saat
+                                    çekim kısıtlaması uygulanır.</small>
                             </div>
+
+                            <!-- Password Change -->
                             <div class="form-group">
                                 <label>Yeni Şifre</label>
-                                <div class="input-with-icon">
+                                <div class="input-wrapper">
                                     <i class="fas fa-lock"></i>
-                                    <input type="password" id="newPassword"
-                                        placeholder="Değiştirmek istemiyorsanız boş bırakın">
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary full-width">
-                                <i class="fas fa-save"></i> Değişiklikleri Kaydet
-                            </button>
+                                    <button type="submit" class="btn btn-primary full-width">
+                                        <i class="fas fa-save"></i> Değişiklikleri Kaydet
+                                    </button>
                         </form>
                     </section>
                 </div>
