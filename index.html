@@ -1795,6 +1795,96 @@
       color: #ff3366;
       font-weight: 800;
     }
+
+    /* Auth Buttons */
+    .nav-auth-links {
+      display: flex;
+      gap: 15px;
+      margin-left: 20px;
+    }
+
+    .nav-btn-outline {
+      padding: 8px 20px;
+      border: 1px solid var(--neon-cyan);
+      border-radius: 30px;
+      color: var(--neon-cyan);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 700;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn-outline:hover {
+      background: rgba(0, 240, 255, 0.1);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+    }
+
+    .nav-btn-filled {
+      padding: 8px 20px;
+      background: var(--neon-cyan);
+      border: 1px solid var(--neon-cyan);
+      border-radius: 30px;
+      color: #000;
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 800;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn-filled:hover {
+      background: #fff;
+      border-color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 240, 255, 0.4);
+    }
+
+    @media (max-width: 1024px) {
+      .nav-links {
+        display: none;
+        /* Mobile menu will handle these */
+      }
+
+      .navbar {
+        left: 15px;
+        right: 15px;
+        padding: 10px 20px;
+      }
+
+      .nav-auth-links {
+        display: none;
+        /* Hide in main navbar on mobile */
+      }
+    }
+
+    /* Mobile Menu Enhancement */
+    .navbar.mobile-open .nav-links {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 80px;
+      left: 0;
+      right: 0;
+      background: rgba(0, 5, 16, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 40px;
+      gap: 25px;
+      transform: none;
+      height: calc(100vh - 80px);
+      border-top: 1px solid var(--border);
+    }
+
+    .navbar.mobile-open .nav-auth-links {
+      display: flex;
+      flex-direction: column;
+      margin-top: 20px;
+      width: 100%;
+    }
   </style>
 </head>
 
@@ -1848,6 +1938,11 @@
           style="font-size:0.6em; background:rgba(255,255,255,0.2); padding:2px 4px; border-radius:3px; margin-left:4px;">YAKINDA</span></a>
     </div>
 
+    <div class="nav-auth-links" id="navAuthGroup">
+      <a href="login.html" class="nav-btn-outline" data-tr="GİRİŞ YAP" data-en="LOGIN">GİRİŞ YAP</a>
+      <a href="register.html" class="nav-btn-filled" data-tr="HEMEN KATIL" data-en="JOIN NOW">HEMEN KATIL</a>
+    </div>
+
     <div class="lang-switcher">
       <button class="lang-btn active" data-lang="tr">TR</button>
       <button class="lang-btn" data-lang="en">EN</button>
@@ -1863,6 +1958,16 @@
     function toggleMobileMenu() {
       const navbar = document.querySelector('.navbar');
       navbar.classList.toggle('mobile-open');
+
+      // Move auth links into mobile menu if opening
+      const navLinks = document.querySelector('.nav-links');
+      const authLinks = document.querySelector('.nav-auth-links');
+
+      if (navbar.classList.contains('mobile-open')) {
+        navLinks.appendChild(authLinks);
+      } else {
+        navbar.insertBefore(authLinks, document.querySelector('.lang-switcher'));
+      }
 
       const icon = document.querySelector('.mobile-menu-btn i');
       if (navbar.classList.contains('mobile-open')) {
@@ -2984,6 +3089,23 @@
         }, 5000);
       }
     })();
+  </script>
+  <!-- Global Auth State Script -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="assets/js/firebase-config.js"></script>
+  <script>
+    firebase.auth().onAuthStateChanged(user => {
+      const authGroup = document.getElementById('navAuthGroup');
+      if (user) {
+        // Kullanıcı giriş yapmışsa sadece "Hesabım" butonunu göster
+        authGroup.innerHTML = `
+          <a href="account.html" class="nav-btn-filled" style="background: var(--neon-cyan); color: #000;">
+            <i class="fas fa-user-circle"></i> <span data-tr="HESABIM" data-en="ACCOUNT">HESABIM</span>
+          </a>
+        `;
+      }
+    });
   </script>
 </body>
 
