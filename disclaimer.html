@@ -476,18 +476,99 @@
             text-shadow: 0 0 15px var(--neon-cyan);
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
+        /* Responsive Enhancements */
+        @media (max-width: 992px) {
             .hero-title {
-                font-size: 2.8rem;
+                font-size: 3.2rem;
+            }
+
+            .glass-card {
+                padding: 50px 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .nav-logo span {
+                font-size: 0.6rem;
+                padding: 2px 8px;
+            }
+
+            .back-btn {
+                padding: 8px 15px;
+                font-size: 0.8rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+                letter-spacing: -1px;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
             }
 
             .glass-card {
                 padding: 40px 20px;
+                border-radius: 20px;
             }
 
             .section {
-                padding: 25px;
+                padding: 25px 20px;
+            }
+
+            .section h2 {
+                font-size: 1.6rem;
+            }
+
+            .benefit-icon {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .nav-logo {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hero {
+                padding: 60px 15px 80px;
+            }
+
+            .hero-icon {
+                font-size: 3.5rem;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .section h2 {
+                font-size: 1.4rem;
+                gap: 10px;
+            }
+
+            .benefit-card {
+                padding: 20px 15px;
+            }
+
+            .footer-links a {
+                display: inline-block;
+                margin: 5px 8px;
             }
         }
     </style>
