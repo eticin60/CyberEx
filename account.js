@@ -1,7 +1,6 @@
 // Account Dashboard Controller
 // Ensure Firebase is initialized correctly
-const db = firebase.firestore();
-const auth = firebase.auth();
+// (Variables db and auth are already defined in firebase-config.js)
 
 function toggleProfileMenu() {
     const dropdown = document.getElementById('profileDropdown');
