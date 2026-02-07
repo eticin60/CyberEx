@@ -13,6 +13,20 @@ All notable changes to the CyberEx website and ecosystem will be documented here
 
 ---
 
+## [2026-02-07] - v1.4.1 Update
+### Added
+- ✅ **P2P Transfer**: Internal platform transfers (instant & zero fee)
+- ✅ **MASAK Compliance**: 48-hour withdrawal lock for security
+- ✅ **Corporate Language**: Professional terminology across app/web
+- ✅ **Web Filtering**: "Legal" filter category added to history/status pages
+
+### Fixed
+- ✅ **Android UI**: Dialog dimming and overlap issues resolved
+- ✅ **Android Themes**: Material 3 compatibility for dialogs
+- ✅ **Campaign Logic**: KYC campaign display frequency fixed
+
+---
+
 ## [2026-01-25] - Website & Ecosystem Updates
 
 ### Added

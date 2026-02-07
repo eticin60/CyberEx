@@ -1,6 +1,6 @@
 {
   "name": "cyberex-wallet",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "CyberEx Web3 Wallet: Secure Multi-Chain Crypto Wallet & DEX Aggregator within the CyberEx Ecosystem.",
   "scripts": {
     "build": "webpack --mode production",

@@ -1,7 +1,7 @@
 # <img src="https://cyberex.com.tr/cyberex-logo.png" height="40" valign="middle" /> CyberEx Web3 Wallet Extension
 
 [![License](https://img.shields.io/badge/License-Proprietary-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-1.4.0-neon.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-1.4.1-neon.svg)](CHANGELOG.md)
 [![Status](https://img.shields.io/badge/Status-Beta-orange.svg)](STATUS.md)
 [![Platform](https://img.shields.io/badge/Platform-Chrome%20%7C%20Edge%20%7C%20Brave-success.svg)]()
 [![CyberEx Ecosystem](https://img.shields.io/badge/CyberEx-Ecosystem-800080.svg)](https://cyberex.com.tr)
