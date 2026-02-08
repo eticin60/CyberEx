@@ -15,5 +15,8 @@ firebase.initializeApp(firebaseConfig);
 // Initialize Firestore
 const db = firebase.firestore();
 const auth = firebase.auth();
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    .then(() => console.log("Persistence set to LOCAL"))
+    .catch((error) => console.error("Persistence error:", error));
 
 console.log("Firebase initialized successfully");
