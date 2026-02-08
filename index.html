@@ -2045,13 +2045,69 @@
       box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
     }
   </style>
+
+  <style>
+    /* Top Bar Auth Buttons Styles */
+    .top-contact-bar #userNav {
+      position: relative;
+      /* Anchor for dropdown */
+    }
+
+    .top-contact-bar .profile-dropdown {
+      top: 40px !important;
+      /* Adjust for thinner top bar */
+      right: 0;
+      z-index: 2001;
+      /* Above top bar */
+    }
+
+    .top-contact-bar .nav-btn-filled,
+    .top-contact-bar .nav-btn-filled,
+    .top-contact-bar .nav-btn-outline {
+      padding: 4px 12px;
+      font-size: 0.7rem;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+      transition: 0.3s;
+      margin-left: 10px;
+    }
+
+    .top-contact-bar .nav-btn-filled {
+      background: rgba(0, 240, 255, 0.1);
+      border-color: var(--neon-cyan);
+    }
+
+    .top-contact-bar .nav-btn-filled:hover {
+      background: var(--neon-cyan);
+      color: #000;
+      box-shadow: 0 0 10px var(--neon-cyan);
+    }
+
+    .top-contact-bar .nav-btn-outline:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    @media (max-width: 900px) {
+      .top-contact-bar .contact-info-left {
+        display: none !important;
+      }
+
+      .top-contact-bar {
+        justify-content: center;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <div class="top-contact-bar">
-    <div style="display: flex; gap: 30px; align-items: center;">
+  <div class="top-contact-bar" style="justify-content: space-between; padding: 0 20px;">
+    <!-- Left Side: Contact Info -->
+    <div class="contact-info-left" style="display: flex; gap: 20px; align-items: center;">
       <span>📧 iletisim@cyberex.com.tr</span>
-      <span>💼 contact@cyberex.com.tr</span>
       <div class="live-activity-box">
         <div class="live-dot"></div>
         <span id="liveTxCount">LIVE: 1,842 TX/S</span>
@@ -2060,7 +2116,16 @@
         style="color: #00ff88; text-decoration: none; font-weight: 800; border: 1px solid #00ff88; padding: 2px 10px; border-radius: 4px; font-size: 0.65rem; transition: 0.3s;"
         onmouseover="this.style.background='rgba(0, 255, 136, 0.1)'" onmouseout="this.style.background='transparent'"
         data-tr="SİSTEM: AKTİF" data-en="SYSTEM: ONLINE">SİSTEM: AKTİF</a>
-      <span>🌐 cyberex.com.tr</span>
+    </div>
+
+    <!-- Right Side: Auth Buttons (Moved Here) -->
+    <div class="nav-right-group" id="userNav" style="display: flex; align-items: center;">
+      <!-- Managed by home-nav.js -->
+      <div class="nav-auth-links">
+        <a href="login.html" class="nav-btn-outline" style="border: none;" data-tr="GİRİŞ YAP" data-en="LOGIN">GİRİŞ
+          YAP</a>
+        <a href="register.html" class="nav-btn-filled" data-tr="HEMEN KATIL" data-en="JOIN NOW">HEMEN KATIL</a>
+      </div>
     </div>
   </div>
 
@@ -2098,15 +2163,8 @@
       </a>
     </div>
 
-    <div class=" nav-right-group" id="userNav">
-      <!-- Managed by home-nav.js -->
-      <div class="nav-auth-links">
-        <a href="login.html" class="nav-btn-outline" style="border: none;" data-tr="GİRİŞ YAP" data-en="LOGIN">GİRİŞ
-          YAP</a>
-        <a href="register.html" class="nav-btn-filled" data-tr="HEMEN KATIL" data-en="JOIN NOW">HEMEN KATIL</a>
-      </div>
-    </div>
-    <div class="lang-switcher">
+    <!-- Navigation Right Group (Removed Auth Links) -->
+    <div class="lang-switcher" style="margin-left: auto;">
       <button class="lang-btn active" data-lang="tr">TR</button>
       <button class="lang-btn" data-lang="en">EN</button>
     </div>
@@ -2123,12 +2181,17 @@
 
       // Move auth links into mobile menu if opening
       const navLinks = document.querySelector('.nav-links');
-      const authLinks = document.querySelector('.nav-auth-links');
+      const authLinks = document.querySelector('.nav-auth-links'); // This stays correctly selected
+      const userNav = document.getElementById('userNav');
+
+      // Ensure elements exist
+      if (!navLinks || !authLinks || !userNav) return;
 
       if (navbar.classList.contains('mobile-open')) {
         navLinks.appendChild(authLinks);
       } else {
-        document.querySelector('.nav-right-group').insertBefore(authLinks, document.querySelector('.lang-switcher'));
+        // Return to top bar container
+        userNav.appendChild(authLinks);
       }
 
       const icon = document.querySelector('.mobile-menu-btn i');
