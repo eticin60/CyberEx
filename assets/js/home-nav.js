@@ -4,11 +4,12 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("home-nav.js: DOMContentLoaded - Initializing Auth Listener");
     const userNav = document.getElementById('userNav');
     if (!userNav) return;
 
     // Listen for Auth State
-    auth.onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged(user => {
         if (user) {
             renderUserNav(user);
         } else {
@@ -35,7 +36,7 @@ async function renderUserNav(user) {
     if (centralDownload) centralDownload.style.display = 'none';
 
     // Fetch profile data
-    const doc = await db.collection('users').doc(user.uid).get();
+    const doc = await firebase.firestore().collection('users').doc(user.uid).get();
     const data = doc.exists ? doc.data() : {};
     const refCode = data.uid ? data.uid.substring(0, 8).toUpperCase() : '---';
     const refCount = data.referralCount || 0; // Assuming this field exists or we fetch it
