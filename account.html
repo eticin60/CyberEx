@@ -24,21 +24,6 @@
 </head>
 
 <body class="dashboard-page">
-    <div class="top-contact-bar" style="display: flex; justify-content: space-between; padding: 0 20px;">
-        <div class="contact-info-left" style="display: flex; gap: 20px; align-items: center;">
-            <span>📧 iletisim@cyberex.com.tr</span>
-            <div class="live-activity-box">
-                <div class="live-dot"></div>
-                <span id="liveTxCount">LIVE: 1,842 TX/S</span>
-            </div>
-            <a href="status.html" class="system-status-pill">SİSTEM: AKTİF</a>
-        </div>
-
-        <!-- User Nav Moved Here -->
-        <div class="nav-right-group" id="userNav" style="display: flex; align-items: center;">
-            <!-- home-nav.js fetches content here -->
-        </div>
-    </div>
 
     <!-- Background Animation Layer (Synced with Index) -->
     <div class="bg-animated">
@@ -49,6 +34,25 @@
         <div class="orb orb-3"></div>
         <canvas id="particles-canvas"></canvas>
         <canvas id="network-canvas"></canvas>
+    </div>
+
+    <!-- Top Contact Bar (Unified with Index) -->
+    <div class="top-contact-bar" style="justify-content: space-between; padding: 0 20px;">
+        <!-- Left Side: Contact Info -->
+        <div class="contact-info-left" style="display: flex; gap: 20px; align-items: center;">
+            <a href="index.html" style="text-decoration: none; color: inherit;"><i class="fas fa-home"></i> Ana
+                Sayfa</a>
+            <div class="live-activity-box">
+                <div class="live-dot"></div>
+                <span id="liveTxCount">LIVE: 1,842 TX/S</span>
+            </div>
+            <a href="#" class="system-status-pill">SİSTEM: AKTİF</a>
+        </div>
+
+        <!-- Right Side: Auth Buttons (Managed by home-nav.js) -->
+        <div class="nav-right-group" id="userNav" style="display: flex; align-items: center;">
+            <!-- Auth buttons will be injected here -->
+        </div>
     </div>
 
     <!-- Navigation -->
