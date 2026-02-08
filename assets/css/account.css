@@ -25,6 +25,26 @@
     --mt-4: 1.5rem;
 }
 
+/* Top Contact Bar (Copied from Index for Consistency) */
+.top-contact-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding-top: env(safe-area-inset-top, 0px);
+    height: calc(35px + env(safe-area-inset-top, 0px));
+    background: rgba(0, 240, 255, 0.05);
+    backdrop-filter: blur(15px);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    font-size: 0.73rem;
+    border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+    color: var(--neon-cyan);
+}
+
 /* Navbar Styles (Synced with Index) */
 /* Body Padding for Fixed Header */
 body {
