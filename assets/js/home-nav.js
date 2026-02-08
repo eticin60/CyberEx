@@ -138,7 +138,7 @@ function renderGuestNav() {
 
     userNav.innerHTML = `
     <div class="nav-auth-buttons" style="display:flex; gap:10px;">
-        <a href="login.html" class="nav-btn-outline" style="border: none;" data-tr="GİRİŞ YAP" data-en="LOGIN">GİRİŞ YAP</a>
+        <a href="#" class="nav-btn-outline" style="border: none; opacity: 0.5; cursor: not-allowed;" onclick="return false;" data-tr="GİRİŞ YAP (YAKINDA)" data-en="LOGIN (SOON)">GİRİŞ YAP <span style="font-size:0.6em; background:#333; padding:2px 4px; border-radius:4px;">YAKINDA</span></a>
         <a href="register.html" class="nav-btn-filled" data-tr="HEMEN KATIL" data-en="JOIN NOW">HEMEN KATIL</a>
     </div>
 `;
