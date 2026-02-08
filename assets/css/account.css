@@ -26,9 +26,19 @@
 }
 
 /* Navbar Styles (Synced with Index) */
+/* Body Padding for Fixed Header */
+body {
+    padding-top: 120px;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
 .navbar {
     position: fixed;
-    top: 0;
+    top: 35px;
+    /* Fallback */
+    top: calc(35px + env(safe-area-inset-top, 0px));
     left: 0;
     right: 0;
     height: 80px;
