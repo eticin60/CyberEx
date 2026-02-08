@@ -49,10 +49,6 @@
             <a href="#" class="system-status-pill">SİSTEM: AKTİF</a>
         </div>
 
-        <!-- Right Side: Auth Buttons (Managed by home-nav.js) -->
-        <div class="nav-right-group" id="userNav" style="display: flex; align-items: center;">
-            <!-- Auth buttons will be injected here -->
-        </div>
     </div>
 
     <!-- Navigation -->
@@ -78,6 +74,23 @@
             <a href="#" class="nav-link disabled-link" onclick="return false;">DESTEK <span
                     class="nav-badge-soon">YAKINDA</span></a>
         </div>
+        </div>
+
+        <!-- Auth/Profile Section -->
+        <div class="nav-right-group" id="userNav"
+            style="display: flex; align-items: center; margin-left: auto; margin-right: 20px;">
+            <!-- Auth buttons will be injected here -->
+        </div>
+
+        <!-- Language Switcher (Added for consistency) -->
+        <div class="lang-switcher">
+            <button class="lang-btn active" data-lang="tr">TR</button>
+            <button class="lang-btn" data-lang="en">EN</button>
+        </div>
+
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+            <i class="fas fa-bars"></i>
+        </button>
     </nav>
 
     <main class="dashboard-content">

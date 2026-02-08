@@ -143,12 +143,19 @@ async function loadUserProfile(uid) {
                 kycEl.className = `status-badge ${kycClass}`;
             }
 
-            // Avatar - Exact path: assets/avatar/avatar_X.png
-            const avatarId = data.avatarId || 1;
+            // Avatar Logic: Check custom URL -> Google URL -> Preset ID
+            let avatarUrl = data.photoUrl;
+            if (!avatarUrl && firebase.auth().currentUser) {
+                avatarUrl = firebase.auth().currentUser.photoURL;
+            }
+            if (!avatarUrl) {
+                const avatarId = data.avatarId || 1;
+                avatarUrl = `assets/avatar/avatar_${avatarId}.png`;
+            }
+
             const avatarContainer = document.getElementById('mainAvatar');
             if (avatarContainer) {
-                // Ensure we use the exact specific path requested
-                avatarContainer.innerHTML = `<img src="assets/avatar/avatar_${avatarId}.png" style="width:100%; height:100%; object-fit:cover; border-radius:50%;" onerror="this.src='assets/images/logo.png'">`;
+                avatarContainer.innerHTML = `<img src="${avatarUrl}" style="width:100%; height:100%; object-fit:cover; border-radius:50%;" onerror="this.src='assets/images/logo.png'">`;
             }
 
             // Pre-fill phone

@@ -76,62 +76,80 @@ async function renderUserNav(user) {
 }
 
 function handleLogout() {
-    firebase.auth().signOut().then(() => {
-        window.location.reload();
-    });
-}
 
-function renderGuestNav() {
-    const userNav = document.getElementById('userNav');
+    // Mobile Menu Toggle (Shared)
+    window.toggleMobileMenu = function () {
+        const navbar = document.querySelector('.navbar');
+        if (!navbar) return;
+        navbar.classList.toggle('mobile-open');
 
-    // Show central Download button if guest
-    const centralDownload = document.getElementById('navDownloadBtn');
-    if (centralDownload) centralDownload.style.display = 'inline-block';
+        const icon = document.querySelector('.mobile-menu-btn i');
+        if (icon) {
+            if (navbar.classList.contains('mobile-open')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            }
+        }
 
-    userNav.innerHTML = `
+        // Safety: ensure dropdowns are closed
+        const d = document.getElementById('profileDropdown');
+        if (d) d.classList.remove('active');
+    };
+
+    function renderGuestNav() {
+        const userNav = document.getElementById('userNav');
+
+        // Show central Download button if guest
+        const centralDownload = document.getElementById('navDownloadBtn');
+        if (centralDownload) centralDownload.style.display = 'inline-block';
+
+        userNav.innerHTML = `
         <div class="nav-auth-buttons">
             <a href="login.html" class="nav-btn-outline" style="border: none;" data-tr="GİRİŞ YAP" data-en="LOGIN">GİRİŞ YAP</a>
             <a href="register.html" class="nav-btn-filled" data-tr="HEMEN KATIL" data-en="JOIN NOW">HEMEN KATIL</a>
         </div>
     `;
-}
-
-function toggleProfileMenu() {
-    const dropdown = document.getElementById('profileDropdown');
-    if (dropdown) dropdown.classList.toggle('active');
-}
-
-function getAvatarHTML(id) {
-    if (id >= 1 && id <= 15) {
-        return `<img src="assets/avatar/avatar_${id}.png" onerror="this.outerHTML='<i class=\'fas fa-user\'></i>'">`;
     }
-    return `<i class="fas fa-user"></i>`;
-}
 
-function listenUnreadCount(uid) {
-    db.collection('users').doc(uid).collection('notifications')
-        .where('read', '==', false)
-        .onSnapshot(snapshot => {
-            const badge = document.getElementById('navUnreadCount');
-            if (badge) {
-                const count = snapshot.size;
-                if (count > 0) {
-                    badge.textContent = count > 9 ? '9+' : count;
-                    badge.style.display = 'flex';
-                } else {
-                    badge.style.display = 'none';
+    function toggleProfileMenu() {
+        const dropdown = document.getElementById('profileDropdown');
+        if (dropdown) dropdown.classList.toggle('active');
+    }
+
+    function getAvatarHTML(id) {
+        if (id >= 1 && id <= 15) {
+            return `<img src="assets/avatar/avatar_${id}.png" onerror="this.outerHTML='<i class=\'fas fa-user\'></i>'">`;
+        }
+        return `<i class="fas fa-user"></i>`;
+    }
+
+    function listenUnreadCount(uid) {
+        db.collection('users').doc(uid).collection('notifications')
+            .where('read', '==', false)
+            .onSnapshot(snapshot => {
+                const badge = document.getElementById('navUnreadCount');
+                if (badge) {
+                    const count = snapshot.size;
+                    if (count > 0) {
+                        badge.textContent = count > 9 ? '9+' : count;
+                        badge.style.display = 'flex';
+                    } else {
+                        badge.style.display = 'none';
+                    }
                 }
-            }
-        });
-}
+            });
+    }
 
-async function handleLogout() {
-    if (confirm("Çıkış yapmak istediğinize emin misiniz?")) {
-        try {
-            await auth.signOut();
-            window.location.href = 'index.html';
-        } catch (error) {
-            console.error("Logout error:", error);
+    async function handleLogout() {
+        if (confirm("Çıkış yapmak istediğinize emin misiniz?")) {
+            try {
+                await firebase.auth().signOut();
+                window.location.href = 'index.html';
+            } catch (error) {
+                console.error("Logout error:", error);
+            }
         }
     }
-}

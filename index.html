@@ -2118,15 +2118,6 @@
         data-tr="SİSTEM: AKTİF" data-en="SYSTEM: ONLINE">SİSTEM: AKTİF</a>
     </div>
 
-    <!-- Right Side: Auth Buttons (Moved Here) -->
-    <div class="nav-right-group" id="userNav" style="display: flex; align-items: center;">
-      <!-- Managed by home-nav.js -->
-      <div class="nav-auth-links">
-        <a href="login.html" class="nav-btn-outline" style="border: none;" data-tr="GİRİŞ YAP" data-en="LOGIN">GİRİŞ
-          YAP</a>
-        <a href="register.html" class="nav-btn-filled" data-tr="HEMEN KATIL" data-en="JOIN NOW">HEMEN KATIL</a>
-      </div>
-    </div>
   </div>
 
   <nav class="navbar">
@@ -2163,8 +2154,18 @@
       </a>
     </div>
 
-    <!-- Navigation Right Group (Removed Auth Links) -->
-    <div class="lang-switcher" style="margin-left: auto;">
+    <!-- Auth/Profile Section (Restored to Main Navbar) -->
+    <div class="nav-right-group" id="userNav"
+      style="display: flex; align-items: center; margin-left: auto; margin-right: 20px;">
+      <div class="nav-auth-links">
+        <a href="login.html" class="nav-btn-outline" style="border: none;" data-tr="GİRİŞ YAP" data-en="LOGIN">GİRİŞ
+          YAP</a>
+        <a href="register.html" class="nav-btn-filled" data-tr="HEMEN KATIL" data-en="JOIN NOW">HEMEN KATIL</a>
+      </div>
+    </div>
+
+    <!-- Language Switcher -->
+    <div class="lang-switcher">
       <button class="lang-btn active" data-lang="tr">TR</button>
       <button class="lang-btn" data-lang="en">EN</button>
     </div>
