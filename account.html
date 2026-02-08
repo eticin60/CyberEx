@@ -24,6 +24,22 @@
 </head>
 
 <body class="dashboard-page">
+    <div class="top-contact-bar" style="display: flex; justify-content: space-between; padding: 0 20px;">
+        <div class="contact-info-left" style="display: flex; gap: 20px; align-items: center;">
+            <span>📧 iletisim@cyberex.com.tr</span>
+            <div class="live-activity-box">
+                <div class="live-dot"></div>
+                <span id="liveTxCount">LIVE: 1,842 TX/S</span>
+            </div>
+            <a href="status.html" class="system-status-pill">SİSTEM: AKTİF</a>
+        </div>
+
+        <!-- User Nav Moved Here -->
+        <div class="nav-right-group" id="userNav" style="display: flex; align-items: center;">
+            <!-- home-nav.js fetches content here -->
+        </div>
+    </div>
+
     <!-- Background Animation Layer (Synced with Index) -->
     <div class="bg-animated">
         <div class="circuit-board"></div>
@@ -57,10 +73,6 @@
                     class="nav-badge-soon">YAKINDA</span></a>
             <a href="#" class="nav-link disabled-link" onclick="return false;">DESTEK <span
                     class="nav-badge-soon">YAKINDA</span></a>
-        </div>
-
-        <div class="nav-right-group" id="userNav">
-            <!-- Managed by home-nav.js -->
         </div>
     </nav>
 
@@ -143,7 +155,12 @@
                         </div>
                         <div class="pnl-summary" id="pnlSummary">
                             <span>Günlük Kar/Zarar</span>
-                            <span class="pnl-value" id="dailyPnl">+$0.00 (0.00%)</span>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span class="pnl-value" id="dailyPnl">+$0.00 (0.00%)</span>
+                                <button class="btn-icon-sm" onclick="sharePnl()" title="PNL Paylaş">
+                                    <i class="fas fa-share-alt"></i>
+                                </button>
+                            </div>
                         </div>
                     </section>
 

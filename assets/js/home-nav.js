@@ -34,39 +34,41 @@ async function renderUserNav(user) {
     const centralDownload = document.getElementById('navDownloadBtn');
     if (centralDownload) centralDownload.style.display = 'none';
 
-    // Fetch profile data for username and avatar
+    // Fetch profile data
     const doc = await db.collection('users').doc(user.uid).get();
     const data = doc.exists ? doc.data() : {};
-    const username = data.username || 'Kullanıcı';
-    const avatarId = data.avatarId || 0;
+    const refCode = data.uid ? data.uid.substring(0, 8).toUpperCase() : '---';
+    const refCount = data.referralCount || 0; // Assuming this field exists or we fetch it
+    const commission = data.commissionRate || 10; // Default 10%
+
+    // Update Modal Data
+    const refLinkEl = document.getElementById('refLink');
+    if (refLinkEl) refLinkEl.value = `https://cyberex.com.tr/register?ref=${refCode}`;
+
+    const totalRefsEl = document.getElementById('totalRefs');
+    if (totalRefsEl) totalRefsEl.textContent = refCount;
+
+    const commRateEl = document.getElementById('commissionRate');
+    if (commRateEl) commRateEl.textContent = `%${commission}`;
+
 
     userNav.innerHTML = `
-        <div class="nav-notification-bell" onclick="window.location.href='account.html#messages'">
-            <i class="fas fa-bell"></i>
-            <span class="unread-badge" id="navUnreadCount" style="display: none;">0</span>
-        </div>
-
-        <div class="profile-summary" onclick="toggleProfileMenu()">
-            <span id="navUsername">${username}</span>
-            <div class="avatar-circle" id="navAvatar">
-                ${getAvatarHTML(avatarId)}
-            </div>
-            <i class="fas fa-chevron-down"></i>
-        </div>
-
-        <div class="profile-dropdown" id="profileDropdown">
-            <a href="account.html#wallet"><i class="fas fa-wallet"></i> Cüzdan</a>
-            <a href="account.html#messages"><i class="fas fa-envelope"></i> Mesajlar</a>
-            <a href="account.html#settings"><i class="fas fa-cog"></i> Ayarlar</a>
-            <a href="account.html"><i class="fas fa-user-circle"></i> Hesabım</a>
-            <hr>
-            <a href="#" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a>
-        </div>
+        <button class="nav-btn-filled" onclick="document.getElementById('referenceModal').style.display='block'" style="font-size: 0.75rem; margin-right: 10px;">
+            <i class="fas fa-users"></i> Referans Sistemi
+        </button>
+        <button class="nav-btn-outline" onclick="handleLogout()" style="font-size: 0.75rem; border-color: #ff3366; color: #ff3366;">
+            <i class="fas fa-sign-out-alt"></i> Çıkış Yap
+        </button>
     `;
 
-    // Initialize Unread Count from account.js logic if on account page, 
-    // or standalone listener here
+    // Initialize Unread Count
     listenUnreadCount(user.uid);
+}
+
+function handleLogout() {
+    firebase.auth().signOut().then(() => {
+        window.location.reload();
+    });
 }
 
 function renderGuestNav() {

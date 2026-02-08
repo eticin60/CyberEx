@@ -94,8 +94,9 @@ async function loadUserProfile(uid) {
             const data = doc.data();
             safeSetText('displayName', data.username || 'Kullanıcı');
             safeSetText('displayEmail', data.email || '---');
-            // Android uses publicId if available, else uid
-            const cId = data.publicId || data.uid || '---------';
+
+            // Cyber ID Fix: Use document ID if uid field is missing in data
+            const cId = data.publicId || data.uid || doc.id || '---------';
             safeSetText('cyberId', cId.length > 10 ? cId.substring(0, 10).toUpperCase() : cId.toUpperCase());
 
             // VIP & Level Icons
@@ -129,8 +130,6 @@ async function loadUserProfile(uid) {
                 let kycIcon = 'fa-times-circle';
 
                 if (kyc === 'verified') {
-                    kycText = 'Doğrulanmadı'; // Label adjustment per user request if needed, but standard is Doğrulandı. 
-                    // Wait, user said "kyc doğru olmalı gerçek verileri". verified = Doğrulandı.
                     kycText = 'Doğrulandı';
                     kycClass = 'status-verified';
                     kycIcon = 'fa-check-circle';
@@ -151,6 +150,8 @@ async function loadUserProfile(uid) {
                 // Ensure we use the exact specific path requested
                 avatarContainer.innerHTML = `<img src="assets/avatar/avatar_${avatarId}.png" style="width:100%; height:100%; object-fit:cover; border-radius:50%;" onerror="this.src='assets/images/logo.png'">`;
             }
+
+            // Pre-fill phone
 
             // Pre-fill phone
             const phoneInput = document.getElementById('phoneInput');
@@ -310,7 +311,32 @@ function loadDailyPnl(uid) {
             const percent = data.pnlPercent || 0;
             pnlEl.textContent = `${pnl >= 0 ? '+' : ''}$${pnl.toFixed(2)} (${percent.toFixed(2)}%)`;
             pnlEl.className = `pnl-value ${pnl >= 0 ? 'text-success' : 'text-danger'}`;
+
+            // Store for sharing
+            window.currentPnl = { pnl, percent };
         });
+}
+
+function sharePnl() {
+    const data = window.currentPnl || { pnl: 0, percent: 0 };
+    const pnlStr = `${data.pnl >= 0 ? '+' : ''}$${data.pnl.toFixed(2)} (${data.percent.toFixed(2)}%)`;
+    const emoji = data.pnl >= 0 ? '🚀' : '🔻';
+
+    // Marketing Text
+    const text = `${emoji} CyberEx'te bugün işlem performansım: ${pnlStr}!\n\n🤖 Yapay zeka destekli alım satım ile sen de kazanmaya başla.\n\n👇 Hemen Üye Ol ve Fırsatları Yakala:\nhttps://cyberex.com.tr\n\n#CyberEx #Kripto #Bitcoin #YapayZeka #Borsa`;
+
+    // Check if mobile for native share, else open Twitter/WhatsApp choice
+    if (navigator.share) {
+        navigator.share({
+            title: 'CyberEx PNL Paylaşımı',
+            text: text,
+            url: 'https://cyberex.com.tr'
+        }).catch(console.error);
+    } else {
+        // Fallback: Copy to clipboard or open WhatsApp
+        const waLink = `https://wa.me/?text=${encodeURIComponent(text)}`;
+        window.open(waLink, '_blank');
+    }
 }
 
 async function updateSettings(uid) {
