@@ -10,9 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Listen for Auth State
     firebase.auth().onAuthStateChanged(user => {
+        console.log("Auth State Changed:", user ? "User Logged In" : "No User");
         if (user) {
+            console.log("Rendering User Nav for:", user.uid);
             renderUserNav(user);
         } else {
+            console.log("Rendering Guest Nav");
             renderGuestNav();
         }
     });
@@ -35,12 +38,18 @@ async function renderUserNav(user) {
     const centralDownload = document.getElementById('navDownloadBtn');
     if (centralDownload) centralDownload.style.display = 'none';
 
-    // Fetch profile data
-    const doc = await firebase.firestore().collection('users').doc(user.uid).get();
-    const data = doc.exists ? doc.data() : {};
+    // Fetch profile data safely
+    let data = {};
+    try {
+        const doc = await firebase.firestore().collection('users').doc(user.uid).get();
+        if (doc.exists) data = doc.data();
+    } catch (error) {
+        console.error("Error fetching user profile:", error);
+    }
+
     const refCode = data.uid ? data.uid.substring(0, 8).toUpperCase() : '---';
-    const refCount = data.referralCount || 0; // Assuming this field exists or we fetch it
-    const commission = data.commissionRate || 10; // Default 10%
+    const refCount = data.referralCount || 0;
+    const commission = data.commissionRate || 10;
 
     // Update Modal Data
     const refLinkEl = document.getElementById('refLink');
