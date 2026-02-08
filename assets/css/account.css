@@ -105,8 +105,8 @@ body {
 
 .nav-link {
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.35);
-    /* Soluk renk */
+    color: rgba(255, 255, 255, 0.8);
+    /* Daha belirgin renk */
     font-size: 0.85rem;
     font-weight: 700;
     letter-spacing: 1px;
