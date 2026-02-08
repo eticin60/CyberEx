@@ -3180,6 +3180,41 @@
     });
   </script>
 
+  <!-- Reference System Modal -->
+  <div id="referenceModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close" onclick="document.getElementById('referenceModal').style.display='none'"
+        style="float: right; cursor: pointer; font-size: 28px;">&times;</span>
+      <h2 style="color: var(--neon-cyan); margin-top: 0;">Referans İstatistikleri</h2>
+
+      <div class="ref-stats-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+        <div class="stat-card"
+          style="background: rgba(0, 240, 255, 0.05); padding: 15px; border-radius: 8px; text-align: center;">
+          <h3 style="font-size: 0.9rem; color: #888;">Toplam Referans</h3>
+          <span id="totalRefs" class="highlight-neon"
+            style="font-size: 1.5rem; font-weight: bold; color: #fff;">0</span>
+        </div>
+        <div class="stat-card"
+          style="background: rgba(0, 240, 255, 0.05); padding: 15px; border-radius: 8px; text-align: center;">
+          <h3 style="font-size: 0.9rem; color: #888;">Komisyon Oranı</h3>
+          <span id="commissionRate" class="highlight-neon"
+            style="font-size: 1.5rem; font-weight: bold; color: #fff;">%10</span>
+        </div>
+      </div>
+
+      <div class="ref-link-box">
+        <label style="display: block; margin-bottom: 8px; color: #ccc;">Referans Bağlantınız:</label>
+        <div class="input-wrapper" style="position: relative;">
+          <input type="text" id="refLink" readonly onclick="this.select(); document.execCommand('copy');"
+            style="width: 100%; padding: 10px; background: #000; border: 1px solid #333; color: #00ff88; border-radius: 5px;">
+          <i class="fas fa-copy"
+            style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #888;"></i>
+        </div>
+        <small style="color: #666; margin-top: 5px; display: block;">Kopyalamak için tıklayın</small>
+      </div>
+    </div>
+  </div>
+
   <!-- Custom Install Prompt -->
   <div id="install-toast" class="install-toast">
     <div class="toast-content">
