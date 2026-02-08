@@ -48,7 +48,7 @@
 /* Navbar Styles (Synced with Index) */
 /* Body Padding for Fixed Header */
 body {
-    padding-top: 120px;
+    padding-top: calc(130px + env(safe-area-inset-top, 0px));
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
