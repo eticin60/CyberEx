@@ -23,6 +23,9 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
         :root {
             --neon-cyan: #00f0ff;
@@ -491,6 +494,33 @@
                 batch.set(walletColRef.doc('spot_history'), { initialized: true });
 
                 await batch.commit();
+                console.log('Firebase Google registration successful');
+
+                // --- SUPABASE DUAL-WRITE (Google) ---
+                try {
+                    // Supabase Auth (Google idToken ile - Web'de popup sonucu idToken almak daha zordur, şimdilik manuel profil açıyoruz)
+                    // Gerçek akışta Supabase.auth.signInWithOAuth kullanılmalıdır.
+
+                    const supabaseUid = user.uid; // Firebase UID'yi ortak kullanıyoruz
+
+                    const { error: sbProfileError } = await supabase.from('user_profiles').upsert({
+                        user_id: supabaseUid,
+                        username: uniqueUsername,
+                        email: user.email,
+                        phone_number: user.phoneNumber || '',
+                        referral_code: publicId,
+                        spot_available: welcomeBonus,
+                        net_investment: welcomeBonus,
+                        is_migrated: true,
+                        device_id: deviceId
+                    });
+
+                    if (sbProfileError) console.error('Supabase Google profile error:', sbProfileError);
+                    else console.log('Supabase Google registration successful');
+
+                } catch (sbError) {
+                    console.error('Supabase Google sync failed:', sbError);
+                }
 
                 // Process referral
                 if (refCodeFromUrl) {

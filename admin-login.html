@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yönetici Girişi | CyberEx</title>
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="icons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="icons/icon-192x192.png" sizes="192x192">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Supabase & Auth -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/admin.js"></script> <!-- Admin Logic -->
+
+    <style>
+        :root {
+            --neon-red: #ff0055;
+            --neon-cyan: #00f0ff;
+            --bg: #000205;
+            --text: #e8f0ff;
+            --glass: rgba(255, 0, 85, 0.05);
+            --border: rgba(255, 0, 85, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Red Theme for Admin */
+        .bg-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 0, 85, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 0, 85, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.2;
+            z-index: 0;
+            perspective: 1000px;
+            transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: perspective(500px) rotateX(60deg) translateY(0) translateZ(-200px);
+            }
+
+            100% {
+                transform: perspective(500px) rotateX(60deg) translateY(50px) translateZ(-200px);
+            }
+        }
+
+        .login-box {
+            position: relative;
+            z-index: 10;
+            width: 400px;
+            padding: 40px;
+            background: rgba(10, 0, 5, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(255, 0, 85, 0.2);
+            backdrop-filter: blur(20px);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h1 {
+            font-size: 1.5rem;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .login-header span {
+            font-size: 0.7rem;
+            color: var(--neon-red);
+            font-weight: 700;
+            border: 1px solid var(--neon-red);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--neon-red);
+            font-size: 0.9rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: var(--neon-red);
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.3);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            background: var(--neon-red);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .btn-login:hover {
+            background: #d40045;
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.5);
+        }
+
+        #errorMsg {
+            color: var(--neon-red);
+            font-size: 0.85rem;
+            text-align: center;
+            margin-top: 15px;
+            min-height: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-grid"></div>
+
+    <div class="login-box">
+        <div class="login-header">
+            <h1>CyberEx</h1>
+            <span>YÖNETİM PANELİ</span>
+        </div>
+
+        <form id="adminLoginForm">
+            <div class="input-group">
+                <i class="fas fa-user-shield"></i>
+                <input type="text" id="username" placeholder="Yönetici ID" autocomplete="off">
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password" placeholder="Erişim Şifresi">
+            </div>
+
+            <button type="submit" class="btn-login" id="loginBtn">Oturum Aç</button>
+        </form>
+
+        <div id="errorMsg"></div>
+    </div>
+
+    <script>
+        document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('loginBtn');
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const errorMsg = document.getElementById('errorMsg');
+
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Kontrol Ediliyor...';
+            errorMsg.textContent = '';
+
+            try {
+                // AdminManager (admin.js) üzerinden giriş denemesi
+                const result = await AdminManager.login(user, pass);
+
+                if (result.success) {
+                    window.location.href = 'admin-dashboard.html';
+                } else {
+                    errorMsg.textContent = result.error || 'Erişim reddedildi.';
+                    btn.textContent = 'Oturum Aç';
+                }
+            } catch (err) {
+                console.error(err);
+                errorMsg.textContent = 'Sistem hatası.';
+                btn.textContent = 'Oturum Aç';
+            }
+        });
+    </script>
+</body>
+
+</html>

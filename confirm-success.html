@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-posta Doğrulandı | CyberEx</title>
+    <link rel="icon" type="image/png" href="icons/favicon-32x32.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-cyan: #00f0ff;
+            --neon-blue: #0072ff;
+            --bg: #000510;
+            --text: #e8f0ff;
+            --glow: rgba(0, 240, 255, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animated {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.2;
+            animation: float 20s infinite alternate;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--neon-cyan), transparent);
+            top: -200px;
+            left: -200px;
+        }
+
+        .orb-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--neon-blue), transparent);
+            bottom: -250px;
+            right: -250px;
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(100px, 100px);
+            }
+        }
+
+        /* Success Card */
+        .confirm-card {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 500px;
+            background: rgba(0, 10, 20, 0.8);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 240, 255, 0.1);
+            border-radius: 40px;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 100px rgba(0, 240, 255, 0.1);
+            animation: cardAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes cardAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-icon-wrap {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            background: rgba(0, 240, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--neon-cyan);
+            box-shadow: 0 0 30px var(--glow);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 20px var(--glow);
+                transform: scale(1);
+            }
+
+            50% {
+                box-shadow: 0 0 50px var(--glow);
+                transform: scale(1.05);
+            }
+
+            100% {
+                box-shadow: 0 0 20px var(--glow);
+                transform: scale(1);
+            }
+        }
+
+        .success-icon-wrap i {
+            font-size: 50px;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 15px var(--neon-cyan);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #00f0ff, #0072ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            color: #94a3b8;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .countdown-text {
+            color: var(--neon-cyan);
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-top: 20px;
+            opacity: 0.7;
+        }
+
+        .btn-login {
+            display: inline-block;
+            padding: 18px 45px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
+            color: #000;
+            text-decoration: none;
+            border-radius: 15px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.3);
+        }
+
+        .btn-login:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 240, 255, 0.5);
+        }
+
+        .logo-bottom {
+            margin-top: 50px;
+            width: 80px;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-animated">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <div class="confirm-card">
+        <div class="success-icon-wrap">
+            <i class="fas fa-check-shield"></i>
+        </div>
+
+        <h1>Doğrulandı!</h1>
+        <p>E-posta adresiniz başarıyla onaylandı. CyberEx ekosistemine tam erişiminiz açılmıştır. Şimdi güvenle giriş
+            yapıp işlem yapmaya başlayabilirsiniz.</p>
+
+        <a href="login.html" class="btn-login">Giriş Sayfasına Git</a>
+
+        <div class="countdown-text" id="countdown">5 saniye içinde yönlendiriliyorsunuz...</div>
+
+        <img src="cyberex-logo.png" alt="CyberEx" class="logo-bottom">
+    </div>
+
+    <script>
+        let counter = 5;
+        const countdownEl = document.getElementById('countdown');
+
+        const interval = setInterval(() => {
+            counter--;
+            if (counter <= 0) {
+                clearInterval(interval);
+                window.location.href = 'login.html';
+            } else {
+                countdownEl.textContent = `${counter} saniye içinde yönlendiriliyorsunuz...`;
+            }
+        }, 1000);
+    </script>
+</body>
+
+</html>

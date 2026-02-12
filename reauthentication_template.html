@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Güvenlik Doğrulaması | CyberEx</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-cyan: #00f0ff;
+            --neon-blue: #0072ff;
+            --bg-dark: #000510;
+            --card-bg: #0a0f18;
+            --text-main: #e8f0ff;
+            --text-muted: #8899ac;
+            --border: rgba(0, 240, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            margin: 0;
+            padding: 0;
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .email-container {
+            max-width: 600px;
+            width: 100%;
+            margin: 20px;
+            background: linear-gradient(145deg, rgba(10, 15, 24, 0.95), rgba(5, 10, 16, 0.98));
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Top Accent Line */
+        .email-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-blue));
+            box-shadow: 0 0 15px var(--neon-cyan);
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0 20px;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: #fff;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .logo span {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
+        }
+
+        .logo img {
+            height: 40px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        .content {
+            padding: 20px 40px 40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        .code-box {
+            background: rgba(0, 240, 255, 0.05);
+            border: 1px dashed var(--neon-cyan);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 30px 0;
+            display: inline-block;
+            min-width: 240px;
+            position: relative;
+        }
+
+        .verification-code {
+            font-family: 'Courier New', monospace;
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--neon-cyan);
+            letter-spacing: 8px;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+            margin: 0;
+        }
+
+        .warning-box {
+            background: rgba(255, 59, 48, 0.08);
+            /* Red tint */
+            border-left: 4px solid #ff3b30;
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-align: left;
+            margin-top: 40px;
+        }
+
+        .warning-title {
+            color: #ff3b30;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .warning-text {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .footer {
+            background: rgba(0, 5, 10, 0.5);
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 12px;
+            color: #556677;
+        }
+
+        .footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.2s;
+        }
+
+        .footer a:hover {
+            color: var(--neon-cyan);
+        }
+
+        .social-icons {
+            margin-bottom: 20px;
+        }
+
+        .social-icons img {
+            width: 20px;
+            height: 20px;
+            margin: 0 8px;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .social-icons img:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="email-container">
+        <div class="header">
+            <!-- Logo with dynamic glow effect simulation -->
+            <div class="logo">
+                CyberEx<span></span>
+            </div>
+        </div>
+
+        <div class="content">
+            <div style="font-size: 48px; margin-bottom: 20px;">🛡️</div>
+            <h1>Güvenlik Doğrulaması</h1>
+            <p>Hesabınızda yeni bir işlem veya oturum açma isteği algıladık.<br>Güvenliğiniz için lütfen aşağıdaki
+                doğrulama kodunu kullanın:</p>
+
+            <div class="code-box">
+                <div class="verification-code">{{ .Token }}</div>
+            </div>
+
+            <p style="font-size: 14px; margin-bottom: 10px;">Bu kod <strong>10 dakika</strong> süreyle geçerlidir.</p>
+            <p style="font-size: 14px;">CyberEx çalışanları sizden ASLA şifrenizi veya bu kodu istemez.</p>
+
+            <div class="warning-box">
+                <span class="warning-title">⚠️ Bu işlemi siz yapmadınız mı?</span>
+                <p class="warning-text">Eğer bu istek size ait değilse, lütfen hesabınızın güvenliği için şifrenizi
+                    hemen değiştirin ve destek ekibimizle iletişime geçin.</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2026 CyberEx Technology Inc. Tüm hakları saklıdır.</p>
+            <p>
+                <a href="https://cyberex.com.tr/privacy">Gizlilik Politikası</a> •
+                <a href="https://cyberex.com.tr/terms">Kullanım Koşulları</a> •
+                <a href="https://cyberex.com.tr/help">Yardım Merkezi</a>
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>
