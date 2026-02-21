@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>CyberEx Privacy - Özel Davet | Gizlilik Öncelikli Finans</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <!-- Mobile & PWA Integration -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="CyberEx Privacy">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+        content="CyberEx Privacy Özel Davet sayfası. Gizliliğinize önem veren, askeri düzeyde güvenlik sunan CyberEx Privacy APK sürümünü indirin.">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#000510">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="../icons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="../icons/icon-192x192.png" sizes="192x192">
+    <link rel="apple-touch-icon" href="../icons/icon-192x192.png">
+    <link rel="shortcut icon" href="../icons/icon-192x192.png" type="image/x-icon">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="CyberEx Privacy - Özel Davet">
+    <meta property="og:description" content="Size özel hazırlanan CyberEx Privacy sürümünü şimdi indirin.">
+    <meta property="og:image" content="https://cyberex.com.tr/CyberEx_Web3.png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link rel="stylesheet" href="../mobile.css">
+    
+    <style>
+        :root {
+            --neon-cyan: #00f0ff;
+            --neon-blue: #0072ff;
+            --bg: #000510;
+            --border: rgba(0, 240, 255, 0.2);
+            --privacy-gold: #ffd700;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            font-family: 'Inter', sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bg-elements {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.3;
+        }
+
+        .orb-1 { width: 500px; height: 500px; background: var(--neon-cyan); top: -200px; left: -200px; }
+        .orb-2 { width: 600px; height: 600px; background: var(--neon-blue); bottom: -200px; right: -100px; }
+
+        .download-container {
+            width: 90%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            padding: 60px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(40px);
+            border: 1px solid var(--border);
+            border-radius: 60px;
+            position: relative;
+            margin: 120px auto 80px;
+        }
+
+        .privacy-badge {
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--privacy-gold);
+            padding: 8px 20px;
+            border-radius: 50px;
+            border: 1px solid var(--privacy-gold);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .left-side { display: flex; flex-direction: column; justify-content: center; }
+        .right-side { display: flex; align-items: center; justify-content: center; position: relative; }
+
+        h1 { font-size: 4rem; font-weight: 950; line-height: 1.1; margin-bottom: 25px; }
+        h1 span { color: var(--neon-cyan); text-shadow: 0 0 20px rgba(0, 240, 255, 0.5); }
+
+        p { color: #6b7a99; font-size: 1.2rem; line-height: 1.7; margin-bottom: 45px; max-width: 500px; }
+
+        .store-btns { display: flex; flex-direction: column; gap: 20px; }
+
+        .store-btn {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px 35px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .store-btn i { font-size: 1.8rem; }
+        .store-btn:hover {
+            background: var(--neon-cyan);
+            color: #000;
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.4);
+        }
+
+        .qr-box {
+            margin-top: 40px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(0, 240, 255, 0.05);
+            border-radius: 30px;
+            border: 1px dashed var(--neon-cyan);
+            width: fit-content;
+        }
+
+        #qrcode { padding: 10px; background: #fff; border-radius: 12px; }
+
+        .mockup-img {
+            width: 100%;
+            max-width: 650px;
+            filter: drop-shadow(0 0 100px rgba(0, 240, 255, 0.3));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .back-nav {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            text-decoration: none;
+            color: #6b7a99;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .back-nav:hover { color: var(--neon-cyan); }
+
+        @media (max-width: 900px) {
+            .download-container { grid-template-columns: 1fr; text-align: center; padding: 40px 20px; }
+            .left-side { align-items: center; }
+            h1 { font-size: 2.5rem; }
+            .qr-box { display: none; }
+        }
+
+        .footer {
+            width: 100%;
+            padding: 80px 20px 0;
+            border-top: 1px solid rgba(0, 240, 255, 0.1);
+            background: transparent;
+            backdrop-filter: blur(10px);
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 60px;
+            text-align: left;
+        }
+
+        .footer-col-title {
+            color: #fff;
+            font-weight: 900;
+            margin-bottom: 25px;
+            border-left: 3px solid var(--neon-cyan);
+            padding-left: 15px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .footer-link {
+            display: block;
+            color: #7f8c8d;
+            text-decoration: none;
+            padding: 8px 0;
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .footer-link:hover { color: var(--neon-cyan); padding-left: 10px; }
+
+        /* Lang Classes */
+        html.lang-tr [data-lang="en"] { display: none !important; }
+        html.lang-en [data-lang="tr"] { display: none !important; }
+        html.lang-en [data-lang="en"] { display: block; }
+        html.lang-en span[data-lang="en"], html.lang-en strong[data-lang="en"] { display: inline-block; }
+        html.lang-en a[data-lang="en"] { display: block; }
+        [data-lang="en"] { display: none; }
+
+        .lang-toggle-container { position: absolute; top: 40px; right: 40px; z-index: 1000; }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .lang-btn:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); }
+    </style>
+    <script>
+        (function () {
+            const savedLang = localStorage.getItem('lang') || 'tr';
+            document.documentElement.className = 'lang-' + savedLang;
+        })();
+    </script>
+</head>
+
+<body>
+    <div class="bg-elements">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <div class="lang-toggle-container">
+        <button id="langToggle" class="lang-btn">EN</button>
+    </div>
+
+    <a href="../index.html" class="back-nav">
+        <i class="fas fa-arrow-left"></i>
+        <span data-lang="tr">ANA SAYFAYA DÖN</span>
+        <span data-lang="en">BACK TO HOME</span>
+    </a>
+
+    <div class="download-container">
+        <div class="left-side">
+            <div class="privacy-badge">
+                <i class="fas fa-shield-alt"></i>
+                <span data-lang="tr">Özel Davet & Gizlilik</span>
+                <span data-lang="en">Private Invite & Privacy</span>
+            </div>
+
+            <h1 data-lang="tr">CyberEx<span> Privacy.</span></h1>
+            <h1 data-lang="en">CyberEx<span> Privacy.</span></h1>
+
+            <p data-lang="tr">Bu size özel, gizli bir davettir. CyberEx Privacy sürümü ile maksimum gizlilik ve 
+                uçtan uca şifreli finansal özgürlük dünyasına adım atın. Tüm verileriniz tamamen size aittir.</p>
+            <p data-lang="en">This is a private, confidential invite for you. Step into the world of maximum privacy 
+                and end-to-end encrypted financial freedom with the CyberEx Privacy version. All your data belongs to you.</p>
+
+            <div class="store-btns">
+                <a href="../apks/CyberEx-Privacy.apk" class="store-btn">
+                    <i class="fab fa-android"></i>
+                    <div>
+                        <div style="font-size: 0.7rem; opacity: 0.7;" data-lang="tr">Hemen İndir</div>
+                        <div style="font-size: 0.7rem; opacity: 0.7;" data-lang="en">Download Now</div>
+                        CyberEx Privacy APK
+                    </div>
+                </a>
+            </div>
+
+            <div class="qr-box">
+                <div id="qrcode"></div>
+                <div>
+                    <h4 style="color: var(--neon-cyan); margin-bottom: 5px;" data-lang="tr">Hemen Tara</h4>
+                    <h4 style="color: var(--neon-cyan); margin-bottom: 5px;" data-lang="en">Scan Now</h4>
+                    <p style="font-size: 0.8rem; margin: 0;" data-lang="tr">Privacy sürümünü anında indirmek için kameranı yaklaştır.</p>
+                    <p style="font-size: 0.8rem; margin: 0;" data-lang="en">Scan to instantly download the Privacy version.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-side">
+            <img src="../cyberex_app_reklam2.png" alt="CyberEx Privacy App" class="mockup-img">
+        </div>
+    </div>
+
+    <div style="width: 90%; max-width: 1200px; margin: 40px auto; text-align: center;">
+        <div style="background: rgba(0, 240, 255, 0.05); padding: 40px; border-radius: 30px; border: 1px solid var(--border);">
+            <i class="fas fa-user-secret" style="font-size: 3rem; color: var(--neon-cyan); margin-bottom: 20px;"></i>
+            <h2 style="margin-bottom: 20px;" data-lang="tr">Gizliliğiniz Bizimle Güvende</h2>
+            <h2 style="margin-bottom: 20px;" data-lang="en">Your Privacy is Safe with Us</h2>
+            <p style="color: #6b7a99; max-width: 800px; margin: 0 auto;" data-lang="tr">CyberEx Privacy, standart sürümlerden farklı olarak 
+                ek gizlilik katmanları ve iz bırakmayan işlem motoru ile donatılmıştır. Bu bağlantı size özeldir, paylaşmayınız.</p>
+            <p style="color: #6b7a99; max-width: 800px; margin: 0 auto;" data-lang="en">Unlike standard versions, CyberEx Privacy 
+                is equipped with additional privacy layers and an untraceable transaction engine. This link is private to you, please do not share.</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div style="grid-column: span 1.5;">
+                <img src="../cyberex-logo.png" alt="CyberEx Corporate Logo" style="height: 60px; margin-bottom: 25px;">
+                <p style="color: #666; font-size: 0.85rem; line-height: 2; max-width: 480px;">
+                    <strong data-lang="tr">CyberEx Teknoloji Anonim Şirketi</strong>
+                    <strong data-lang="en">CyberEx Technology Inc.</strong><br>
+                    <span data-lang="tr">CyberEx Privacy, en yüksek gizlilik standartlarını hedefleyen özel bir finansal ekosistemdir.</span>
+                    <span data-lang="en">CyberEx Privacy is a private financial ecosystem aimed at the highest privacy standards.</span>
+                </p>
+            </div>
+            <div>
+                <h4 class="footer-col-title" data-lang="tr">KURUMSAL</h4>
+                <a href="../about.html" class="footer-link">Hakkımızda</a>
+                <a href="../legal.html" class="footer-link">Yasal Uyarı</a>
+                <a href="../privacy.html" class="footer-link">Gizlilik Politikası</a>
+            </div>
+            <div>
+                <h4 class="footer-col-title" data-lang="tr">DESTEK</h4>
+                <a href="../help.html" class="footer-link">Yardım Merkezi</a>
+                <a href="../fees.html" class="footer-link">Ücretler</a>
+                <a href="../status.html" class="footer-link">Sistem Durumu</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const langToggle = document.getElementById('langToggle');
+        langToggle.addEventListener('click', () => {
+            const currentLang = document.documentElement.className.includes('lang-tr') ? 'tr' : 'en';
+            const newLang = currentLang === 'tr' ? 'en' : 'tr';
+            document.documentElement.className = 'lang-' + newLang;
+            localStorage.setItem('lang', newLang);
+            langToggle.textContent = newLang === 'tr' ? 'EN' : 'TR';
+        });
+
+        // Generate QR code for the current download link
+        const qrUrl = window.location.origin + "/apks/CyberEx-Privacy.apk";
+        new QRCode(document.getElementById("qrcode"), {
+            text: qrUrl,
+            width: 120,
+            height: 120,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+    </script>
+</body>
+</html>
