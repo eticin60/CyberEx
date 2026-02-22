@@ -13,6 +13,18 @@ All notable changes to the CyberEx website and ecosystem will be documented here
 
 ---
 
+## [2026-02-22] - v1.4.2 Update
+### Added
+- ✅ **Turbo Bot Fix**: Manual trade parameter (amount/leverage) override bug resolved.
+- ✅ **Dynamic AI Logic**: Smart AI confidence thresholds linked to timeframe modes.
+- ✅ **Real-Time Data**: Home screen market cap chart connected to live market volatility.
+- ✅ **Stability**: Currency synchronization (400 error) and profile data fetching fixes.
+- ✅ **Cyber ID System**: Integrated unique 9-digit ID for P2P and referrals.
+- ✅ **Referral Cards**: New QR-based sharing cards for "Invite Friends".
+- ✅ **Identity UX**: ML Kit based ID scanning and liveness detection.
+
+---
+
 ## [2026-02-07] - v1.4.1 Update
 ### Added
 - ✅ **P2P Transfer**: Internal platform transfers (instant & zero fee)
