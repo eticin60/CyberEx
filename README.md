@@ -50,21 +50,22 @@ Explore features, documentation, and ecosystem products:
 
 ## 📥 Download Mobile App
 
-### Latest Release: v1.4.1
+### Latest Release: v1.4.2
 
-[![Download APK](https://img.shields.io/badge/Download-APK%20v1.4.1-orange?style=for-the-badge&logo=android)](https://github.com/eticin60/cyberex-update/raw/main/CyberEx-v1.4.1.apk)
+[![Download APK](https://img.shields.io/badge/Download-APK%20v1.4.2-orange?style=for-the-badge&logo=android)](https://github.com/eticin60/cyberex-update/raw/main/CyberEx-v1.4.2.apk)
 [![Download](https://img.shields.io/badge/Download-On%20Website-cyan?style=for-the-badge&logo=google-chrome)](https://cyberex.com.tr/download.html)
 
 **Quick Download:**
-- 📱 **Direct APK**: [CyberEx-v1.4.1.apk](https://github.com/eticin60/cyberex-update/raw/main/CyberEx-v1.4.1.apk) (~235 MB)
+- 📱 **Direct APK**: [CyberEx-v1.4.2.apk](https://github.com/eticin60/cyberex-update/raw/main/CyberEx-v1.4.2.apk) (~255 MB)
 - 🌐 **Website**: [cyberex.com.tr/download](https://cyberex.com.tr/download.html)
 - 📦 **Releases**: [GitHub Releases](https://github.com/eticin60/cyberex-update)
 
-**What's New in v1.4.1:**
-- ✅ P2P Internal Platform Transfers (Instant & Zero Fee)
-- ✅ MASAK Compliance & 48-hour Withdrawal Lock
-- ✅ Corporate Language Refinements
-- ✅ Android Dialog & UI Stability Fixes
+**What's New in v1.4.2:**
+- ✅ Turbo Bot Optimization (Manual/Auto execution accuracy)
+- ✅ Smart AI Thresholding (Automated confidence levels)
+- ✅ Live Market Analytics (Home screen market cap charts)
+- ✅ Financial Sync (USDT/TRY Real-time tracking)
+- ✅ Access Control & Security Updates
 
 [View Full Changelog →](https://github.com/eticin60/cyberex-update/blob/main/CHANGELOG.md)
 
@@ -93,9 +94,12 @@ Explore features, documentation, and ecosystem products:
 *   **Integrated Fiat Gateway**: Full-stack bank deposit and withdrawal systems supporting **TRY (TL)** and **USD** with automated IBAN formatting and verification.
 *   **Credit Card On-Ramp**: Instant crypto purchases via global providers: **MoonPay, Banxa, Simplex, Sardine,** and **Mercuryo** within a secured environment.
 
-### 🧠 Intelligence & Analytics
+### 🧠 Intelligence & Analytics (Enhanced v1.4.2)
 *   **Gemini AI Core**: Deep integration with **Google Gemini 2.0 Flash** for real-time market structure, technical analysis, and trade setups.
+*   **Turbo Trading Bot**: Optimized trade execution with advanced manual/auto controls and millisecond-accurate pricing.
+*   **Smart AI Thresholding**: New dynamic confidence levels for improved signal accuracy across different timeframes.
 *   **Institutional Market Data**: Ultra-low latency feeds from **Binance** and **CoinGecko** for millisecond-accurate order books and pricing.
+*   **Live Market Integration**: Integrated 7-day market cap charts and real-time global metrics directly on the home dashboard.
 *   **Smart Risk Management**: Automated liquidation tracking, position monitoring, and AI-driven risk assessments.
 *   **Technical Pattern Recognition**: Real-time identification of HH/HL, CHoCH/BOS, liquidity maps, and trend structures.
 
