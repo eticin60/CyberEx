@@ -1,7 +1,7 @@
-// Supabase Configuration (Lütfen gerçek anahtarlarınızı buraya ekleyin veya .env kullanın)
-const SUPABASE_URL = 'https://fkxynlctcbagfvpatzlb.supabase.co'; // TODO: Gerçek URL ile değiştirilmelidir
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; // TODO: Gerçek Anon Key ile değiştirilmelidir
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Supabase Configuration
+const SUPABASE_APP_URL = 'https://fkxynlctcbagfvpatzlb.supabase.co';
+const SUPABASE_APP_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; // TODO: Gerçek Anon Key ile değiştirilmelidir
+const sb = supabase.createClient(SUPABASE_APP_URL, SUPABASE_APP_ANON_KEY);
 
 // Authentication utilities for CyberEx
 class AuthManager {
@@ -103,7 +103,7 @@ class AuthManager {
                 // KARAR: Supabase Auth ID'sini 'user_id' olarak kullanacağız.
                 // Firebase'deki 'publicId' ve verileri buraya eşleyeceğiz.
 
-                const { error: sbProfileError } = await supabase.from('user_profiles').upsert({
+                const { error: sbProfileError } = await sb.from('user_profiles').upsert({
                     user_id: userUid, // Supabase Auth ID
                     username: uniqueUsername,
                     email: userEmail,
@@ -263,7 +263,7 @@ class AuthManager {
             // 10. SUPABASE DUAL-WRITE
             try {
                 // Supabase Auth
-                const { data: sbAuthData, error: sbAuthError } = await supabase.auth.signUp({
+                const { data: sbAuthData, error: sbAuthError } = await sb.auth.signUp({
                     email: email,
                     password: password
                 });
@@ -271,7 +271,7 @@ class AuthManager {
                 const supabaseUid = sbAuthData?.user?.id || userId;
 
                 // Supabase Profile (UserProfileDTO ile aynı)
-                const { error: sbProfileError } = await supabase.from('user_profiles').upsert({
+                const { error: sbProfileError } = await sb.from('user_profiles').upsert({
                     user_id: supabaseUid,
                     username: uniqueUsername,
                     email: email,
@@ -344,7 +344,7 @@ class AuthManager {
     static async loginUser(email, password) {
         try {
             // 1. Önce Supabase ile giriş yapmayı dene (Email verification kontrolü için)
-            const { data, error } = await supabase.auth.signInWithPassword({
+            const { data, error } = await sb.auth.signInWithPassword({
                 email: email,
                 password: password
             });
@@ -390,7 +390,7 @@ class AuthManager {
     // Resend Verification Email (Web)
     static async resendVerificationEmail(email) {
         try {
-            const { error } = await supabase.auth.resend({
+            const { error } = await sb.auth.resend({
                 type: 'signup',
                 email: email
             });
@@ -455,7 +455,7 @@ auth.onAuthStateChanged((user) => {
     window.dispatchEvent(new CustomEvent('authStateChanged', { detail: { user } }));
 });
 
-// --- URL HASH LISTENER (Invite, Recovery & Email Change Logic) ---
+// --- URL HASH LISTENER (Invite, Recovery, Signup & Email Change Logic) ---
 window.addEventListener('load', async () => {
     const hash = window.location.hash;
 
@@ -465,7 +465,13 @@ window.addEventListener('load', async () => {
         window.location.href = 'set-password.html' + hash;
     }
 
-    // 2. Email Change Verification -> Sync Databases
+    // 2. Signup Confirmation -> confirm-success.html
+    else if (hash && hash.includes('type=signup')) {
+        console.log('Signup confirmation token detected, redirecting to confirm-success.html...');
+        window.location.href = 'confirm-success.html' + hash;
+    }
+
+    // 3. Email Change Verification -> Sync Databases
     else if (hash && hash.includes('type=email_change')) {
         console.log('Email change token detected. Verifying and syncing...');
 
@@ -473,7 +479,7 @@ window.addEventListener('load', async () => {
         // Bizim yapmamız gereken: Yeni email'i Firestore ve user_profiles'a eşitlemek.
 
         // Kullanıcı oturumunun güncellenmesini bekle
-        const { data: { user } } = await supabase.auth.getUser();
+        const { data: { user } } = await sb.auth.getUser();
 
         if (user) {
             console.log('Email change verified for:', user.email);
@@ -497,7 +503,7 @@ window.addEventListener('load', async () => {
                 // Not: Kullanıcının Firebase UID'sini bilmiyorsak (Supabase ile giriş yaptıysa)
                 // Supabase 'user_profiles' tablosunu güncelleyebiliriz.
 
-                const { error: profileError } = await supabase
+                const { error: profileError } = await sb
                     .from('user_profiles')
                     .update({ email: user.email })
                     .eq('user_id', user.id);
