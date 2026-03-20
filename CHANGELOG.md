@@ -13,6 +13,14 @@ All notable changes to the CyberEx website and ecosystem will be documented here
 
 ---
 
+## [2026-03-20] - v1.4.3 Update
+### Added
+- ✅ **Veri Kotası Optimizasyonu**: Uygulamanın veri tüketimi optimize edilerek kota aşımı sorunları giderildi.
+- ✅ **Giriş Sorunu Düzeltildi**: Supabase kota kısıtlamasından kaynaklanan giriş hataları çözüldü.
+- ✅ **Verimli Veri Akışı**: Haber ve piyasa verilerinin işlenme hızı ve verimliliği artırıldı.
+
+---
+
 ## [2026-02-22] - v1.4.2 Update
 ### Added
 - ✅ **Turbo Bot Stability**: Manual trade processing and leverage adjustments optimized.

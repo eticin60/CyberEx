@@ -1,6 +1,6 @@
 {
   "name": "cyberex-wallet",
-  "version": "1.0.0",
+  "version": "1.4.3",
   "description": "CyberEx Wallet - Web3 Dijital Soğuk Cüzdan",
   "scripts": {
     "build": "webpack --mode production",

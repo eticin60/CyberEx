@@ -56,7 +56,7 @@ const Settings: React.FC<SettingsProps> = ({ onNavigate }) => {
 
         <div className="settings-item">
           <h3>Hakkında</h3>
-          <p>CyberEx Wallet v1.4.2</p>
+          <p>CyberEx Wallet v1.4.3</p>
           <p>Web3 Dijital Soğuk Cüzdan</p>
         </div>
 

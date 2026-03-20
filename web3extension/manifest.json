@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "CyberEx Cüzdan | Web3 & AI",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "minimum_chrome_version": "114",
   "description": "CyberEx Ekosistemini keşfedin. Yapay zeka destekli alım satım, çoklu ağ yönetimi ve kurumsal düzeyde güvenlik. Merkeziyetsiz finansın geleceği burada.",
   "permissions": [
