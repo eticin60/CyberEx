@@ -1,7 +1,32 @@
 // Supabase Configuration
 const SUPABASE_APP_URL = 'https://fkxynlctcbagfvpatzlb.supabase.co';
-const SUPABASE_APP_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; // TODO: Gerçek Anon Key ile değiştirilmelidir
+const SUPABASE_APP_ANON_KEY = 'sb_publishable_eQK0Npo_3DnhQdZUAV5ZTw_SAj-zt_G';
+if (!SUPABASE_APP_ANON_KEY || SUPABASE_APP_ANON_KEY === 'YOUR_SUPABASE_ANON_KEY') {
+    console.error('[SUPABASE-CONFIG] SUPABASE_APP_ANON_KEY eksik. Web Auth çalışmaz.');
+}
 const sb = supabase.createClient(SUPABASE_APP_URL, SUPABASE_APP_ANON_KEY);
+
+async function getSupabaseAccessToken() {
+    const { data: { session } } = await sb.auth.getSession();
+    return session?.access_token || null;
+}
+
+async function callFirebaseSync(payload) {
+    const accessToken = await getSupabaseAccessToken();
+    if (!accessToken) {
+        console.warn('[FIREBASE-SYNC] Supabase session yok, sync atlandı.');
+        return { success: false, error: 'NoSupabaseSession' };
+    }
+    const res = await fetch(`${SUPABASE_APP_URL}/functions/v1/firebase-sync`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+        },
+        body: JSON.stringify(payload || {})
+    });
+    return await res.json();
+}
 
 // Authentication utilities for CyberEx
 class AuthManager {
@@ -131,7 +156,7 @@ class AuthManager {
         }
     }
 
-    // Generate unique 9-digit Cyber ID (Android IdGenerator.generateUniqueCyberId() ile aynı)
+    // Generate unique 9-digit Cyber ID (Supabase PRIMARY)
     static async generateCyberId() {
         const min = 100000000;
         const max = 999999999;
@@ -143,15 +168,13 @@ class AuthManager {
             const id = Math.floor(Math.random() * (max - min + 1)) + min;
             const idString = id.toString();
 
-            // Check if this ID already exists
-            const existingUsers = await db.collection('users')
-                .where('publicId', '==', idString)
-                .limit(1)
-                .get();
-
-            if (existingUsers.empty) {
-                return idString;
-            }
+            // Check if this ID already exists in Supabase (referral_code)
+            const { data } = await sb
+                .from('user_profiles')
+                .select('user_id')
+                .eq('referral_code', idString)
+                .limit(1);
+            if (!data || data.length === 0) return idString;
 
             attempts++;
         }
@@ -160,18 +183,19 @@ class AuthManager {
         return Date.now().toString().slice(-9);
     }
 
-    // Generate unique username (Android generateUniqueUsername ile aynı)
+    // Generate unique username (Supabase PRIMARY)
     static async generateUniqueUsername(baseUsername) {
         try {
-            const snapshot = await db.collection('users')
-                .where('username', '>=', baseUsername)
-                .get();
-
-            const takenUsernames = snapshot.docs.map(doc => doc.data().username);
             let finalUsername = baseUsername;
             let counter = 1;
 
-            while (takenUsernames.includes(finalUsername)) {
+            while (true) {
+                const { data } = await sb
+                    .from('user_profiles')
+                    .select('user_id')
+                    .eq('username', finalUsername)
+                    .limit(1);
+                if (!data || data.length === 0) break;
                 finalUsername = `${baseUsername}${counter}`;
                 counter++;
             }
@@ -183,13 +207,19 @@ class AuthManager {
         }
     }
 
-    // Register new user (Android registerUser ile TAMAMEN AYNI - Dual-Write)
+    // Register new user (Supabase Auth PRIMARY, Firebase mirror via Edge Function)
     static async registerUser(email, password, phoneNumber, refCode, tcId = '') {
         try {
-            // 1. Firebase Authentication ile kullanıcı oluştur
-            const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-            const user = userCredential.user;
-            const userId = user.uid;
+            // 1. Supabase Auth ile kullanıcı oluştur (PRIMARY)
+            const { data: sbAuthData, error: sbAuthError } = await sb.auth.signUp({
+                email: email,
+                password: password
+            });
+            if (sbAuthError) {
+                return { success: false, error: sbAuthError.message };
+            }
+            const user = sbAuthData?.user;
+            const userId = user?.id || null;
 
             // 2. Cyber ID oluştur
             const publicId = await this.generateCyberId();
@@ -245,34 +275,10 @@ class AuthManager {
                 totalPnl: 0.0
             };
 
-            // 9. FIREBASE BATCH WRITE
-            const batch = db.batch();
-
-            const userDocRef = db.collection('users').doc(userId);
-            const walletColRef = userDocRef.collection('wallet');
-
-            batch.set(userDocRef, userData);
-            batch.set(walletColRef.doc('usdt_balance'), initialBalanceData);
-            batch.set(walletColRef.doc('summary'), initialSummaryData);
-            batch.set(walletColRef.doc('spot_assets'), { initialized: true });
-            batch.set(walletColRef.doc('spot_history'), { initialized: true });
-
-            await batch.commit();
-            console.log('Firebase registration successful');
-
-            // 10. SUPABASE DUAL-WRITE
-            try {
-                // Supabase Auth
-                const { data: sbAuthData, error: sbAuthError } = await sb.auth.signUp({
-                    email: email,
-                    password: password
-                });
-
-                const supabaseUid = sbAuthData?.user?.id || userId;
-
-                // Supabase Profile (UserProfileDTO ile aynı)
+            // 9. SUPABASE Profile (PRIMARY)
+            if (userId) {
                 const { error: sbProfileError } = await sb.from('user_profiles').upsert({
-                    user_id: supabaseUid,
+                    user_id: userId,
                     username: uniqueUsername,
                     email: email,
                     phone_number: phoneNumber,
@@ -283,12 +289,31 @@ class AuthManager {
                     is_migrated: true,
                     device_id: deviceId
                 });
-
                 if (sbProfileError) console.error('Supabase profile error:', sbProfileError);
-                else console.log('Supabase registration successful');
+            }
 
-            } catch (sbError) {
-                console.error('Supabase sync failed, but Firebase succeeded:', sbError);
+            // 10. FIREBASE mirror (Edge Function) + optional custom token login
+            if (userId) {
+                try {
+                    const fbRes = await callFirebaseSync({
+                        action: 'register',
+                        uid: userId,
+                        email,
+                        profile: userData,
+                        wallet: {
+                            usdt_balance: initialBalanceData,
+                            summary: initialSummaryData
+                        }
+                    });
+                    if (fbRes?.custom_token) {
+                        await auth.signInWithCustomToken(fbRes.custom_token);
+                        console.log('Firebase sync/login successful');
+                    } else {
+                        console.warn('Firebase sync response:', fbRes);
+                    }
+                } catch (fbErr) {
+                    console.error('Firebase sync failed:', fbErr);
+                }
             }
 
             // 11. Referral code processing (Android processReferralCode ile AYNI)
@@ -340,7 +365,7 @@ class AuthManager {
         }
     }
 
-    // Login user (Dual-Login: Firebase + Supabase for Verification)
+    // Login user (Supabase PRIMARY, Firebase mirror via custom token)
     static async loginUser(email, password) {
         try {
             // 1. Önce Supabase ile giriş yapmayı dene (Email verification kontrolü için)
@@ -365,9 +390,19 @@ class AuthManager {
                 // Ancak "Invalid login credentials" ise Firebase de muhtemelen başarısız olacaktır.
             }
 
-            // 2. Firebase Authentication ile giriş yap
-            const userCredential = await auth.signInWithEmailAndPassword(email, password);
-            return { success: true, user: userCredential.user };
+            const supabaseUser = data?.user;
+            if (supabaseUser?.id) {
+                try {
+                    const fbRes = await callFirebaseSync({ action: 'login', uid: supabaseUser.id, email: supabaseUser.email });
+                    if (fbRes?.custom_token) {
+                        const userCredential = await auth.signInWithCustomToken(fbRes.custom_token);
+                        return { success: true, user: userCredential.user };
+                    }
+                } catch (fbErr) {
+                    console.error('Firebase login sync failed:', fbErr);
+                }
+            }
+            return { success: true, user: supabaseUser };
 
         } catch (error) {
             console.error('Login error:', error);
@@ -406,6 +441,7 @@ class AuthManager {
     // Logout user
     static async logoutUser() {
         try {
+            await sb.auth.signOut();
             await auth.signOut();
             return { success: true };
         } catch (error) {
@@ -416,7 +452,7 @@ class AuthManager {
 
     // Check if user is logged in
     static getCurrentUser() {
-        return auth.currentUser;
+        return sb.auth.getUser();
     }
 
     // Generate device ID
@@ -429,8 +465,9 @@ class AuthManager {
     }
 }
 
-// Auth state observer
-auth.onAuthStateChanged((user) => {
+// Auth state observer (Supabase PRIMARY)
+sb.auth.onAuthStateChange((_event, session) => {
+    const user = session?.user || null;
     console.log('Auth state changed:', user ? user.email : 'Not logged in');
 
     // Update index.html navbar if we are on that page

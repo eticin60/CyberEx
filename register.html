@@ -406,8 +406,6 @@
     <script src="assets/js/auth.js"></script>
 
     <script>
-        // Google Sign-In provider
-        const googleProvider = new firebase.auth.GoogleAuthProvider();
 
         // Extract referral code from URL
         const urlParams = new URLSearchParams(window.location.search);
@@ -420,118 +418,19 @@
             document.getElementById('referralCodeInput').value = refCodeFromUrl;
         }
 
-        // Google Sign-In (Android SignUpActivity ile AYNI)
+        // Google Sign-In (Supabase OAuth PRIMARY)
         document.getElementById('googleSignInBtn').addEventListener('click', async () => {
             const submitBtn = document.getElementById('googleSignInBtn');
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Google ile giriş yapılıyor...';
 
             try {
-                const result = await auth.signInWithPopup(googleProvider);
-                const user = result.user;
-
-                // Check if user already exists in Firestore
-                const userDoc = await db.collection('users').doc(user.uid).get();
-
-                if (userDoc.exists) {
-                    // User already registered with Google, redirect to login
-                    showError('Bu Google hesabı zaten kayıtlı. Giriş sayfasına yönlendiriliyorsunuz...');
-                    setTimeout(() => {
-                        window.location.href = 'login.html';
-                    }, 2000);
-                    return;
-                }
-
-                // New user - create account (Android ile AYNI mantık)
-                const publicId = await AuthManager.generateCyberId();
-                const baseUsername = user.email.split('@')[0];
-                const uniqueUsername = await AuthManager.generateUniqueUsername(baseUsername);
-                const deviceId = `web_${AuthManager.generateDeviceId()}`;
-                const welcomeBonus = 100.0;
-
-                const userData = {
-                    username: uniqueUsername,
-                    publicId: publicId,
-                    email: user.email,
-                    phoneNumber: user.phoneNumber || '',
-                    ageVerified: true,
-                    premium: false,
-                    admin: false,
-                    user: true,
-                    deviceId: deviceId,
-                    createdAt: firebase.firestore.Timestamp.now(),
-                    referralCode: publicId,
-                    referralCount: 0,
-                    feeDiscount: 0.0,
-                    welcomeBonus: welcomeBonus,
-                    welcomeBonusClaimed: false,
-                    welcomeBonusAddedAt: firebase.firestore.Timestamp.now(),
-                    spotBalance: welcomeBonus,
-                    enteredReferralCode: refCodeFromUrl || '',
-                    registrationSource: 'web_google',
-                    displayName: user.displayName || uniqueUsername,
-                    photoURL: user.photoURL || ''
-                };
-
-                // Wallet data
-                const initialBalance = welcomeBonus;
-                const initialBalanceData = { balance: initialBalance };
-                const initialSummaryData = {
-                    principalBalance: initialBalance,
-                    totalPortfolioValue: initialBalance,
-                    totalPnl: 0.0
-                };
-
-                // Batch write
-                const batch = db.batch();
-                const userDocRef = db.collection('users').doc(user.uid);
-                const walletColRef = userDocRef.collection('wallet');
-
-                batch.set(userDocRef, userData);
-                batch.set(walletColRef.doc('usdt_balance'), initialBalanceData);
-                batch.set(walletColRef.doc('summary'), initialSummaryData);
-                batch.set(walletColRef.doc('spot_assets'), { initialized: true });
-                batch.set(walletColRef.doc('spot_history'), { initialized: true });
-
-                await batch.commit();
-                console.log('Firebase Google registration successful');
-
-                // --- SUPABASE DUAL-WRITE (Google) ---
-                try {
-                    // Supabase Auth (Google idToken ile - Web'de popup sonucu idToken almak daha zordur, şimdilik manuel profil açıyoruz)
-                    // Gerçek akışta Supabase.auth.signInWithOAuth kullanılmalıdır.
-
-                    const supabaseUid = user.uid; // Firebase UID'yi ortak kullanıyoruz
-
-                    const { error: sbProfileError } = await supabase.from('user_profiles').upsert({
-                        user_id: supabaseUid,
-                        username: uniqueUsername,
-                        email: user.email,
-                        phone_number: user.phoneNumber || '',
-                        referral_code: publicId,
-                        spot_available: welcomeBonus,
-                        net_investment: welcomeBonus,
-                        is_migrated: true,
-                        device_id: deviceId
-                    });
-
-                    if (sbProfileError) console.error('Supabase Google profile error:', sbProfileError);
-                    else console.log('Supabase Google registration successful');
-
-                } catch (sbError) {
-                    console.error('Supabase Google sync failed:', sbError);
-                }
-
-                // Process referral
-                if (refCodeFromUrl) {
-                    await AuthManager.processReferralCode(refCodeFromUrl, user.uid);
-                }
-
-                showSuccess(`Google ile kayıt başarılı! Cyber ID: ${publicId}. Download sayfasına yönlendiriliyorsunuz...`);
-
-                setTimeout(() => {
-                    window.location.href = 'download.html';
-                }, 2000);
+                localStorage.setItem('oauth_pending', '1');
+                if (refCodeFromUrl) localStorage.setItem('oauth_ref', refCodeFromUrl);
+                await sb.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: { redirectTo: window.location.origin + '/register.html' }
+                });
 
             } catch (error) {
                 console.error('Google sign-in error:', error);
@@ -546,6 +445,86 @@
                 showError(errorMessage);
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = '<i class="fab fa-google"></i> Google ile Kayıt Ol';
+            }
+        });
+
+        // OAuth dönüş sonrası profil oluşturma
+        window.addEventListener('load', async () => {
+            const oauthPending = localStorage.getItem('oauth_pending') === '1';
+            if (!oauthPending) return;
+            const { data: { session } } = await sb.auth.getSession();
+            const user = session?.user;
+            if (!user) return;
+
+            localStorage.removeItem('oauth_pending');
+            const ref = localStorage.getItem('oauth_ref') || '';
+            localStorage.removeItem('oauth_ref');
+
+            try {
+                const publicId = await AuthManager.generateCyberId();
+                const baseUsername = (user.email || '').split('@')[0] || `user${Date.now()}`;
+                const uniqueUsername = await AuthManager.generateUniqueUsername(baseUsername);
+                const deviceId = `web_${AuthManager.generateDeviceId()}`;
+                const welcomeBonus = 100.0;
+
+                const { data: existingProfile } = await sb
+                    .from('user_profiles')
+                    .select('user_id')
+                    .eq('user_id', user.id)
+                    .limit(1);
+                if (!existingProfile || existingProfile.length === 0) {
+                    await sb.from('user_profiles').upsert({
+                        user_id: user.id,
+                        username: uniqueUsername,
+                        email: user.email,
+                        phone_number: user.phone || null,
+                        referral_code: publicId,
+                        spot_available: welcomeBonus,
+                        net_investment: welcomeBonus,
+                        is_migrated: true,
+                        device_id: deviceId
+                    });
+                }
+
+                // Firebase mirror + custom token login
+                await callFirebaseSync({
+                    action: 'register',
+                    uid: user.id,
+                    email: user.email,
+                    profile: {
+                        username: uniqueUsername,
+                        publicId: publicId,
+                        email: user.email,
+                        phoneNumber: user.phone || '',
+                        ageVerified: true,
+                        premium: false,
+                        admin: false,
+                        user: true,
+                        deviceId: deviceId,
+                        createdAt: new Date().toISOString(),
+                        referralCode: publicId,
+                        referralCount: 0,
+                        feeDiscount: 0.0,
+                        welcomeBonus: welcomeBonus,
+                        welcomeBonusClaimed: false,
+                        welcomeBonusAddedAt: new Date().toISOString(),
+                        spotBalance: welcomeBonus,
+                        enteredReferralCode: ref || '',
+                        registrationSource: 'web_google',
+                        displayName: user.user_metadata?.full_name || uniqueUsername,
+                        photoURL: user.user_metadata?.avatar_url || ''
+                    },
+                    wallet: {
+                        usdt_balance: { balance: welcomeBonus },
+                        summary: { principalBalance: welcomeBonus, totalPortfolioValue: welcomeBonus, totalPnl: 0.0 }
+                    }
+                });
+
+                showSuccess(`Google ile kayıt başarılı! Cyber ID: ${publicId}. Download sayfasına yönlendiriliyorsunuz...`);
+                setTimeout(() => { window.location.href = 'download.html'; }, 2000);
+            } catch (err) {
+                console.error('OAuth completion error:', err);
+                showError('Google ile kayıt tamamlanamadı. Lütfen tekrar deneyin.');
             }
         });
 
