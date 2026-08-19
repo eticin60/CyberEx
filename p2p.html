@@ -266,10 +266,10 @@ input:focus, select:focus { border-color: #00f0ff; box-shadow: 0 0 15px rgba(0, 
 
       <!-- State: Not Connected -->
       <div id="wallet-off-state" class="space-y-3">
-        <button onclick="openWalletSelectModal()" class="btn-gradient-cyan w-full py-4 rounded-2xl text-xs uppercase tracking-widest font-black">
-          <i class="fas fa-plug mr-2"></i>Gerçek Web3 Cüzdanı Bağla
+        <button onclick="openWalletSelectModal()" class="btn-gradient-cyan w-full py-4 rounded-2xl text-sm uppercase tracking-widest font-black">
+          <i class="fas fa-link mr-2"></i>Web3 Cüzdan Bağla
         </button>
-        <p class="text-[10px] text-gray-500">EIP-1193 / EIP-6963 Destekli • EVM, TRC20, BEP20, Solana</p>
+        <p class="text-[10px] text-gray-500 text-center">MetaMask • Trust • OKX • Coinbase • Phantom • WalletConnect</p>
       </div>
 
       <!-- State: Connected -->
@@ -834,96 +834,260 @@ function copyIban(val) {
 }
 
 // ==========================================
-// REAL WEB3 MULTI-WALLET CONNECT ENGINE
+// REAL WEB3 ENGINE — EIP-6963 + WALLETCONNECT v2
 // ==========================================
+
+// WalletConnect Project ID — cloud.walletconnect.com'dan ücretsiz alınır
+const WC_PROJECT_ID = '2ca90b07e9d94f57b254e71e8264d7dc';
+
+// EIP-6963: Injected provider discovery (MetaMask, OKX, Coinbase, Rabby…)
+const _eip6963Providers = {};
+window.addEventListener('eip6963:announceProvider', (evt) => {
+  _eip6963Providers[evt.detail.info.rdns] = evt.detail;
+});
+window.dispatchEvent(new Event('eip6963:requestProvider'));
+
+let _wcProvider = null;   // WalletConnect EthereumProvider instance
+
 function openWalletSelectModal() {
-  document.getElementById("wallet-modal").classList.remove("hidden");
+  document.getElementById('wallet-modal').classList.remove('hidden');
 }
 
 async function connectSpecificWallet(walletType) {
-  closeModal("wallet-modal");
+  closeModal('wallet-modal');
+  _showConnectingBanner(walletType);
 
-  // 1. Injected Provider (MetaMask / Trust / OKX / Coinbase / Brave)
-  if (window.ethereum) {
-    try {
-      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      if (accounts && accounts.length > 0) {
-        app.wallet.address = accounts[0];
-        app.wallet.provider = walletType;
+  try {
+    if (walletType === 'WalletConnect') {
+      await _connectWalletConnect();
+      return;
+    }
 
-        // Request Chain ID
-        try {
-          const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-          app.wallet.chainId = chainId;
-        } catch (ce) {}
+    // 1. EIP-6963: find by wallet type name
+    const rdnsMap = {
+      'MetaMask'       : 'io.metamask',
+      'Trust Wallet'   : 'com.trustwallet.app',
+      'OKX Wallet'     : 'com.okex.wallet',
+      'Coinbase Wallet': 'com.coinbase.wallet',
+      'Phantom'        : 'app.phantom',
+    };
+    const rdns = rdnsMap[walletType];
+    const eip6963 = rdns ? _eip6963Providers[rdns] : null;
+    if (eip6963) {
+      await _connectWithProvider(eip6963.provider, walletType);
+      return;
+    }
 
-        // Request Balance
-        try {
-          const balHex = await window.ethereum.request({ method: 'eth_getBalance', params: [accounts[0], 'latest'] });
-          const balEth = (parseInt(balHex, 16) / 1e18).toFixed(4);
-          app.wallet.balance = balEth + " ETH";
-        } catch (be) {
-          app.wallet.balance = "1,450.00 USDT";
-        }
+    // 2. window.ethereum fallback (injected — MetaMask, Trust dApp browser…)
+    if (window.ethereum) {
+      await _connectWithProvider(window.ethereum, walletType);
+      return;
+    }
 
-        applyConnectedWalletState();
-        return;
-      }
-    } catch (err) {
-      console.warn("Injected wallet connect cancelled/failed:", err);
+    // 3. window.okxwallet (OKX specific)
+    if (walletType === 'OKX Wallet' && window.okxwallet) {
+      await _connectWithProvider(window.okxwallet, walletType);
+      return;
+    }
+
+    // 4. window.phantom (Phantom specific)
+    if (walletType === 'Phantom' && window.phantom?.ethereum) {
+      await _connectWithProvider(window.phantom.ethereum, walletType);
+      return;
+    }
+
+    // 5. Mobil derin bağlantı (cüzdan uygulaması yüklü ama tarayıcıda değil)
+    _openDeepLink(walletType);
+
+  } catch (err) {
+    _hideConnectingBanner();
+    console.error('Wallet connect error:', err);
+    const msg = err.code === 4001 ? 'Bağlantı reddedildi.' : (err.message || 'Bağlantı başarısız.');
+    if (window.Telegram?.WebApp) {
+      window.Telegram.WebApp.showAlert('⛔ ' + msg);
+    } else {
+      alert('⛔ ' + msg);
     }
   }
+}
 
-  // 2. Direct Fallback if opened inside Telegram / mobile WebApp without injected extension
-  // Prompt user with real address binder or WalletConnect deep link
-  const manualAddr = prompt(`Lütfen ${walletType} Web3 Cüzdan Adresinizi (0x... veya Tron T...) giriniz:`, "0x742d35Cc6634C0532925a3b844Bc454e4438f44e");
-  if (manualAddr && manualAddr.trim().length > 10) {
-    app.wallet.address = manualAddr.trim();
-    app.wallet.provider = walletType;
-    app.wallet.balance = "2,850.00 USDT";
-    applyConnectedWalletState();
+async function _connectWithProvider(provider, walletType) {
+  const accounts = await provider.request({ method: 'eth_requestAccounts' });
+  if (!accounts || accounts.length === 0) throw new Error('Hesap bulunamadı.');
+
+  app.wallet.address  = accounts[0];
+  app.wallet.provider = walletType;
+  app.wallet.rawProvider = provider;
+
+  // Chain ID
+  try {
+    app.wallet.chainId = await provider.request({ method: 'eth_chainId' });
+  } catch (_) {}
+
+  // Native balance
+  try {
+    const balHex = await provider.request({ method: 'eth_getBalance', params: [accounts[0], 'latest'] });
+    const balEth = (parseInt(balHex, 16) / 1e18).toFixed(4);
+    app.wallet.balance = balEth + ' ETH';
+  } catch (_) {
+    app.wallet.balance = 'Bakiye alınamadı';
   }
+
+  // Listen for account/chain changes
+  try {
+    provider.on('accountsChanged', (accs) => { if (accs.length === 0) disconnectRealWallet(); else { app.wallet.address = accs[0]; applyConnectedWalletState(); } });
+    provider.on('chainChanged', (cid) => { app.wallet.chainId = cid; applyConnectedWalletState(); });
+  } catch (_) {}
+
+  applyConnectedWalletState();
+}
+
+async function _connectWalletConnect() {
+  // Lazy-load WalletConnect Ethereum Provider SDK
+  if (!window.WalletConnectEthereumProvider) {
+    await _loadScript('https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.17.0/dist/index.umd.js');
+  }
+
+  const EthProvider = (window.WalletConnectEthereumProvider?.default) || window.WalletConnectEthereumProvider;
+
+  _wcProvider = await EthProvider.init({
+    projectId      : WC_PROJECT_ID,
+    chains         : [1],
+    optionalChains : [56, 137, 10, 42161, 43114],
+    showQrModal    : true,
+    qrModalOptions : {
+      themeMode      : 'dark',
+      themeVariables : { '--w3m-accent': '#00f0ff', '--w3m-background-color': '#000c1e' }
+    },
+    metadata: {
+      name       : 'CyberEx P2P',
+      description: 'AI & Web3 Smart Escrow P2P Exchange',
+      url        : 'https://cyberex.com.tr',
+      icons      : ['https://cyberex.com.tr/cyberex-logo.png']
+    }
+  });
+
+  _wcProvider.on('disconnect', disconnectRealWallet);
+  _wcProvider.on('accountsChanged', (accs) => { if (!accs.length) disconnectRealWallet(); });
+
+  await _wcProvider.enable();
+  await _connectWithProvider(_wcProvider, 'WalletConnect');
+}
+
+function _openDeepLink(walletType) {
+  const pageUrl = encodeURIComponent(window.location.href);
+  const links = {
+    'MetaMask'       : 'https://metamask.app.link/dapp/' + window.location.host + window.location.pathname,
+    'Trust Wallet'   : 'https://link.trustwallet.com/open_url?url=' + pageUrl,
+    'OKX Wallet'     : 'okx://wallet/dapp/url?dappUrl=' + pageUrl,
+    'Coinbase Wallet': 'https://go.cb-w.com/dapp?cb_url=' + pageUrl,
+    'Phantom'        : 'https://phantom.app/ul/browse/' + pageUrl + '?ref=' + pageUrl,
+  };
+  const url = links[walletType];
+  if (url) {
+    window.location.href = url;
+  } else {
+    alert('Lütfen cüzdan uygulamanızda bu sayfayı açın: cyberex.com.tr/p2p.html');
+  }
+  _hideConnectingBanner();
+}
+
+function _showConnectingBanner(walletType) {
+  // Brief visual feedback
+  const btn = document.querySelector('#wallet-off-state button');
+  if (btn) { btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>' + walletType + ' bağlanıyor…'; btn.disabled = true; }
+}
+
+function _hideConnectingBanner() {
+  const btn = document.querySelector('#wallet-off-state button');
+  if (btn) { btn.innerHTML = '<i class="fas fa-link mr-2"></i>Web3 Cüzdan Bağla'; btn.disabled = false; }
+}
+
+function _loadScript(src) {
+  return new Promise((res, rej) => {
+    const s = document.createElement('script');
+    s.src = src; s.onload = res; s.onerror = rej;
+    document.head.appendChild(s);
+  });
 }
 
 function applyConnectedWalletState() {
-  document.getElementById("wallet-off-state").classList.add("hidden");
-  document.getElementById("wallet-on-state").classList.remove("hidden");
-  document.getElementById("connected-wallet-provider-name").innerText = app.wallet.provider + " On-Chain Web3";
-  document.getElementById("wallet-real-addr").innerText = app.wallet.address;
-  document.getElementById("wallet-real-bal").innerText = app.wallet.balance;
-  document.getElementById("wallet-real-chain").innerText = app.wallet.chainId === '0x1' ? 'Ethereum Mainnet' : (app.wallet.chainId === '0x38' ? 'BNB Smart Chain' : 'Multi-Chain Gateway');
+  _hideConnectingBanner();
+  document.getElementById('wallet-off-state').classList.add('hidden');
+  document.getElementById('wallet-on-state').classList.remove('hidden');
 
-  // Update Home Card
-  document.getElementById("u-network-badge").innerText = app.wallet.provider.toUpperCase() + " BAĞLI";
-  document.getElementById("u-balance").innerText = app.wallet.balance.split(" ")[0];
-  document.getElementById("u-currency-symbol").innerText = app.wallet.balance.split(" ")[1] || "USDT";
-  document.getElementById("u-wallet-mini-addr").innerText = "Bağlı Adres: " + app.wallet.address.slice(0, 8) + "..." + app.wallet.address.slice(-6);
+  const chainLabels = {
+    '0x1'   : 'Ethereum Mainnet',
+    '0x38'  : 'BNB Smart Chain',
+    '0x89'  : 'Polygon',
+    '0xa'   : 'Optimism',
+    '0xa4b1': 'Arbitrum One',
+    '0xa86a': 'Avalanche C-Chain',
+  };
+  const chainLabel = chainLabels[app.wallet.chainId] || ('Chain ' + (parseInt(app.wallet.chainId, 16) || app.wallet.chainId));
 
-  localStorage.setItem('cyberex_wallet_addr', app.wallet.address);
+  document.getElementById('connected-wallet-provider-name').innerText = app.wallet.provider;
+  document.getElementById('wallet-real-addr').innerText = app.wallet.address;
+  document.getElementById('wallet-real-bal').innerText  = app.wallet.balance;
+  document.getElementById('wallet-real-chain').innerText = chainLabel;
+
+  // Home card
+  document.getElementById('u-network-badge').innerText     = app.wallet.provider.toUpperCase() + ' BAĞLI';
+  document.getElementById('u-balance').innerText           = app.wallet.balance.split(' ')[0];
+  document.getElementById('u-currency-symbol').innerText   = app.wallet.balance.split(' ')[1] || 'ETH';
+  document.getElementById('u-wallet-mini-addr').innerText  = 'Bağlı: ' + app.wallet.address.slice(0,8) + '…' + app.wallet.address.slice(-6);
+
+  // Buy modal autofill
+  const destInput = document.getElementById('input-dest-wallet');
+  if (destInput && !destInput.value) destInput.value = app.wallet.address;
+
+  // Persist
+  localStorage.setItem('cyberex_wallet_addr',     app.wallet.address);
   localStorage.setItem('cyberex_wallet_provider', app.wallet.provider);
+  localStorage.setItem('cyberex_wallet_chainId',  app.wallet.chainId || '');
 }
 
 function disconnectRealWallet() {
-  app.wallet.address = null;
+  if (_wcProvider) { try { _wcProvider.disconnect(); } catch (_) {} _wcProvider = null; }
+  app.wallet.address  = null;
   app.wallet.provider = null;
+  app.wallet.balance  = null;
+  app.wallet.chainId  = null;
   localStorage.removeItem('cyberex_wallet_addr');
   localStorage.removeItem('cyberex_wallet_provider');
-
-  document.getElementById("wallet-on-state").classList.add("hidden");
-  document.getElementById("wallet-off-state").classList.remove("hidden");
-  document.getElementById("u-network-badge").innerText = "BAĞLI DEĞİL";
-  document.getElementById("u-balance").innerText = "0.00";
-  document.getElementById("u-wallet-mini-addr").innerText = "Cüzdanınızı bağlayarak doğrudan Escrow işlemi yapabilirsiniz.";
+  localStorage.removeItem('cyberex_wallet_chainId');
+  document.getElementById('wallet-on-state').classList.add('hidden');
+  document.getElementById('wallet-off-state').classList.remove('hidden');
+  _hideConnectingBanner();
+  document.getElementById('u-network-badge').innerText    = 'BAĞLI DEĞİL';
+  document.getElementById('u-balance').innerText          = '0.00';
+  document.getElementById('u-currency-symbol').innerText  = 'USDT';
+  document.getElementById('u-wallet-mini-addr').innerText = 'Kripto almak için cüzdanınızı bağlayın.';
 }
 
-// Auto-restore wallet from storage
-const savedWallet = localStorage.getItem('cyberex_wallet_addr');
-if (savedWallet) {
-  app.wallet.address = savedWallet;
-  app.wallet.provider = localStorage.getItem('cyberex_wallet_provider') || 'Web3 Wallet';
-  app.wallet.balance = "2,850.00 USDT";
-  applyConnectedWalletState();
-}
+// Auto-restore from localStorage (page refresh)
+(function restoreWallet() {
+  const addr     = localStorage.getItem('cyberex_wallet_addr');
+  const provider = localStorage.getItem('cyberex_wallet_provider') || 'Web3 Wallet';
+  const chainId  = localStorage.getItem('cyberex_wallet_chainId') || '0x1';
+  if (addr) {
+    app.wallet.address  = addr;
+    app.wallet.provider = provider;
+    app.wallet.chainId  = chainId;
+    app.wallet.balance  = 'Bakiye güncelleniyor…';
+    applyConnectedWalletState();
+    // Re-fetch balance in background if window.ethereum still injected
+    if (window.ethereum) {
+      window.ethereum.request({ method: 'eth_getBalance', params: [addr, 'latest'] })
+        .then(hex => {
+          app.wallet.balance = (parseInt(hex, 16) / 1e18).toFixed(4) + ' ETH';
+          document.getElementById('wallet-real-bal').innerText = app.wallet.balance;
+          document.getElementById('u-balance').innerText = app.wallet.balance.split(' ')[0];
+        }).catch(() => {});
+    }
+  }
+})();
+
 
 // ==========================================
 // SPOT TICKER SIMULATION & ORACLE
