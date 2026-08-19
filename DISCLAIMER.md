@@ -20,7 +20,7 @@ Thank you for joining our **Beta Test Program!** As an early adopter, you're hel
 ✅ **SPK (Sermaye Piyasası Kurulu) License Application:** In Progress  
 ✅ **CMB (Capital Markets Board) Compliance:** Ongoing  
 ✅ **Financial Infrastructure:** Being established  
-✅ **Target:** Full regulatory compliance by Q2 2026
+✅ **Target:** Full regulatory compliance by Q2 2027
 
 **What This Means:**
 - The platform is **functional and secure**

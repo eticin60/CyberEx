@@ -2661,10 +2661,10 @@
         </h2>
 
         <p style="color: #e8f0ff; font-size: 1.2rem; margin-bottom: 30px; line-height: 1.9; max-width: 950px; margin-left: auto; margin-right: auto; position: relative; z-index: 1;"
-          data-tr="Erken katılımcılar <strong style='color: #4CAF50;'>özel ödüller ve ayrıcalıklar</strong> kazanıyor! SPK lisans başvurusu devam ediyor (Q2 2026 hedefi). Platform aktif test aşamasında - geri bildirimleriniz bizim için çok değerli! ✨"
-          data-en="Early adopters earn <strong style='color: #4CAF50;'>special rewards and privileges</strong>! SPK license application in progress (Q2 2026 target). Platform in active testing - your feedback is invaluable! ✨">
+          data-tr="Erken katılımcılar <strong style='color: #4CAF50;'>özel ödüller ve ayrıcalıklar</strong> kazanıyor! SPK lisans başvurusu devam ediyor (Q2 2027 hedefi). Platform aktif test aşamasında - geri bildirimleriniz bizim için çok değerli! ✨"
+          data-en="Early adopters earn <strong style='color: #4CAF50;'>special rewards and privileges</strong>! SPK license application in progress (Q2 2027 target). Platform in active testing - your feedback is invaluable! ✨">
           Erken katılımcılar <strong style="color: #4CAF50;">özel ödüller ve ayrıcalıklar</strong> kazanıyor! SPK lisans
-          başvurusu devam ediyor (Q2 2026 hedefi). Platform aktif test aşamasında - geri bildirimleriniz bizim için çok
+          başvurusu devam ediyor (Q2 2027 hedefi). Platform aktif test aşamasında - geri bildirimleriniz bizim için çok
           değerli! ✨
         </p>
 
@@ -3026,9 +3026,9 @@
 
     // Countdown Timer Logic
     function updateCountdown() {
-      const launchDate = new Date("June 16, 2026 00:00:00").getTime();
+      const launchDate = new Date("June 16, 2027 00:00:00").getTime();
       const now = new Date().getTime();
-      const diff = launchDate - now;
+      const diff = Math.max(0, launchDate - now);
 
       const d = Math.floor(diff / (1000 * 60 * 60 * 24));
       const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
