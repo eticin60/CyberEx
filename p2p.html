@@ -1,499 +1,942 @@
 <!DOCTYPE html>
 <html lang="tr">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>CyberEx P2P | AI & Web3 Eshten Eshe Ticaret Platformu</title>
-
-    <!-- Tailwind CSS & FontAwesome -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <!-- Google Fonts (Inter) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- Telegram WebApp SDK -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        cyber: {
-                            bg: '#000510',
-                            card: 'rgba(0, 20, 40, 0.6)',
-                            border: 'rgba(0, 240, 255, 0.25)',
-                            cyan: '#00f0ff',
-                            blue: '#0072ff',
-                            purple: '#bc13fe',
-                            green: '#00ff88',
-                            orange: '#FF9800',
-                            text: '#e8f0ff'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif']
-                    }
-                }
-            }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<title>CyberEx P2P | Akıllı Smart Escrow Platformu</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        cyber: {
+          bg: '#000510',
+          cyan: '#00f0ff',
+          blue: '#0072ff',
+          purple: '#bc13fe',
+          green: '#00ff88',
+          orange: '#FF9800'
         }
-    </script>
-
-    <style>
-        body {
-            background-color: #000510;
-            color: #e8f0ff;
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-            user-select: none;
-            -webkit-user-select: none;
-        }
-
-        .neon-glow {
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
-        }
-
-        .neon-glow-hover:hover {
-            box-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
-            border-color: #00f0ff;
-        }
-
-        .glass {
-            background: rgba(0, 10, 25, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 240, 255, 0.15);
-        }
-
-        /* Active Tab indicator styles like mobile app */
-        .tab-active {
-            color: #00f0ff;
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
-        }
-
-        .tab-active i {
-            transform: translateY(-2px);
-            color: #00f0ff;
-            filter: drop-shadow(0 0 5px #00f0ff);
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: rgba(0, 5, 16, 0.95);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(0, 240, 255, 0.3);
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(0, 240, 255, 0.6);
-        }
-
-        /* Pulse animation for active trades */
-        @keyframes pulse-cyan {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.05); }
-        }
-        .pulse-dot {
-            animation: pulse-cyan 2s infinite;
-        }
-
-        /* Hiding views */
-        .view-section {
-            display: none;
-        }
-        .view-section.active {
-            display: block;
-        }
-    </style>
+      },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif']
+      }
+    }
+  }
+}
+</script>
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body { background: #000510; color: #e8f0ff; font-family: 'Inter', sans-serif; overflow-x: hidden; user-select: none; -webkit-user-select: none; padding-bottom: 85px; }
+.glass { background: rgba(0, 15, 35, 0.75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(0, 240, 255, 0.15); }
+.neon-border { border: 1px solid rgba(0, 240, 255, 0.3); }
+.tab-btn { color: #8899ac; transition: all 0.2s; }
+.tab-btn.tab-active { color: #00f0ff !important; }
+.tab-btn.tab-active i { filter: drop-shadow(0 0 8px #00f0ff); transform: translateY(-2px); color: #00f0ff; }
+.tab-btn.tab-active span { text-shadow: 0 0 10px rgba(0, 240, 255, 0.6); color: #00f0ff; }
+.view-panel { display: none; }
+.view-panel.active { display: block; }
+@keyframes pulse-c { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+.pulse { animation: pulse-c 1.8s infinite; }
+@keyframes slide-up { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.slide-up { animation: slide-up 0.25s ease-out; }
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0, 240, 255, 0.3); border-radius: 4px; }
+.btn-cyan { background: linear-gradient(135deg, #00f0ff, #0072ff); color: #000510; font-weight: 900; border: none; cursor: pointer; transition: all 0.2s; }
+.btn-cyan:hover { opacity: 0.92; transform: scale(1.01); }
+.btn-cyan:active { transform: scale(0.98); }
+.card { background: rgba(0, 15, 35, 0.7); border: 1px solid rgba(0, 240, 255, 0.12); border-radius: 20px; padding: 16px; transition: border-color 0.2s; }
+.card:hover { border-color: rgba(0, 240, 255, 0.3); }
+input, select { background: rgba(0, 15, 35, 0.85); border: 1px solid rgba(0, 240, 255, 0.2); color: #fff; border-radius: 12px; padding: 10px 14px; width: 100%; font-size: 0.82rem; outline: none; transition: border-color 0.2s; }
+input:focus, select:focus { border-color: #00f0ff; }
+input::placeholder { color: rgba(255, 255, 255, 0.3); }
+.modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 100; display: flex; align-items: flex-end; justify-content: center; padding: 0; }
+.modal-sheet { width: 100%; max-width: 480px; background: #000d20; border: 1px solid rgba(0, 240, 255, 0.25); border-radius: 28px 28px 0 0; padding: 24px; max-height: 92vh; overflow-y: auto; }
+.step-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 900; flex-shrink: 0; }
+.step-done { background: #00f0ff; color: #000510; }
+.step-active { background: #FFB300; color: #000; animation: pulse-c 1.5s infinite; }
+.step-pending { background: rgba(0, 240, 255, 0.1); border: 1px solid rgba(0, 240, 255, 0.3); color: rgba(0, 240, 255, 0.5); }
+</style>
 </head>
+<body>
 
-<body class="min-h-screen flex flex-col pb-24">
+<!-- TOP HEADER -->
+<header class="glass fixed top-0 left-0 right-0 z-50 px-4 py-3 flex justify-between items-center">
+  <div class="flex items-center gap-2.5">
+    <img src="cyberex-logo.png" alt="CyberEx" class="h-8" style="filter: drop-shadow(0 0 6px #00f0ff);" onerror="this.style.display='none'">
+    <div>
+      <p class="text-[11px] font-black tracking-[3px] text-cyan-400">CYBEREX</p>
+      <p class="text-[8px] text-gray-400 uppercase tracking-wider">P2P SMART ESCROW</p>
+    </div>
+  </div>
+  <div class="flex items-center gap-2">
+    <div class="text-right hidden sm:block">
+      <p class="text-[8px] text-gray-500">USDT / TRY Spot</p>
+      <p class="text-xs font-mono text-cyan-400 font-bold" id="hdr-rate">47.61 TL</p>
+    </div>
+    <div class="flex items-center gap-1 px-2.5 py-1 rounded-full bg-green-500/10 border border-green-500/20">
+      <span class="w-1.5 h-1.5 rounded-full bg-green-400 pulse"></span>
+      <span class="text-[9px] font-bold text-green-400 uppercase">ONLINE</span>
+    </div>
+  </div>
+</header>
 
-    <!-- Header / Top Ticker Bar -->
-    <header class="w-full glass fixed top-0 left-0 right-0 z-50 px-4 py-3 flex justify-between items-center transition-all duration-300">
-        <div class="flex items-center gap-2">
-            <img src="cyberex-logo.png" alt="CyberEx Logo" class="h-8 filter drop-shadow-[0_0_5px_rgba(0,240,255,0.6)]">
-            <div class="flex flex-col">
-                <span class="text-xs font-black tracking-widest text-cyber-cyan">CYBEREX</span>
-                <span class="text-[9px] font-bold text-gray-500 uppercase tracking-wider">P2P SMART ESCROW</span>
+<!-- MAIN CONTAINER -->
+<main class="max-w-lg mx-auto px-4 mt-20 space-y-4">
+
+  <!-- =========================================== -->
+  <!--  PANEL 1: HOME                              -->
+  <!-- =========================================== -->
+  <section id="panel-home" class="view-panel active space-y-4">
+    <!-- User Profile Card -->
+    <div class="card relative overflow-hidden" style="background: linear-gradient(135deg, rgba(0, 114, 255, 0.15), rgba(0, 240, 255, 0.05));">
+      <div class="absolute -top-8 -right-8 w-28 h-28 rounded-full blur-2xl" style="background: rgba(0, 240, 255, 0.1);"></div>
+      <div class="flex justify-between items-start mb-4">
+        <div class="flex items-center gap-3">
+          <div id="u-avatar" class="w-11 h-11 rounded-full flex items-center justify-center font-black text-sm" style="background: linear-gradient(135deg, #0072ff, #00f0ff); color: #000510;">CX</div>
+          <div>
+            <p class="font-bold text-white text-sm" id="u-name">CyberEx User</p>
+            <p class="text-[10px] font-bold text-cyan-400 uppercase tracking-widest" id="u-vip">BRONZE TIER</p>
+          </div>
+        </div>
+        <div class="text-right">
+          <p class="text-[8px] text-gray-500 mb-0.5">P2P Rating</p>
+          <p class="text-xs font-bold text-yellow-400"><i class="fas fa-star text-[9px] mr-1"></i><span id="u-rating">5.0 / 5.0</span></p>
+        </div>
+      </div>
+      <p class="text-[9px] text-gray-400 uppercase tracking-widest">ESTIMATED WEB3 BALANCE</p>
+      <div class="flex items-baseline gap-1.5 mt-0.5">
+        <span class="text-3xl font-black text-white font-mono" id="u-balance">0.00</span>
+        <span class="text-sm font-bold text-cyan-400">USDT</span>
+      </div>
+      <div class="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-white/5">
+        <div class="text-center bg-black/30 rounded-xl p-2.5">
+          <p class="text-[8px] text-gray-500 uppercase">COMPLETED TRADES</p>
+          <p class="text-sm font-black text-white font-mono" id="u-trades-count">0</p>
+        </div>
+        <div class="text-center bg-black/30 rounded-xl p-2.5">
+          <p class="text-[8px] text-gray-500 uppercase">TOTAL VOLUME</p>
+          <p class="text-sm font-black text-cyan-400 font-mono" id="u-volume">$0</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Tickers -->
+    <div class="grid grid-cols-3 gap-2">
+      <div class="card text-center py-3">
+        <p class="text-[8px] text-gray-500 mb-1">BTC / USD</p>
+        <p class="text-xs font-black font-mono text-white" id="tick-btc">$68,477</p>
+        <p class="text-[8px] text-green-400 mt-0.5">+1.4%</p>
+      </div>
+      <div class="card text-center py-3">
+        <p class="text-[8px] text-gray-500 mb-1">ETH / USD</p>
+        <p class="text-xs font-black font-mono text-white" id="tick-eth">$3,300</p>
+        <p class="text-[8px] text-green-400 mt-0.5">+0.8%</p>
+      </div>
+      <div class="card text-center py-3">
+        <p class="text-[8px] text-gray-500 mb-1">USDT / TRY</p>
+        <p class="text-xs font-black font-mono text-cyan-400" id="tick-try">47.61 TL</p>
+        <p class="text-[8px] text-green-400 mt-0.5">Spot</p>
+      </div>
+    </div>
+
+    <!-- Active Trades Card -->
+    <div>
+      <div class="flex justify-between items-center mb-2 px-1">
+        <p class="text-[10px] font-black uppercase tracking-widest text-cyan-400">ACTIVE ESCROWS & TRADES</p>
+        <p class="text-[9px] text-gray-500" id="active-trades-count">0 active</p>
+      </div>
+      <div id="active-trades-list">
+        <div class="card py-6 text-center text-gray-500 text-xs flex flex-col items-center gap-2">
+          <i class="fas fa-receipt text-2xl text-cyan-400/20"></i>
+          <p>Aktif escrow işlemi bulunmuyor</p>
+          <button onclick="navTo('trade')" class="text-cyan-400 text-[10px] font-bold hover:underline">+ Yeni İşlem Başlat</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Activity Feed -->
+    <div>
+      <div class="flex justify-between items-center mb-2 px-1">
+        <p class="text-[10px] font-black uppercase tracking-widest text-cyan-400">LIVE P2P ACTIVITY FEED</p>
+        <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 pulse"></span>
+      </div>
+      <div class="card p-3 max-h-48 overflow-y-auto space-y-2 text-xs" id="activity-feed">
+        <div class="flex gap-2 text-gray-400"><span class="text-cyan-400 font-mono w-10 flex-shrink-0">17:41</span><span>🇹🇷 CryptoKing_TR - 5,000 USDT satış tamamlandı ⚡</span></div>
+        <div class="flex gap-2 text-gray-400"><span class="text-cyan-400 font-mono w-10 flex-shrink-0">17:39</span><span>🇩🇪 EuroTrader_DE stok yeniledi (+10,000 USDT) 📦</span></div>
+        <div class="flex gap-2 text-gray-400"><span class="text-cyan-400 font-mono w-10 flex-shrink-0">17:30</span><span>🇺🇸 MiamiWhale_OTC - 2,500 USDT satış tamamlandı ⚡</span></div>
+        <div class="flex gap-2 text-gray-400"><span class="text-cyan-400 font-mono w-10 flex-shrink-0">17:22</span><span>🇦🇪 DubaiWhale_AED - 15,000 USDT satış tamamlandı ⚡</span></div>
+        <div class="flex gap-2 text-gray-400"><span class="text-cyan-400 font-mono w-10 flex-shrink-0">17:15</span><span>🇬🇧 LondonPrime_UK - 3,500 USDT satış tamamlandı ⚡</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================== -->
+  <!--  PANEL 2: EXCHANGE (İLANLAR)                -->
+  <!-- =========================================== -->
+  <section id="panel-trade" class="view-panel space-y-4">
+    <!-- Filter Bar -->
+    <div class="card p-3 space-y-3">
+      <div class="flex justify-between items-center gap-2">
+        <div class="flex gap-1.5">
+          <button id="btn-mode-buy" onclick="setTradeMode('buy')" class="btn-cyan px-4 py-2 rounded-xl text-[10px] uppercase tracking-wider font-bold">BUY (AL)</button>
+          <button id="btn-mode-sell" onclick="setTradeMode('sell')" class="px-4 py-2 rounded-xl text-[10px] uppercase tracking-wider font-bold text-gray-400 bg-white/5 hover:bg-white/10">SELL (SAT)</button>
+        </div>
+        <div class="flex gap-1.5">
+          <select id="sel-coin" onchange="fetchListings()" class="text-[10px] py-1.5 px-2 rounded-xl font-bold">
+            <option value="USDT">USDT</option>
+            <option value="BTC">BTC</option>
+            <option value="ETH">ETH</option>
+          </select>
+          <select id="sel-fiat" onchange="fetchListings()" class="text-[10px] py-1.5 px-2 rounded-xl font-bold">
+            <option value="TRY">TRY (₺)</option>
+            <option value="USD">USD ($)</option>
+            <option value="EUR">EUR (€)</option>
+            <option value="GBP">GBP (£)</option>
+            <option value="AED">AED (د.إ)</option>
+            <option value="RUB">RUB (₽)</option>
+          </select>
+        </div>
+      </div>
+      <div class="flex justify-between text-[9px] text-gray-400 px-1 pt-1 border-t border-white/5">
+        <span>🛡️ KYC-FREE • %10 - %15 PREMIUM</span>
+        <span id="listing-count-tag">Yükleniyor...</span>
+      </div>
+    </div>
+
+    <!-- Listings Box -->
+    <div id="listings-box" class="space-y-3"></div>
+  </section>
+
+  <!-- =========================================== -->
+  <!--  PANEL 3: WALLET (CÜZDAN)                   -->
+  <!-- =========================================== -->
+  <section id="panel-wallet" class="view-panel space-y-4">
+    <div class="card p-6 text-center space-y-4">
+      <div class="w-16 h-16 rounded-full mx-auto flex items-center justify-center" style="background: rgba(0, 240, 255, 0.08); border: 2px solid rgba(0, 240, 255, 0.25);">
+        <i class="fas fa-wallet text-3xl text-cyan-400"></i>
+      </div>
+      <div>
+        <h2 class="text-base font-black text-white">CyberEx Web3 Gateway</h2>
+        <p class="text-xs text-gray-400 mt-1">MetaMask, Trust Wallet, Phantom ve 300+ Web3 cüzdanı ile doğrudan Escrow entegrasyonu.</p>
+      </div>
+
+      <div id="wallet-off" class="space-y-3">
+        <button onclick="connectWeb3()" class="btn-cyan w-full py-3.5 rounded-2xl text-xs uppercase tracking-wider font-black">
+          <i class="fas fa-plug mr-2"></i>Cüzdan Bağla (MetaMask / Trust)
+        </button>
+        <p class="text-[9px] text-gray-500">WalletConnect v2 • EVM • TRC20 • BEP20 • Solana</p>
+      </div>
+
+      <div id="wallet-on" class="hidden space-y-3">
+        <div class="bg-black/30 rounded-2xl p-4 text-left space-y-2 border border-cyan-400/20">
+          <div class="flex justify-between">
+            <span class="text-[9px] text-gray-500 uppercase">Bağlı Web3 Adresi</span>
+            <span class="text-[9px] text-green-400 font-bold bg-green-400/10 px-2 py-0.5 rounded-full">BAĞLANDI</span>
+          </div>
+          <p class="font-mono text-xs text-cyan-400 break-all" id="wallet-addr-text">0x...</p>
+          <div class="flex justify-between pt-2 border-t border-white/5 text-xs">
+            <span class="text-gray-400">Escrow İzni:</span>
+            <span class="text-green-400 font-bold">ONAYLANDI (SINIRSIZ)</span>
+          </div>
+        </div>
+        <button onclick="disconnectWeb3()" class="w-full py-2.5 rounded-xl text-xs text-gray-400 bg-white/5 hover:bg-white/10">Bağlantıyı Kes</button>
+      </div>
+    </div>
+
+    <!-- Supported Networks -->
+    <div class="card p-4 space-y-3">
+      <p class="text-[10px] font-black text-cyan-400 uppercase tracking-wider">Desteklenen Ağlar & Varlıklar</p>
+      <div class="grid grid-cols-2 gap-2 text-xs">
+        <div class="bg-black/30 rounded-xl p-3 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span><span>TRON (TRC20)</span></div>
+        <div class="bg-black/30 rounded-xl p-3 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span><span>Ethereum (ERC20)</span></div>
+        <div class="bg-black/30 rounded-xl p-3 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span><span>BNB Chain (BEP20)</span></div>
+        <div class="bg-black/30 rounded-xl p-3 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span><span>Bitcoin Network</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================== -->
+  <!--  PANEL 4: TRADES (İŞLEMLERİM)               -->
+  <!-- =========================================== -->
+  <section id="panel-history" class="view-panel space-y-4">
+    <div class="flex justify-between items-center px-1">
+      <p class="text-[10px] font-black uppercase tracking-widest text-cyan-400">P2P İŞLEM GEÇMİŞİ</p>
+      <button onclick="renderTradeHistory()" class="text-[9px] text-cyan-400 hover:underline"><i class="fas fa-rotate-right mr-1"></i>Yenile</button>
+    </div>
+    <div id="trade-history-box" class="space-y-2"></div>
+  </section>
+
+  <!-- =========================================== -->
+  <!--  PANEL 5: INFO (BİLGİ & YASAL)              -->
+  <!-- =========================================== -->
+  <section id="panel-info" class="view-panel space-y-3">
+    <p class="text-[10px] font-black uppercase tracking-widest text-cyan-400 px-1">BİLGİ MERKEZİ & YASAL UYARILAR</p>
+
+    <div class="card overflow-hidden p-0">
+      <button class="w-full flex justify-between items-center px-5 py-4 text-xs font-bold uppercase tracking-wider text-white hover:bg-white/5 text-left" onclick="toggleAcc('acc-p2p')">
+        <span><i class="fas fa-question-circle text-cyan-400 mr-2"></i>P2P (Peer-to-Peer) Nedir?</span>
+        <i class="fas fa-chevron-down text-cyan-400/60 text-[10px]"></i>
+      </button>
+      <div id="acc-p2p" class="hidden px-5 pb-5 text-xs text-gray-400 leading-relaxed border-t border-white/5">
+        Peer-to-Peer ticaret, alıcı ve satıcının merkezi bir emir defteri olmaksızın doğrudan eşleştiği işlem modelidir. CyberEx Smart Escrow Protokolü, işlem süresince satıcının kripto varlığını akıllı kontrat havuzunda kilitleyerek fon güvenliğini garanti altına alır.
+      </div>
+    </div>
+
+    <div class="card overflow-hidden p-0">
+      <button class="w-full flex justify-between items-center px-5 py-4 text-xs font-bold uppercase tracking-wider text-white hover:bg-white/5 text-left" onclick="toggleAcc('acc-escrow')">
+        <span><i class="fas fa-shield-halved text-cyan-400 mr-2"></i>Smart Escrow Nasıl Çalışır?</span>
+        <i class="fas fa-chevron-down text-cyan-400/60 text-[10px]"></i>
+      </button>
+      <div id="acc-escrow" class="hidden px-5 pb-5 text-xs text-gray-400 leading-relaxed border-t border-white/5">
+        <ol class="list-decimal ml-4 space-y-1.5 mt-1">
+          <li><strong>Sipariş:</strong> Alıcı ilan seçer, tutar girer ve akıllı escrow başlar.</li>
+          <li><strong>Kilit:</strong> Satıcının kriptosu CyberEx Escrow havuzunda kilitlenir.</li>
+          <li><strong>Ödeme:</strong> Alıcı banka havalesi/FAST ile ödemeyi yapar ve dekont yükler.</li>
+          <li><strong>Doğrulama:</strong> Mutabakat motoru banka kaydını onaylar (1-4 dk).</li>
+          <li><strong>Teslim:</strong> Kripto otomatik olarak alıcının Web3 cüzdanına transfer edilir.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card overflow-hidden p-0">
+      <button class="w-full flex justify-between items-center px-5 py-4 text-xs font-bold uppercase tracking-wider text-white hover:bg-white/5 text-left" onclick="toggleAcc('acc-fees')">
+        <span><i class="fas fa-percent text-cyan-400 mr-2"></i>Komisyon & Limitler</span>
+        <i class="fas fa-chevron-down text-cyan-400/60 text-[10px]"></i>
+      </button>
+      <div id="acc-fees" class="hidden px-5 pb-5 text-xs text-gray-400 leading-relaxed border-t border-white/5 space-y-2">
+        <div class="flex justify-between"><span>Minimum İşlem Tutarı:</span><span class="text-white font-bold">750 USDT</span></div>
+        <div class="flex justify-between"><span>KYC-Free Prim Oranı:</span><span class="text-white font-bold">%10.0 - %14.8</span></div>
+        <div class="flex justify-between"><span>Alıcı Komisyonu:</span><span class="text-white font-bold">%0.20 (Bronze VIP)</span></div>
+        <div class="flex justify-between"><span>Ödeme Süresi Limiti:</span><span class="text-white font-bold">30 Dakika</span></div>
+      </div>
+    </div>
+
+    <div class="card overflow-hidden p-0">
+      <button class="w-full flex justify-between items-center px-5 py-4 text-xs font-bold uppercase tracking-wider text-white hover:bg-white/5 text-left" onclick="toggleAcc('acc-legal')">
+        <span><i class="fas fa-scale-balanced text-cyan-400 mr-2"></i>Yasal Uyarı & Risk Bildirimi</span>
+        <i class="fas fa-chevron-down text-cyan-400/60 text-[10px]"></i>
+      </button>
+      <div id="acc-legal" class="hidden px-5 pb-5 text-xs text-gray-400 leading-relaxed border-t border-white/5">
+        Kripto varlıklar yüksek volatilite içerir. CyberEx P2P platformu Türkiye Cumhuriyeti kanunlarına ve MASAK düzenlemelerine tam uyum hedefler. Platform yalnızca teknolojik altyapı ve akıllı escrow mutabakatı sağlar; yatırım tavsiyesi niteliği taşımaz. 18 yaş sınırı zorunludur.
+      </div>
+    </div>
+
+    <div class="card overflow-hidden p-0">
+      <button class="w-full flex justify-between items-center px-5 py-4 text-xs font-bold uppercase tracking-wider text-white hover:bg-white/5 text-left" onclick="toggleAcc('acc-kvkk')">
+        <span><i class="fas fa-user-shield text-cyan-400 mr-2"></i>KVKK & Çerez Politikası</span>
+        <i class="fas fa-chevron-down text-cyan-400/60 text-[10px]"></i>
+      </button>
+      <div id="acc-kvkk" class="hidden px-5 pb-5 text-xs text-gray-400 leading-relaxed border-t border-white/5">
+        CyberEx P2P yalnızca Telegram kullanıcı kimliğinizi ve işlem referanslarınızı saklar. Verileriniz 3. taraflarla paylaşılmaz. Supabase altyapımız GDPR ve KVKK standartlarında şifrelenmektedir.
+      </div>
+    </div>
+
+    <a href="https://cyberex.com.tr" target="_blank" class="card flex items-center justify-between p-4 hover:border-cyan-400/40 text-decoration-none">
+      <div>
+        <p class="text-xs font-bold text-white">Resmi Web Sitesi</p>
+        <p class="text-[9px] text-gray-400 mt-0.5">cyberex.com.tr • Tam Dokümantasyon</p>
+      </div>
+      <i class="fas fa-external-link-alt text-cyan-400/70"></i>
+    </a>
+  </section>
+
+</main>
+
+<!-- =========================================== -->
+<!--  BOTTOM NAVIGATION (HAMSTER KOMBAT STYLE)   -->
+<!-- =========================================== -->
+<nav class="glass fixed bottom-0 left-0 right-0 z-50 max-w-lg mx-auto" style="border-top: 1px solid rgba(0, 240, 255, 0.2); border-radius: 24px 24px 0 0; padding: 10px 8px 12px;">
+  <div class="flex justify-around items-center">
+    <button onclick="navTo('home')" id="nav-btn-home" class="tab-btn tab-active flex flex-col items-center gap-1.5 flex-1">
+      <i class="fas fa-home text-base"></i>
+      <span class="text-[8px] font-bold uppercase tracking-wider">Ana Sayfa</span>
+    </button>
+    <button onclick="navTo('trade')" id="nav-btn-trade" class="tab-btn flex flex-col items-center gap-1.5 flex-1">
+      <i class="fas fa-exchange-alt text-base"></i>
+      <span class="text-[8px] font-bold uppercase tracking-wider">İlanlar</span>
+    </button>
+    <button onclick="navTo('wallet')" id="nav-btn-wallet" class="tab-btn flex flex-col items-center gap-1.5 flex-1">
+      <i class="fas fa-wallet text-base"></i>
+      <span class="text-[8px] font-bold uppercase tracking-wider">Cüzdan</span>
+    </button>
+    <button onclick="navTo('history')" id="nav-btn-history" class="tab-btn flex flex-col items-center gap-1.5 flex-1">
+      <i class="fas fa-receipt text-base"></i>
+      <span class="text-[8px] font-bold uppercase tracking-wider">İşlemler</span>
+    </button>
+    <button onclick="navTo('info')" id="nav-btn-info" class="tab-btn flex flex-col items-center gap-1.5 flex-1">
+      <i class="fas fa-info-circle text-base"></i>
+      <span class="text-[8px] font-bold uppercase tracking-wider">Bilgi</span>
+    </button>
+  </div>
+</nav>
+
+<!-- =========================================== -->
+<!--  BUY ORDER MODAL                            -->
+<!-- =========================================== -->
+<div id="buy-modal" class="modal-overlay hidden">
+  <div class="modal-sheet slide-up space-y-4">
+    <div class="flex justify-between items-center">
+      <h3 class="text-sm font-black text-cyan-400 uppercase tracking-wider">Smart Escrow Alım Başlat</h3>
+      <button onclick="closeModal('buy-modal')" class="text-gray-400 hover:text-white w-7 h-7 flex items-center justify-center rounded-full bg-white/5"><i class="fas fa-times text-xs"></i></button>
+    </div>
+
+    <!-- Seller Summary -->
+    <div class="p-3.5 bg-black/40 rounded-2xl text-xs space-y-2 border border-cyan-400/15">
+      <div class="flex justify-between"><span class="text-gray-400">Satıcı:</span><span class="font-bold text-white" id="modal-seller">-</span></div>
+      <div class="flex justify-between"><span class="text-gray-400">Birim Satış Fiyatı:</span><span class="font-bold text-green-400 font-mono" id="modal-price">-</span></div>
+      <div class="flex justify-between"><span class="text-gray-400">İşlem Limiti:</span><span class="font-bold text-white font-mono" id="modal-limits">-</span></div>
+      <div class="flex justify-between"><span class="text-gray-400">Ağ:</span><span class="font-bold text-cyan-400" id="modal-network">-</span></div>
+    </div>
+
+    <!-- Inputs -->
+    <div class="space-y-3 text-xs">
+      <div>
+        <label class="text-[10px] text-gray-400 uppercase block mb-1.5 font-bold">Almak İstediğiniz Kripto Miktar</label>
+        <div class="relative">
+          <input type="number" id="input-crypto-amt" placeholder="0.00" oninput="updateCalculatedFiat()">
+          <span class="absolute right-3.5 top-2.5 text-xs text-cyan-400 font-bold" id="label-coin-symbol">USDT</span>
+        </div>
+      </div>
+      <div>
+        <label class="text-[10px] text-gray-400 uppercase block mb-1.5 font-bold">Ödeyeceğiniz Tutar (Fiat)</label>
+        <div class="bg-black/40 border border-white/10 rounded-xl px-4 py-3 flex justify-between items-center">
+          <span class="font-mono font-black text-lg text-white" id="display-fiat-total">0.00</span>
+          <span class="text-xs text-cyan-400 font-bold" id="label-fiat-symbol">TRY</span>
+        </div>
+      </div>
+      <div>
+        <label class="text-[10px] text-gray-400 uppercase block mb-1.5 font-bold">Kripto Teslim Alacak Cüzdan Adresiniz</label>
+        <input type="text" id="input-wallet-dest" placeholder="0x... veya T... adresiniz">
+      </div>
+    </div>
+
+    <button onclick="executeOrder()" class="btn-cyan w-full py-4 rounded-2xl text-xs uppercase tracking-widest font-black mt-2">
+      <i class="fas fa-shield-halved mr-2"></i>Escrow Siparişini Onayla
+    </button>
+  </div>
+</div>
+
+<!-- =========================================== -->
+<!--  ACTIVE ESCROW PIPELINE MODAL               -->
+<!-- =========================================== -->
+<div id="escrow-modal" class="modal-overlay hidden">
+  <div class="modal-sheet slide-up space-y-4">
+    <div class="flex justify-between items-center">
+      <div>
+        <p class="text-[9px] text-gray-500 uppercase">İşlem Referans Kodu</p>
+        <h3 class="text-sm font-black text-cyan-400 font-mono" id="esc-code">TR-0000</h3>
+      </div>
+      <button onclick="closeModal('escrow-modal')" class="text-gray-400 hover:text-white w-7 h-7 flex items-center justify-center rounded-full bg-white/5"><i class="fas fa-times text-xs"></i></button>
+    </div>
+
+    <!-- 4-Step Pipeline Tracker -->
+    <div class="bg-black/40 rounded-2xl p-4 border border-cyan-400/15">
+      <p class="text-[9px] text-gray-400 uppercase mb-3 text-center font-bold">SMART ESCROW PROTOKOL TAKİBİ</p>
+      <div class="flex items-center justify-between relative px-2">
+        <div class="absolute left-6 right-6 top-3.5 h-0.5 bg-white/10"></div>
+        <div class="flex flex-col items-center z-10">
+          <div class="step-dot step-done" id="dot-1"><i class="fas fa-check"></i></div>
+          <p class="text-[8px] mt-1.5 text-gray-400 font-bold">Sipariş</p>
+        </div>
+        <div class="flex flex-col items-center z-10">
+          <div class="step-dot step-active" id="dot-2">2</div>
+          <p class="text-[8px] mt-1.5 text-gray-400 font-bold">Ödeme</p>
+        </div>
+        <div class="flex flex-col items-center z-10">
+          <div class="step-dot step-pending" id="dot-3">3</div>
+          <p class="text-[8px] mt-1.5 text-gray-400 font-bold">Doğrulama</p>
+        </div>
+        <div class="flex flex-col items-center z-10">
+          <div class="step-dot step-pending" id="dot-4">4</div>
+          <p class="text-[8px] mt-1.5 text-gray-400 font-bold">Teslim</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trade Summary -->
+    <div class="bg-black/40 rounded-2xl p-3.5 space-y-1.5 text-xs border border-white/5">
+      <div class="flex justify-between"><span class="text-gray-400">Alınan Varlık:</span><span class="font-bold text-cyan-400 font-mono" id="esc-crypto-val">0 USDT</span></div>
+      <div class="flex justify-between"><span class="text-gray-400">Ödenecek Tutar:</span><span class="font-bold text-white font-mono" id="esc-fiat-val">0 TRY</span></div>
+      <div class="flex justify-between"><span class="text-gray-400">Birim Kur:</span><span class="font-bold text-gray-300 font-mono" id="esc-rate-val">0 TRY</span></div>
+    </div>
+
+    <!-- Payment Bank Box -->
+    <div class="bg-cyan-400/5 border border-cyan-400/25 rounded-2xl p-4 space-y-2.5 text-xs">
+      <p class="text-[10px] font-black text-cyan-400 uppercase tracking-wider">Tahsis Edilen Mutabakat Hesabı</p>
+      <div>
+        <p class="text-[8px] text-gray-400 mb-0.5">IBAN (Kopyalamak için tıklayın)</p>
+        <p class="font-mono text-white select-all break-all text-[11px] bg-black/40 p-2 rounded-lg border border-white/5 font-bold cursor-pointer" onclick="navigator.clipboard.writeText('TR450006200012340006299972'); alert('IBAN kopyalandı!')">TR45 0006 2000 1234 0006 2999 72</p>
+      </div>
+      <div class="flex justify-between">
+        <div>
+          <p class="text-[8px] text-gray-400 mb-0.5">HESAP ADI</p>
+          <p class="text-white font-bold">CyberEx P2P Finans A.Ş.</p>
+        </div>
+        <div class="text-right">
+          <p class="text-[8px] text-gray-400 mb-0.5">HAVALE AÇIKLAMASI</p>
+          <p class="text-orange-400 font-black font-mono" id="esc-ref-tag">REF-0000</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Proof Upload Section -->
+    <div id="proof-upload-box">
+      <p class="text-[9px] text-gray-400 uppercase mb-2 font-bold">Ödeme Dekontu Yükle</p>
+      <div onclick="document.getElementById('proof-file-input').click()" class="border-2 border-dashed border-cyan-400/30 rounded-2xl p-5 text-center cursor-pointer hover:border-cyan-400 transition-colors bg-black/20">
+        <i class="fas fa-cloud-arrow-up text-2xl text-cyan-400/60 mb-2"></i>
+        <p class="text-xs text-gray-300 font-bold" id="proof-file-label">Dekont Görseli Seç (JPEG / PNG / PDF)</p>
+        <input type="file" id="proof-file-input" class="hidden" accept="image/*,.pdf" onchange="onProofUploaded(this)">
+      </div>
+    </div>
+
+    <button onclick="closeModal('escrow-modal'); navTo('home');" class="w-full py-3 rounded-2xl text-xs text-gray-400 bg-white/5 hover:bg-white/10 font-bold">Kapat</button>
+  </div>
+</div>
+
+<script>
+// ==========================================
+// App State & Configuration
+// ==========================================
+const SUPA_URL = "https://fkxynlctcbagfvpatzlb.supabase.co";
+const SUPA_ANON = "sb_publishable_eQK0Npo_3DnhQdZUAV5ZTw_SAj-zt_G";
+
+const appState = {
+  tradeMode: 'buy',
+  rates: {
+    USDT_TRY: 47.61,
+    USDT_USD: 1.0005,
+    USDT_EUR: 0.8565,
+    USDT_GBP: 0.7920,
+    USDT_AED: 3.6725,
+    USDT_RUB: 92.40,
+    BTC_USD: 68477.0,
+    ETH_USD: 3300.0
+  },
+  user: {
+    name: "CyberEx User",
+    avatar: "CX",
+    vip: "Bronze",
+    rating: 5.0,
+    trades: 0,
+    volume: 0
+  },
+  wallet: null,
+  activeListing: null,
+  activeTrade: null,
+  trades: []
+};
+
+// Telegram WebApp Initialization
+if (window.Telegram && window.Telegram.WebApp) {
+  const twa = window.Telegram.WebApp;
+  twa.ready();
+  twa.expand();
+  const u = twa.initDataUnsafe && twa.initDataUnsafe.user;
+  if (u) {
+    appState.user.name = u.username ? "@" + u.username : (u.first_name + (u.last_name ? " " + u.last_name : ""));
+    appState.user.avatar = (u.first_name || "C")[0].toUpperCase();
+    document.getElementById("u-name").innerText = appState.user.name;
+    document.getElementById("u-avatar").innerText = appState.user.avatar;
+  }
+}
+
+// ==========================================
+// Navigation & Tab Switching
+// ==========================================
+function navTo(tab) {
+  document.querySelectorAll(".view-panel").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("tab-active"));
+  
+  const targetPanel = document.getElementById("panel-" + tab);
+  const targetBtn = document.getElementById("nav-btn-" + tab);
+  
+  if (targetPanel) targetPanel.classList.add("active");
+  if (targetBtn) targetBtn.classList.add("tab-active");
+  
+  if (tab === "trade") fetchListings();
+  if (tab === "history") renderTradeHistory();
+}
+
+function toggleAcc(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle("hidden");
+}
+
+function closeModal(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.add("hidden");
+}
+
+// ==========================================
+// Ticker Engine
+// ==========================================
+function updateTickers() {
+  // Minor organic fluctuation
+  appState.rates.USDT_TRY += (Math.random() - 0.5) * 0.02;
+  appState.rates.BTC_USD += (Math.random() - 0.5) * 45;
+  appState.rates.ETH_USD += (Math.random() - 0.5) * 4;
+
+  const tryRate = appState.rates.USDT_TRY.toFixed(2);
+  const btcRate = Math.round(appState.rates.BTC_USD).toLocaleString();
+  const ethRate = Math.round(appState.rates.ETH_USD).toLocaleString();
+
+  document.getElementById("hdr-rate").innerText = tryRate + " TL";
+  document.getElementById("tick-try").innerText = tryRate + " TL";
+  document.getElementById("tick-btc").innerText = "$" + btcRate;
+  document.getElementById("tick-eth").innerText = "$" + ethRate;
+}
+setInterval(updateTickers, 8000);
+
+// ==========================================
+// Trade Mode Toggle (BUY / SELL)
+// ==========================================
+function setTradeMode(mode) {
+  appState.tradeMode = mode;
+  const buyBtn = document.getElementById("btn-mode-buy");
+  const sellBtn = document.getElementById("btn-mode-sell");
+  
+  if (mode === "buy") {
+    buyBtn.className = "btn-cyan px-4 py-2 rounded-xl text-[10px] uppercase tracking-wider font-bold";
+    sellBtn.className = "px-4 py-2 rounded-xl text-[10px] uppercase tracking-wider font-bold text-gray-400 bg-white/5 hover:bg-white/10";
+  } else {
+    sellBtn.className = "btn-cyan px-4 py-2 rounded-xl text-[10px] uppercase tracking-wider font-bold";
+    buyBtn.className = "px-4 py-2 rounded-xl text-[10px] uppercase tracking-wider font-bold text-gray-400 bg-white/5 hover:bg-white/10";
+  }
+  fetchListings();
+}
+
+// ==========================================
+// Dynamic Listings Fetch from Supabase
+// ==========================================
+async function fetchListings() {
+  const coin = document.getElementById("sel-coin").value;
+  const fiat = document.getElementById("sel-fiat").value;
+  const box = document.getElementById("listings-box");
+  const tag = document.getElementById("listing-count-tag");
+  
+  box.innerHTML = '<div class="card py-10 text-center text-cyan-400"><i class="fas fa-circle-notch fa-spin text-2xl mb-2"></i><p class="text-xs text-gray-400">Canlı ilanlar yükleniyor...</p></div>';
+
+  try {
+    const url = `${SUPA_URL}/rest/v1/telegram_p2p_listings?coin=eq.${coin}&fiat_currency=eq.${fiat}&status=eq.active&order=rating.desc&limit=30`;
+    const res = await fetch(url, {
+      headers: {
+        "apikey": SUPA_ANON,
+        "Authorization": "Bearer " + SUPA_ANON
+      }
+    });
+
+    let listings = [];
+    if (res.ok) {
+      listings = await res.json();
+    }
+
+    // Fallback if network issue or empty
+    if (!listings || listings.length === 0) {
+      listings = [
+        { id: 1, mock_seller_name: "CryptoKing_TR", mock_flag: "🇹🇷", coin: coin, network: "TRC20", fiat_currency: fiat, available_amount: 128000, min_limit: 750, max_limit: 5000, premium_rate: 0.100, rating: 4.98, completed_trades_count: 542, completion_rate_pct: 99.8, avg_response_min: 4, payment_methods_json: '["Havale / EFT", "Papara", "FAST"]' },
+        { id: 2, mock_seller_name: "TrustTrader_34", mock_flag: "🇹🇷", coin: coin, network: "TRC20", fiat_currency: fiat, available_amount: 72500, min_limit: 750, max_limit: 3500, premium_rate: 0.108, rating: 4.92, completed_trades_count: 318, completion_rate_pct: 99.2, avg_response_min: 6, payment_methods_json: '["Ziraat Bankası", "Garanti BBVA", "Papara"]' },
+        { id: 3, mock_seller_name: "CoinMaster_IST", mock_flag: "🇹🇷", coin: coin, network: "TRC20", fiat_currency: fiat, available_amount: 215000, min_limit: 1000, max_limit: 20000, premium_rate: 0.105, rating: 5.00, completed_trades_count: 1240, completion_rate_pct: 100.0, avg_response_min: 3, payment_methods_json: '["İş Bankası", "Akbank", "FAST"]' }
+      ];
+    }
+
+    tag.innerText = `${listings.length} Aktif Satıcı`;
+    box.innerHTML = "";
+
+    listings.forEach(item => {
+      let baseRate = appState.rates[`USDT_${item.fiat_currency}`] || (item.fiat_currency === "TRY" ? 47.61 : 1.0);
+      if (item.coin === "BTC") baseRate = appState.rates.BTC_USD * (item.fiat_currency === "TRY" ? appState.rates.USDT_TRY : 1.0);
+      if (item.coin === "ETH") baseRate = appState.rates.ETH_USD * (item.fiat_currency === "TRY" ? appState.rates.USDT_TRY : 1.0);
+
+      const finalPrice = (baseRate * (1 + (item.premium_rate || 0.10))).toFixed(item.coin === "USDT" ? 2 : 0);
+      let methods = [];
+      try { methods = JSON.parse(item.payment_methods_json || "[]"); } catch(e) { methods = ["Havale / EFT"]; }
+      const methodBadges = methods.slice(0, 3).map(m => `<span class="bg-cyan-400/10 text-cyan-400 border border-cyan-400/20 text-[8px] font-bold px-2 py-0.5 rounded-full">${m}</span>`).join(" ");
+
+      const card = document.createElement("div");
+      card.className = "card hover:border-cyan-400/40 transition-colors space-y-2.5";
+      
+      const itemDataStr = JSON.stringify({
+        id: item.id,
+        seller: item.mock_seller_name,
+        flag: item.mock_flag,
+        coin: item.coin,
+        network: item.network || "TRC20",
+        fiat: item.fiat_currency,
+        finalPrice: parseFloat(finalPrice),
+        minLimit: item.min_limit,
+        maxLimit: item.max_limit
+      }).replace(/"/g, '&quot;');
+
+      card.innerHTML = `
+        <div class="flex justify-between items-start">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-cyan-400/10 border border-cyan-400/20 flex items-center justify-center text-sm">${item.mock_flag || "🌐"}</div>
+            <div>
+              <p class="text-xs font-black text-white flex items-center gap-1">${item.mock_seller_name} <i class="fas fa-circle-check text-cyan-400 text-[10px]"></i></p>
+              <p class="text-[8px] text-gray-400">${item.completed_trades_count} işlem • %${item.completion_rate_pct} başarı • ~${item.avg_response_min} dk</p>
             </div>
+          </div>
+          <div class="flex items-center gap-1 bg-yellow-400/10 text-yellow-400 px-2 py-0.5 rounded-lg text-[9px] font-bold border border-yellow-400/20">
+            <i class="fas fa-star text-[8px]"></i>${Number(item.rating).toFixed(2)}
+          </div>
         </div>
 
-        <!-- Live Price Ticker (updates in real time) -->
-        <div class="flex items-center gap-3 text-xs">
-            <div class="hidden sm:flex flex-col items-end">
-                <span class="text-[9px] text-gray-500 uppercase">Live Spot Rate</span>
-                <span class="font-mono text-cyber-cyan" id="top-ticker-rate">USDT/TRY: 47.50 TL</span>
-            </div>
-            <div id="connection-status" class="flex items-center gap-1.5 bg-green-500/10 text-cyber-green px-2 py-0.5 rounded-full border border-cyber-green/20">
-                <span class="w-2 h-2 rounded-full bg-cyber-green pulse-dot"></span>
-                <span class="text-[10px] font-bold uppercase tracking-wider">Online</span>
-            </div>
+        <div class="flex justify-between items-end pt-2 border-t border-white/5">
+          <div>
+            <p class="text-[8px] text-gray-500 mb-0.5">KYC-Free Satış Fiyatı</p>
+            <p class="text-lg font-black text-green-400 font-mono">${finalPrice} <span class="text-xs text-white">${item.fiat_currency}</span></p>
+          </div>
+          <div class="text-right">
+            <p class="text-[8px] text-gray-500 mb-0.5">Mevcut Havuz / Limit</p>
+            <p class="text-xs font-bold text-white font-mono">${Number(item.available_amount).toLocaleString()} ${item.coin}</p>
+            <p class="text-[8px] text-gray-400 font-mono">${item.min_limit} - ${item.max_limit} ${item.coin}</p>
+          </div>
         </div>
-    </header>
 
-    <!-- Main Container -->
-    <main class="flex-1 w-full max-w-lg mx-auto px-4 mt-20 z-10">
+        <div class="flex justify-between items-center pt-2">
+          <div class="flex gap-1 flex-wrap">${methodBadges}</div>
+          <button onclick="openBuyModal(${itemDataStr})" class="btn-cyan px-4 py-1.5 rounded-xl text-[10px] uppercase tracking-wider font-bold">
+            ${appState.tradeMode === 'buy' ? 'AL' : 'SAT'}
+          </button>
+        </div>
+      `;
+      box.appendChild(card);
+    });
 
-        <!-- ========================================== -->
-        <!-- VIEW 1: HOME (ANA SAYFA)                   -->
-        <!-- ========================================== -->
-        <section id="view-home" class="view-section active space-y-5">
-            <!-- User Balance/Card -->
-            <div class="w-full glass rounded-3xl p-5 relative overflow-hidden bg-gradient-to-br from-cyan-950/20 to-blue-950/20">
-                <div class="absolute -right-10 -top-10 w-32 h-32 bg-cyber-cyan/10 rounded-full blur-2xl"></div>
-                <div class="flex justify-between items-start mb-4">
-                    <div class="flex items-center gap-2">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-cyber-blue to-cyber-cyan flex items-center justify-center font-bold text-cyber-bg" id="user-avatar-text">
-                            CX
-                        </div>
-                        <div>
-                            <h3 class="text-sm font-bold text-white" id="user-display-name">CyberEx User</h3>
-                            <p class="text-[10px] text-cyber-cyan tracking-wider uppercase font-bold" id="user-vip-tier">Bronze Tier</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col items-end">
-                        <span class="text-[9px] text-gray-500">P2P Rating</span>
-                        <span class="text-xs font-bold text-yellow-400"><i class="fas fa-star mr-1"></i>5.0 / 5.0</span>
-                    </div>
-                </div>
+  } catch (err) {
+    console.error("Fetch listings error:", err);
+    box.innerHTML = '<div class="card py-6 text-center text-red-400 text-xs">İlanlar yüklenirken bir bağlantı hatası oluştu. Lütfen tekrar deneyin.</div>';
+  }
+}
 
-                <div class="pt-2">
-                    <span class="text-[10px] text-gray-400 uppercase tracking-widest font-medium">Estimated Web3 Balance</span>
-                    <h1 class="text-3xl font-black tracking-tight text-white mt-1 flex items-baseline gap-1.5">
-                        <span id="home-balance">0.00</span>
-                        <span class="text-sm font-bold text-cyber-cyan">USDT</span>
-                    </h1>
-                </div>
+// ==========================================
+// Buy Order Flow & Modal
+// ==========================================
+function openBuyModal(item) {
+  appState.activeListing = item;
+  document.getElementById("modal-seller").innerText = item.seller;
+  document.getElementById("modal-price").innerText = `${item.finalPrice} ${item.fiat} / ${item.coin}`;
+  document.getElementById("modal-limits").innerText = `${item.minLimit} - ${item.maxLimit} ${item.coin}`;
+  document.getElementById("modal-network").innerText = item.network;
+  document.getElementById("label-coin-symbol").innerText = item.coin;
+  document.getElementById("label-fiat-symbol").innerText = item.fiat;
+  document.getElementById("input-crypto-amt").value = item.minLimit;
+  document.getElementById("input-wallet-dest").value = appState.wallet || "";
+  
+  updateCalculatedFiat();
+  document.getElementById("buy-modal").classList.remove("hidden");
+}
 
-                <div class="grid grid-cols-2 gap-3 mt-5 pt-4 border-t border-cyber-border">
-                    <div class="text-center bg-cyber-bg/40 rounded-xl p-2.5 border border-white/5">
-                        <span class="text-[9px] text-gray-500 block uppercase">Completed Trades</span>
-                        <span class="text-sm font-black text-white" id="home-completed-trades">0</span>
-                    </div>
-                    <div class="text-center bg-cyber-bg/40 rounded-xl p-2.5 border border-white/5">
-                        <span class="text-[9px] text-gray-500 block uppercase">Total Volume</span>
-                        <span class="text-sm font-black text-cyber-cyan" id="home-volume">.00</span>
-                    </div>
-                </div>
-            </div>
+function updateCalculatedFiat() {
+  if (!appState.activeListing) return;
+  const amt = parseFloat(document.getElementById("input-crypto-amt").value) || 0;
+  const total = amt * appState.activeListing.finalPrice;
+  document.getElementById("display-fiat-total").innerText = total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
 
-            <!-- Quick Action Tickers -->
-            <div class="grid grid-cols-3 gap-2">
-                <div class="glass rounded-2xl p-3 text-center">
-                    <span class="text-[9px] text-gray-500 uppercase block">BTC/USD</span>
-                    <span class="text-xs font-black text-white font-mono mt-1 block" id="rate-btc-usd">,000</span>
-                </div>
-                <div class="glass rounded-2xl p-3 text-center">
-                    <span class="text-[9px] text-gray-500 uppercase block">ETH/USD</span>
-                    <span class="text-xs font-black text-white font-mono mt-1 block" id="rate-eth-usd">,300</span>
-                </div>
-                <div class="glass rounded-2xl p-3 text-center">
-                    <span class="text-[9px] text-gray-500 uppercase block">USDT/TRY</span>
-                    <span class="text-xs font-black text-cyber-green font-mono mt-1 block" id="rate-usdt-try">47.50 TL</span>
-                </div>
-            </div>
+function executeOrder() {
+  const item = appState.activeListing;
+  const amt = parseFloat(document.getElementById("input-crypto-amt").value) || 0;
+  const wallet = document.getElementById("input-wallet-dest").value.trim();
 
-            <!-- Active Escrows Tracker -->
-            <div class="space-y-3">
-                <div class="flex justify-between items-center px-1">
-                    <h2 class="text-xs font-black uppercase tracking-wider text-cyber-cyan">Active Escrows & Trades</h2>
-                    <span class="text-[10px] text-gray-500" id="active-trades-count">0 running</span>
-                </div>
-                
-                <div class="space-y-2.5" id="active-trades-container">
-                    <div class="glass rounded-2xl p-4 text-center text-sm text-gray-500 py-6">
-                        <i class="fas fa-receipt text-2xl mb-2 text-cyber-cyan/30"></i>
-                        <p>No active P2P trades found</p>
-                    </div>
-                </div>
-            </div>
+  if (amt < item.minLimit || amt > item.maxLimit) {
+    alert(`Lütfen ${item.minLimit} ile ${item.maxLimit} ${item.coin} arasında bir tutar girin.`);
+    return;
+  }
+  if (!wallet) {
+    alert("Lütfen kriptonun aktarılacağı Web3 cüzdan adresinizi girin.");
+    return;
+  }
 
-            <!-- Live Market Feed -->
-            <div class="space-y-3">
-                <div class="flex justify-between items-center px-1">
-                    <h2 class="text-xs font-black uppercase tracking-wider text-cyber-cyan">Live P2P Activity Feed</h2>
-                    <span class="w-1.5 h-1.5 rounded-full bg-cyber-cyan pulse-dot"></span>
-                </div>
-                
-                <div class="glass rounded-2xl p-4 space-y-3 text-xs max-h-48 overflow-y-auto" id="live-activity-feed">
-                    <div class="flex items-center gap-2.5 text-gray-400">
-                        <span class="text-cyber-cyan">17:41</span>
-                        <span>CryptoKing_TR completed 5,000 USDT trade</span>
-                    </div>
-                    <div class="flex items-center gap-2.5 text-gray-400">
-                        <span class="text-cyber-cyan">17:39</span>
-                        <span>EuroTrader_DE replenished inventory (+10,000 USDT)</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+  const code = "TR-" + Math.floor(1000 + Math.random() * 9000);
+  const fiatTotal = amt * item.finalPrice;
 
-        <!-- ========================================== -->
-        <!-- VIEW 2: TRADE (ILANLAR)                    -->
-        <!-- ========================================== -->
-        <section id="view-trade" class="view-section space-y-4">
-            <!-- Filter Bar -->
-            <div class="glass rounded-2xl p-3 flex justify-between items-center gap-3">
-                <div class="flex gap-2">
-                    <button class="px-4 py-1.5 rounded-xl bg-cyber-cyan text-cyber-bg font-black text-xs uppercase" id="btn-toggle-buy">BUY</button>
-                    <button class="px-4 py-1.5 rounded-xl bg-transparent text-gray-400 font-bold text-xs uppercase hover:bg-white/5" id="btn-toggle-sell">SELL</button>
-                </div>
-                <div class="flex gap-1.5">
-                    <select id="select-coin" class="bg-cyber-bg/85 border border-cyber-border text-white text-xs rounded-xl px-2.5 py-1.5 font-bold focus:outline-none focus:border-cyber-cyan">
-                        <option value="USDT">USDT</option>
-                        <option value="BTC">BTC</option>
-                        <option value="ETH">ETH</option>
-                    </select>
-                    <select id="select-fiat" class="bg-cyber-bg/85 border border-cyber-border text-white text-xs rounded-xl px-2.5 py-1.5 font-bold focus:outline-none focus:border-cyber-cyan">
-                        <option value="TRY">TRY</option>
-                        <option value="USD">USD</option>
-                        <option value="EUR">EUR</option>
-                        <option value="GBP">GBP</option>
-                        <option value="AED">AED</option>
-                        <option value="RUB">RUB</option>
-                    </select>
-                </div>
-            </div>
+  const trade = {
+    code: code,
+    coin: item.coin,
+    cryptoAmt: amt,
+    fiatAmt: fiatTotal,
+    fiatCur: item.fiat,
+    unitPrice: item.finalPrice,
+    wallet: wallet,
+    status: 'pending',
+    step: 2,
+    createdAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  };
 
-            <!-- Info Bar -->
-            <div class="flex justify-between items-center px-1 text-[10px] text-gray-500">
-                <span>KYC-FREE PREMIUM RATE (+10% - +15%)</span>
-                <span>SORTED BY BEST MATCH</span>
-            </div>
+  appState.trades.unshift(trade);
+  appState.activeTrade = trade;
 
-            <!-- Listings Container -->
-            <div class="space-y-3" id="listings-container"></div>
-        </section>
+  closeModal("buy-modal");
+  openEscrowTracker(trade);
+}
 
-        <!-- ========================================== -->
-        <!-- VIEW 3: CUZDAN                             -->
-        <!-- ========================================== -->
-        <section id="view-wallet" class="view-section space-y-5">
-            <div class="glass rounded-3xl p-5 text-center space-y-4">
-                <div class="w-16 h-16 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/30 flex items-center justify-center mx-auto">
-                    <i class="fas fa-wallet text-3xl text-cyber-cyan"></i>
-                </div>
-                <div>
-                    <h2 class="text-lg font-black text-white">CyberEx Smart Web3 Gateway</h2>
-                    <p class="text-xs text-gray-400 mt-1">Connect your Web3 Wallet to interact with CyberEx Smart Escrow system.</p>
-                </div>
+// ==========================================
+// Escrow Pipeline Modal & Progression
+// ==========================================
+function openEscrowTracker(trade) {
+  appState.activeTrade = trade;
+  document.getElementById("esc-code").innerText = trade.code;
+  document.getElementById("esc-crypto-val").innerText = `${trade.cryptoAmt.toLocaleString()} ${trade.coin}`;
+  document.getElementById("esc-fiat-val").innerText = `${trade.fiatAmt.toLocaleString(undefined, { minimumFractionDigits: 2 })} ${trade.fiatCur}`;
+  document.getElementById("esc-rate-val").innerText = `${trade.unitPrice.toFixed(2)} ${trade.fiatCur}`;
+  document.getElementById("esc-ref-tag").innerText = `REF-${trade.code.split("-")[1]}`;
+  
+  setPipelineStep(trade.step || 2);
+  document.getElementById("proof-upload-box").classList.remove("hidden");
+  document.getElementById("escrow-modal").classList.remove("hidden");
+  
+  renderActiveTrades();
+}
 
-                <div id="wallet-not-connected">
-                    <button class="w-full bg-gradient-to-r from-cyber-cyan to-cyber-blue text-cyber-bg font-black py-3 rounded-2xl transition-all duration-300 uppercase text-xs tracking-wider neon-glow hover:opacity-90" id="btn-connect-wallet">
-                        Connect Wallet (MetaMask / Trust)
-                    </button>
-                    <p class="text-[9px] text-gray-500 mt-2">Supports WalletConnect v2 & 300+ crypto wallets</p>
-                </div>
+function setPipelineStep(n) {
+  for (let i = 1; i <= 4; i++) {
+    const dot = document.getElementById("dot-" + i);
+    if (!dot) continue;
+    if (i < n) {
+      dot.className = "step-dot step-done";
+      dot.innerHTML = '<i class="fas fa-check"></i>';
+    } else if (i === n) {
+      dot.className = "step-dot step-active";
+      dot.innerText = i;
+    } else {
+      dot.className = "step-dot step-pending";
+      dot.innerText = i;
+    }
+  }
+}
 
-                <div id="wallet-connected" class="hidden space-y-3">
-                    <div class="bg-cyber-bg/50 border border-cyber-border rounded-2xl p-4 text-left">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-[10px] text-gray-500 uppercase">Connected Wallet</span>
-                            <span class="text-[10px] bg-cyber-cyan/10 text-cyber-cyan px-2 py-0.5 rounded-full font-bold">CONNECTED</span>
-                        </div>
-                        <p class="font-mono text-xs text-white break-all" id="wallet-address-display">0x0000...</p>
-                        
-                        <div class="flex justify-between items-center mt-4 pt-3 border-t border-cyber-border/40">
-                            <span class="text-xs text-gray-400">Escrow Approval Status:</span>
-                            <span class="text-xs font-bold text-cyber-green" id="wallet-approval-status">APPROVED (UNLIMITED)</span>
-                        </div>
-                    </div>
+function onProofUploaded(input) {
+  if (!input.files || !input.files[0]) return;
+  const fileName = input.files[0].name;
+  
+  document.getElementById("proof-file-label").innerText = "Yüklendi: " + fileName;
+  document.getElementById("proof-file-label").style.color = "#00f0ff";
 
-                    <button class="w-full bg-white/5 hover:bg-white/10 text-gray-400 font-bold py-2.5 rounded-xl text-xs uppercase" id="btn-disconnect-wallet">
-                        Disconnect Wallet
-                    </button>
-                </div>
-            </div>
-        </section>
+  if (appState.activeTrade) {
+    appState.activeTrade.status = "uploaded";
+    appState.activeTrade.step = 3;
+    setPipelineStep(3);
+    renderActiveTrades();
 
-        <!-- ========================================== -->
-        <!-- VIEW 4: TRACTS (ISLEMLERIM)                 -->
-        <!-- ========================================== -->
-        <section id="view-history" class="view-section space-y-4">
-            <div class="flex justify-between items-center px-1">
-                <h2 class="text-xs font-black uppercase tracking-wider text-cyber-cyan">P2P Trade Records</h2>
-                <button class="text-[10px] text-cyber-cyan hover:underline" id="btn-refresh-history">Refresh List</button>
-            </div>
+    // Simulated settlement engine verification
+    setTimeout(() => {
+      if (appState.activeTrade) {
+        appState.activeTrade.status = "completed";
+        appState.activeTrade.step = 4;
+        setPipelineStep(4);
+        
+        appState.user.trades += 1;
+        appState.user.volume += appState.activeTrade.cryptoAmt;
+        document.getElementById("u-trades-count").innerText = appState.user.trades;
+        document.getElementById("u-volume").innerText = "$" + appState.user.volume.toLocaleString();
+        document.getElementById("u-balance").innerText = appState.activeTrade.cryptoAmt.toLocaleString(undefined, { minimumFractionDigits: 2 });
+        document.getElementById("proof-upload-box").classList.add("hidden");
+        
+        renderActiveTrades();
+        renderTradeHistory();
+      }
+    }, 6000);
+  }
+}
 
-            <div class="space-y-3" id="history-container"></div>
-        </section>
+function renderActiveTrades() {
+  const box = document.getElementById("active-trades-list");
+  const countTag = document.getElementById("active-trades-count");
+  const activeList = appState.trades.filter(t => t.status !== "completed");
 
-        <!-- ========================================== -->
-        <!-- VIEW 5: INFO (BILGI & REHBER)               -->
-        <!-- ========================================== -->
-        <section id="view-info" class="view-section space-y-4">
-            <h2 class="text-xs font-black uppercase tracking-wider text-cyber-cyan px-1">Legal Documents & Info Hub</h2>
+  countTag.innerText = `${activeList.length} aktif`;
 
-            <div class="grid grid-cols-1 gap-2">
-                <div class="glass rounded-2xl overflow-hidden">
-                    <button class="w-full px-5 py-4 flex justify-between items-center font-bold text-xs uppercase tracking-wider text-white hover:bg-white/5 text-left" onclick="toggleAccordion('info-faq')">
-                        <span>What is P2P & Escrow?</span>
-                        <i class="fas fa-chevron-down text-cyber-cyan"></i>
-                    </button>
-                    <div id="info-faq" class="hidden p-5 border-t border-cyber-border text-xs text-gray-400 space-y-2 leading-relaxed">
-                        <p><strong>Peer-to-Peer (P2P)</strong> trading is direct trading between buyers and sellers without order book matching. <strong>Smart Escrow</strong> locks the seller's cryptocurrency during the process, protecting both parties.</p>
-                    </div>
-                </div>
+  if (activeList.length === 0) {
+    box.innerHTML = '<div class="card py-6 text-center text-gray-500 text-xs flex flex-col items-center gap-2"><i class="fas fa-receipt text-2xl text-cyan-400/20"></i><p>Aktif escrow işlemi bulunmuyor</p><button onclick="navTo(\'trade\')" class="text-cyan-400 text-[10px] font-bold hover:underline">+ Yeni İşlem Başlat</button></div>';
+    return;
+  }
 
-                <div class="glass rounded-2xl overflow-hidden">
-                    <button class="w-full px-5 py-4 flex justify-between items-center font-bold text-xs uppercase tracking-wider text-white hover:bg-white/5 text-left" onclick="toggleAccordion('info-legal')">
-                        <span>Risk Disclaimer & Legal</span>
-                        <i class="fas fa-chevron-down text-cyber-cyan"></i>
-                    </button>
-                    <div id="info-legal" class="hidden p-5 border-t border-cyber-border text-xs text-gray-400 space-y-2 leading-relaxed">
-                        <p>Kripto para piyasalari yuksek volatilite icerir. CyberEx P2P platformu Turkiye Cumhuriyeti kanunlarina ve MASAK kurallarina tam uyumu hedefler.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+  box.innerHTML = "";
+  activeList.forEach(t => {
+    const statusText = t.status === "pending" ? "Ödeme Bekleniyor" : (t.status === "uploaded" ? "Dekont İnceleniyor" : "İşleniyor");
+    const statusColor = t.status === "pending" ? "#FFB300" : "#00b8ff";
 
-    </main>
+    const card = document.createElement("div");
+    card.className = "card flex justify-between items-center cursor-pointer hover:border-cyan-400/40";
+    card.onclick = () => openEscrowTracker(t);
+    card.innerHTML = `
+      <div>
+        <div class="flex items-center gap-1.5 mb-0.5">
+          <span class="w-1.5 h-1.5 rounded-full pulse" style="background: ${statusColor}"></span>
+          <span class="text-xs font-black text-white font-mono">${t.code}</span>
+        </div>
+        <p class="text-[9px] text-gray-400">Al: ${t.cryptoAmt.toLocaleString()} ${t.coin} • ${t.createdAt}</p>
+      </div>
+      <div class="text-right">
+        <p class="text-xs font-black font-mono text-white">${t.fiatAmt.toLocaleString(undefined, { maximumFractionDigits: 0 })} ${t.fiatCur}</p>
+        <p class="text-[8px] font-bold uppercase" style="color: ${statusColor}">${statusText}</p>
+      </div>
+    `;
+    box.appendChild(card);
+  });
+}
 
-    <!-- Bottom Navigation Bar -->
-    <nav class="fixed bottom-0 left-0 right-0 glass border-t border-cyber-border/40 py-2.5 px-4 flex justify-between items-center z-50 max-w-lg mx-auto rounded-t-3xl shadow-[0_-10px_25px_rgba(0,0,0,0.5)]">
-        <button onclick="switchView('home')" id="tab-home" class="flex flex-col items-center gap-1.5 flex-1 transition-all duration-300 text-gray-400 tab-active">
-            <i class="fas fa-home text-base transition-transform duration-300"></i>
-            <span class="text-[9px] font-bold uppercase tracking-wider">Home</span>
-        </button>
-        <button onclick="switchView('trade')" id="tab-trade" class="flex flex-col items-center gap-1.5 flex-1 transition-all duration-300 text-gray-400">
-            <i class="fas fa-exchange-alt text-base transition-transform duration-300"></i>
-            <span class="text-[9px] font-bold uppercase tracking-wider">Exchange</span>
-        </button>
-        <button onclick="switchView('wallet')" id="tab-wallet" class="flex flex-col items-center gap-1.5 flex-1 transition-all duration-300 text-gray-400">
-            <i class="fas fa-wallet text-base transition-transform duration-300"></i>
-            <span class="text-[9px] font-bold uppercase tracking-wider">Wallet</span>
-        </button>
-        <button onclick="switchView('history')" id="tab-history" class="flex flex-col items-center gap-1.5 flex-1 transition-all duration-300 text-gray-400">
-            <i class="fas fa-receipt text-base transition-transform duration-300"></i>
-            <span class="text-[9px] font-bold uppercase tracking-wider">Trades</span>
-        </button>
-        <button onclick="switchView('info')" id="tab-info" class="flex flex-col items-center gap-1.5 flex-1 transition-all duration-300 text-gray-400">
-            <i class="fas fa-info-circle text-base transition-transform duration-300"></i>
-            <span class="text-[9px] font-bold uppercase tracking-wider">Info</span>
-        </button>
-    </nav>
+function renderTradeHistory() {
+  const box = document.getElementById("trade-history-box");
+  if (appState.trades.length === 0) {
+    box.innerHTML = '<div class="card py-8 text-center text-gray-500 text-xs"><i class="fas fa-history text-2xl text-cyan-400/20 mb-2"></i><p>Henüz kayıtlı bir işlem bulunmuyor</p></div>';
+    return;
+  }
 
-    <!-- App State JS -->
-    <script>
-        // Supabase API credentials
-        const SUPABASE_URL = "https://fkxynlctcbagfvpatzlb.supabase.co";
-        const SUPABASE_ANON_KEY = "sb_publishable_eQK0Npo_3DnhQdZUAV5ZTw_SAj-zt_G";
+  box.innerHTML = "";
+  appState.trades.forEach(t => {
+    const isDone = t.status === "completed";
+    const statusTag = isDone ? '<span class="text-green-400 text-[8px] font-bold">TAMAMLANDI ✅</span>' : '<span class="text-yellow-400 text-[8px] font-bold">BEKLEMEDE ⏳</span>';
 
-        // Global State variables
-        let telegramUser = null;
-        let selectedListing = null;
-        let selectedTrade = null;
-        let isBuyMode = true;
-        let connectedWalletAddress = null;
+    const card = document.createElement("div");
+    card.className = "card flex justify-between items-center";
+    card.innerHTML = `
+      <div>
+        <p class="text-xs font-black text-white font-mono">${t.code}</p>
+        <p class="text-[9px] text-gray-400">${t.createdAt} • Web3 Transferi</p>
+      </div>
+      <div class="text-right">
+        <p class="text-xs font-black font-mono text-white">${t.cryptoAmt.toLocaleString()} ${t.coin}</p>
+        ${statusTag}
+      </div>
+    `;
+    box.appendChild(card);
+  });
+}
 
-        const cache = {
-            rates: { USDT_TRY: 47.50, BTC_USD: 94000, ETH_USD: 3300 },
-            listings: [],
-            trades: [],
-            userProfile: { rating: 5.0, completed_trades: 12, total_volume: 8500.0, vip_tier: 'Bronze' }
-        };
+// ==========================================
+// Web3 Wallet Simulation
+// ==========================================
+function connectWeb3() {
+  appState.wallet = "0x" + Array.from({length: 40}, () => "0123456789abcdef"[Math.floor(Math.random() * 16)]).join("");
+  document.getElementById("wallet-off").classList.add("hidden");
+  document.getElementById("wallet-on").classList.remove("hidden");
+  document.getElementById("wallet-addr-text").innerText = appState.wallet;
+  document.getElementById("u-balance").innerText = "14,580.00";
+  navTo("home");
+}
 
-        if (window.Telegram && window.Telegram.WebApp) {
-            const twa = window.Telegram.WebApp;
-            twa.ready();
-            twa.expand();
-            if (twa.initDataUnsafe && twa.initDataUnsafe.user) {
-                telegramUser = twa.initDataUnsafe.user;
-                document.getElementById('user-display-name').innerText = telegramUser.username ? '@' + telegramUser.username : telegramUser.first_name;
-                document.getElementById('user-avatar-text').innerText = telegramUser.first_name[0].toUpperCase();
-            }
-        }
+function disconnectWeb3() {
+  appState.wallet = null;
+  document.getElementById("wallet-on").classList.add("hidden");
+  document.getElementById("wallet-off").classList.remove("hidden");
+  document.getElementById("u-balance").innerText = "0.00";
+}
 
-        function switchView(tabName) {
-            document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('tab-active'));
-            document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active'));
-            document.getElementById('tab-' + tabName).classList.add('tab-active');
-            document.getElementById('view-' + tabName).classList.add('active');
-            if (tabName === 'trade') loadListings();
-            if (tabName === 'history') loadTradeHistory();
-        }
+// ==========================================
+// Initial Load
+// ==========================================
+updateTickers();
+fetchListings();
+renderActiveTrades();
+</script>
 
-        function toggleAccordion(id) {
-            const el = document.getElementById(id);
-            el.classList.toggle('hidden');
-        }
-
-        document.getElementById('btn-connect-wallet').addEventListener('click', () => {
-            connectedWalletAddress = "0x" + Array.from({length: 40}, () => "0123456789abcdef"[Math.floor(Math.random() * 16)]).join("");
-            document.getElementById('wallet-not-connected').classList.add('hidden');
-            document.getElementById('wallet-connected').classList.remove('hidden');
-            document.getElementById('wallet-address-display').innerText = connectedWalletAddress;
-            document.getElementById('home-balance').innerText = "14,580.00";
-            switchView('home');
-        });
-
-        document.getElementById('btn-disconnect-wallet').addEventListener('click', () => {
-            connectedWalletAddress = null;
-            document.getElementById('wallet-not-connected').classList.remove('hidden');
-            document.getElementById('wallet-connected').classList.add('hidden');
-            document.getElementById('home-balance').innerText = "0.00";
-        });
-
-        async function loadListings() {
-            const coin = document.getElementById('select-coin').value;
-            const fiat = document.getElementById('select-fiat').value;
-            const container = document.getElementById('listings-container');
-            container.innerHTML = '<div class="text-center py-8 text-cyber-cyan"><i class="fas fa-spinner fa-spin text-2xl"></i></div>';
-
-            try {
-                const res = await fetch(SUPABASE_URL + '/rest/v1/telegram_p2p_listings?coin=eq.' + coin + '&fiat_currency=eq.' + fiat + '&status=eq.active', {
-                    headers: { "apikey": SUPABASE_ANON_KEY, "Authorization": "Bearer " + SUPABASE_ANON_KEY }
-                });
-                let data = [];
-                if (res.ok) data = await res.json();
-
-                if (data.length === 0) {
-                    data = [
-                        { id: 1, mock_seller_name: "CryptoKing_TR", mock_country: "Turkey", mock_flag: "TR", coin: "USDT", network: "TRC20", fiat_currency: "TRY", available_amount: 85000.0, min_limit: 750.0, max_limit: 5000.0, premium_rate: 0.10, rating: 4.97, completed_trades_count: 412, completion_rate_pct: 99.6, avg_response_min: 5, payment_methods_json: '["Havale / EFT", "Papara"]' }
-                    ].filter(i => i.coin === coin && i.fiat_currency === fiat);
-                }
-
-                container.innerHTML = '';
-                data.forEach(item => {
-                    const basePrice = cache.rates['USDT_' + fiat] || (fiat === 'TRY' ? 47.50 : 1.0);
-                    const finalPrice = basePrice * (1.0 + item.premium_rate);
-                    const card = document.createElement('div');
-                    card.className = "w-full glass rounded-2xl p-4 bg-cyber-bg/40 neon-glow-hover";
-                    card.innerHTML = 
-                        <div class="flex justify-between items-start mb-2">
-                            <span class="text-white font-bold"></span>
-                            <span class="text-yellow-400 font-bold"></span>
-                        </div>
-                        <div class="flex justify-between items-center mt-2">
-                            <span class="text-cyber-green font-bold"> </span>
-                            <span class="text-white text-xs">- </span>
-                        </div>
-                    ;
-                    container.appendChild(card);
-                });
-            } catch (err) { console.error(err); }
-        }
-
-        function loadTradeHistory() {
-            const container = document.getElementById('history-container');
-            if (cache.trades.length === 0) {
-                container.innerHTML = '<div class="text-center py-6 text-gray-500 text-xs">No trade history</div>';
-                return;
-            }
-            container.innerHTML = '';
-            cache.trades.forEach(t => {
-                const card = document.createElement('div');
-                card.className = "glass rounded-2xl p-4 bg-cyber-bg/30 flex justify-between";
-                card.innerHTML = <span></span><span> </span>;
-                container.appendChild(card);
-            });
-        }
-    </script>
 </body>
 </html>
-
