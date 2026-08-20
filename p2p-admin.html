@@ -788,21 +788,45 @@ async function bulkApproveSelected() {
   toast(`✅ ${selectedIds.size || 'Seçili'} işlem toplu onaylandı!`, 'g');
 }
 
-function sendTGMsg(text) {
-  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-    method: 'POST', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ chat_id: ADMIN_CID, text, parse_mode: 'HTML' })
-  }).catch(()=>{});
+async function sendTGMsg(text) {
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: ADMIN_CID, text, parse_mode: 'HTML' })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      toast('📢 Telegram bildirimi başarıyla iletildi!', 'g');
+      return true;
+    } else {
+      toast('⚠️ Telegram API: ' + (data.description || 'İletilemedi'), 'r');
+      return false;
+    }
+  } catch (err) {
+    toast('⛔ Telegram bağlantı hatası!', 'r');
+    return false;
+  }
 }
 
-function sendTelegramAlert() {
-  if (!detailTrade) return;
+async function sendTelegramAlert() {
+  if (!detailTrade) { toast('Açık bir işlem bulunamadı.', 'r'); return; }
   const t = detailTrade;
   const sm = STATUS_META[t.status] || { label:'?' };
-  const note = document.getElementById('md-note').value.trim();
-  const msg = `📢 <b>ADMİN MESAJI — ${t.trade_code}</b>\n\nDurum: <b>${sm.label}</b>\n💰 ${t.amount_crypto} ${t.coin}\n💵 ${t.amount_fiat} ${t.fiat_currency}\n🌐 ${t.network||'—'}\n${note ? '\n📝 Not: '+note : ''}`;
-  sendTGMsg(msg);
-  toast('📤 Telegram bildirimi gönderildi.', 'c');
+  const note = (document.getElementById('md-note').value || t.admin_notes || '').trim();
+  const isBuy = t.type === 'buy';
+  
+  const msg = `📢 <b>CYBEREX ADMİN BİLDİRİMİ (#${t.trade_code})</b>\n\n` +
+              `👤 <b>Kullanıcı:</b> ${t.user_name || 'Kullanıcı'}\n` +
+              `📊 <b>Tür / Durum:</b> ${isBuy ? '📥 Kripto Alım' : '📤 Kripto Satış'} — <b>${sm.label}</b>\n` +
+              `💰 <b>Miktar:</b> ${t.amount_crypto} ${t.coin} (${t.network || 'TRC20'})\n` +
+              `💵 <b>Tutar:</b> ${parseFloat(t.amount_fiat).toLocaleString('tr-TR')} ${t.fiat_currency}\n` +
+              (isBuy ? `👛 <b>Alıcı Cüzdan:</b> <code>${t.buyer_wallet_address || t.user_wallet_to_receive || '—'}</code>\n` : `🏦 <b>Kullanıcı IBAN:</b> <code>${t.user_payout_iban || '—'}</code> (${t.user_payout_holder || '—'})\n`) +
+              (t.tx_hash ? `🔗 <b>TXID:</b> <code>${t.tx_hash}</code>\n` : '') +
+              (note ? `📝 <b>Yönetici Notu:</b> ${note}\n` : '') +
+              `\n⚡ Yönetici ID: ${ADMIN_CID} | Tarih: ${new Date().toLocaleTimeString('tr-TR')}`;
+
+  await sendTGMsg(msg);
 }
 
 function exportCSV() {

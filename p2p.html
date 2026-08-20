@@ -377,7 +377,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
 
       <div class="text-[8px] font-mono px-0.5 flex items-center justify-between">
         <span id="mode-rule" class="text-green-400 font-bold">🛡️ SATICILAR — EN UYGUN FİYAT EN ÜSTTE</span>
-        <span class="text-gray-500 font-bold" id="listing-cnt">200+ Aktif İlan</span>
+        <span class="text-gray-500 font-bold" id="listing-cnt">350+ Aktif İlan</span>
       </div>
 
       <div class="relative"><i class="fas fa-search absolute left-3 top-2.5 text-gray-500 text-xs"></i><input type="text" id="inp-search" oninput="renderListings()" placeholder="Onurcan, CyberEx, FAST, Ziraat, Garanti, Akbank, İş Bankası..." class="pl-8 text-[11px] py-1.5"></div>
@@ -440,7 +440,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
   <section id="panel-history" class="panel space-y-3">
     <div class="glass p-3 flex justify-between items-center">
       <div><h2 class="text-xs font-black text-white uppercase">İşlem Geçmişi</h2><p class="text-[9px] text-gray-400">Tüm alım, satım, iptal kayıtları</p></div>
-      <button onclick="renderHistory()" class="text-cyan-400 text-xs hover:underline flex items-center gap-1"><i class="fas fa-rotate"></i>Yenile</button>
+      <button onclick="syncHistoryWithSupabase(true)" class="text-cyan-400 text-xs hover:underline flex items-center gap-1 font-bold"><i id="hist-spin-icon" class="fas fa-rotate"></i>Yenile</button>
     </div>
     <div id="history-box" class="space-y-2"></div>
   </section>
@@ -735,10 +735,11 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
       <p class="text-xs font-black text-green-400">İşlem Başarıyla Tamamlandı! 🎉</p>
     </div>
 
-    <!-- Cancelled Banner -->
-    <div id="esc-cancel-box" class="hidden p-3 rounded-xl bg-red-400/10 border border-red-400/30 text-center space-y-1">
+    <!-- Cancelled Banner (with distinct Admin Cancellation details) -->
+    <div id="esc-cancel-box" class="hidden p-3.5 rounded-xl bg-red-400/15 border border-red-400/35 text-center space-y-1.5">
       <i class="fas fa-ban text-2xl text-red-400"></i>
-      <p class="text-xs font-black text-red-400">Sipariş İptal Edildi</p>
+      <p class="text-xs font-black text-red-400" id="esc-cancel-heading">Sipariş İptal Edildi</p>
+      <p class="text-[9px] text-gray-300" id="esc-cancel-reason">Yönetici / Destek: Bu işlem sonlandırılmıştır.</p>
     </div>
 
     <!-- Proof Upload with Resilient Fallback -->
@@ -1846,25 +1847,6 @@ const RAW_MERCHANTS = [
     ]
   },
   {
-    "id": 46,
-    "name": "Hyper_7_Express",
-    "flag": "🇦🇪",
-    "tier": "verified",
-    "prem": 0.01,
-    "disc": -0.008,
-    "pool": 92177,
-    "min": 500,
-    "max": 13168,
-    "trades": 1119,
-    "rate": 4.99,
-    "comp": 98.2,
-    "resp": 4,
-    "methods": [
-      "İş Bankası",
-      "Yapı Kredi"
-    ]
-  },
-  {
     "id": 47,
     "name": "Hyper_8_Escrow",
     "flag": "🇦🇪",
@@ -1883,48 +1865,6 @@ const RAW_MERCHANTS = [
       "Papara",
       "Akbank",
       "Ziraat Bankası"
-    ]
-  },
-  {
-    "id": 48,
-    "name": "Nova_9_Liquidity",
-    "flag": "🇰🇿",
-    "tier": "verified",
-    "prem": 0.019,
-    "disc": -0.019,
-    "pool": 134429,
-    "min": 250,
-    "max": 22404,
-    "trades": 371,
-    "rate": 4.97,
-    "comp": 99.1,
-    "resp": 6,
-    "methods": [
-      "Ziraat Bankası",
-      "SEPA",
-      "Garanti BBVA",
-      "Akbank"
-    ]
-  },
-  {
-    "id": 49,
-    "name": "Aero_10_Escrow",
-    "flag": "🇺🇸",
-    "tier": "verified",
-    "prem": 0.01,
-    "disc": -0.024,
-    "pool": 140373,
-    "min": 1000,
-    "max": 23395,
-    "trades": 364,
-    "rate": 4.9,
-    "comp": 98.6,
-    "resp": 2,
-    "methods": [
-      "Papara",
-      "Ziraat Bankası",
-      "Wise",
-      "FAST"
     ]
   },
   {
@@ -1967,27 +1907,6 @@ const RAW_MERCHANTS = [
     ]
   },
   {
-    "id": 52,
-    "name": "Zenith_13_OTC",
-    "flag": "🇩🇪",
-    "tier": "verified",
-    "prem": 0.016,
-    "disc": -0.024,
-    "pool": 374757,
-    "min": 250,
-    "max": 31229,
-    "trades": 1418,
-    "rate": 4.95,
-    "comp": 99.4,
-    "resp": 4,
-    "methods": [
-      "Wise",
-      "Ziraat Bankası",
-      "FAST",
-      "Yapı Kredi"
-    ]
-  },
-  {
     "id": 53,
     "name": "Levant_14_OTC",
     "flag": "🇩🇪",
@@ -2006,26 +1925,6 @@ const RAW_MERCHANTS = [
       "Yapı Kredi",
       "Wise",
       "FAST"
-    ]
-  },
-  {
-    "id": 54,
-    "name": "Fast_15_FX",
-    "flag": "🇹🇷",
-    "tier": "verified",
-    "prem": 0.009,
-    "disc": -0.011,
-    "pool": 184111,
-    "min": 500,
-    "max": 15342,
-    "trades": 558,
-    "rate": 4.89,
-    "comp": 99.2,
-    "resp": 1,
-    "methods": [
-      "SEPA",
-      "FAST",
-      "Ziraat Bankası"
     ]
   },
   {
@@ -2231,26 +2130,6 @@ const RAW_MERCHANTS = [
     ]
   },
   {
-    "id": 65,
-    "name": "Anatolia_26_Whale",
-    "flag": "🇺🇸",
-    "tier": "verified",
-    "prem": 0.014,
-    "disc": -0.022,
-    "pool": 245685,
-    "min": 1000,
-    "max": 22335,
-    "trades": 1978,
-    "rate": 4.88,
-    "comp": 99.7,
-    "resp": 3,
-    "methods": [
-      "Ziraat Bankası",
-      "Wise",
-      "Akbank"
-    ]
-  },
-  {
     "id": 66,
     "name": "Quantum_27_Trade",
     "flag": "🇬🇧",
@@ -2269,67 +2148,6 @@ const RAW_MERCHANTS = [
       "Ziraat Bankası",
       "Garanti BBVA",
       "Akbank"
-    ]
-  },
-  {
-    "id": 67,
-    "name": "Falcon_28_Trade",
-    "flag": "🇹🇷",
-    "tier": "verified",
-    "prem": 0.01,
-    "disc": -0.01,
-    "pool": 157388,
-    "min": 250,
-    "max": 17487,
-    "trades": 1401,
-    "rate": 4.91,
-    "comp": 98.5,
-    "resp": 1,
-    "methods": [
-      "SEPA",
-      "Papara",
-      "Garanti BBVA"
-    ]
-  },
-  {
-    "id": 68,
-    "name": "Orient_29_Whale",
-    "flag": "🇰🇿",
-    "tier": "verified",
-    "prem": 0.026,
-    "disc": -0.01,
-    "pool": 332641,
-    "min": 500,
-    "max": 55440,
-    "trades": 902,
-    "rate": 4.97,
-    "comp": 98.4,
-    "resp": 6,
-    "methods": [
-      "İş Bankası",
-      "SEPA",
-      "Yapı Kredi",
-      "Papara"
-    ]
-  },
-  {
-    "id": 69,
-    "name": "Orient_30_FX",
-    "flag": "🇹🇷",
-    "tier": "verified",
-    "prem": 0.014,
-    "disc": -0.022,
-    "pool": 172596,
-    "min": 250,
-    "max": 24656,
-    "trades": 574,
-    "rate": 5.0,
-    "comp": 99.5,
-    "resp": 4,
-    "methods": [
-      "Garanti BBVA",
-      "FAST",
-      "Wise"
     ]
   },
   {
@@ -2431,25 +2249,6 @@ const RAW_MERCHANTS = [
     ]
   },
   {
-    "id": 75,
-    "name": "Secure_36_Escrow",
-    "flag": "🇨🇭",
-    "tier": "verified",
-    "prem": 0.01,
-    "disc": -0.02,
-    "pool": 331606,
-    "min": 250,
-    "max": 66321,
-    "trades": 544,
-    "rate": 4.93,
-    "comp": 99.0,
-    "resp": 4,
-    "methods": [
-      "SEPA",
-      "Ziraat Bankası"
-    ]
-  },
-  {
     "id": 76,
     "name": "Pulse_37_Liquidity",
     "flag": "🇹🇷",
@@ -2510,47 +2309,6 @@ const RAW_MERCHANTS = [
     ]
   },
   {
-    "id": 79,
-    "name": "Cyber_40_Whale",
-    "flag": "🇹🇷",
-    "tier": "verified",
-    "prem": 0.016,
-    "disc": -0.021,
-    "pool": 252564,
-    "min": 250,
-    "max": 31570,
-    "trades": 1217,
-    "rate": 4.87,
-    "comp": 98.6,
-    "resp": 6,
-    "methods": [
-      "Ziraat Bankası",
-      "Wise",
-      "Papara",
-      "Garanti BBVA"
-    ]
-  },
-  {
-    "id": 80,
-    "name": "Apex_41_Escrow",
-    "flag": "🇰🇿",
-    "tier": "verified",
-    "prem": 0.01,
-    "disc": -0.012,
-    "pool": 194442,
-    "min": 1000,
-    "max": 17676,
-    "trades": 950,
-    "rate": 4.98,
-    "comp": 99.9,
-    "resp": 1,
-    "methods": [
-      "İş Bankası",
-      "Akbank",
-      "Garanti BBVA"
-    ]
-  },
-  {
     "id": 81,
     "name": "Anatolia_42_Liquidity",
     "flag": "🇬🇧",
@@ -2564,25 +2322,6 @@ const RAW_MERCHANTS = [
     "rate": 4.82,
     "comp": 98.5,
     "resp": 1,
-    "methods": [
-      "Akbank",
-      "Papara"
-    ]
-  },
-  {
-    "id": 82,
-    "name": "Levant_43_Trade",
-    "flag": "🇹🇷",
-    "tier": "verified",
-    "prem": 0.025,
-    "disc": -0.012,
-    "pool": 185231,
-    "min": 250,
-    "max": 16839,
-    "trades": 398,
-    "rate": 4.95,
-    "comp": 98.4,
-    "resp": 2,
     "methods": [
       "Akbank",
       "Papara"
@@ -2606,26 +2345,6 @@ const RAW_MERCHANTS = [
       "Wise",
       "Papara",
       "Akbank"
-    ]
-  },
-  {
-    "id": 84,
-    "name": "Titan_45_Express",
-    "flag": "🇹🇷",
-    "tier": "verified",
-    "prem": 0.013,
-    "disc": -0.018,
-    "pool": 145270,
-    "min": 250,
-    "max": 16141,
-    "trades": 473,
-    "rate": 4.95,
-    "comp": 98.3,
-    "resp": 6,
-    "methods": [
-      "SEPA",
-      "Garanti BBVA",
-      "Yapı Kredi"
     ]
   },
   {
@@ -2668,27 +2387,6 @@ const RAW_MERCHANTS = [
     ]
   },
   {
-    "id": 87,
-    "name": "Quantum_48_Express",
-    "flag": "🇰🇿",
-    "tier": "verified",
-    "prem": 0.023,
-    "disc": -0.015,
-    "pool": 340795,
-    "min": 1000,
-    "max": 68159,
-    "trades": 1548,
-    "rate": 4.84,
-    "comp": 99.2,
-    "resp": 3,
-    "methods": [
-      "Yapı Kredi",
-      "Akbank",
-      "İş Bankası",
-      "Papara"
-    ]
-  },
-  {
     "id": 88,
     "name": "Hyper_49_Whale",
     "flag": "🇹🇷",
@@ -2705,27 +2403,6 @@ const RAW_MERCHANTS = [
     "methods": [
       "Garanti BBVA",
       "Wise"
-    ]
-  },
-  {
-    "id": 89,
-    "name": "Cyber_50_Trade",
-    "flag": "🇹🇷",
-    "tier": "verified",
-    "prem": 0.023,
-    "disc": -0.023,
-    "pool": 229366,
-    "min": 250,
-    "max": 32766,
-    "trades": 1961,
-    "rate": 4.89,
-    "comp": 99.4,
-    "resp": 2,
-    "methods": [
-      "Wise",
-      "SEPA",
-      "Ziraat Bankası",
-      "Yapı Kredi"
     ]
   },
   {
@@ -2967,27 +2644,6 @@ const RAW_MERCHANTS = [
     ]
   },
   {
-    "id": 102,
-    "name": "Fast_63_Express",
-    "flag": "🇦🇿",
-    "tier": "verified",
-    "prem": 0.024,
-    "disc": -0.022,
-    "pool": 248871,
-    "min": 250,
-    "max": 49774,
-    "trades": 967,
-    "rate": 4.85,
-    "comp": 98.9,
-    "resp": 1,
-    "methods": [
-      "SEPA",
-      "Yapı Kredi",
-      "Wise",
-      "Papara"
-    ]
-  },
-  {
     "id": 103,
     "name": "Quantum_64_Escrow",
     "flag": "🇹🇷",
@@ -3024,26 +2680,6 @@ const RAW_MERCHANTS = [
     "resp": 2,
     "methods": [
       "FAST",
-      "Garanti BBVA"
-    ]
-  },
-  {
-    "id": 105,
-    "name": "Vanguard_66_OTC",
-    "flag": "🇹🇷",
-    "tier": "verified",
-    "prem": 0.011,
-    "disc": -0.026,
-    "pool": 152090,
-    "min": 500,
-    "max": 12674,
-    "trades": 1812,
-    "rate": 4.99,
-    "comp": 98.9,
-    "resp": 6,
-    "methods": [
-      "FAST",
-      "SEPA",
       "Garanti BBVA"
     ]
   },
@@ -3165,27 +2801,6 @@ const RAW_MERCHANTS = [
       "Garanti BBVA",
       "Papara",
       "SEPA"
-    ]
-  },
-  {
-    "id": 112,
-    "name": "Falcon_73_Prime",
-    "flag": "🇩🇪",
-    "tier": "verified",
-    "prem": 0.012,
-    "disc": -0.012,
-    "pool": 230968,
-    "min": 500,
-    "max": 46193,
-    "trades": 380,
-    "rate": 4.9,
-    "comp": 98.4,
-    "resp": 2,
-    "methods": [
-      "FAST",
-      "SEPA",
-      "Akbank",
-      "Ziraat Bankası"
     ]
   },
   {
@@ -3466,27 +3081,6 @@ const RAW_MERCHANTS = [
     ]
   },
   {
-    "id": 127,
-    "name": "Atlantic_88_Liquidity",
-    "flag": "🇬🇧",
-    "tier": "verified",
-    "prem": 0.018,
-    "disc": -0.025,
-    "pool": 247185,
-    "min": 250,
-    "max": 20598,
-    "trades": 1810,
-    "rate": 4.91,
-    "comp": 99.6,
-    "resp": 1,
-    "methods": [
-      "Akbank",
-      "SEPA",
-      "Garanti BBVA",
-      "Papara"
-    ]
-  },
-  {
     "id": 128,
     "name": "Orient_89_Liquidity",
     "flag": "🇹🇷",
@@ -3505,27 +3099,6 @@ const RAW_MERCHANTS = [
       "Wise",
       "Garanti BBVA",
       "SEPA"
-    ]
-  },
-  {
-    "id": 129,
-    "name": "Hyper_90_Whale",
-    "flag": "🇰🇿",
-    "tier": "verified",
-    "prem": 0.014,
-    "disc": -0.022,
-    "pool": 358466,
-    "min": 1000,
-    "max": 51209,
-    "trades": 1974,
-    "rate": 4.88,
-    "comp": 99.3,
-    "resp": 5,
-    "methods": [
-      "FAST",
-      "SEPA",
-      "Garanti BBVA",
-      "Papara"
     ]
   },
   {
@@ -3608,26 +3181,6 @@ const RAW_MERCHANTS = [
     "methods": [
       "Papara",
       "SEPA"
-    ]
-  },
-  {
-    "id": 134,
-    "name": "Anatolia_95_FX",
-    "flag": "🇰🇿",
-    "tier": "verified",
-    "prem": 0.018,
-    "disc": -0.022,
-    "pool": 67986,
-    "min": 1000,
-    "max": 7554,
-    "trades": 837,
-    "rate": 4.83,
-    "comp": 99.4,
-    "resp": 3,
-    "methods": [
-      "SEPA",
-      "Garanti BBVA",
-      "Ziraat Bankası"
     ]
   },
   {
@@ -3912,47 +3465,6 @@ const RAW_MERCHANTS = [
     ]
   },
   {
-    "id": 149,
-    "name": "Cyber_110_Express",
-    "flag": "🇹🇷",
-    "tier": "verified",
-    "prem": 0.015,
-    "disc": -0.016,
-    "pool": 332121,
-    "min": 250,
-    "max": 33212,
-    "trades": 1927,
-    "rate": 4.92,
-    "comp": 99.9,
-    "resp": 5,
-    "methods": [
-      "Akbank",
-      "Wise",
-      "SEPA",
-      "Papara"
-    ]
-  },
-  {
-    "id": 150,
-    "name": "Hyper_111_Trade",
-    "flag": "🇹🇷",
-    "tier": "verified",
-    "prem": 0.019,
-    "disc": -0.024,
-    "pool": 185781,
-    "min": 1000,
-    "max": 15481,
-    "trades": 576,
-    "rate": 4.85,
-    "comp": 100.0,
-    "resp": 2,
-    "methods": [
-      "İş Bankası",
-      "Papara",
-      "Ziraat Bankası"
-    ]
-  },
-  {
     "id": 151,
     "name": "Nordic_112_Express",
     "flag": "🇺🇸",
@@ -3971,45 +3483,6 @@ const RAW_MERCHANTS = [
       "Akbank",
       "Ziraat Bankası",
       "SEPA"
-    ]
-  },
-  {
-    "id": 152,
-    "name": "Alpha_113_Express",
-    "flag": "🇩🇪",
-    "tier": "verified",
-    "prem": 0.012,
-    "disc": -0.015,
-    "pool": 203766,
-    "min": 500,
-    "max": 25470,
-    "trades": 1978,
-    "rate": 4.92,
-    "comp": 99.2,
-    "resp": 5,
-    "methods": [
-      "Ziraat Bankası",
-      "Yapı Kredi"
-    ]
-  },
-  {
-    "id": 153,
-    "name": "Anatolia_114_FX",
-    "flag": "🇩🇪",
-    "tier": "verified",
-    "prem": 0.011,
-    "disc": -0.016,
-    "pool": 193752,
-    "min": 250,
-    "max": 19375,
-    "trades": 755,
-    "rate": 4.87,
-    "comp": 100.0,
-    "resp": 3,
-    "methods": [
-      "İş Bankası",
-      "Akbank",
-      "FAST"
     ]
   },
   {
@@ -4115,152 +3588,1820 @@ const RAW_MERCHANTS = [
     ]
   },
   {
-    "id": 159,
-    "name": "Secure_120_Prime",
-    "flag": "🇺🇸",
-    "tier": "verified",
-    "prem": 0.025,
-    "disc": -0.012,
-    "pool": 131056,
-    "min": 500,
-    "max": 11914,
-    "trades": 1462,
-    "rate": 4.93,
-    "comp": 98.5,
-    "resp": 3,
-    "methods": [
-      "Ziraat Bankası",
-      "Garanti BBVA"
-    ]
-  },
-  {
-    "id": 162,
-    "name": "ahmet_kaya_06",
+    "id": 135,
+    "name": "melih_ziraat",
     "flag": "🇹🇷",
     "tier": "user",
-    "prem": 0.006,
-    "disc": -0.006,
-    "trades": 48,
-    "comp": 98.6,
-    "rate": 4.85,
-    "resp": 2,
-    "pool": 25500,
-    "min": 500,
-    "max": 8500,
-    "methods": [
-      "Ziraat Bankası",
-      "FAST Anında"
-    ]
-  },
-  {
-    "id": 163,
-    "name": "mehmet_trader_34",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.007,
-    "disc": -0.007,
-    "trades": 112,
-    "comp": 99.1,
-    "rate": 4.89,
-    "resp": 1,
-    "pool": 45000,
-    "min": 300,
-    "max": 15000,
-    "methods": [
-      "Garanti BBVA",
-      "FAST Anında"
-    ]
-  },
-  {
-    "id": 164,
-    "name": "kripto_burak",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.008,
-    "disc": -0.008,
-    "trades": 64,
-    "comp": 98.4,
-    "rate": 4.93,
-    "resp": 3,
-    "pool": 18000,
-    "min": 250,
-    "max": 6000,
-    "methods": [
-      "Akbank",
-      "FAST Anında"
-    ]
-  },
-  {
-    "id": 165,
-    "name": "emre_usdt_fast",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.009000000000000001,
-    "disc": -0.009000000000000001,
-    "trades": 175,
-    "comp": 99.4,
-    "rate": 4.97,
-    "resp": 1,
-    "pool": 60000,
-    "min": 400,
+    "prem": 0.0063,
+    "disc": -0.0033,
+    "trades": 195,
+    "comp": 99.0,
+    "rate": 4.8,
+    "resp": 4,
+    "pool": 100000,
+    "min": 150,
     "max": 20000,
-    "methods": [
-      "Ziraat Bankası",
-      "Garanti BBVA",
-      "FAST Anında"
-    ]
-  },
-  {
-    "id": 166,
-    "name": "selim_crypto_35",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.01,
-    "disc": -0.01,
-    "trades": 82,
-    "comp": 98.9,
-    "rate": 4.85,
-    "resp": 2,
-    "pool": 27000,
-    "min": 300,
-    "max": 9000,
-    "methods": [
-      "İş Bankası",
-      "FAST Anında"
-    ]
-  },
-  {
-    "id": 167,
-    "name": "batuhan_demir",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.011,
-    "disc": -0.011,
-    "trades": 53,
-    "comp": 98.2,
-    "rate": 4.89,
-    "resp": 2,
-    "pool": 22500,
-    "min": 250,
-    "max": 7500,
     "methods": [
       "Yapı Kredi",
       "FAST Anında"
     ]
   },
   {
-    "id": 168,
-    "name": "murat_fast_tr",
+    "id": 136,
+    "name": "selim_otc",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0085,
+    "disc": -0.0118,
+    "trades": 239,
+    "comp": 99.2,
+    "rate": 4.79,
+    "resp": 1,
+    "pool": 60000,
+    "min": 300,
+    "max": 20000,
+    "methods": [
+      "İş Bankası",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 137,
+    "name": "furkan_kripto",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0059,
+    "disc": -0.0138,
+    "trades": 38,
+    "comp": 99.3,
+    "rate": 4.84,
+    "resp": 3,
+    "pool": 40000,
+    "min": 1000,
+    "max": 20000,
+    "methods": [
+      "Halkbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 138,
+    "name": "saban_ist",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0098,
+    "disc": -0.007,
+    "trades": 57,
+    "comp": 98.1,
+    "rate": 4.86,
+    "resp": 2,
+    "pool": 24000,
+    "min": 1000,
+    "max": 8000,
+    "methods": [
+      "Param / Papara",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 139,
+    "name": "volkan_prime",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0142,
+    "disc": -0.0148,
+    "trades": 297,
+    "comp": 98.6,
+    "rate": 4.86,
+    "resp": 1,
+    "pool": 100000,
+    "min": 500,
+    "max": 20000,
+    "methods": [
+      "Garanti BBVA",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 140,
+    "name": "cagdas_usdt",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0138,
+    "disc": -0.0079,
+    "trades": 363,
+    "comp": 99.7,
+    "rate": 4.96,
+    "resp": 1,
+    "pool": 24000,
+    "min": 500,
+    "max": 12000,
+    "methods": [
+      "Akbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 141,
+    "name": "caner_vip",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0149,
+    "disc": -0.0079,
+    "trades": 444,
+    "comp": 98.0,
+    "rate": 4.76,
+    "resp": 1,
+    "pool": 16000,
+    "min": 200,
+    "max": 8000,
+    "methods": [
+      "Ziraat Bankası",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 142,
+    "name": "zafer_vip",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0106,
+    "disc": -0.0031,
+    "trades": 364,
+    "comp": 98.4,
+    "rate": 4.87,
+    "resp": 1,
+    "pool": 80000,
+    "min": 500,
+    "max": 20000,
+    "methods": [
+      "Garanti BBVA",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 143,
+    "name": "semih_nakit",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0082,
+    "disc": -0.0036,
+    "trades": 129,
+    "comp": 99.3,
+    "rate": 4.96,
+    "resp": 4,
+    "pool": 32000,
+    "min": 200,
+    "max": 8000,
+    "methods": [
+      "Simplex",
+      "Wise",
+      "SEPA Instant"
+    ]
+  },
+  {
+    "id": 144,
+    "name": "cihan_06",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0039,
+    "disc": -0.0072,
+    "trades": 397,
+    "comp": 99.3,
+    "rate": 4.93,
+    "resp": 4,
+    "pool": 32000,
+    "min": 250,
+    "max": 8000,
+    "methods": [
+      "Garanti BBVA",
+      "Akbank",
+      "Param / Papara"
+    ]
+  },
+  {
+    "id": 145,
+    "name": "harun_35",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0139,
+    "disc": -0.0034,
+    "trades": 125,
+    "comp": 98.7,
+    "rate": 4.93,
+    "resp": 2,
+    "pool": 60000,
+    "min": 1000,
+    "max": 12000,
+    "methods": [
+      "TEB",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 146,
+    "name": "umut_garanti",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0096,
+    "disc": -0.0145,
+    "trades": 370,
+    "comp": 99.9,
+    "rate": 4.78,
+    "resp": 3,
+    "pool": 100000,
+    "min": 1000,
+    "max": 50000,
+    "methods": [
+      "İş Bankası",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 147,
+    "name": "tuncay_pro",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0072,
+    "disc": -0.0036,
+    "trades": 205,
+    "comp": 97.9,
+    "rate": 4.87,
+    "resp": 1,
+    "pool": 140000,
+    "min": 400,
+    "max": 35000,
+    "methods": [
+      "Simplex",
+      "Wise",
+      "SEPA Instant"
+    ]
+  },
+  {
+    "id": 148,
+    "name": "ismail_ist",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0065,
+    "disc": -0.0071,
+    "trades": 82,
+    "comp": 98.2,
+    "rate": 4.8,
+    "resp": 1,
+    "pool": 32000,
+    "min": 150,
+    "max": 8000,
+    "methods": [
+      "İş Bankası",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 149,
+    "name": "serkan_prime",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0108,
+    "disc": -0.0046,
+    "trades": 232,
+    "comp": 98.6,
+    "rate": 4.85,
+    "resp": 1,
+    "pool": 40000,
+    "min": 200,
+    "max": 20000,
+    "methods": [
+      "TEB",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 150,
+    "name": "caner_antalya",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0064,
+    "disc": -0.0075,
+    "trades": 241,
+    "comp": 99.9,
+    "rate": 4.76,
+    "resp": 2,
+    "pool": 36000,
+    "min": 500,
+    "max": 12000,
+    "methods": [
+      "Ziraat Bankası",
+      "VakıfBank",
+      "Halkbank"
+    ]
+  },
+  {
+    "id": 151,
+    "name": "eren_aninda",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0044,
+    "disc": -0.0062,
+    "trades": 105,
+    "comp": 98.5,
+    "rate": 4.99,
+    "resp": 2,
+    "pool": 45000,
+    "min": 250,
+    "max": 15000,
+    "methods": [
+      "Simplex",
+      "Wise",
+      "SEPA Instant"
+    ]
+  },
+  {
+    "id": 152,
+    "name": "batuhan_antalya",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0036,
+    "disc": -0.0143,
+    "trades": 181,
+    "comp": 98.3,
+    "rate": 4.83,
+    "resp": 4,
+    "pool": 60000,
+    "min": 200,
+    "max": 12000,
+    "methods": [
+      "QNB Finansbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 153,
+    "name": "cemil_35",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0086,
+    "disc": -0.0043,
+    "trades": 290,
+    "comp": 99.9,
+    "rate": 4.89,
+    "resp": 3,
+    "pool": 16000,
+    "min": 250,
+    "max": 8000,
+    "methods": [
+      "Ziraat Bankası",
+      "VakıfBank",
+      "Halkbank"
+    ]
+  },
+  {
+    "id": 154,
+    "name": "saban_usdt",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0109,
+    "disc": -0.006,
+    "trades": 348,
+    "comp": 99.7,
+    "rate": 4.77,
+    "resp": 3,
+    "pool": 150000,
+    "min": 150,
+    "max": 50000,
+    "methods": [
+      "İş Bankası",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 155,
+    "name": "onur_aninda",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0085,
+    "disc": -0.0054,
+    "trades": 249,
+    "comp": 99.6,
+    "rate": 4.84,
+    "resp": 4,
+    "pool": 40000,
+    "min": 300,
+    "max": 20000,
+    "methods": [
+      "Halkbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 156,
+    "name": "kerem_pro",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0079,
+    "disc": -0.0077,
+    "trades": 339,
+    "comp": 98.7,
+    "rate": 4.89,
+    "resp": 2,
+    "pool": 200000,
+    "min": 500,
+    "max": 50000,
+    "methods": [
+      "Yapı Kredi",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 157,
+    "name": "alperen_34",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0036,
+    "disc": -0.0077,
+    "trades": 113,
+    "comp": 99.0,
+    "rate": 4.97,
+    "resp": 4,
+    "pool": 140000,
+    "min": 1000,
+    "max": 35000,
+    "methods": [
+      "Ziraat Bankası",
+      "VakıfBank",
+      "Halkbank"
+    ]
+  },
+  {
+    "id": 158,
+    "name": "serkan_otc",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0104,
+    "disc": -0.0033,
+    "trades": 144,
+    "comp": 98.8,
+    "rate": 4.83,
+    "resp": 3,
+    "pool": 40000,
+    "min": 300,
+    "max": 8000,
+    "methods": [
+      "İş Bankası",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 159,
+    "name": "fatih_izmir",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0085,
+    "disc": -0.0113,
+    "trades": 189,
+    "comp": 98.4,
+    "rate": 4.78,
+    "resp": 4,
+    "pool": 75000,
+    "min": 400,
+    "max": 15000,
+    "methods": [
+      "Ziraat Bankası",
+      "VakıfBank",
+      "Halkbank"
+    ]
+  },
+  {
+    "id": 160,
+    "name": "tarik_35",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0051,
+    "disc": -0.0146,
+    "trades": 371,
+    "comp": 99.3,
+    "rate": 4.81,
+    "resp": 2,
+    "pool": 100000,
+    "min": 150,
+    "max": 20000,
+    "methods": [
+      "TEB",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 161,
+    "name": "serkan_finans",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0092,
+    "disc": -0.0118,
+    "trades": 203,
+    "comp": 99.7,
+    "rate": 4.87,
+    "resp": 2,
+    "pool": 60000,
+    "min": 500,
+    "max": 12000,
+    "methods": [
+      "TEB",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 162,
+    "name": "taner_otc",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0035,
+    "disc": -0.0066,
+    "trades": 416,
+    "comp": 98.8,
+    "rate": 4.96,
+    "resp": 2,
+    "pool": 16000,
+    "min": 250,
+    "max": 8000,
+    "methods": [
+      "Simplex",
+      "Wise",
+      "SEPA Instant"
+    ]
+  },
+  {
+    "id": 163,
+    "name": "ibrahim_nakit",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0041,
+    "disc": -0.0074,
+    "trades": 395,
+    "comp": 98.9,
+    "rate": 4.82,
+    "resp": 2,
+    "pool": 60000,
+    "min": 150,
+    "max": 12000,
+    "methods": [
+      "Akbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 164,
+    "name": "yusuf_nakit",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0112,
+    "disc": -0.0034,
+    "trades": 437,
+    "comp": 99.0,
+    "rate": 4.91,
+    "resp": 4,
+    "pool": 10000,
+    "min": 150,
+    "max": 5000,
+    "methods": [
+      "Ziraat Bankası",
+      "Garanti BBVA",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 165,
+    "name": "selim_trade",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.01,
+    "disc": -0.0048,
+    "trades": 76,
+    "comp": 98.8,
+    "rate": 4.89,
+    "resp": 2,
+    "pool": 30000,
+    "min": 300,
+    "max": 15000,
+    "methods": [
+      "DenizBank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 166,
+    "name": "berkay_otc",
     "flag": "🇹🇷",
     "tier": "user",
     "prem": 0.012,
-    "disc": -0.012,
-    "trades": 96,
-    "comp": 99.0,
-    "rate": 4.93,
+    "disc": -0.0053,
+    "trades": 253,
+    "comp": 99.3,
+    "rate": 4.94,
+    "resp": 4,
+    "pool": 250000,
+    "min": 200,
+    "max": 50000,
+    "methods": [
+      "VakıfBank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 167,
+    "name": "melih_garanti",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0085,
+    "disc": -0.0056,
+    "trades": 32,
+    "comp": 98.0,
+    "rate": 4.97,
+    "resp": 3,
+    "pool": 40000,
+    "min": 200,
+    "max": 8000,
+    "methods": [
+      "Garanti BBVA",
+      "Akbank",
+      "Param / Papara"
+    ]
+  },
+  {
+    "id": 168,
+    "name": "saban_finans",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.006,
+    "disc": -0.0125,
+    "trades": 238,
+    "comp": 98.1,
+    "rate": 4.77,
     "resp": 1,
-    "pool": 36000,
-    "min": 350,
+    "pool": 100000,
+    "min": 250,
+    "max": 20000,
+    "methods": [
+      "Banxa",
+      "MoonPay",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 169,
+    "name": "mehmet_bursa",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.01,
+    "disc": -0.0131,
+    "trades": 334,
+    "comp": 98.3,
+    "rate": 4.8,
+    "resp": 3,
+    "pool": 105000,
+    "min": 300,
+    "max": 35000,
+    "methods": [
+      "Ziraat Bankası",
+      "VakıfBank",
+      "Halkbank"
+    ]
+  },
+  {
+    "id": 170,
+    "name": "caner_finans",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0096,
+    "disc": -0.0117,
+    "trades": 344,
+    "comp": 99.8,
+    "rate": 4.86,
+    "resp": 1,
+    "pool": 20000,
+    "min": 1000,
+    "max": 5000,
+    "methods": [
+      "Garanti BBVA",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 171,
+    "name": "ercan_34",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0112,
+    "disc": -0.0086,
+    "trades": 258,
+    "comp": 99.7,
+    "rate": 4.92,
+    "resp": 2,
+    "pool": 45000,
+    "min": 300,
+    "max": 15000,
+    "methods": [
+      "TEB",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 172,
+    "name": "mahmut_prime",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0146,
+    "disc": -0.0069,
+    "trades": 223,
+    "comp": 99.0,
+    "rate": 4.78,
+    "resp": 2,
+    "pool": 100000,
+    "min": 400,
+    "max": 20000,
+    "methods": [
+      "Garanti BBVA",
+      "Akbank",
+      "Param / Papara"
+    ]
+  },
+  {
+    "id": 173,
+    "name": "eren_izmir",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0127,
+    "disc": -0.0081,
+    "trades": 391,
+    "comp": 98.4,
+    "rate": 4.76,
+    "resp": 4,
+    "pool": 100000,
+    "min": 400,
+    "max": 50000,
+    "methods": [
+      "Akbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 174,
+    "name": "sarp_nakit",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.01,
+    "disc": -0.0112,
+    "trades": 237,
+    "comp": 99.0,
+    "rate": 4.99,
+    "resp": 1,
+    "pool": 60000,
+    "min": 200,
+    "max": 15000,
+    "methods": [
+      "Banxa",
+      "MoonPay",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 175,
+    "name": "tarik_06",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.012,
+    "disc": -0.0069,
+    "trades": 237,
+    "comp": 98.3,
+    "rate": 4.92,
+    "resp": 3,
+    "pool": 16000,
+    "min": 250,
+    "max": 8000,
+    "methods": [
+      "Akbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 176,
+    "name": "umut_aninda",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0139,
+    "disc": -0.0141,
+    "trades": 41,
+    "comp": 98.3,
+    "rate": 4.8,
+    "resp": 4,
+    "pool": 10000,
+    "min": 250,
+    "max": 5000,
+    "methods": [
+      "Ziraat Bankası",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 177,
+    "name": "melih_usdt",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0108,
+    "disc": -0.0077,
+    "trades": 279,
+    "comp": 98.4,
+    "rate": 4.99,
+    "resp": 1,
+    "pool": 60000,
+    "min": 300,
+    "max": 15000,
+    "methods": [
+      "Garanti BBVA",
+      "Akbank",
+      "Param / Papara"
+    ]
+  },
+  {
+    "id": 178,
+    "name": "kemal_p2p",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0055,
+    "disc": -0.0073,
+    "trades": 328,
+    "comp": 98.5,
+    "rate": 4.77,
+    "resp": 3,
+    "pool": 60000,
+    "min": 1000,
+    "max": 12000,
+    "methods": [
+      "İş Bankası",
+      "Yapı Kredi",
+      "Akbank"
+    ]
+  },
+  {
+    "id": 179,
+    "name": "arda_garanti",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0113,
+    "disc": -0.0119,
+    "trades": 362,
+    "comp": 97.8,
+    "rate": 4.86,
+    "resp": 2,
+    "pool": 25000,
+    "min": 400,
+    "max": 5000,
+    "methods": [
+      "VakıfBank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 180,
+    "name": "mertcan_tr",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0063,
+    "disc": -0.0061,
+    "trades": 78,
+    "comp": 98.1,
+    "rate": 4.86,
+    "resp": 2,
+    "pool": 105000,
+    "min": 150,
+    "max": 35000,
+    "methods": [
+      "Simplex",
+      "Wise",
+      "SEPA Instant"
+    ]
+  },
+  {
+    "id": 181,
+    "name": "taner_pro",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.009,
+    "disc": -0.0106,
+    "trades": 362,
+    "comp": 99.7,
+    "rate": 4.9,
+    "resp": 1,
+    "pool": 105000,
+    "min": 200,
+    "max": 35000,
+    "methods": [
+      "İş Bankası",
+      "Yapı Kredi",
+      "Akbank"
+    ]
+  },
+  {
+    "id": 182,
+    "name": "caner_ist",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0141,
+    "disc": -0.0051,
+    "trades": 363,
+    "comp": 99.4,
+    "rate": 4.95,
+    "resp": 3,
+    "pool": 20000,
+    "min": 1000,
+    "max": 5000,
+    "methods": [
+      "Ziraat Bankası",
+      "Garanti BBVA",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 183,
+    "name": "eren_bursa",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.012,
+    "disc": -0.0048,
+    "trades": 394,
+    "comp": 98.5,
+    "rate": 4.83,
+    "resp": 1,
+    "pool": 105000,
+    "min": 1000,
+    "max": 35000,
+    "methods": [
+      "Ziraat Bankası",
+      "Garanti BBVA",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 184,
+    "name": "kerem_ist",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0095,
+    "disc": -0.007,
+    "trades": 207,
+    "comp": 98.8,
+    "rate": 4.78,
+    "resp": 1,
+    "pool": 70000,
+    "min": 200,
+    "max": 35000,
+    "methods": [
+      "VakıfBank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 185,
+    "name": "baris_ist",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.009,
+    "disc": -0.0095,
+    "trades": 45,
+    "comp": 98.2,
+    "rate": 4.93,
+    "resp": 3,
+    "pool": 25000,
+    "min": 250,
+    "max": 5000,
+    "methods": [
+      "Param / Papara",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 186,
+    "name": "yasin_finans",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0127,
+    "disc": -0.0099,
+    "trades": 378,
+    "comp": 98.2,
+    "rate": 5.0,
+    "resp": 1,
+    "pool": 105000,
+    "min": 250,
+    "max": 35000,
+    "methods": [
+      "Simplex",
+      "Wise",
+      "SEPA Instant"
+    ]
+  },
+  {
+    "id": 187,
+    "name": "ali_riza_finans",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0122,
+    "disc": -0.0095,
+    "trades": 382,
+    "comp": 98.8,
+    "rate": 4.89,
+    "resp": 4,
+    "pool": 24000,
+    "min": 400,
+    "max": 12000,
+    "methods": [
+      "TEB",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 188,
+    "name": "kaan_usdt",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0128,
+    "disc": -0.0046,
+    "trades": 47,
+    "comp": 99.1,
+    "rate": 4.92,
+    "resp": 3,
+    "pool": 20000,
+    "min": 200,
+    "max": 5000,
+    "methods": [
+      "Akbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 189,
+    "name": "sarp_ist",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0103,
+    "disc": -0.0059,
+    "trades": 115,
+    "comp": 98.4,
+    "rate": 4.97,
+    "resp": 2,
+    "pool": 24000,
+    "min": 400,
+    "max": 12000,
+    "methods": [
+      "Halkbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 190,
+    "name": "deniz_pro",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0121,
+    "disc": -0.0141,
+    "trades": 329,
+    "comp": 99.5,
+    "rate": 4.82,
+    "resp": 1,
+    "pool": 15000,
+    "min": 400,
+    "max": 5000,
+    "methods": [
+      "DenizBank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 191,
+    "name": "veysel_vip",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0125,
+    "disc": -0.0148,
+    "trades": 197,
+    "comp": 98.2,
+    "rate": 4.82,
+    "resp": 1,
+    "pool": 60000,
+    "min": 400,
+    "max": 12000,
+    "methods": [
+      "Banxa",
+      "MoonPay",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 192,
+    "name": "kerem_ziraat",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0132,
+    "disc": -0.013,
+    "trades": 202,
+    "comp": 98.0,
+    "rate": 4.81,
+    "resp": 4,
+    "pool": 105000,
+    "min": 400,
+    "max": 35000,
+    "methods": [
+      "Garanti BBVA",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 193,
+    "name": "volkan_ankara",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0143,
+    "disc": -0.0062,
+    "trades": 173,
+    "comp": 99.7,
+    "rate": 4.92,
+    "resp": 3,
+    "pool": 40000,
+    "min": 400,
+    "max": 8000,
+    "methods": [
+      "VakıfBank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 194,
+    "name": "furkan_ankara",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0094,
+    "disc": -0.0123,
+    "trades": 161,
+    "comp": 98.3,
+    "rate": 4.8,
+    "resp": 1,
+    "pool": 24000,
+    "min": 500,
+    "max": 8000,
+    "methods": [
+      "Halkbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 195,
+    "name": "koray_otc",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0099,
+    "disc": -0.006,
+    "trades": 379,
+    "comp": 99.0,
+    "rate": 4.78,
+    "resp": 4,
+    "pool": 10000,
+    "min": 250,
+    "max": 5000,
+    "methods": [
+      "Ziraat Bankası",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 196,
+    "name": "saban_crypto",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0038,
+    "disc": -0.0096,
+    "trades": 189,
+    "comp": 97.9,
+    "rate": 4.8,
+    "resp": 2,
+    "pool": 60000,
+    "min": 1000,
+    "max": 12000,
+    "methods": [
+      "Yapı Kredi",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 197,
+    "name": "ercan_kripto",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0098,
+    "disc": -0.0043,
+    "trades": 366,
+    "comp": 98.1,
+    "rate": 4.78,
+    "resp": 1,
+    "pool": 100000,
+    "min": 300,
+    "max": 50000,
+    "methods": [
+      "Ziraat Bankası",
+      "Garanti BBVA",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 198,
+    "name": "alperen_06",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0092,
+    "disc": -0.0146,
+    "trades": 61,
+    "comp": 99.3,
+    "rate": 4.92,
+    "resp": 3,
+    "pool": 200000,
+    "min": 500,
+    "max": 50000,
+    "methods": [
+      "Garanti BBVA",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 199,
+    "name": "kaan_pro",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0048,
+    "disc": -0.0054,
+    "trades": 187,
+    "comp": 98.1,
+    "rate": 4.91,
+    "resp": 3,
+    "pool": 40000,
+    "min": 500,
+    "max": 20000,
+    "methods": [
+      "Akbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 200,
+    "name": "ramazan_ziraat",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0143,
+    "disc": -0.006,
+    "trades": 161,
+    "comp": 99.4,
+    "rate": 4.81,
+    "resp": 3,
+    "pool": 70000,
+    "min": 1000,
+    "max": 35000,
+    "methods": [
+      "Ziraat Bankası",
+      "VakıfBank",
+      "Halkbank"
+    ]
+  },
+  {
+    "id": 201,
+    "name": "mertcan_61_tr",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0032,
+    "disc": -0.014,
+    "trades": 340,
+    "comp": 99.5,
+    "rate": 4.9,
+    "resp": 2,
+    "pool": 75000,
+    "min": 150,
+    "max": 15000,
+    "methods": [
+      "İş Bankası",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 202,
+    "name": "serkan_aninda",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.014,
+    "disc": -0.0127,
+    "trades": 347,
+    "comp": 99.6,
+    "rate": 4.92,
+    "resp": 2,
+    "pool": 70000,
+    "min": 150,
+    "max": 35000,
+    "methods": [
+      "QNB Finansbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 203,
+    "name": "sarp_garanti",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0128,
+    "disc": -0.0047,
+    "trades": 245,
+    "comp": 98.5,
+    "rate": 4.97,
+    "resp": 2,
+    "pool": 40000,
+    "min": 300,
+    "max": 20000,
+    "methods": [
+      "DenizBank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 204,
+    "name": "ramazan_antalya",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.013,
+    "disc": -0.0043,
+    "trades": 76,
+    "comp": 99.4,
+    "rate": 4.98,
+    "resp": 2,
+    "pool": 10000,
+    "min": 400,
+    "max": 5000,
+    "methods": [
+      "VakıfBank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 205,
+    "name": "cemil_prime",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0068,
+    "disc": -0.0067,
+    "trades": 237,
+    "comp": 97.9,
+    "rate": 4.76,
+    "resp": 4,
+    "pool": 40000,
+    "min": 300,
+    "max": 8000,
+    "methods": [
+      "Banxa",
+      "MoonPay",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 206,
+    "name": "batuhan_garanti",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0126,
+    "disc": -0.0031,
+    "trades": 230,
+    "comp": 99.3,
+    "rate": 4.79,
+    "resp": 2,
+    "pool": 45000,
+    "min": 400,
+    "max": 15000,
+    "methods": [
+      "VakıfBank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 207,
+    "name": "yunus_trc20",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0075,
+    "disc": -0.014,
+    "trades": 65,
+    "comp": 98.6,
+    "rate": 4.81,
+    "resp": 1,
+    "pool": 60000,
+    "min": 150,
+    "max": 15000,
+    "methods": [
+      "Garanti BBVA",
+      "Akbank",
+      "Param / Papara"
+    ]
+  },
+  {
+    "id": 208,
+    "name": "yunus_antalya",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0149,
+    "disc": -0.009,
+    "trades": 124,
+    "comp": 99.1,
+    "rate": 4.77,
+    "resp": 3,
+    "pool": 175000,
+    "min": 250,
+    "max": 35000,
+    "methods": [
+      "Akbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 209,
+    "name": "bilal_kripto",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0092,
+    "disc": -0.0053,
+    "trades": 152,
+    "comp": 99.3,
+    "rate": 4.75,
+    "resp": 1,
+    "pool": 60000,
+    "min": 200,
+    "max": 12000,
+    "methods": [
+      "Param / Papara",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 210,
+    "name": "tayfun_crypto",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0069,
+    "disc": -0.0031,
+    "trades": 48,
+    "comp": 98.8,
+    "rate": 4.92,
+    "resp": 4,
+    "pool": 20000,
+    "min": 300,
+    "max": 5000,
+    "methods": [
+      "Banxa",
+      "MoonPay",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 211,
+    "name": "volkan_izmir",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0117,
+    "disc": -0.0139,
+    "trades": 32,
+    "comp": 97.9,
+    "rate": 4.81,
+    "resp": 4,
+    "pool": 100000,
+    "min": 300,
+    "max": 20000,
+    "methods": [
+      "Simplex",
+      "Wise",
+      "SEPA Instant"
+    ]
+  },
+  {
+    "id": 212,
+    "name": "deniz_otc",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0045,
+    "disc": -0.0039,
+    "trades": 50,
+    "comp": 98.6,
+    "rate": 4.77,
+    "resp": 1,
+    "pool": 100000,
+    "min": 500,
+    "max": 20000,
+    "methods": [
+      "Param / Papara",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 213,
+    "name": "eren_06",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0073,
+    "disc": -0.0115,
+    "trades": 107,
+    "comp": 97.9,
+    "rate": 4.76,
+    "resp": 1,
+    "pool": 16000,
+    "min": 1000,
+    "max": 8000,
+    "methods": [
+      "Garanti BBVA",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 214,
+    "name": "ibrahim_vip",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.015,
+    "disc": -0.0125,
+    "trades": 204,
+    "comp": 98.6,
+    "rate": 4.75,
+    "resp": 4,
+    "pool": 60000,
+    "min": 1000,
+    "max": 15000,
+    "methods": [
+      "Banxa",
+      "MoonPay",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 215,
+    "name": "batuhan_p2p",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.004,
+    "disc": -0.0145,
+    "trades": 419,
+    "comp": 98.5,
+    "rate": 4.94,
+    "resp": 2,
+    "pool": 40000,
+    "min": 400,
+    "max": 20000,
+    "methods": [
+      "Garanti BBVA",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 216,
+    "name": "eren_otc",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.006,
+    "disc": -0.0127,
+    "trades": 290,
+    "comp": 99.5,
+    "rate": 4.98,
+    "resp": 2,
+    "pool": 60000,
+    "min": 400,
+    "max": 12000,
+    "methods": [
+      "TEB",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 217,
+    "name": "tarik_izmir",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0036,
+    "disc": -0.0066,
+    "trades": 115,
+    "comp": 98.0,
+    "rate": 4.78,
+    "resp": 3,
+    "pool": 24000,
+    "min": 500,
+    "max": 12000,
+    "methods": [
+      "İş Bankası",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 218,
+    "name": "cemil_ist",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0095,
+    "disc": -0.0109,
+    "trades": 53,
+    "comp": 98.4,
+    "rate": 4.96,
+    "resp": 1,
+    "pool": 45000,
+    "min": 250,
+    "max": 15000,
+    "methods": [
+      "Ziraat Bankası",
+      "VakıfBank",
+      "Halkbank"
+    ]
+  },
+  {
+    "id": 219,
+    "name": "ahmet_vip",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0105,
+    "disc": -0.0069,
+    "trades": 199,
+    "comp": 99.8,
+    "rate": 4.79,
+    "resp": 2,
+    "pool": 140000,
+    "min": 300,
+    "max": 35000,
+    "methods": [
+      "Param / Papara",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 220,
+    "name": "caglar_vip",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0072,
+    "disc": -0.011,
+    "trades": 29,
+    "comp": 98.6,
+    "rate": 4.89,
+    "resp": 1,
+    "pool": 100000,
+    "min": 300,
+    "max": 20000,
+    "methods": [
+      "Akbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 221,
+    "name": "aykut_kripto",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0038,
+    "disc": -0.0125,
+    "trades": 310,
+    "comp": 98.5,
+    "rate": 4.8,
+    "resp": 3,
+    "pool": 105000,
+    "min": 150,
+    "max": 35000,
+    "methods": [
+      "Yapı Kredi",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 222,
+    "name": "dogukan_antalya",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.008,
+    "disc": -0.0094,
+    "trades": 336,
+    "comp": 98.1,
+    "rate": 4.83,
+    "resp": 1,
+    "pool": 75000,
+    "min": 250,
+    "max": 15000,
+    "methods": [
+      "İş Bankası",
+      "Yapı Kredi",
+      "Akbank"
+    ]
+  },
+  {
+    "id": 223,
+    "name": "caner_06",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0074,
+    "disc": -0.0112,
+    "trades": 234,
+    "comp": 99.5,
+    "rate": 4.88,
+    "resp": 3,
+    "pool": 75000,
+    "min": 200,
+    "max": 15000,
+    "methods": [
+      "İş Bankası",
+      "Yapı Kredi",
+      "Akbank"
+    ]
+  },
+  {
+    "id": 224,
+    "name": "saban_tr",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0111,
+    "disc": -0.007,
+    "trades": 250,
+    "comp": 99.3,
+    "rate": 4.9,
+    "resp": 4,
+    "pool": 75000,
+    "min": 150,
+    "max": 15000,
+    "methods": [
+      "Yapı Kredi",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 225,
+    "name": "alperen_ist",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0052,
+    "disc": -0.0076,
+    "trades": 363,
+    "comp": 99.2,
+    "rate": 4.86,
+    "resp": 2,
+    "pool": 140000,
+    "min": 1000,
+    "max": 35000,
+    "methods": [
+      "Garanti BBVA",
+      "Akbank",
+      "Param / Papara"
+    ]
+  },
+  {
+    "id": 226,
+    "name": "semih_express",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0136,
+    "disc": -0.0145,
+    "trades": 49,
+    "comp": 98.9,
+    "rate": 4.96,
+    "resp": 3,
+    "pool": 25000,
+    "min": 1000,
+    "max": 5000,
+    "methods": [
+      "QNB Finansbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 227,
+    "name": "alp_trade",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0039,
+    "disc": -0.0103,
+    "trades": 147,
+    "comp": 98.8,
+    "rate": 4.81,
+    "resp": 2,
+    "pool": 16000,
+    "min": 150,
+    "max": 8000,
+    "methods": [
+      "Banxa",
+      "MoonPay",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 228,
+    "name": "gokhan_ist",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0132,
+    "disc": -0.0081,
+    "trades": 433,
+    "comp": 99.3,
+    "rate": 4.92,
+    "resp": 4,
+    "pool": 60000,
+    "min": 200,
     "max": 12000,
     "methods": [
       "VakıfBank",
@@ -4268,56 +5409,231 @@ const RAW_MERCHANTS = [
     ]
   },
   {
-    "id": 169,
-    "name": "onur_alimsatim",
+    "id": 229,
+    "name": "melih_trade",
     "flag": "🇹🇷",
     "tier": "user",
-    "prem": 0.006,
-    "disc": -0.006,
-    "trades": 140,
-    "comp": 99.3,
-    "rate": 4.97,
-    "resp": 1,
-    "pool": 75000,
-    "min": 500,
-    "max": 25000,
+    "prem": 0.0116,
+    "disc": -0.0143,
+    "trades": 396,
+    "comp": 98.7,
+    "rate": 4.95,
+    "resp": 2,
+    "pool": 16000,
+    "min": 300,
+    "max": 8000,
     "methods": [
       "Ziraat Bankası",
+      "VakıfBank",
+      "Halkbank"
+    ]
+  },
+  {
+    "id": 230,
+    "name": "tarik_vip",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0116,
+    "disc": -0.0101,
+    "trades": 73,
+    "comp": 99.8,
+    "rate": 4.82,
+    "resp": 2,
+    "pool": 40000,
+    "min": 400,
+    "max": 20000,
+    "methods": [
+      "Yapı Kredi",
       "FAST Anında"
     ]
   },
   {
-    "id": 170,
-    "name": "serkan_btc_ist",
+    "id": 231,
+    "name": "omer_aninda",
     "flag": "🇹🇷",
     "tier": "user",
-    "prem": 0.007,
-    "disc": -0.007,
-    "trades": 88,
-    "comp": 98.7,
-    "rate": 4.85,
+    "prem": 0.0099,
+    "disc": -0.012,
+    "trades": 372,
+    "comp": 98.4,
+    "rate": 4.81,
     "resp": 2,
-    "pool": 42000,
-    "min": 300,
-    "max": 14000,
+    "pool": 24000,
+    "min": 200,
+    "max": 12000,
     "methods": [
-      "Garanti BBVA",
-      "Akbank"
+      "DenizBank",
+      "FAST Anında"
     ]
   },
   {
-    "id": 171,
-    "name": "cemil_otc",
+    "id": 232,
+    "name": "veysel_antalya",
     "flag": "🇹🇷",
     "tier": "user",
-    "prem": 0.008,
-    "disc": -0.008,
-    "trades": 42,
-    "comp": 98.0,
-    "rate": 4.89,
+    "prem": 0.0131,
+    "disc": -0.0148,
+    "trades": 92,
+    "comp": 98.6,
+    "rate": 4.8,
     "resp": 3,
-    "pool": 15000,
+    "pool": 75000,
+    "min": 150,
+    "max": 15000,
+    "methods": [
+      "VakıfBank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 233,
+    "name": "onur_35",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0079,
+    "disc": -0.0108,
+    "trades": 406,
+    "comp": 99.4,
+    "rate": 4.76,
+    "resp": 3,
+    "pool": 105000,
+    "min": 400,
+    "max": 35000,
+    "methods": [
+      "DenizBank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 234,
+    "name": "arda_finans",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0097,
+    "disc": -0.0129,
+    "trades": 187,
+    "comp": 99.5,
+    "rate": 4.84,
+    "resp": 3,
+    "pool": 70000,
+    "min": 400,
+    "max": 35000,
+    "methods": [
+      "Halkbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 235,
+    "name": "tayfun_finans",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0088,
+    "disc": -0.0106,
+    "trades": 258,
+    "comp": 99.2,
+    "rate": 4.92,
+    "resp": 2,
+    "pool": 24000,
     "min": 250,
+    "max": 12000,
+    "methods": [
+      "Param / Papara",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 236,
+    "name": "cemil_bursa",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0141,
+    "disc": -0.0047,
+    "trades": 422,
+    "comp": 98.0,
+    "rate": 4.86,
+    "resp": 1,
+    "pool": 32000,
+    "min": 1000,
+    "max": 8000,
+    "methods": [
+      "Ziraat Bankası",
+      "VakıfBank",
+      "Halkbank"
+    ]
+  },
+  {
+    "id": 237,
+    "name": "alp_35",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0078,
+    "disc": -0.0128,
+    "trades": 146,
+    "comp": 98.9,
+    "rate": 4.8,
+    "resp": 4,
+    "pool": 80000,
+    "min": 250,
+    "max": 20000,
+    "methods": [
+      "Simplex",
+      "Wise",
+      "SEPA Instant"
+    ]
+  },
+  {
+    "id": 238,
+    "name": "murat_ankara",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0136,
+    "disc": -0.0081,
+    "trades": 32,
+    "comp": 99.3,
+    "rate": 4.95,
+    "resp": 3,
+    "pool": 75000,
+    "min": 250,
+    "max": 15000,
+    "methods": [
+      "TEB",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 239,
+    "name": "batuhan_trade",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.006,
+    "disc": -0.0124,
+    "trades": 171,
+    "comp": 98.2,
+    "rate": 4.92,
+    "resp": 3,
+    "pool": 250000,
+    "min": 1000,
+    "max": 50000,
+    "methods": [
+      "Garanti BBVA",
+      "Akbank",
+      "Param / Papara"
+    ]
+  },
+  {
+    "id": 240,
+    "name": "zafer_fast",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0065,
+    "disc": -0.0054,
+    "trades": 440,
+    "comp": 99.3,
+    "rate": 4.81,
+    "resp": 1,
+    "pool": 15000,
+    "min": 400,
     "max": 5000,
     "methods": [
       "Halkbank",
@@ -4325,573 +5641,2130 @@ const RAW_MERCHANTS = [
     ]
   },
   {
-    "id": 172,
-    "name": "ali_riza_fast",
+    "id": 241,
+    "name": "halil_fast",
     "flag": "🇹🇷",
     "tier": "user",
-    "prem": 0.009000000000000001,
-    "disc": -0.009000000000000001,
-    "trades": 77,
-    "comp": 98.8,
-    "rate": 4.93,
+    "prem": 0.0145,
+    "disc": -0.0091,
+    "trades": 340,
+    "comp": 98.3,
+    "rate": 4.99,
     "resp": 2,
-    "pool": 24000,
-    "min": 300,
-    "max": 8000,
+    "pool": 100000,
+    "min": 400,
+    "max": 50000,
     "methods": [
-      "DenizBank",
+      "Garanti BBVA",
+      "Akbank",
+      "Param / Papara"
+    ]
+  },
+  {
+    "id": 242,
+    "name": "bilal_25_kripto",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0077,
+    "disc": -0.0055,
+    "trades": 225,
+    "comp": 99.5,
+    "rate": 4.75,
+    "resp": 3,
+    "pool": 70000,
+    "min": 500,
+    "max": 35000,
+    "methods": [
+      "İş Bankası",
       "FAST Anında"
     ]
   },
   {
-    "id": 173,
-    "name": "yusuf_usdt_izmir",
+    "id": 243,
+    "name": "ibrahim_garanti",
     "flag": "🇹🇷",
     "tier": "user",
-    "prem": 0.01,
-    "disc": -0.01,
-    "trades": 129,
-    "comp": 99.2,
-    "rate": 4.97,
-    "resp": 1,
-    "pool": 54000,
-    "min": 400,
-    "max": 18000,
+    "prem": 0.0131,
+    "disc": -0.0086,
+    "trades": 61,
+    "comp": 99.1,
+    "rate": 4.99,
+    "resp": 3,
+    "pool": 60000,
+    "min": 150,
+    "max": 15000,
     "methods": [
-      "Ziraat Bankası",
-      "QNB Finansbank"
+      "Garanti BBVA",
+      "Akbank",
+      "Param / Papara"
     ]
   },
   {
-    "id": 174,
-    "name": "hakan_crypto",
+    "id": 244,
+    "name": "sarp_trc20",
     "flag": "🇹🇷",
     "tier": "user",
-    "prem": 0.011,
-    "disc": -0.011,
-    "trades": 58,
-    "comp": 98.5,
-    "rate": 4.85,
-    "resp": 2,
-    "pool": 19500,
-    "min": 250,
-    "max": 6500,
+    "prem": 0.0095,
+    "disc": -0.0093,
+    "trades": 410,
+    "comp": 99.5,
+    "rate": 4.87,
+    "resp": 3,
+    "pool": 30000,
+    "min": 1000,
+    "max": 15000,
     "methods": [
       "TEB",
       "FAST Anında"
     ]
   },
   {
-    "id": 175,
-    "name": "oguzhan_p2p",
+    "id": 245,
+    "name": "ugur_ist",
     "flag": "🇹🇷",
     "tier": "user",
-    "prem": 0.012,
-    "disc": -0.012,
-    "trades": 190,
-    "comp": 99.6,
-    "rate": 4.89,
+    "prem": 0.0132,
+    "disc": -0.0083,
+    "trades": 378,
+    "comp": 98.3,
+    "rate": 4.83,
     "resp": 1,
-    "pool": 30000,
-    "min": 200,
-    "max": 10000,
-    "methods": [
-      "Param / Papara",
-      "FAST Anında"
-    ]
-  },
-  {
-    "id": 176,
-    "name": "fatih_tr_trade",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.006,
-    "disc": -0.006,
-    "trades": 105,
-    "comp": 99.0,
-    "rate": 4.93,
-    "resp": 2,
-    "pool": 48000,
-    "min": 500,
-    "max": 16000,
-    "methods": [
-      "Ziraat Bankası",
-      "Garanti BBVA"
-    ]
-  },
-  {
-    "id": 177,
-    "name": "deniz_coin_34",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.007,
-    "disc": -0.007,
-    "trades": 69,
-    "comp": 98.6,
-    "rate": 4.97,
-    "resp": 2,
-    "pool": 33000,
-    "min": 300,
-    "max": 11000,
-    "methods": [
-      "İş Bankası",
-      "Yapı Kredi"
-    ]
-  },
-  {
-    "id": 178,
-    "name": "tolga_garanti",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.008,
-    "disc": -0.008,
-    "trades": 145,
-    "comp": 99.3,
-    "rate": 4.85,
-    "resp": 1,
-    "pool": 66000,
-    "min": 400,
-    "max": 22000,
-    "methods": [
-      "Garanti BBVA",
-      "FAST Anında"
-    ]
-  },
-  {
-    "id": 179,
-    "name": "caner_fast_ziraat",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.009000000000000001,
-    "disc": -0.009000000000000001,
-    "trades": 160,
-    "comp": 99.5,
-    "rate": 4.89,
-    "resp": 1,
-    "pool": 84000,
-    "min": 500,
-    "max": 28000,
-    "methods": [
-      "Ziraat Bankası",
-      "FAST Anında"
-    ]
-  },
-  {
-    "id": 180,
-    "name": "volkan_trc20",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.01,
-    "disc": -0.01,
-    "trades": 84,
-    "comp": 98.9,
-    "rate": 4.93,
-    "resp": 2,
-    "pool": 28500,
-    "min": 250,
-    "max": 9500,
-    "methods": [
-      "Akbank",
-      "Param / Papara"
-    ]
-  },
-  {
-    "id": 181,
-    "name": "eren_akbank",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.011,
-    "disc": -0.011,
-    "trades": 92,
-    "comp": 99.1,
-    "rate": 4.97,
-    "resp": 1,
-    "pool": 39000,
-    "min": 300,
-    "max": 13000,
-    "methods": [
-      "Akbank",
-      "FAST Anında"
-    ]
-  },
-  {
-    "id": 182,
-    "name": "furkan_p2p",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.012,
-    "disc": -0.012,
-    "trades": 115,
-    "comp": 99.2,
-    "rate": 4.85,
-    "resp": 2,
-    "pool": 52500,
-    "min": 350,
-    "max": 17500,
-    "methods": [
-      "Ziraat Bankası",
-      "VakıfBank"
-    ]
-  },
-  {
-    "id": 183,
-    "name": "kerem_whale",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.006,
-    "disc": -0.006,
-    "trades": 210,
-    "comp": 99.7,
-    "rate": 4.89,
-    "resp": 1,
-    "pool": 150000,
-    "min": 1000,
-    "max": 50000,
-    "methods": [
-      "Garanti BBVA",
-      "İş Bankası"
-    ]
-  },
-  {
-    "id": 184,
-    "name": "baris_nakit",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.007,
-    "disc": -0.007,
-    "trades": 138,
-    "comp": 99.4,
-    "rate": 4.93,
-    "resp": 1,
-    "pool": 36000,
-    "min": 200,
-    "max": 12000,
-    "methods": [
-      "FAST Anında",
-      "Param / Papara"
-    ]
-  },
-  {
-    "id": 185,
-    "name": "berk_usdt",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.008,
-    "disc": -0.008,
-    "trades": 74,
-    "comp": 98.7,
-    "rate": 4.97,
-    "resp": 2,
-    "pool": 25500,
-    "min": 300,
-    "max": 8500,
-    "methods": [
-      "Yapı Kredi",
-      "FAST Anında"
-    ]
-  },
-  {
-    "id": 186,
-    "name": "kaan_otc_ankara",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.009000000000000001,
-    "disc": -0.009000000000000001,
-    "trades": 102,
-    "comp": 99.0,
-    "rate": 4.85,
-    "resp": 2,
-    "pool": 45000,
-    "min": 400,
-    "max": 15000,
-    "methods": [
-      "Ziraat Bankası",
-      "Halkbank"
-    ]
-  },
-  {
-    "id": 187,
-    "name": "sarp_fast_papara",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.01,
-    "disc": -0.01,
-    "trades": 165,
-    "comp": 99.5,
-    "rate": 4.89,
-    "resp": 1,
-    "pool": 42000,
-    "min": 200,
-    "max": 14000,
-    "methods": [
-      "Param / Papara",
-      "FAST Anında"
-    ]
-  },
-  {
-    "id": 188,
-    "name": "doruk_crypto_99",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.011,
-    "disc": -0.011,
-    "trades": 81,
-    "comp": 98.8,
-    "rate": 4.93,
-    "resp": 2,
-    "pool": 27000,
-    "min": 300,
-    "max": 9000,
-    "methods": [
-      "Akbank",
-      "Garanti BBVA"
-    ]
-  },
-  {
-    "id": 189,
-    "name": "tarik_istanbul",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.012,
-    "disc": -0.012,
-    "trades": 95,
-    "comp": 99.1,
-    "rate": 4.97,
-    "resp": 1,
-    "pool": 40500,
-    "min": 350,
-    "max": 13500,
-    "methods": [
-      "İş Bankası",
-      "FAST Anında"
-    ]
-  },
-  {
-    "id": 190,
-    "name": "melih_bursa",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.006,
-    "disc": -0.006,
-    "trades": 122,
-    "comp": 99.3,
-    "rate": 4.85,
-    "resp": 1,
-    "pool": 57000,
-    "min": 400,
-    "max": 19000,
-    "methods": [
-      "Ziraat Bankası",
-      "FAST Anında"
-    ]
-  },
-  {
-    "id": 191,
-    "name": "alperen_fast_tr",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.007,
-    "disc": -0.007,
-    "trades": 108,
-    "comp": 99.0,
-    "rate": 4.89,
-    "resp": 2,
-    "pool": 48000,
-    "min": 300,
-    "max": 16000,
-    "methods": [
-      "Garanti BBVA",
-      "VakıfBank"
-    ]
-  },
-  {
-    "id": 192,
-    "name": "dogukan_usdt",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.008,
-    "disc": -0.008,
-    "trades": 62,
-    "comp": 98.5,
-    "rate": 4.93,
-    "resp": 2,
-    "pool": 21000,
-    "min": 250,
-    "max": 7000,
-    "methods": [
-      "DenizBank",
-      "FAST Anında"
-    ]
-  },
-  {
-    "id": 193,
-    "name": "tayfun_trade",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.009000000000000001,
-    "disc": -0.009000000000000001,
-    "trades": 87,
-    "comp": 98.9,
-    "rate": 4.97,
-    "resp": 2,
-    "pool": 34500,
-    "min": 350,
-    "max": 11500,
+    "pool": 100000,
+    "min": 150,
+    "max": 20000,
     "methods": [
       "QNB Finansbank",
       "FAST Anında"
     ]
   },
   {
-    "id": 194,
-    "name": "semih_kripto",
+    "id": 246,
+    "name": "salih_ziraat",
     "flag": "🇹🇷",
     "tier": "user",
-    "prem": 0.01,
-    "disc": -0.01,
-    "trades": 56,
-    "comp": 98.3,
-    "rate": 4.85,
-    "resp": 3,
-    "pool": 18000,
-    "min": 200,
-    "max": 6000,
-    "methods": [
-      "TEB",
-      "Param / Papara"
-    ]
-  },
-  {
-    "id": 195,
-    "name": "aykut_izmir_fast",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.011,
-    "disc": -0.011,
-    "trades": 150,
-    "comp": 99.4,
-    "rate": 4.89,
-    "resp": 1,
-    "pool": 72000,
+    "prem": 0.0096,
+    "disc": -0.0109,
+    "trades": 437,
+    "comp": 99.5,
+    "rate": 4.9,
+    "resp": 4,
+    "pool": 60000,
     "min": 500,
-    "max": 24000,
+    "max": 20000,
     "methods": [
       "Ziraat Bankası",
-      "Garanti BBVA"
+      "FAST Anında"
     ]
   },
   {
-    "id": 196,
-    "name": "koray_trc",
+    "id": 247,
+    "name": "berkay_express",
     "flag": "🇹🇷",
     "tier": "user",
-    "prem": 0.012,
-    "disc": -0.012,
-    "trades": 90,
-    "comp": 99.0,
+    "prem": 0.0129,
+    "disc": -0.0033,
+    "trades": 128,
+    "comp": 99.2,
+    "rate": 4.91,
+    "resp": 4,
+    "pool": 25000,
+    "min": 500,
+    "max": 5000,
+    "methods": [
+      "Garanti BBVA",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 248,
+    "name": "ismail_ankara",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0091,
+    "disc": -0.0118,
+    "trades": 99,
+    "comp": 98.3,
     "rate": 4.93,
+    "resp": 3,
+    "pool": 80000,
+    "min": 500,
+    "max": 20000,
+    "methods": [
+      "Simplex",
+      "Wise",
+      "SEPA Instant"
+    ]
+  },
+  {
+    "id": 249,
+    "name": "emre_p2p",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0084,
+    "disc": -0.0063,
+    "trades": 372,
+    "comp": 98.2,
+    "rate": 4.82,
+    "resp": 3,
+    "pool": 70000,
+    "min": 400,
+    "max": 35000,
+    "methods": [
+      "TEB",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 250,
+    "name": "eren_vip",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0099,
+    "disc": -0.0087,
+    "trades": 219,
+    "comp": 98.1,
+    "rate": 4.94,
+    "resp": 3,
+    "pool": 24000,
+    "min": 150,
+    "max": 12000,
+    "methods": [
+      "Ziraat Bankası",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 251,
+    "name": "emre_prime",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0141,
+    "disc": -0.0063,
+    "trades": 93,
+    "comp": 99.2,
+    "rate": 4.77,
     "resp": 2,
-    "pool": 37500,
-    "min": 300,
-    "max": 12500,
+    "pool": 150000,
+    "min": 150,
+    "max": 50000,
+    "methods": [
+      "İş Bankası",
+      "Yapı Kredi",
+      "Akbank"
+    ]
+  },
+  {
+    "id": 252,
+    "name": "arda_p2p",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0032,
+    "disc": -0.0112,
+    "trades": 181,
+    "comp": 98.4,
+    "rate": 4.91,
+    "resp": 2,
+    "pool": 25000,
+    "min": 250,
+    "max": 5000,
     "methods": [
       "Akbank",
       "FAST Anında"
     ]
   },
   {
-    "id": 197,
-    "name": "mertcan_p2p_34",
+    "id": 253,
+    "name": "vedat_06",
     "flag": "🇹🇷",
     "tier": "user",
-    "prem": 0.006,
-    "disc": -0.006,
-    "trades": 118,
-    "comp": 99.2,
+    "prem": 0.0045,
+    "disc": -0.0063,
+    "trades": 157,
+    "comp": 98.8,
     "rate": 4.97,
+    "resp": 3,
+    "pool": 24000,
+    "min": 500,
+    "max": 8000,
+    "methods": [
+      "Simplex",
+      "Wise",
+      "SEPA Instant"
+    ]
+  },
+  {
+    "id": 254,
+    "name": "oguzhan_pro",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0074,
+    "disc": -0.0134,
+    "trades": 184,
+    "comp": 99.3,
+    "rate": 4.83,
+    "resp": 4,
+    "pool": 40000,
+    "min": 300,
+    "max": 20000,
+    "methods": [
+      "Ziraat Bankası",
+      "VakıfBank",
+      "Halkbank"
+    ]
+  },
+  {
+    "id": 255,
+    "name": "alperen_35",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0039,
+    "disc": -0.0091,
+    "trades": 415,
+    "comp": 99.9,
+    "rate": 4.83,
+    "resp": 4,
+    "pool": 100000,
+    "min": 300,
+    "max": 50000,
+    "methods": [
+      "Simplex",
+      "Wise",
+      "SEPA Instant"
+    ]
+  },
+  {
+    "id": 256,
+    "name": "murat_kripto",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0072,
+    "disc": -0.0106,
+    "trades": 188,
+    "comp": 99.0,
+    "rate": 4.83,
+    "resp": 4,
+    "pool": 24000,
+    "min": 250,
+    "max": 12000,
+    "methods": [
+      "TEB",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 257,
+    "name": "fatih_39_izmir",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0092,
+    "disc": -0.0063,
+    "trades": 177,
+    "comp": 99.2,
+    "rate": 4.82,
+    "resp": 2,
+    "pool": 60000,
+    "min": 1000,
+    "max": 20000,
+    "methods": [
+      "TEB",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 258,
+    "name": "deniz_p2p",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0076,
+    "disc": -0.0137,
+    "trades": 276,
+    "comp": 98.3,
+    "rate": 4.97,
+    "resp": 3,
+    "pool": 60000,
+    "min": 250,
+    "max": 12000,
+    "methods": [
+      "İş Bankası",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 259,
+    "name": "tayfun_ist",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0072,
+    "disc": -0.0039,
+    "trades": 96,
+    "comp": 98.0,
+    "rate": 4.98,
+    "resp": 2,
+    "pool": 80000,
+    "min": 200,
+    "max": 20000,
+    "methods": [
+      "TEB",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 260,
+    "name": "salih_otc",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0061,
+    "disc": -0.0148,
+    "trades": 396,
+    "comp": 98.9,
+    "rate": 4.76,
+    "resp": 3,
+    "pool": 40000,
+    "min": 200,
+    "max": 8000,
+    "methods": [
+      "Param / Papara",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 261,
+    "name": "emre_34",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0113,
+    "disc": -0.0039,
+    "trades": 356,
+    "comp": 99.1,
+    "rate": 4.85,
     "resp": 1,
-    "pool": 55500,
+    "pool": 60000,
+    "min": 250,
+    "max": 12000,
+    "methods": [
+      "TEB",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 262,
+    "name": "tarik_65_izmir",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.01,
+    "disc": -0.0094,
+    "trades": 400,
+    "comp": 98.7,
+    "rate": 4.77,
+    "resp": 3,
+    "pool": 24000,
+    "min": 500,
+    "max": 12000,
+    "methods": [
+      "İş Bankası",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 263,
+    "name": "ali_riza_whale",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0149,
+    "disc": -0.0122,
+    "trades": 230,
+    "comp": 99.4,
+    "rate": 4.99,
+    "resp": 2,
+    "pool": 40000,
+    "min": 200,
+    "max": 20000,
+    "methods": [
+      "Garanti BBVA",
+      "Akbank",
+      "Param / Papara"
+    ]
+  },
+  {
+    "id": 264,
+    "name": "bilal_35",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0069,
+    "disc": -0.0103,
+    "trades": 192,
+    "comp": 98.8,
+    "rate": 4.76,
+    "resp": 1,
+    "pool": 200000,
+    "min": 150,
+    "max": 50000,
+    "methods": [
+      "DenizBank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 265,
+    "name": "tuncay_garanti",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0084,
+    "disc": -0.0044,
+    "trades": 335,
+    "comp": 99.6,
+    "rate": 4.97,
+    "resp": 3,
+    "pool": 200000,
+    "min": 250,
+    "max": 50000,
+    "methods": [
+      "Ziraat Bankası",
+      "VakıfBank",
+      "Halkbank"
+    ]
+  },
+  {
+    "id": 266,
+    "name": "sarp_40_nakit",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0109,
+    "disc": -0.0094,
+    "trades": 185,
+    "comp": 98.8,
+    "rate": 4.84,
+    "resp": 1,
+    "pool": 24000,
+    "min": 500,
+    "max": 8000,
+    "methods": [
+      "Garanti BBVA",
+      "Akbank",
+      "Param / Papara"
+    ]
+  },
+  {
+    "id": 267,
+    "name": "omer_otc",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0066,
+    "disc": -0.0099,
+    "trades": 402,
+    "comp": 98.8,
+    "rate": 4.87,
+    "resp": 3,
+    "pool": 24000,
+    "min": 300,
+    "max": 12000,
+    "methods": [
+      "Ziraat Bankası",
+      "VakıfBank",
+      "Halkbank"
+    ]
+  },
+  {
+    "id": 268,
+    "name": "ramazan_93_ziraat",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0075,
+    "disc": -0.0075,
+    "trades": 432,
+    "comp": 97.9,
+    "rate": 4.93,
+    "resp": 3,
+    "pool": 20000,
+    "min": 500,
+    "max": 5000,
+    "methods": [
+      "Ziraat Bankası",
+      "Garanti BBVA",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 269,
+    "name": "murat_finans",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0097,
+    "disc": -0.0089,
+    "trades": 410,
+    "comp": 99.4,
+    "rate": 4.98,
+    "resp": 4,
+    "pool": 105000,
     "min": 400,
-    "max": 18500,
+    "max": 35000,
+    "methods": [
+      "İş Bankası",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 270,
+    "name": "halil_06",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0134,
+    "disc": -0.0085,
+    "trades": 425,
+    "comp": 98.3,
+    "rate": 4.8,
+    "resp": 4,
+    "pool": 60000,
+    "min": 200,
+    "max": 20000,
+    "methods": [
+      "Garanti BBVA",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 271,
+    "name": "emre_56_p2p",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0122,
+    "disc": -0.0091,
+    "trades": 266,
+    "comp": 98.0,
+    "rate": 4.8,
+    "resp": 4,
+    "pool": 24000,
+    "min": 400,
+    "max": 12000,
+    "methods": [
+      "İş Bankası",
+      "Yapı Kredi",
+      "Akbank"
+    ]
+  },
+  {
+    "id": 272,
+    "name": "berkay_pro",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0112,
+    "disc": -0.0118,
+    "trades": 126,
+    "comp": 97.8,
+    "rate": 4.92,
+    "resp": 4,
+    "pool": 75000,
+    "min": 500,
+    "max": 15000,
+    "methods": [
+      "Halkbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 273,
+    "name": "semih_ankara",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0105,
+    "disc": -0.0069,
+    "trades": 331,
+    "comp": 99.4,
+    "rate": 4.96,
+    "resp": 2,
+    "pool": 16000,
+    "min": 1000,
+    "max": 8000,
+    "methods": [
+      "Garanti BBVA",
+      "Akbank",
+      "Param / Papara"
+    ]
+  },
+  {
+    "id": 274,
+    "name": "berkay_prime",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0056,
+    "disc": -0.0104,
+    "trades": 214,
+    "comp": 99.7,
+    "rate": 4.91,
+    "resp": 2,
+    "pool": 140000,
+    "min": 400,
+    "max": 35000,
+    "methods": [
+      "Halkbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 275,
+    "name": "dogukan_express",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0097,
+    "disc": -0.0049,
+    "trades": 194,
+    "comp": 99.8,
+    "rate": 4.78,
+    "resp": 1,
+    "pool": 48000,
+    "min": 200,
+    "max": 12000,
     "methods": [
       "Yapı Kredi",
       "FAST Anında"
     ]
   },
   {
-    "id": 198,
-    "name": "gokhan_otc",
+    "id": 276,
+    "name": "selcuk_06",
     "flag": "🇹🇷",
     "tier": "user",
-    "prem": 0.007,
-    "disc": -0.007,
-    "trades": 134,
-    "comp": 99.3,
-    "rate": 4.85,
-    "resp": 1,
-    "pool": 66000,
-    "min": 500,
-    "max": 22000,
-    "methods": [
-      "İş Bankası",
-      "Ziraat Bankası"
-    ]
-  },
-  {
-    "id": 199,
-    "name": "yasin_fast_nakit",
-    "flag": "🇹🇷",
-    "tier": "user",
-    "prem": 0.008,
-    "disc": -0.008,
-    "trades": 180,
-    "comp": 99.6,
-    "rate": 4.89,
-    "resp": 1,
+    "prem": 0.0094,
+    "disc": -0.0125,
+    "trades": 247,
+    "comp": 97.8,
+    "rate": 4.99,
+    "resp": 2,
     "pool": 45000,
     "min": 200,
     "max": 15000,
     "methods": [
-      "FAST Anında",
+      "Yapı Kredi",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 277,
+    "name": "zafer_pro",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0097,
+    "disc": -0.0127,
+    "trades": 273,
+    "comp": 97.8,
+    "rate": 4.88,
+    "resp": 3,
+    "pool": 48000,
+    "min": 200,
+    "max": 12000,
+    "methods": [
+      "İş Bankası",
+      "Yapı Kredi",
+      "Akbank"
+    ]
+  },
+  {
+    "id": 278,
+    "name": "yunus_izmir",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0034,
+    "disc": -0.0049,
+    "trades": 183,
+    "comp": 99.3,
+    "rate": 4.99,
+    "resp": 2,
+    "pool": 40000,
+    "min": 200,
+    "max": 8000,
+    "methods": [
+      "İş Bankası",
+      "Yapı Kredi",
+      "Akbank"
+    ]
+  },
+  {
+    "id": 279,
+    "name": "hakan_kripto",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0064,
+    "disc": -0.004,
+    "trades": 33,
+    "comp": 97.9,
+    "rate": 4.97,
+    "resp": 2,
+    "pool": 40000,
+    "min": 200,
+    "max": 20000,
+    "methods": [
+      "Garanti BBVA",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 280,
+    "name": "harun_pro",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0088,
+    "disc": -0.0062,
+    "trades": 365,
+    "comp": 98.7,
+    "rate": 4.92,
+    "resp": 1,
+    "pool": 24000,
+    "min": 400,
+    "max": 8000,
+    "methods": [
+      "Halkbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 281,
+    "name": "alperen_garanti",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0075,
+    "disc": -0.0146,
+    "trades": 294,
+    "comp": 98.0,
+    "rate": 4.89,
+    "resp": 4,
+    "pool": 60000,
+    "min": 150,
+    "max": 12000,
+    "methods": [
+      "Ziraat Bankası",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 282,
+    "name": "saban_bursa",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0072,
+    "disc": -0.0107,
+    "trades": 214,
+    "comp": 98.6,
+    "rate": 4.77,
+    "resp": 3,
+    "pool": 100000,
+    "min": 150,
+    "max": 50000,
+    "methods": [
+      "DenizBank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 283,
+    "name": "kerem_garanti",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0064,
+    "disc": -0.0145,
+    "trades": 400,
+    "comp": 98.9,
+    "rate": 4.79,
+    "resp": 2,
+    "pool": 75000,
+    "min": 500,
+    "max": 15000,
+    "methods": [
+      "İş Bankası",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 284,
+    "name": "sarp_crypto",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0082,
+    "disc": -0.0142,
+    "trades": 66,
+    "comp": 99.1,
+    "rate": 4.86,
+    "resp": 1,
+    "pool": 105000,
+    "min": 400,
+    "max": 35000,
+    "methods": [
+      "TEB",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 285,
+    "name": "recep_vip",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0031,
+    "disc": -0.007,
+    "trades": 316,
+    "comp": 97.9,
+    "rate": 4.77,
+    "resp": 4,
+    "pool": 40000,
+    "min": 150,
+    "max": 8000,
+    "methods": [
+      "Akbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 286,
+    "name": "berkay_finans",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0064,
+    "disc": -0.0132,
+    "trades": 62,
+    "comp": 98.1,
+    "rate": 4.79,
+    "resp": 2,
+    "pool": 25000,
+    "min": 300,
+    "max": 5000,
+    "methods": [
+      "İş Bankası",
+      "Yapı Kredi",
+      "Akbank"
+    ]
+  },
+  {
+    "id": 287,
+    "name": "mustafa_ankara",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0107,
+    "disc": -0.009,
+    "trades": 395,
+    "comp": 99.6,
+    "rate": 4.97,
+    "resp": 4,
+    "pool": 10000,
+    "min": 1000,
+    "max": 5000,
+    "methods": [
+      "Garanti BBVA",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 288,
+    "name": "cemil_p2p",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0109,
+    "disc": -0.0089,
+    "trades": 140,
+    "comp": 97.9,
+    "rate": 4.96,
+    "resp": 1,
+    "pool": 48000,
+    "min": 500,
+    "max": 12000,
+    "methods": [
+      "QNB Finansbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 289,
+    "name": "taner_ankara",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0143,
+    "disc": -0.0103,
+    "trades": 389,
+    "comp": 98.9,
+    "rate": 4.84,
+    "resp": 1,
+    "pool": 10000,
+    "min": 250,
+    "max": 5000,
+    "methods": [
+      "Akbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 290,
+    "name": "kaan_ist",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0065,
+    "disc": -0.0137,
+    "trades": 76,
+    "comp": 98.5,
+    "rate": 4.99,
+    "resp": 4,
+    "pool": 24000,
+    "min": 200,
+    "max": 12000,
+    "methods": [
+      "DenizBank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 291,
+    "name": "tuncay_antalya",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0036,
+    "disc": -0.0138,
+    "trades": 449,
+    "comp": 99.6,
+    "rate": 4.87,
+    "resp": 2,
+    "pool": 60000,
+    "min": 300,
+    "max": 20000,
+    "methods": [
+      "TEB",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 292,
+    "name": "cagdas_tr",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.015,
+    "disc": -0.0111,
+    "trades": 232,
+    "comp": 98.9,
+    "rate": 4.77,
+    "resp": 3,
+    "pool": 175000,
+    "min": 200,
+    "max": 35000,
+    "methods": [
+      "Garanti BBVA",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 293,
+    "name": "saban_51_bursa",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0124,
+    "disc": -0.0131,
+    "trades": 358,
+    "comp": 98.8,
+    "rate": 4.79,
+    "resp": 4,
+    "pool": 60000,
+    "min": 300,
+    "max": 12000,
+    "methods": [
+      "Banxa",
+      "MoonPay",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 294,
+    "name": "ercan_ankara",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0139,
+    "disc": -0.004,
+    "trades": 228,
+    "comp": 99.0,
+    "rate": 4.76,
+    "resp": 3,
+    "pool": 32000,
+    "min": 500,
+    "max": 8000,
+    "methods": [
+      "QNB Finansbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 295,
+    "name": "burak_34",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0065,
+    "disc": -0.0099,
+    "trades": 43,
+    "comp": 99.8,
+    "rate": 4.9,
+    "resp": 1,
+    "pool": 24000,
+    "min": 300,
+    "max": 12000,
+    "methods": [
+      "QNB Finansbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 296,
+    "name": "sinan_otc",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0113,
+    "disc": -0.0046,
+    "trades": 168,
+    "comp": 99.2,
+    "rate": 4.96,
+    "resp": 3,
+    "pool": 24000,
+    "min": 200,
+    "max": 12000,
+    "methods": [
+      "Ziraat Bankası",
+      "VakıfBank",
+      "Halkbank"
+    ]
+  },
+  {
+    "id": 297,
+    "name": "serkan_ziraat",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.008,
+    "disc": -0.0062,
+    "trades": 121,
+    "comp": 98.3,
+    "rate": 4.97,
+    "resp": 4,
+    "pool": 32000,
+    "min": 1000,
+    "max": 8000,
+    "methods": [
+      "İş Bankası",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 298,
+    "name": "ahmet_trc20",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0069,
+    "disc": -0.0118,
+    "trades": 270,
+    "comp": 99.1,
+    "rate": 4.99,
+    "resp": 1,
+    "pool": 48000,
+    "min": 400,
+    "max": 12000,
+    "methods": [
+      "İş Bankası",
+      "Yapı Kredi",
+      "Akbank"
+    ]
+  },
+  {
+    "id": 299,
+    "name": "yasin_88_finans",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0057,
+    "disc": -0.0134,
+    "trades": 313,
+    "comp": 99.1,
+    "rate": 4.77,
+    "resp": 4,
+    "pool": 100000,
+    "min": 400,
+    "max": 20000,
+    "methods": [
+      "Garanti BBVA",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 300,
+    "name": "melih_p2p",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0145,
+    "disc": -0.0111,
+    "trades": 251,
+    "comp": 98.0,
+    "rate": 4.97,
+    "resp": 1,
+    "pool": 75000,
+    "min": 500,
+    "max": 15000,
+    "methods": [
+      "Ziraat Bankası",
+      "VakıfBank",
+      "Halkbank"
+    ]
+  },
+  {
+    "id": 301,
+    "name": "caner_pro",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0057,
+    "disc": -0.0116,
+    "trades": 324,
+    "comp": 97.9,
+    "rate": 4.93,
+    "resp": 3,
+    "pool": 60000,
+    "min": 300,
+    "max": 20000,
+    "methods": [
+      "Yapı Kredi",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 302,
+    "name": "alp_trc20",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0096,
+    "disc": -0.0089,
+    "trades": 267,
+    "comp": 97.9,
+    "rate": 4.82,
+    "resp": 3,
+    "pool": 100000,
+    "min": 300,
+    "max": 50000,
+    "methods": [
+      "Banxa",
+      "MoonPay",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 303,
+    "name": "kemal_trc20",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0066,
+    "disc": -0.0078,
+    "trades": 420,
+    "comp": 98.4,
+    "rate": 4.82,
+    "resp": 2,
+    "pool": 140000,
+    "min": 500,
+    "max": 35000,
+    "methods": [
+      "Akbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 304,
+    "name": "bilal_trade",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0054,
+    "disc": -0.008,
+    "trades": 331,
+    "comp": 99.7,
+    "rate": 4.8,
+    "resp": 4,
+    "pool": 105000,
+    "min": 200,
+    "max": 35000,
+    "methods": [
+      "DenizBank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 305,
+    "name": "veysel_ankara",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0034,
+    "disc": -0.0112,
+    "trades": 238,
+    "comp": 98.6,
+    "rate": 4.83,
+    "resp": 2,
+    "pool": 60000,
+    "min": 150,
+    "max": 20000,
+    "methods": [
+      "Garanti BBVA",
+      "Akbank",
       "Param / Papara"
     ]
   },
   {
-    "id": 200,
-    "name": "bilal_kripto",
+    "id": 306,
+    "name": "caglar_35",
     "flag": "🇹🇷",
     "tier": "user",
-    "prem": 0.009000000000000001,
-    "disc": -0.009000000000000001,
-    "trades": 79,
-    "comp": 98.8,
-    "rate": 4.93,
+    "prem": 0.0032,
+    "disc": -0.011,
+    "trades": 381,
+    "comp": 98.6,
+    "rate": 4.84,
+    "resp": 4,
+    "pool": 10000,
+    "min": 500,
+    "max": 5000,
+    "methods": [
+      "QNB Finansbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 307,
+    "name": "kerem_express",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0032,
+    "disc": -0.0055,
+    "trades": 132,
+    "comp": 98.1,
+    "rate": 4.95,
     "resp": 2,
-    "pool": 30000,
+    "pool": 20000,
+    "min": 500,
+    "max": 5000,
+    "methods": [
+      "Simplex",
+      "Wise",
+      "SEPA Instant"
+    ]
+  },
+  {
+    "id": 308,
+    "name": "kemal_antalya",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0054,
+    "disc": -0.0098,
+    "trades": 167,
+    "comp": 98.9,
+    "rate": 4.76,
+    "resp": 2,
+    "pool": 80000,
+    "min": 250,
+    "max": 20000,
+    "methods": [
+      "İş Bankası",
+      "Yapı Kredi",
+      "Akbank"
+    ]
+  },
+  {
+    "id": 309,
+    "name": "mustafa_aninda",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0076,
+    "disc": -0.0132,
+    "trades": 186,
+    "comp": 99.3,
+    "rate": 4.83,
+    "resp": 1,
+    "pool": 150000,
+    "min": 150,
+    "max": 50000,
+    "methods": [
+      "İş Bankası",
+      "Yapı Kredi",
+      "Akbank"
+    ]
+  },
+  {
+    "id": 310,
+    "name": "kaan_crypto",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0137,
+    "disc": -0.0053,
+    "trades": 384,
+    "comp": 99.3,
+    "rate": 4.82,
+    "resp": 3,
+    "pool": 250000,
+    "min": 200,
+    "max": 50000,
+    "methods": [
+      "Halkbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 311,
+    "name": "tuncay_51_pro",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0129,
+    "disc": -0.0045,
+    "trades": 446,
+    "comp": 98.2,
+    "rate": 4.91,
+    "resp": 3,
+    "pool": 16000,
+    "min": 150,
+    "max": 8000,
+    "methods": [
+      "Garanti BBVA",
+      "Akbank",
+      "Param / Papara"
+    ]
+  },
+  {
+    "id": 312,
+    "name": "hakan_trade",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0135,
+    "disc": -0.0045,
+    "trades": 302,
+    "comp": 99.5,
+    "rate": 4.76,
+    "resp": 1,
+    "pool": 15000,
+    "min": 400,
+    "max": 5000,
+    "methods": [
+      "Akbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 313,
+    "name": "ercan_express",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.009,
+    "disc": -0.0123,
+    "trades": 287,
+    "comp": 99.0,
+    "rate": 4.9,
+    "resp": 4,
+    "pool": 24000,
+    "min": 150,
+    "max": 12000,
+    "methods": [
+      "Yapı Kredi",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 314,
+    "name": "onur_06",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.007,
+    "disc": -0.0048,
+    "trades": 297,
+    "comp": 98.4,
+    "rate": 4.84,
+    "resp": 1,
+    "pool": 80000,
+    "min": 200,
+    "max": 20000,
+    "methods": [
+      "Banxa",
+      "MoonPay",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 315,
+    "name": "tuncay_fast",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0136,
+    "disc": -0.0077,
+    "trades": 58,
+    "comp": 97.8,
+    "rate": 4.79,
+    "resp": 4,
+    "pool": 140000,
     "min": 300,
-    "max": 10000,
+    "max": 35000,
+    "methods": [
+      "DenizBank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 316,
+    "name": "taner_p2p",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0066,
+    "disc": -0.0033,
+    "trades": 157,
+    "comp": 99.8,
+    "rate": 4.86,
+    "resp": 1,
+    "pool": 45000,
+    "min": 250,
+    "max": 15000,
+    "methods": [
+      "Ziraat Bankası",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 317,
+    "name": "caglar_ist",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0127,
+    "disc": -0.0137,
+    "trades": 368,
+    "comp": 98.4,
+    "rate": 4.79,
+    "resp": 4,
+    "pool": 105000,
+    "min": 200,
+    "max": 35000,
+    "methods": [
+      "Param / Papara",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 318,
+    "name": "mehmet_finans",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0126,
+    "disc": -0.0087,
+    "trades": 249,
+    "comp": 99.4,
+    "rate": 4.86,
+    "resp": 4,
+    "pool": 150000,
+    "min": 400,
+    "max": 50000,
     "methods": [
       "VakıfBank",
       "FAST Anında"
     ]
   },
   {
-    "id": 201,
-    "name": "harun_usdt_tr",
+    "id": 319,
+    "name": "alperen_21_35",
     "flag": "🇹🇷",
     "tier": "user",
-    "prem": 0.01,
-    "disc": -0.01,
-    "trades": 142,
+    "prem": 0.0096,
+    "disc": -0.0112,
+    "trades": 349,
+    "comp": 98.1,
+    "rate": 5.0,
+    "resp": 4,
+    "pool": 15000,
+    "min": 1000,
+    "max": 5000,
+    "methods": [
+      "Yapı Kredi",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 320,
+    "name": "halil_antalya",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0126,
+    "disc": -0.0118,
+    "trades": 333,
+    "comp": 98.1,
+    "rate": 4.99,
+    "resp": 3,
+    "pool": 100000,
+    "min": 400,
+    "max": 20000,
+    "methods": [
+      "Param / Papara",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 321,
+    "name": "alperen_whale",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0129,
+    "disc": -0.0139,
+    "trades": 130,
+    "comp": 99.7,
+    "rate": 4.9,
+    "resp": 2,
+    "pool": 60000,
+    "min": 1000,
+    "max": 15000,
+    "methods": [
+      "Ziraat Bankası",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 322,
+    "name": "mahmut_pro",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.007,
+    "disc": -0.011,
+    "trades": 353,
     "comp": 99.4,
-    "rate": 4.97,
+    "rate": 4.81,
     "resp": 1,
-    "pool": 69000,
-    "min": 450,
-    "max": 23000,
+    "pool": 24000,
+    "min": 500,
+    "max": 12000,
+    "methods": [
+      "Ziraat Bankası",
+      "Garanti BBVA",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 323,
+    "name": "halil_64_fast",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0138,
+    "disc": -0.0088,
+    "trades": 432,
+    "comp": 99.7,
+    "rate": 4.79,
+    "resp": 4,
+    "pool": 100000,
+    "min": 150,
+    "max": 50000,
+    "methods": [
+      "Ziraat Bankası",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 324,
+    "name": "batuhan_vip",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0082,
+    "disc": -0.0075,
+    "trades": 253,
+    "comp": 99.7,
+    "rate": 4.97,
+    "resp": 2,
+    "pool": 60000,
+    "min": 150,
+    "max": 12000,
+    "methods": [
+      "VakıfBank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 325,
+    "name": "aykut_70_kripto",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0059,
+    "disc": -0.0031,
+    "trades": 271,
+    "comp": 99.7,
+    "rate": 4.81,
+    "resp": 4,
+    "pool": 100000,
+    "min": 1000,
+    "max": 50000,
+    "methods": [
+      "QNB Finansbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 326,
+    "name": "ali_riza_06",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0109,
+    "disc": -0.0064,
+    "trades": 339,
+    "comp": 99.9,
+    "rate": 4.89,
+    "resp": 2,
+    "pool": 24000,
+    "min": 1000,
+    "max": 12000,
+    "methods": [
+      "Halkbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 327,
+    "name": "ercan_antalya",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0043,
+    "disc": -0.0082,
+    "trades": 418,
+    "comp": 99.1,
+    "rate": 4.83,
+    "resp": 1,
+    "pool": 40000,
+    "min": 400,
+    "max": 8000,
+    "methods": [
+      "VakıfBank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 328,
+    "name": "onur_izmir",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0079,
+    "disc": -0.007,
+    "trades": 285,
+    "comp": 99.7,
+    "rate": 4.81,
+    "resp": 2,
+    "pool": 70000,
+    "min": 1000,
+    "max": 35000,
+    "methods": [
+      "VakıfBank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 329,
+    "name": "ugur_aninda",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0095,
+    "disc": -0.0132,
+    "trades": 92,
+    "comp": 99.1,
+    "rate": 4.92,
+    "resp": 1,
+    "pool": 10000,
+    "min": 400,
+    "max": 5000,
+    "methods": [
+      "Simplex",
+      "Wise",
+      "SEPA Instant"
+    ]
+  },
+  {
+    "id": 330,
+    "name": "hakan_bursa",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0134,
+    "disc": -0.0105,
+    "trades": 78,
+    "comp": 99.0,
+    "rate": 4.99,
+    "resp": 3,
+    "pool": 150000,
+    "min": 400,
+    "max": 50000,
+    "methods": [
+      "Halkbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 331,
+    "name": "serkan_usdt",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0098,
+    "disc": -0.0066,
+    "trades": 437,
+    "comp": 99.8,
+    "rate": 4.86,
+    "resp": 4,
+    "pool": 60000,
+    "min": 500,
+    "max": 20000,
+    "methods": [
+      "Banxa",
+      "MoonPay",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 332,
+    "name": "fatih_06",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0075,
+    "disc": -0.0056,
+    "trades": 420,
+    "comp": 98.0,
+    "rate": 4.95,
+    "resp": 3,
+    "pool": 45000,
+    "min": 250,
+    "max": 15000,
+    "methods": [
+      "Akbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 333,
+    "name": "umut_nakit",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0145,
+    "disc": -0.0057,
+    "trades": 377,
+    "comp": 98.4,
+    "rate": 4.83,
+    "resp": 1,
+    "pool": 70000,
+    "min": 400,
+    "max": 35000,
     "methods": [
       "Garanti BBVA",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 334,
+    "name": "halil_express",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0102,
+    "disc": -0.0126,
+    "trades": 322,
+    "comp": 99.3,
+    "rate": 4.84,
+    "resp": 4,
+    "pool": 40000,
+    "min": 250,
+    "max": 20000,
+    "methods": [
+      "Akbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 335,
+    "name": "gokhan_kripto",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0087,
+    "disc": -0.0034,
+    "trades": 45,
+    "comp": 98.0,
+    "rate": 4.84,
+    "resp": 4,
+    "pool": 70000,
+    "min": 1000,
+    "max": 35000,
+    "methods": [
+      "Garanti BBVA",
+      "Akbank",
+      "Param / Papara"
+    ]
+  },
+  {
+    "id": 336,
+    "name": "zafer_kripto",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0064,
+    "disc": -0.0104,
+    "trades": 428,
+    "comp": 99.3,
+    "rate": 4.96,
+    "resp": 3,
+    "pool": 200000,
+    "min": 500,
+    "max": 50000,
+    "methods": [
+      "Garanti BBVA",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 337,
+    "name": "selim_fast",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0056,
+    "disc": -0.0141,
+    "trades": 81,
+    "comp": 99.4,
+    "rate": 4.89,
+    "resp": 4,
+    "pool": 32000,
+    "min": 400,
+    "max": 8000,
+    "methods": [
+      "Ziraat Bankası",
+      "VakıfBank",
+      "Halkbank"
+    ]
+  },
+  {
+    "id": 338,
+    "name": "kaan_p2p",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0128,
+    "disc": -0.0048,
+    "trades": 128,
+    "comp": 99.3,
+    "rate": 4.9,
+    "resp": 4,
+    "pool": 200000,
+    "min": 300,
+    "max": 50000,
+    "methods": [
+      "Param / Papara",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 339,
+    "name": "oguzhan_53_pro",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0121,
+    "disc": -0.0135,
+    "trades": 439,
+    "comp": 98.4,
+    "rate": 4.91,
+    "resp": 4,
+    "pool": 75000,
+    "min": 300,
+    "max": 15000,
+    "methods": [
+      "Param / Papara",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 340,
+    "name": "dogukan_finans",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.005,
+    "disc": -0.0041,
+    "trades": 443,
+    "comp": 97.9,
+    "rate": 4.91,
+    "resp": 3,
+    "pool": 200000,
+    "min": 400,
+    "max": 50000,
+    "methods": [
+      "Garanti BBVA",
+      "Akbank",
+      "Param / Papara"
+    ]
+  },
+  {
+    "id": 341,
+    "name": "serkan_23_aninda",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0068,
+    "disc": -0.0123,
+    "trades": 209,
+    "comp": 99.1,
+    "rate": 4.85,
+    "resp": 1,
+    "pool": 32000,
+    "min": 1000,
+    "max": 8000,
+    "methods": [
+      "İş Bankası",
+      "Yapı Kredi",
       "Akbank"
+    ]
+  },
+  {
+    "id": 342,
+    "name": "orhan_fast",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0124,
+    "disc": -0.0064,
+    "trades": 395,
+    "comp": 98.5,
+    "rate": 4.87,
+    "resp": 3,
+    "pool": 40000,
+    "min": 200,
+    "max": 8000,
+    "methods": [
+      "Banxa",
+      "MoonPay",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 343,
+    "name": "dogukan_35",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0119,
+    "disc": -0.0119,
+    "trades": 289,
+    "comp": 98.5,
+    "rate": 4.9,
+    "resp": 4,
+    "pool": 70000,
+    "min": 250,
+    "max": 35000,
+    "methods": [
+      "QNB Finansbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 344,
+    "name": "batuhan_fast",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0098,
+    "disc": -0.0054,
+    "trades": 429,
+    "comp": 98.0,
+    "rate": 4.97,
+    "resp": 2,
+    "pool": 45000,
+    "min": 300,
+    "max": 15000,
+    "methods": [
+      "TEB",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 345,
+    "name": "kerem_antalya",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0076,
+    "disc": -0.0141,
+    "trades": 417,
+    "comp": 98.9,
+    "rate": 4.76,
+    "resp": 3,
+    "pool": 60000,
+    "min": 250,
+    "max": 20000,
+    "methods": [
+      "Param / Papara",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 346,
+    "name": "oguzhan_vip",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0039,
+    "disc": -0.0117,
+    "trades": 324,
+    "comp": 98.6,
+    "rate": 4.92,
+    "resp": 1,
+    "pool": 15000,
+    "min": 200,
+    "max": 5000,
+    "methods": [
+      "QNB Finansbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 347,
+    "name": "mertcan_express",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0036,
+    "disc": -0.0139,
+    "trades": 246,
+    "comp": 97.9,
+    "rate": 4.96,
+    "resp": 3,
+    "pool": 140000,
+    "min": 500,
+    "max": 35000,
+    "methods": [
+      "VakıfBank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 348,
+    "name": "cagdas_ist",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.005,
+    "disc": -0.0126,
+    "trades": 427,
+    "comp": 99.4,
+    "rate": 4.84,
+    "resp": 3,
+    "pool": 75000,
+    "min": 1000,
+    "max": 15000,
+    "methods": [
+      "Ziraat Bankası",
+      "Garanti BBVA",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 349,
+    "name": "doruk_06",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0076,
+    "disc": -0.0121,
+    "trades": 438,
+    "comp": 99.1,
+    "rate": 4.95,
+    "resp": 2,
+    "pool": 60000,
+    "min": 250,
+    "max": 15000,
+    "methods": [
+      "Halkbank",
+      "FAST Anında"
+    ]
+  },
+  {
+    "id": 350,
+    "name": "ahmet_ist",
+    "flag": "🇹🇷",
+    "tier": "user",
+    "prem": 0.0133,
+    "disc": -0.0103,
+    "trades": 256,
+    "comp": 98.8,
+    "rate": 4.8,
+    "resp": 3,
+    "pool": 60000,
+    "min": 400,
+    "max": 12000,
+    "methods": [
+      "Yapı Kredi",
+      "FAST Anında"
     ]
   }
 ];
@@ -5008,7 +7881,7 @@ function navTo(tab) {
   if (p) p.classList.add('show');
   if (b) b.classList.add('active');
   if (tab === 'trade') renderListings();
-  if (tab === 'history') renderHistory();
+  if (tab === 'history') syncHistoryWithSupabase();
   if (tab === 'wallet') renderWalletUI();
 }
 function closeM(id) { document.getElementById(id).classList.add('hidden'); }
@@ -5421,11 +8294,12 @@ function openEscrow(t) {
 }
 
 function updateEscrowUI(t) {
+  const isAdmCancelled = t.status === 'cancelled' && (t.admin_notes?.toLowerCase().includes('admin') || t.admin_notes?.toLowerCase().includes('yönetici') || t.admin_notes?.toLowerCase().includes('reddedildi') || t.admin_notes?.toLowerCase().includes('iptal'));
   const stMap = {
     pending_payment: { badge:'badge-y', label:'Ödeme / Transfer Bekleniyor' },
     proof_uploaded: { badge:'badge-c', label:'Admin Onayı Bekleniyor' },
     completed: { badge:'badge-g', label:'Tamamlandı ✅' },
-    cancelled: { badge:'badge-r', label:'İptal Edildi ❌' }
+    cancelled: { badge:'badge-r', label: isAdmCancelled ? '🚫 Admin İptali' : 'İptal Edildi ❌' }
   };
   const sm = stMap[t.status] || stMap.pending_payment;
   document.getElementById('esc-status-badge').className = 'badge ' + sm.badge + ' mt-0.5 inline-block';
@@ -5437,6 +8311,18 @@ function updateEscrowUI(t) {
   document.getElementById('esc-done-box').classList.toggle('hidden', !isCompleted);
   document.getElementById('esc-cancel-box').classList.toggle('hidden', !isCancelled);
   document.getElementById('proof-wrap').classList.toggle('hidden', isCompleted || isCancelled || hasProof);
+
+  if (isCancelled) {
+    const cancelHeading = document.getElementById('esc-cancel-heading');
+    const cancelReason = document.getElementById('esc-cancel-reason');
+    if (isAdmCancelled) {
+      cancelHeading.innerText = '🚫 İşlem Yönetici / Admin Tarafından İptal Edildi';
+      cancelReason.innerText = t.admin_notes || 'Yönetici Notu: Ödeme doğrulanamadı veya işlem zaman aşımına uğradı.';
+    } else {
+      cancelHeading.innerText = 'Sipariş İptal Edildi';
+      cancelReason.innerText = t.admin_notes || 'İşlem iptal edilmiştir.';
+    }
+  }
 
   if (t.admin_notes && t.admin_notes.trim()) {
     document.getElementById('esc-admin-note-box').classList.remove('hidden');
@@ -5629,51 +8515,60 @@ async function uploadProof(inp) {
   addAct(`📨 #${app_active.trade_code} kanıt yüklendi`);
 }
 
-// 5S REAL-TIME AUTO SYNC (STATUS, TX_HASH, ADMIN_NOTES)
-setInterval(async () => {
-  const pending = app_trades.filter(t => t.status !== 'completed' && t.status !== 'cancelled');
-  for (const t of pending) {
-    try {
-      const r = await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=eq.${t.trade_code}&select=status,tx_hash,admin_notes`, {
-        headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY }
-      });
-      if (r.ok) {
-        const rows = await r.json();
-        if (rows && rows[0]) {
-          const row = rows[0];
-          if (row.tx_hash) t.tx_hash = row.tx_hash;
-          if (row.admin_notes && row.admin_notes !== t.admin_notes) {
-            t.admin_notes = row.admin_notes;
-            if (app_active && app_active.trade_code === t.trade_code) {
-              const noteBox = document.getElementById('esc-admin-note-box');
-              const noteText = document.getElementById('esc-admin-note-text');
-              if (noteBox && noteText) {
-                noteBox.classList.remove('hidden');
-                noteText.innerText = row.admin_notes;
-                toast('📌 Yönetici Notu Güncellendi: ' + row.admin_notes.slice(0, 30) + '…', 'c');
-              }
-            }
+// LIVE SUPABASE HISTORY SYNCHRONIZATION
+async function syncHistoryWithSupabase(isManual = false) {
+  const spinIcon = document.getElementById('hist-spin-icon');
+  if (spinIcon && isManual) spinIcon.classList.add('fa-spin');
+  try {
+    const r = await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?select=*&order=created_at.desc&limit=60`, {
+      headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY }
+    });
+    if (r.ok) {
+      const dbRows = await r.json();
+      if (dbRows && dbRows.length) {
+        dbRows.forEach(row => {
+          const idx = app_trades.findIndex(t => t.trade_code === row.trade_code);
+          if (idx !== -1) {
+            app_trades[idx].status = row.status;
+            if (row.admin_notes) app_trades[idx].admin_notes = row.admin_notes;
+            if (row.tx_hash) app_trades[idx].tx_hash = row.tx_hash;
+          } else if (row.trade_code) {
+            app_trades.push({
+              trade_code: row.trade_code,
+              coin: row.coin || 'USDT',
+              network: row.network || 'TRC20',
+              amount_crypto: row.amount_crypto,
+              amount_fiat: row.amount_fiat,
+              fiat_currency: row.fiat_currency || 'TRY',
+              status: row.status,
+              admin_notes: row.admin_notes,
+              tx_hash: row.tx_hash,
+              createdAt: row.created_at ? new Date(row.created_at).toLocaleTimeString('tr-TR', { hour:'2-digit', minute:'2-digit' }) : '—',
+              type: row.type || (row.buyer_wallet_address ? 'buy' : 'sell'),
+              seller: 'CyberEx OTC'
+            });
           }
-          if (row.status === 'completed' && t.status !== 'completed') {
-            t.status = 'completed'; t.step = 4;
-            app_user.trades += 1; app_user.vol += parseFloat(t.amount_crypto || 0);
-            localStorage.setItem('cx_profile', JSON.stringify(app_user));
-            localStorage.setItem('cx_trades', JSON.stringify(app_trades));
-            renderActiveTrades(); renderHistory(); updateProfileUI();
-            if (app_active && app_active.trade_code === t.trade_code) updateEscrowUI(t);
-            toast(`🎉 #${t.trade_code} Onaylandı — Transfer Tamamlandı!`, 'g');
-            addAct(`⚡ #${t.trade_code} onaylandı ✅`);
-          } else if (row.status === 'cancelled' && t.status !== 'cancelled') {
-            t.status = 'cancelled'; t.step = 0;
-            localStorage.setItem('cx_trades', JSON.stringify(app_trades));
-            renderActiveTrades(); renderHistory();
-            if (app_active && app_active.trade_code === t.trade_code) updateEscrowUI(t);
-            toast(`❌ #${t.trade_code} İptal Edildi.`, 'r');
-          }
-        }
+        });
+        localStorage.setItem('cx_trades', JSON.stringify(app_trades));
       }
-    } catch (_) {}
+    }
+    if (isManual) toast('🔄 İşlem geçmişi canlı senkronize edildi.', 'c');
+  } catch (_) {
+    if (isManual) toast('⚠️ Senkronizasyon hatası.', 'r');
+  } finally {
+    if (spinIcon) spinIcon.classList.remove('fa-spin');
+    renderActiveTrades();
+    renderHistory();
+    if (app_active) {
+      const fresh = app_trades.find(t => t.trade_code === app_active.trade_code);
+      if (fresh) { app_active = fresh; updateEscrowUI(fresh); }
+    }
   }
+}
+
+// 5S REAL-TIME AUTO SYNC (STATUS, TX_HASH, ADMIN_NOTES)
+setInterval(() => {
+  syncHistoryWithSupabase(false);
   if (app_active && !document.getElementById('modal-escrow').classList.contains('hidden')) {
     renderUserChat();
   }
@@ -5707,7 +8602,8 @@ function renderHistory() {
   box.innerHTML = '';
   app_trades.forEach(t => {
     const done = t.status === 'completed', canc = t.status === 'cancelled', wait = t.status === 'proof_uploaded';
-    const tag = done ? '<span class="badge badge-g">TML ✅</span>' : canc ? '<span class="badge badge-r">İPTAL ❌</span>' : wait ? '<span class="badge badge-c">ONAY ⏳</span>' : '<span class="badge badge-y">BEK.</span>';
+    const isAdmCanc = canc && (t.admin_notes?.toLowerCase().includes('admin') || t.admin_notes?.toLowerCase().includes('yönetici'));
+    const tag = done ? '<span class="badge badge-g">TML ✅</span>' : canc ? (isAdmCanc ? '<span class="badge badge-r">🚫 ADMİN İPTALİ</span>' : '<span class="badge badge-r">İPTAL ❌</span>') : wait ? '<span class="badge badge-c">ONAY ⏳</span>' : '<span class="badge badge-y">BEK.</span>';
     const card = document.createElement('div');
     card.className = 'glass p-3 flex justify-between items-center cursor-pointer hover:border-cyan-400/50';
     card.onclick = () => openEscrow(t);
@@ -5965,8 +8861,7 @@ if (window.Telegram?.WebApp) {
   }
   renderFeed();
   fetchPrices();
-  renderActiveTrades();
-  renderHistory();
+  syncHistoryWithSupabase(false);
   renderWalletUI();
 
   setInterval(fetchPrices, 10000);
