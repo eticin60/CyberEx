@@ -62,19 +62,10 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
 .info-sell { background: rgba(255, 140, 0, 0.07); border: 1px solid rgba(255, 140, 0, 0.28); border-radius: 14px; padding: 12px; }
 .net-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(0, 240, 255, 0.1); color: #00f0ff; border: 1px solid rgba(0, 240, 255, 0.25); border-radius: 99px; padding: 2px 8px; font-size: 0.6rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; }
 
-/* Bank Logo Badges */
-.bank-badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 6px; border-radius: 6px; font-size: 0.62rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; border: 1px solid rgba(255,255,255,0.1); }
-.bank-ziraat { background: rgba(227, 6, 19, 0.15); color: #ff4d4d; border-color: rgba(227, 6, 19, 0.35); }
-.bank-garanti { background: rgba(0, 166, 81, 0.15); color: #00ff88; border-color: rgba(0, 166, 81, 0.35); }
-.bank-akbank { background: rgba(237, 28, 36, 0.15); color: #ff5252; border-color: rgba(237, 28, 36, 0.35); }
-.bank-isbank { background: rgba(0, 75, 141, 0.2); color: #00f0ff; border-color: rgba(0, 75, 141, 0.4); }
-.bank-yapikredi { background: rgba(0, 48, 135, 0.2); color: #4da6ff; border-color: rgba(0, 48, 135, 0.4); }
-.bank-kuveyt { background: rgba(0, 135, 68, 0.15); color: #5cd65c; border-color: rgba(0, 135, 68, 0.35); }
-.bank-papara { background: rgba(142, 68, 173, 0.2); color: #d980fa; border-color: rgba(142, 68, 173, 0.4); }
-.bank-wise { background: rgba(37, 194, 160, 0.15); color: #2ecc71; border-color: rgba(37, 194, 160, 0.35); }
-.bank-revolut { background: rgba(0, 117, 255, 0.2); color: #3399ff; border-color: rgba(0, 117, 255, 0.4); }
-.bank-sepa { background: rgba(255, 193, 7, 0.15); color: #ffd152; border-color: rgba(255, 193, 7, 0.35); }
-.bank-fast { background: rgba(0, 240, 255, 0.12); color: #00f0ff; border-color: rgba(0, 240, 255, 0.3); }
+/* Real Bank Badges with Android Assets */
+.bank-badge { display: inline-flex; align-items: center; gap: 5px; padding: 2.5px 7px; border-radius: 8px; font-size: 0.62rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; background: rgba(0, 18, 42, 0.85); border: 1px solid rgba(0, 240, 255, 0.2); color: #e8f0ff; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
+.bank-badge img { width: 14px; height: 14px; border-radius: 3px; object-fit: contain; flex-shrink: 0; }
+.bank-fast { background: rgba(0, 240, 255, 0.12); color: #00f0ff; border-color: rgba(0, 240, 255, 0.35); }
 
 /* Escrow Chat Styles */
 .chat-msg-user { background: rgba(0, 240, 255, 0.12); border: 1px solid rgba(0, 240, 255, 0.28); color: #fff; border-radius: 12px 12px 2px 12px; align-self: flex-end; }
@@ -277,7 +268,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
         <span class="text-gray-500 font-bold" id="listing-cnt">180+ Aktif İlan</span>
       </div>
 
-      <div class="relative"><i class="fas fa-search absolute left-3 top-2.5 text-gray-500 text-xs"></i><input type="text" id="inp-search" oninput="renderListings()" placeholder="Onurcan, CyberEx, FAST, Papara, Wise, Ziraat, Kuveyt Türk..." class="pl-8 text-[11px] py-1.5"></div>
+      <div class="relative"><i class="fas fa-search absolute left-3 top-2.5 text-gray-500 text-xs"></i><input type="text" id="inp-search" oninput="renderListings()" placeholder="Onurcan, CyberEx, FAST, Ziraat, Garanti, Akbank, İş Bankası..." class="pl-8 text-[11px] py-1.5"></div>
 
       <div class="grid grid-cols-3 gap-1.5">
         <div class="relative">
@@ -309,17 +300,23 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
 
         <select id="sel-pay" onchange="renderListings()" class="font-bold text-[10px] py-1.5 px-2">
           <option value="ALL">Tüm Ödemeler</option>
-          <option value="FAST">FAST / Havale</option>
-          <option value="Ziraat">Ziraat Bankası</option>
-          <option value="Garanti">Garanti BBVA</option>
-          <option value="Akbank">Akbank</option>
-          <option value="Kuveyt">Kuveyt Türk</option>
-          <option value="İş Bankası">İş Bankası</option>
-          <option value="Yapı Kredi">Yapı Kredi</option>
-          <option value="Papara">Papara</option>
-          <option value="Wise">Wise / Revolut</option>
-          <option value="SEPA">SEPA Instant</option>
-          <option value="Kaspi">Kaspi Bank</option>
+          <option value="FAST">⚡ FAST / Havale</option>
+          <option value="Ziraat">🔴 Ziraat Bankası</option>
+          <option value="Garanti">🟢 Garanti BBVA</option>
+          <option value="Akbank">🔴 Akbank</option>
+          <option value="İş Bankası">🔵 İş Bankası</option>
+          <option value="Yapı Kredi">🔵 Yapı Kredi</option>
+          <option value="VakıfBank">🟡 VakıfBank</option>
+          <option value="Halkbank">🔵 Halkbank</option>
+          <option value="DenizBank">🔵 DenizBank</option>
+          <option value="QNB">🟣 QNB Finansbank</option>
+          <option value="TEB">🟢 TEB</option>
+          <option value="Param">🟣 Param / Papara</option>
+          <option value="Banxa">🌐 Banxa</option>
+          <option value="Simplex">🌐 Simplex</option>
+          <option value="MoonPay">🌐 MoonPay</option>
+          <option value="Wise">🟢 Wise / Revolut</option>
+          <option value="SEPA">🟡 SEPA Instant</option>
         </select>
       </div>
     </div>
@@ -433,7 +430,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
       <div class="flex justify-between"><span class="text-gray-400" id="ord-cp-lbl">Satıcı:</span><span class="font-bold text-white" id="ord-seller">—</span></div>
       <div class="flex justify-between"><span class="text-gray-400">Birim Fiyat:</span><span class="font-black text-green-400 font-mono" id="ord-price">—</span></div>
       <div class="flex justify-between"><span class="text-gray-400">Limit:</span><span class="font-bold text-white font-mono" id="ord-limit">—</span></div>
-      <div class="flex justify-between"><span class="text-gray-400">Ödeme:</span><span class="font-bold text-cyan-400 text-[9px]" id="ord-pay">—</span></div>
+      <div class="flex justify-between items-center"><span class="text-gray-400">Ödeme:</span><div id="ord-pay" class="flex gap-1 flex-wrap justify-end">—</div></div>
     </div>
 
     <div class="space-y-2.5 text-xs">
@@ -537,7 +534,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
     <div id="esc-buy-box" class="info-buy space-y-2 p-3">
       <div class="flex justify-between items-center">
         <p class="text-[9px] font-black text-green-400 uppercase" id="esc-bank-title">Ödeme Yapacağınız Hesap</p>
-        <span class="bank-badge bank-ziraat">Ziraat Bankası / FAST</span>
+        <span class="bank-badge"><img src="assets/banks/ziraat_bankasi.png" class="w-3.5 h-3.5 inline-block"> Ziraat Bankası / FAST</span>
       </div>
       <div>
         <p class="text-[7px] text-gray-400 mb-0.5 font-bold uppercase">IBAN (Dokunarak kopyala)</p>
@@ -657,7 +654,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
   </div>
 </div>
 
-<!-- ====== MODAL: CREATE LISTING WITH RICH BANK LOGOS ====== -->
+<!-- ====== MODAL: CREATE LISTING WITH REAL BANK LOGOS ====== -->
 <div id="modal-create" class="backdrop hidden">
   <div class="sheet space-y-3.5">
     <div class="flex justify-between items-center">
@@ -725,18 +722,24 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
       </div>
     </div>
 
-    <!-- Bank Logos / Payment Selector in Create Listing -->
+    <!-- Real Bank Logos / Payment Selector in Create Listing -->
     <div><label class="text-[8px] text-gray-400 uppercase block mb-1 font-bold">Kabul Ettiğiniz Banka & Ödeme Yöntemleri</label>
       <div class="grid grid-cols-3 gap-1.5 text-[9px]" id="cl-pay-cbs">
-        <label class="flex items-center gap-1.5 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="FAST Anında" checked class="w-3 h-3"><span class="bank-badge bank-fast">⚡ FAST</span></label>
-        <label class="flex items-center gap-1.5 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="Ziraat Bankası" checked class="w-3 h-3"><span class="bank-badge bank-ziraat">🔴 Ziraat</span></label>
-        <label class="flex items-center gap-1.5 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="Garanti BBVA" checked class="w-3 h-3"><span class="bank-badge bank-garanti">🟢 Garanti</span></label>
-        <label class="flex items-center gap-1.5 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="Akbank" class="w-3 h-3"><span class="bank-badge bank-akbank">🔴 Akbank</span></label>
-        <label class="flex items-center gap-1.5 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="Kuveyt Türk" class="w-3 h-3"><span class="bank-badge bank-kuveyt">🟢 Kuveyt</span></label>
-        <label class="flex items-center gap-1.5 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="İş Bankası" class="w-3 h-3"><span class="bank-badge bank-isbank">🔵 İş Bank</span></label>
-        <label class="flex items-center gap-1.5 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="Yapı Kredi" class="w-3 h-3"><span class="bank-badge bank-yapikredi">🔵 Y.Kredi</span></label>
-        <label class="flex items-center gap-1.5 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="Papara" checked class="w-3 h-3"><span class="bank-badge bank-papara">🟣 Papara</span></label>
-        <label class="flex items-center gap-1.5 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="Wise / Revolut" class="w-3 h-3"><span class="bank-badge bank-wise">🟢 Wise</span></label>
+        <label class="flex items-center gap-1 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="FAST Anında" checked class="w-3 h-3"><span class="bank-badge bank-fast"><i class="fas fa-bolt text-[10px]"></i> FAST</span></label>
+        <label class="flex items-center gap-1 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="Ziraat Bankası" checked class="w-3 h-3"><span class="bank-badge"><img src="assets/banks/ziraat_bankasi.png"> Ziraat</span></label>
+        <label class="flex items-center gap-1 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="Garanti BBVA" checked class="w-3 h-3"><span class="bank-badge"><img src="assets/banks/garanti_bankasi.png"> Garanti</span></label>
+        <label class="flex items-center gap-1 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="Akbank" class="w-3 h-3"><span class="bank-badge"><img src="assets/banks/akbank.png"> Akbank</span></label>
+        <label class="flex items-center gap-1 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="İş Bankası" class="w-3 h-3"><span class="bank-badge"><img src="assets/banks/turkiye_is_bankasi.png"> İş Bank</span></label>
+        <label class="flex items-center gap-1 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="Yapı Kredi" class="w-3 h-3"><span class="bank-badge"><img src="assets/banks/yapi_kredi.png"> Y.Kredi</span></label>
+        <label class="flex items-center gap-1 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="VakıfBank" class="w-3 h-3"><span class="bank-badge"><img src="assets/banks/vakifbank.png"> Vakıf</span></label>
+        <label class="flex items-center gap-1 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="Halkbank" class="w-3 h-3"><span class="bank-badge"><img src="assets/banks/halkbank.png"> Halk</span></label>
+        <label class="flex items-center gap-1 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="DenizBank" class="w-3 h-3"><span class="bank-badge"><img src="assets/banks/denizbank.png"> Deniz</span></label>
+        <label class="flex items-center gap-1 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="QNB Finansbank" class="w-3 h-3"><span class="bank-badge"><img src="assets/banks/qnb_finansbank.png"> QNB</span></label>
+        <label class="flex items-center gap-1 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="TEB" class="w-3 h-3"><span class="bank-badge"><img src="assets/banks/teb.png"> TEB</span></label>
+        <label class="flex items-center gap-1 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="Param / Papara" checked class="w-3 h-3"><span class="bank-badge"><img src="assets/banks/param.png"> Param</span></label>
+        <label class="flex items-center gap-1 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="Banxa" class="w-3 h-3"><span class="bank-badge"><img src="assets/banks/banxa.webp"> Banxa</span></label>
+        <label class="flex items-center gap-1 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="Simplex" class="w-3 h-3"><span class="bank-badge"><img src="assets/banks/simplex.webp"> Simplex</span></label>
+        <label class="flex items-center gap-1 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="MoonPay" class="w-3 h-3"><span class="bank-badge"><img src="assets/banks/moonpay.jpeg"> MoonPay</span></label>
       </div>
     </div>
 
@@ -943,20 +946,27 @@ function baseSpot(coin, fiat) {
   return usd * usdtFiat;
 }
 
-// BANK BADGE GENERATOR
+// REAL BANK BADGE GENERATOR WITH COPIED ASSETS
 function getBankBadge(methodName) {
   const m = methodName.toLowerCase();
-  if (m.includes('ziraat')) return `<span class="bank-badge bank-ziraat">🔴 Ziraat</span>`;
-  if (m.includes('garanti')) return `<span class="bank-badge bank-garanti">🟢 Garanti</span>`;
-  if (m.includes('akbank')) return `<span class="bank-badge bank-akbank">🔴 Akbank</span>`;
-  if (m.includes('iş bank') || m.includes('is bank')) return `<span class="bank-badge bank-isbank">🔵 İş Bankası</span>`;
-  if (m.includes('yapı kredi') || m.includes('yapi kredi')) return `<span class="bank-badge bank-yapikredi">🔵 Yapı Kredi</span>`;
-  if (m.includes('kuveyt')) return `<span class="bank-badge bank-kuveyt">🟢 Kuveyt Türk</span>`;
-  if (m.includes('papara')) return `<span class="bank-badge bank-papara">🟣 Papara</span>`;
-  if (m.includes('wise')) return `<span class="bank-badge bank-wise">🟢 Wise</span>`;
-  if (m.includes('revolut')) return `<span class="bank-badge bank-revolut">🔵 Revolut</span>`;
-  if (m.includes('sepa')) return `<span class="bank-badge bank-sepa">🟡 SEPA</span>`;
-  if (m.includes('fast')) return `<span class="bank-badge bank-fast">⚡ FAST</span>`;
+  if (m.includes('ziraat')) return `<span class="bank-badge"><img src="assets/banks/ziraat_bankasi.png"> Ziraat</span>`;
+  if (m.includes('garanti')) return `<span class="bank-badge"><img src="assets/banks/garanti_bankasi.png"> Garanti</span>`;
+  if (m.includes('akbank')) return `<span class="bank-badge"><img src="assets/banks/akbank.png"> Akbank</span>`;
+  if (m.includes('iş bank') || m.includes('is bank') || m.includes('işbank')) return `<span class="bank-badge"><img src="assets/banks/turkiye_is_bankasi.png"> İş Bankası</span>`;
+  if (m.includes('yapı kredi') || m.includes('yapi kredi') || m.includes('yapıkredi')) return `<span class="bank-badge"><img src="assets/banks/yapi_kredi.png"> Yapı Kredi</span>`;
+  if (m.includes('vakıf') || m.includes('vakif')) return `<span class="bank-badge"><img src="assets/banks/vakifbank.png"> VakıfBank</span>`;
+  if (m.includes('halk')) return `<span class="bank-badge"><img src="assets/banks/halkbank.png"> Halkbank</span>`;
+  if (m.includes('deniz')) return `<span class="bank-badge"><img src="assets/banks/denizbank.png"> DenizBank</span>`;
+  if (m.includes('qnb') || m.includes('finans')) return `<span class="bank-badge"><img src="assets/banks/qnb_finansbank.png"> QNB</span>`;
+  if (m.includes('teb')) return `<span class="bank-badge"><img src="assets/banks/teb.png"> TEB</span>`;
+  if (m.includes('param') || m.includes('papara')) return `<span class="bank-badge"><img src="assets/banks/param.png"> Param</span>`;
+  if (m.includes('banxa')) return `<span class="bank-badge"><img src="assets/banks/banxa.webp"> Banxa</span>`;
+  if (m.includes('simplex')) return `<span class="bank-badge"><img src="assets/banks/simplex.webp"> Simplex</span>`;
+  if (m.includes('moonpay')) return `<span class="bank-badge"><img src="assets/banks/moonpay.jpeg"> MoonPay</span>`;
+  if (m.includes('kuveyt')) return `<span class="bank-badge">🟢 Kuveyt Türk</span>`;
+  if (m.includes('wise') || m.includes('revolut')) return `<span class="bank-badge">🟢 Wise / Revolut</span>`;
+  if (m.includes('sepa')) return `<span class="bank-badge">🟡 SEPA</span>`;
+  if (m.includes('fast')) return `<span class="bank-badge bank-fast"><i class="fas fa-bolt text-cyan-400"></i> FAST</span>`;
   return `<span class="badge badge-c">${methodName}</span>`;
 }
 
@@ -1094,7 +1104,7 @@ function openOrder(item) {
   document.getElementById('ord-seller').innerText = `${item.flag || '🌐'} ${item.name}`;
   document.getElementById('ord-price').innerText = `${item.finalPrice.toLocaleString('tr-TR', { minimumFractionDigits: 2 })} ${item.fiat} / ${item.coin}`;
   document.getElementById('ord-limit').innerText = `${item.min} – ${(item.max).toLocaleString('tr-TR')} ${item.coin}`;
-  document.getElementById('ord-pay').innerText = (item.methods || []).join(' • ');
+  document.getElementById('ord-pay').innerHTML = (item.methods || []).map(m => getBankBadge(m)).join(' ');
   document.getElementById('ord-crypto-lbl').innerText = isBuy ? `Almak İstediğiniz ${item.coin} Miktarı` : `Satmak İstediğiniz ${item.coin} Miktarı`;
   document.getElementById('ord-fiat-lbl').innerText = isBuy ? `Ödeyeceğiniz Toplam ${item.fiat}` : `Hesabınıza Geçecek Toplam ${item.fiat}`;
   document.getElementById('ord-sym').innerText = item.coin;
