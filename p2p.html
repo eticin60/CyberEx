@@ -347,14 +347,14 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
         </div>
       </div>
 
-      <!-- Social & Community Links -->
+      <!-- Official Support & Community Channels -->
       <div class="flex justify-between items-center pt-2 border-t border-white/5">
         <p class="text-[8px] font-bold text-gray-400 font-mono">RESMİ KANALLAR</p>
         <div class="flex gap-2">
-          <a href="https://t.me/cyberex_support" target="_blank" class="w-7 h-7 rounded-lg bg-[#0088cc]/15 border border-[#0088cc]/30 text-[#0088cc] flex items-center justify-center text-xs hover:scale-110 transition-transform"><i class="fab fa-telegram"></i></a>
+          <a href="https://t.me/cyberex" target="_blank" title="Official Telegram" class="w-7 h-7 rounded-lg bg-[#0088cc]/15 border border-[#0088cc]/30 text-[#0088cc] flex items-center justify-center text-xs hover:scale-110 transition-transform"><i class="fab fa-telegram"></i></a>
+          <a href="mailto:contact@cyberex.com.tr" title="Destek E-Posta" class="w-7 h-7 rounded-lg bg-cyan-400/15 border border-cyan-400/30 text-cyan-400 flex items-center justify-center text-xs hover:scale-110 transition-transform"><i class="fas fa-envelope"></i></a>
           <a href="https://twitter.com/cyberex" target="_blank" class="w-7 h-7 rounded-lg bg-white/10 border border-white/20 text-white flex items-center justify-center text-xs hover:scale-110 transition-transform"><i class="fab fa-x-twitter"></i></a>
           <a href="https://github.com/eticin60/CyberEx" target="_blank" class="w-7 h-7 rounded-lg bg-white/10 border border-white/20 text-white flex items-center justify-center text-xs hover:scale-110 transition-transform"><i class="fab fa-github"></i></a>
-          <a href="https://linkedin.com/company/cyberex" target="_blank" class="w-7 h-7 rounded-lg bg-[#0077b5]/15 border border-[#0077b5]/30 text-[#0077b5] flex items-center justify-center text-xs hover:scale-110 transition-transform"><i class="fab fa-linkedin"></i></a>
         </div>
       </div>
 
@@ -532,7 +532,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
 </div>
 
 <!-- ====================================================== -->
-<!--  MODAL: ORDER SHEET WITH TELEGRAM USERNAME FIELD        -->
+<!--  MODAL: ORDER SHEET WITH DETAILED SUMMARY & METADATA    -->
 <!-- ====================================================== -->
 <div id="modal-order" class="backdrop hidden">
   <div class="sheet space-y-3.5">
@@ -541,11 +541,11 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
       <button onclick="closeM('modal-order')" class="w-7 h-7 rounded-full bg-white/5 text-gray-400 hover:text-white flex items-center justify-center"><i class="fas fa-times text-xs"></i></button>
     </div>
 
-    <div class="p-3 bg-black/40 rounded-xl text-xs space-y-1 border border-cyan-400/18">
+    <div class="p-3 bg-black/40 rounded-xl text-xs space-y-1.5 border border-cyan-400/18">
       <div class="flex justify-between"><span class="text-gray-400" id="ord-cp-lbl">Satıcı:</span><span class="font-bold text-white" id="ord-seller">—</span></div>
-      <div class="flex justify-between"><span class="text-gray-400">Birim Fiyat:</span><span class="font-black text-green-400 font-mono" id="ord-price">—</span></div>
-      <div class="flex justify-between"><span class="text-gray-400">Limit:</span><span class="font-bold text-white font-mono" id="ord-limit">—</span></div>
-      <div class="flex justify-between items-center"><span class="text-gray-400">Ödeme:</span><div id="ord-pay" class="flex gap-1 flex-wrap justify-end">—</div></div>
+      <div class="flex justify-between"><span class="text-gray-400">Birim Spot Fiyat:</span><span class="font-black text-green-400 font-mono" id="ord-price">—</span></div>
+      <div class="flex justify-between"><span class="text-gray-400">İşlem Limiti:</span><span class="font-bold text-white font-mono" id="ord-limit">—</span></div>
+      <div class="flex justify-between items-center"><span class="text-gray-400">Kabul Edilen Banka:</span><div id="ord-pay" class="flex gap-1 flex-wrap justify-end">—</div></div>
     </div>
 
     <div class="space-y-2.5 text-xs">
@@ -572,7 +572,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
 
       <!-- Telegram Handle Field -->
       <div>
-        <label class="text-[8px] text-gray-400 uppercase block mb-1 font-bold">Telegram Kullanıcı Adınız (Otomatik Eşleşir)</label>
+        <label class="text-[8px] text-gray-400 uppercase block mb-1 font-bold">Telegram Kullanıcı Adınız (Bildirimler İçin)</label>
         <div class="relative">
           <i class="fab fa-telegram absolute left-3 top-2.5 text-[#0088cc] text-xs"></i>
           <input type="text" id="ord-tg" placeholder="@kullanici_adiniz" class="pl-8 text-xs font-mono font-bold text-cyan-300">
@@ -614,7 +614,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
 </div>
 
 <!-- ====================================================== -->
-<!--  MODAL: ESCROW TRACKER WITH CLOUD CHAT & ADMIN NOTE     -->
+<!--  MODAL: ESCROW TRACKER WITH CYBEREX DESTEK CHAT         -->
 <!-- ====================================================== -->
 <div id="modal-escrow" class="backdrop hidden">
   <div class="sheet space-y-3">
@@ -642,30 +642,32 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
       </div>
     </div>
 
-    <!-- Dynamic Admin Note Alert Box -->
+    <!-- Dynamic Admin Note Alert Box (Clean, only shown when real note is written) -->
     <div id="esc-admin-note-box" class="hidden p-2.5 rounded-xl bg-cyan-400/10 border border-cyan-400/30 text-xs space-y-0.5">
       <div class="flex items-center gap-1.5 text-cyan-400 font-bold text-[9px] uppercase">
-        <i class="fas fa-circle-info"></i><span>Yönetici / Destek Notu:</span>
+        <img src="cyberex-logo.png" class="w-3.5 h-3.5 object-contain">
+        <span>CyberEx Destek / Yönetici Notu:</span>
       </div>
-      <p id="esc-admin-note-text" class="text-white text-[10px] font-mono leading-tight pl-3.5">—</p>
+      <p id="esc-admin-note-text" class="text-white text-[10px] font-mono leading-tight pl-4">—</p>
     </div>
 
-    <!-- Summary -->
-    <div class="bg-black/40 rounded-xl p-3 space-y-1 text-xs border border-white/5">
-      <div class="flex justify-between"><span class="text-gray-400" id="esc-am-lbl">Miktar:</span><span class="font-black text-cyan-400 font-mono" id="esc-am">0 USDT</span></div>
-      <div class="flex justify-between"><span class="text-gray-400">Ağ:</span><span class="font-bold text-white font-mono" id="esc-net">TRC20</span></div>
-      <div class="flex justify-between"><span class="text-gray-400" id="esc-fi-lbl">Tutar:</span><span class="font-black text-white font-mono" id="esc-fi">0 TRY</span></div>
-      <div class="flex justify-between"><span class="text-gray-400" id="esc-tg-lbl">Hedef:</span><span class="font-mono text-cyan-400 text-[10px] truncate w-48 text-right" id="esc-tg-val">—</span></div>
+    <!-- Order Summary Grid with Unit Price & Details -->
+    <div class="bg-black/40 rounded-xl p-3 space-y-1 text-xs border border-white/5 font-mono">
+      <div class="flex justify-between"><span class="text-gray-400" id="esc-am-lbl">Miktar:</span><span class="font-black text-cyan-400" id="esc-am">0 USDT</span></div>
+      <div class="flex justify-between"><span class="text-gray-400">Transfer Ağı:</span><span class="font-bold text-white" id="esc-net">TRC20</span></div>
+      <div class="flex justify-between"><span class="text-gray-400">Birim Spot Kur:</span><span class="font-bold text-green-400" id="esc-unit-rate">1 USDT = 47.69 TRY</span></div>
+      <div class="flex justify-between"><span class="text-gray-400" id="esc-fi-lbl">Toplam Tutar:</span><span class="font-black text-white" id="esc-fi">0 TRY</span></div>
+      <div class="flex justify-between"><span class="text-gray-400" id="esc-tg-lbl">Hedef:</span><span class="text-cyan-400 text-[10px] truncate w-48 text-right" id="esc-tg-val">—</span></div>
       <div id="esc-txid-row" class="hidden flex justify-between items-center pt-1 border-t border-white/5">
         <span class="text-gray-400">On-Chain TXID:</span>
-        <a id="esc-txid-link" href="#" target="_blank" class="font-mono text-green-400 text-[10px] truncate w-44 hover:underline">0x… <i class="fas fa-arrow-up-right-from-square text-[8px] ml-0.5"></i></a>
+        <a id="esc-txid-link" href="#" target="_blank" class="text-green-400 text-[10px] truncate w-44 hover:underline">0x… <i class="fas fa-arrow-up-right-from-square text-[8px] ml-0.5"></i></a>
       </div>
     </div>
 
     <!-- BUY CASE -->
     <div id="esc-buy-box" class="info-buy space-y-2 p-3">
       <div class="flex justify-between items-center">
-        <p class="text-[9px] font-black text-green-400 uppercase" id="esc-bank-title">Ödeme Yapacağınız Hesap</p>
+        <p class="text-[9px] font-black text-green-400 uppercase" id="esc-bank-title">Ödeme Yapacağınız Banka Hesabı</p>
         <span class="bank-badge"><img src="assets/banks/ziraat_bankasi.png" class="w-3.5 h-3.5 inline-block"> Ziraat Bankası / FAST</span>
       </div>
       <div>
@@ -704,7 +706,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
       </div>
     </div>
 
-    <!-- LIVE P2P CHAT ENGINE (REAL-TIME CLOUD SYNCED) -->
+    <!-- LIVE P2P CHAT ENGINE WITH CYBEREX DESTEK BRANDING -->
     <div class="glass p-3 space-y-2 border-cyan-400/25 bg-black/60">
       <div class="flex justify-between items-center">
         <p class="text-[9px] font-black text-cyan-400 uppercase flex items-center gap-1.5">
@@ -729,7 +731,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
 
       <!-- Chat Input -->
       <div class="flex gap-1.5">
-        <input type="text" id="escrow-chat-input" placeholder="Satıcıya veya Desteğe mesaj yazın..." class="text-xs py-2 flex-1" onkeypress="if(event.key==='Enter')sendUserChat()">
+        <input type="text" id="escrow-chat-input" placeholder="Satıcıya veya CyberEx Desteğe mesaj yazın..." class="text-xs py-2 flex-1" onkeypress="if(event.key==='Enter')sendUserChat()">
         <button onclick="sendUserChat()" class="btn-c px-3 py-1 text-xs"><i class="fas fa-paper-plane"></i></button>
       </div>
     </div>
@@ -737,7 +739,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
     <!-- Review Banner -->
     <div id="esc-review-box" class="hidden p-3 rounded-xl bg-yellow-400/10 border border-yellow-400/30 text-center space-y-1">
       <i class="fas fa-user-shield text-2xl text-yellow-400 pdot"></i>
-      <p class="text-xs font-bold text-yellow-400">Admin İnceleme Masasında</p>
+      <p class="text-xs font-bold text-yellow-400">CyberEx Yönetim Onay Masasında</p>
       <p class="text-[9px] text-gray-300">Dekont / transfer kanıtınız CyberEx Yöneticileri tarafından inceleniyor. Onaylandığında transferiniz anında tamamlanır.</p>
     </div>
 
@@ -7969,7 +7971,7 @@ function baseSpot(coin, fiat) {
 
 // REAL BANK BADGE GENERATOR WITH COPIED ASSETS
 function getBankBadge(methodName) {
-  const m = methodName.toLowerCase();
+  const m = (methodName || '').toLowerCase();
   if (m.includes('ziraat')) return `<span class="bank-badge"><img src="assets/banks/ziraat_bankasi.png"> Ziraat</span>`;
   if (m.includes('garanti')) return `<span class="bank-badge"><img src="assets/banks/garanti_bankasi.png"> Garanti</span>`;
   if (m.includes('akbank')) return `<span class="bank-badge"><img src="assets/banks/akbank.png"> Akbank</span>`;
@@ -8115,7 +8117,7 @@ function renderListings() {
   });
 }
 
-// ORDER MODAL & SUBMIT WITH TELEGRAM USERNAME PAIRING
+// ORDER MODAL & SUBMIT WITH STRUCTURED METADATA PACKING
 function openOrder(item) {
   app_active_listing = item;
   const isBuy = app_mode === 'buy';
@@ -8123,7 +8125,7 @@ function openOrder(item) {
   document.getElementById('ord-subtitle').innerText = isBuy ? '📥 TL Öde → Kripto Al' : '📤 Kripto Gönder → TL Al';
   document.getElementById('ord-cp-lbl').innerText = isBuy ? 'Satıcı:' : 'Alıcı:';
   document.getElementById('ord-seller').innerText = `${item.flag || '🌐'} ${item.name}`;
-  document.getElementById('ord-price').innerText = `${item.finalPrice.toLocaleString('tr-TR', { minimumFractionDigits: 2 })} ${item.fiat} / ${item.coin}`;
+  document.getElementById('ord-price').innerText = `1 ${item.coin} = ${item.finalPrice.toLocaleString('tr-TR', { minimumFractionDigits: 2 })} ${item.fiat}`;
   document.getElementById('ord-limit').innerText = `${item.min} – ${(item.max).toLocaleString('tr-TR')} ${item.coin}`;
   document.getElementById('ord-pay').innerHTML = (item.methods || []).map(m => getBankBadge(m)).join(' ');
   document.getElementById('ord-crypto-lbl').innerText = isBuy ? `Almak İstediğiniz ${item.coin} Miktarı` : `Satmak İstediğiniz ${item.coin} Miktarı`;
@@ -8240,9 +8242,23 @@ async function submitOrder() {
   localStorage.setItem('cx_trades', JSON.stringify(app_trades));
 
   const deadline = new Date(Date.now() + 30 * 60000).toISOString();
-  const paymentMethod = (app_active_listing.methods || ['FAST Anında']).join(' • ');
-  const adminNotes = isBuy ? ('Alıcı Cüzdan: ' + buyerWallet) : ('Kullanıcı IBAN: ' + sellerIban + ' - ' + sellerHolder);
+  
+  // Pack structured metadata into payment_method for 100% data fidelity
+  const basePayMethod = (app_active_listing.methods || ['FAST Anında']).join(' • ');
+  const packedMeta = {
+    type: trade.type,
+    user_name: trade.user_name,
+    telegram_user: trade.telegram_user,
+    seller: trade.seller,
+    user_payout_iban: trade.user_payout_iban,
+    user_payout_holder: trade.user_payout_holder,
+    user_wallet_to_receive: trade.user_wallet_to_receive,
+    unit_fiat_price: trade.unit_fiat_price,
+    bank_name: isBuy ? (trade.assignedBank || 'Ziraat Bankası') : 'Kullanıcı Banka Hesabı'
+  };
+  const fullPaymentString = `${basePayMethod} || META:::${JSON.stringify(packedMeta)}`;
 
+  // Save to Supabase (admin_notes starts completely CLEAN)
   fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades`, {
     method: 'POST',
     headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
@@ -8250,15 +8266,15 @@ async function submitOrder() {
       trade_code: code, coin: trade.coin, network: net, amount_crypto: am,
       unit_fiat_price: trade.unit_fiat_price, amount_fiat: totalFiat, fiat_currency: trade.fiat_currency,
       buyer_wallet_address: trade.buyer_wallet_address,
-      payment_method: paymentMethod,
+      payment_method: fullPaymentString,
       payment_deadline: deadline,
-      admin_notes: adminNotes,
+      admin_notes: '',
       status: 'pending_payment'
     })
   }).catch(()=>{});
 
   const tgLink = app_user.tg_username ? `<a href="https://t.me/${app_user.tg_username.replace('@','')}">${app_user.tg_username}</a>` : app_user.name;
-  const tgMsg = `🔔 <b>YENİ P2P ${isBuy ? 'ALIM' : 'SATIŞ'} SİPARİŞİ</b>\n\n📋 <code>${code}</code>\n👤 <b>Kullanıcı:</b> ${tgLink} (${uid})\n🏪 ${trade.seller}\n🌐 ${net}\n💰 ${am} ${trade.coin}\n💵 ${totalFiat.toLocaleString('tr-TR', { maximumFractionDigits: 0 })} ${trade.fiat_currency}\n` + (isBuy ? `👛 Alıcı Cüzdan: <code>${buyerWallet}</code>` : `🏦 IBAN: <code>${sellerIban}</code> (${sellerHolder})`);
+  const tgMsg = `🔔 <b>YENİ P2P ${isBuy ? 'ALIM' : 'SATIŞ'} SİPARİŞİ</b>\n\n📋 <code>${code}</code>\n👤 <b>Kullanıcı:</b> ${tgLink} (${uid})\n🏪 <b>Karşı Taraf:</b> ${trade.seller}\n🌐 <b>Ağ:</b> ${net}\n💰 <b>Miktar:</b> ${am} ${trade.coin} (1 ${trade.coin} = ${trade.unit_fiat_price} ${trade.fiat_currency})\n💵 <b>Toplam:</b> ${totalFiat.toLocaleString('tr-TR', { maximumFractionDigits: 2 })} ${trade.fiat_currency}\n` + (isBuy ? `👛 <b>Alıcı Cüzdan:</b> <code>${buyerWallet}</code>` : `🏦 <b>Kullanıcı IBAN:</b> <code>${sellerIban}</code> (${sellerHolder})`);
   
   fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -8298,24 +8314,27 @@ function encodeChatIntoNotes(cleanNote, messages) {
   return `${notePart} || CHAT_LOG:::${JSON.stringify(messages)}`;
 }
 
-// ESCROW MODAL TRACKER WITH TXID LINK, CLOUD CHAT & ADMIN NOTE
+// ESCROW MODAL TRACKER WITH CYBEREX DESTEK BRANDING
 function openEscrow(t) {
   app_active = t;
   const isBuy = t.type === 'buy';
   document.getElementById('esc-code').innerText = t.trade_code;
   document.getElementById('esc-am').innerText = `${parseFloat(t.amount_crypto).toLocaleString()} ${t.coin}`;
   document.getElementById('esc-net').innerText = t.network || 'TRC20';
-  document.getElementById('esc-fi').innerText = `${parseFloat(t.amount_fiat).toLocaleString('tr-TR', { maximumFractionDigits: 0 })} ${t.fiat_currency}`;
+  
+  const unitRateFormatted = parseFloat(t.unit_fiat_price || (t.amount_fiat / t.amount_crypto) || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+  document.getElementById('esc-unit-rate').innerText = `1 ${t.coin} = ${unitRateFormatted} ${t.fiat_currency}`;
+  document.getElementById('esc-fi').innerText = `${parseFloat(t.amount_fiat).toLocaleString('tr-TR', { minimumFractionDigits: 2 })} ${t.fiat_currency}`;
   document.getElementById('esc-am-lbl').innerText = isBuy ? 'Alınacak Kripto:' : 'Satılacak Kripto:';
-  document.getElementById('esc-fi-lbl').innerText = isBuy ? 'Ödenecek Tutar:' : 'Hesaba Geçecek:';
+  document.getElementById('esc-fi-lbl').innerText = isBuy ? 'Ödenecek Toplam:' : 'Hesaba Geçecek Toplam:';
   document.getElementById('esc-tg-lbl').innerText = isBuy ? 'Alıcı Cüzdanınız:' : 'Kullanıcı IBAN:';
   document.getElementById('esc-tg-val').innerText = isBuy ? (t.buyer_wallet_address || t.user_wallet_to_receive || '—') : (t.user_payout_iban ? `${t.user_payout_iban} (${t.user_payout_holder})` : '—');
 
-  // Clean Admin Note Display
+  // Clean Admin Note Display (only visible if real admin note exists)
   const cleanNote = parseAdminNoteOnly(t.admin_notes);
   const noteBox = document.getElementById('esc-admin-note-box');
   const noteText = document.getElementById('esc-admin-note-text');
-  if (cleanNote) {
+  if (cleanNote && !cleanNote.startsWith('Alıcı Cüzdan:') && !cleanNote.startsWith('Kullanıcı IBAN:')) {
     noteBox.classList.remove('hidden');
     noteText.innerText = cleanNote;
   } else {
@@ -8395,9 +8414,11 @@ function updateEscrowUI(t) {
     }
   }
 
-  if (cleanNote) {
+  if (cleanNote && !cleanNote.startsWith('Alıcı Cüzdan:') && !cleanNote.startsWith('Kullanıcı IBAN:')) {
     document.getElementById('esc-admin-note-box').classList.remove('hidden');
     document.getElementById('esc-admin-note-text').innerText = cleanNote;
+  } else {
+    document.getElementById('esc-admin-note-box').classList.add('hidden');
   }
 
   if (isCompleted || isCancelled) {
@@ -8417,7 +8438,7 @@ function setSteps(n) {
   }
 }
 
-// REAL-TIME CLOUD CHAT ENGINE (SYNCS BOTH SIDES LIVE)
+// REAL-TIME CLOUD CHAT ENGINE WITH CYBEREX LOGO BRANDING
 function renderUserChat() {
   if (!app_active) return;
   const box = document.getElementById('escrow-chat-box');
@@ -8437,6 +8458,7 @@ function renderUserChat() {
   ];
 
   box.innerHTML = finalMsgs.map(m => {
+    const isAdm = m.sender === 'Admin' || m.sender === 'Destek' || m.sender === 'Destek/Admin' || m.sender.includes('CyberEx Destek');
     const isMe = m.sender === app_user.name || m.sender === 'Siz' || m.sender === (app_user.tg_username || '');
     const isSys = m.sender === 'System';
     if (isSys) {
@@ -8445,10 +8467,12 @@ function renderUserChat() {
     return `
       <div class="p-1.5 ${isMe ? 'chat-msg-user' : 'chat-msg-other'} max-w-[85%]">
         <div class="flex justify-between items-center gap-2 mb-0.5 text-[8px] font-bold">
-          <span class="${isMe ? 'text-cyan-300' : 'text-yellow-400'}">${m.sender}</span>
+          <span class="${isMe ? 'text-cyan-300' : 'text-yellow-400 flex items-center gap-1'}">
+            ${isAdm ? '<img src="cyberex-logo.png" class="w-3 h-3 object-contain inline-block"> CyberEx Destek' : (m.sender || 'Kullanıcı')}
+          </span>
           <span class="text-gray-400 font-mono text-[7px]">${m.time}</span>
         </div>
-        <p class="text-[9px] text-white leading-tight">${m.text}</p>
+        <p class="text-[9px] text-white leading-tight font-sans">${m.text}</p>
       </div>
     `;
   }).join('');
@@ -8602,7 +8626,7 @@ async function uploadProof(inp) {
   }).catch(()=>{});
 
   const isBuy = app_active.type === 'buy';
-  const tgMsg = `📨 <b>${isBuy ? 'ÖDEME DEKONTU' : 'KRİPTO TXID KANITI'} — ONAY BEKLİYOR</b>\n\n📋 <code>${app_active.trade_code}</code>\n👤 ${app_user.name}\n💰 ${app_active.amount_crypto} ${app_active.coin} (${app_active.network})\n💵 ${app_active.amount_fiat.toLocaleString('tr-TR', { maximumFractionDigits: 0 })} ${app_active.fiat_currency}\n` + (isBuy ? `👛 Alıcı Cüzdan: <code>${app_active.user_wallet_to_receive || app_active.buyer_wallet_address}</code>` : `🏦 Kullanıcı IBAN: <code>${app_active.user_payout_iban}</code> (${app_active.user_payout_holder})`) + (app_active.tx_hash ? `\n🔗 TXID: <code>${app_active.tx_hash}</code>` : '') + (proofUrl ? `\n🖼️ <a href="${proofUrl}">Dekontu Görüntüle</a>` : '') + '\n\n⚡ p2p-admin.html üzerinden onaylayınız.';
+  const tgMsg = `📨 <b>${isBuy ? 'ÖDEME DEKONTU' : 'KRİPTO TXID KANITI'} — ONAY BEKLİYOR</b>\n\n📋 <code>${app_active.trade_code}</code>\n👤 ${app_user.name}\n💰 ${app_active.amount_crypto} ${app_active.coin} (${app_active.network})\n💵 ${app_active.amount_fiat.toLocaleString('tr-TR', { maximumFractionDigits: 2 })} ${app_active.fiat_currency}\n` + (isBuy ? `👛 Alıcı Cüzdan: <code>${app_active.user_wallet_to_receive || app_active.buyer_wallet_address}</code>` : `🏦 Kullanıcı IBAN: <code>${app_active.user_payout_iban}</code> (${app_active.user_payout_holder})`) + (app_active.tx_hash ? `\n🔗 TXID: <code>${app_active.tx_hash}</code>` : '') + (proofUrl ? `\n🖼️ <a href="${proofUrl}">Dekontu Görüntüle</a>` : '') + '\n\n⚡ p2p-admin.html üzerinden onaylayınız.';
 
   fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -8613,7 +8637,7 @@ async function uploadProof(inp) {
   addAct(`📨 #${app_active.trade_code} kanıt yüklendi`);
 }
 
-// LIVE SUPABASE HISTORY SYNCHRONIZATION
+// LIVE SUPABASE HISTORY SYNCHRONIZATION WITH METADATA UNPACKING
 async function syncHistoryWithSupabase(isManual = false) {
   const spinIcon = document.getElementById('hist-spin-icon');
   if (spinIcon && isManual) spinIcon.classList.add('fa-spin');
@@ -8625,11 +8649,24 @@ async function syncHistoryWithSupabase(isManual = false) {
       const dbRows = await r.json();
       if (dbRows && dbRows.length) {
         dbRows.forEach(row => {
+          let meta = {};
+          if (row.payment_method && row.payment_method.includes('|| META:::')) {
+            try {
+              meta = JSON.parse(row.payment_method.split('|| META:::')[1]) || {};
+            } catch (_) {}
+          }
+
           const idx = app_trades.findIndex(t => t.trade_code === row.trade_code);
           if (idx !== -1) {
             app_trades[idx].status = row.status;
             if (row.admin_notes) app_trades[idx].admin_notes = row.admin_notes;
             if (row.tx_hash) app_trades[idx].tx_hash = row.tx_hash;
+            if (meta.user_payout_iban) app_trades[idx].user_payout_iban = meta.user_payout_iban;
+            if (meta.user_payout_holder) app_trades[idx].user_payout_holder = meta.user_payout_holder;
+            if (meta.user_wallet_to_receive) app_trades[idx].user_wallet_to_receive = meta.user_wallet_to_receive;
+            if (meta.type) app_trades[idx].type = meta.type;
+            if (meta.seller) app_trades[idx].seller = meta.seller;
+            if (meta.unit_fiat_price) app_trades[idx].unit_fiat_price = meta.unit_fiat_price;
           } else if (row.trade_code) {
             app_trades.push({
               trade_code: row.trade_code,
@@ -8637,13 +8674,17 @@ async function syncHistoryWithSupabase(isManual = false) {
               network: row.network || 'TRC20',
               amount_crypto: row.amount_crypto,
               amount_fiat: row.amount_fiat,
+              unit_fiat_price: row.unit_fiat_price || meta.unit_fiat_price,
               fiat_currency: row.fiat_currency || 'TRY',
               status: row.status,
               admin_notes: row.admin_notes,
               tx_hash: row.tx_hash,
               createdAt: row.created_at ? new Date(row.created_at).toLocaleTimeString('tr-TR', { hour:'2-digit', minute:'2-digit' }) : '—',
-              type: row.type || (row.buyer_wallet_address ? 'buy' : 'sell'),
-              seller: 'CyberEx OTC'
+              type: meta.type || (row.buyer_wallet_address ? 'buy' : 'sell'),
+              seller: meta.seller || 'CyberEx OTC',
+              user_payout_iban: meta.user_payout_iban || '',
+              user_payout_holder: meta.user_payout_holder || '',
+              user_wallet_to_receive: meta.user_wallet_to_receive || row.buyer_wallet_address
             });
           }
         });
@@ -8686,7 +8727,7 @@ function renderActiveTrades() {
     const card = document.createElement('div');
     card.className = 'glass p-3 flex justify-between items-center cursor-pointer hover:border-cyan-400/50';
     card.onclick = () => openEscrow(t);
-    card.innerHTML = `<div><div class="flex items-center gap-1.5 mb-0.5"><span class="w-2 h-2 rounded-full pdot" style="background:${stCol}"></span><span class="text-[11px] font-black text-white font-mono">${t.trade_code}</span><span class="text-[8px] text-gray-400">${t.type === 'buy' ? '📥 Alım' : '📤 Satış'}</span></div><p class="text-[8px] text-gray-400 font-mono">${parseFloat(t.amount_crypto).toLocaleString()} ${t.coin} • ${t.network || 'TRC20'} • ${t.createdAt}</p></div><div class="text-right"><p class="text-xs font-black font-mono text-white">${parseFloat(t.amount_fiat).toLocaleString('tr-TR', { maximumFractionDigits: 0 })} ${t.fiat_currency}</p><p class="text-[7px] font-bold uppercase font-mono" style="color:${stCol}">${stLabel}</p></div>`;
+    card.innerHTML = `<div><div class="flex items-center gap-1.5 mb-0.5"><span class="w-2 h-2 rounded-full pdot" style="background:${stCol}"></span><span class="text-[11px] font-black text-white font-mono">${t.trade_code}</span><span class="text-[8px] text-gray-400">${t.type === 'buy' ? '📥 Alım' : '📤 Satış'}</span></div><p class="text-[8px] text-gray-400 font-mono">${parseFloat(t.amount_crypto).toLocaleString()} ${t.coin} • ${t.network || 'TRC20'} • ${t.createdAt}</p></div><div class="text-right"><p class="text-xs font-black font-mono text-white">${parseFloat(t.amount_fiat).toLocaleString('tr-TR', { minimumFractionDigits: 2 })} ${t.fiat_currency}</p><p class="text-[7px] font-bold uppercase font-mono" style="color:${stCol}">${stLabel}</p></div>`;
     box.appendChild(card);
   });
 }

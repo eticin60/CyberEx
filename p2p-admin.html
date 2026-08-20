@@ -88,7 +88,7 @@ input:focus, select:focus, textarea:focus { border-color:#00f0ff; box-shadow:0 0
       </div>
       <div>
         <p class="text-[11px] font-black text-white tracking-widest">CYBEREX P2P — YÖNETİCİ KONSOLU</p>
-        <p class="text-[8px] text-gray-400 font-mono">CyberEx Yöneticileri • Tam Yetki Modu</p>
+        <p class="text-[8px] text-gray-400 font-mono flex items-center gap-1"><img src="cyberex-logo.png" class="w-3 h-3"> CyberEx Yönetim & Destek Merkezi</p>
       </div>
     </div>
     <div class="flex items-center gap-2">
@@ -566,7 +566,37 @@ function openDetail(t) {
 }
 
 
-// REAL-TIME SUPABASE CLOUD CHAT ENGINE
+
+// PARSE TRADE METADATA & DATA UNPACKER
+function unpackTradeMeta(t) {
+  if (t._unpacked) return t;
+  let rawPay = t.payment_method || '';
+  let meta = {};
+  if (rawPay.includes('|| META:::')) {
+    try {
+      const parts = rawPay.split('|| META:::');
+      t.clean_payment_method = parts[0].trim();
+      meta = JSON.parse(parts[1]) || {};
+    } catch (_) {}
+  } else {
+    t.clean_payment_method = rawPay;
+  }
+
+  // Merge metadata fields
+  t.type = meta.type || t.type || (t.user_payout_iban ? 'sell' : 'buy');
+  t.user_name = meta.user_name || t.user_name || 'Kullanıcı';
+  t.telegram_user = meta.telegram_user || t.telegram_user || '';
+  t.seller = meta.seller || t.seller || 'CyberEx OTC Escrow';
+  t.user_payout_iban = meta.user_payout_iban || t.user_payout_iban || '';
+  t.user_payout_holder = meta.user_payout_holder || t.user_payout_holder || '';
+  t.user_wallet_to_receive = meta.user_wallet_to_receive || t.user_wallet_to_receive || t.buyer_wallet_address || '';
+  t.bank_name = meta.bank_name || t.bank_name || '';
+  t.unit_fiat_price = t.unit_fiat_price || meta.unit_fiat_price || (t.amount_crypto ? (t.amount_fiat / t.amount_crypto).toFixed(2) : 0);
+  t._unpacked = true;
+  return t;
+}
+
+// REAL-TIME SUPABASE CLOUD CHAT ENGINE WITH CYBEREX LOGO BRANDING
 function parseChatFromNotes(notesStr) {
   if (!notesStr) return [];
   if (notesStr.includes('|| CHAT_LOG:::')) {
@@ -611,18 +641,20 @@ function renderAdminChat() {
   ];
 
   box.innerHTML = finalMsgs.map(m => {
-    const isAdm = m.sender === 'Admin' || m.sender === 'Destek' || m.sender === 'Destek/Admin';
+    const isAdm = m.sender === 'Admin' || m.sender === 'Destek' || m.sender === 'Destek/Admin' || m.sender.includes('CyberEx Destek');
     const isSys = m.sender === 'System';
     if (isSys) {
       return `<div class="text-center text-[9px] text-gray-500 my-1 font-mono">${m.text}</div>`;
     }
     return `
-      <div class="p-2 ${isAdm ? 'bubble-admin' : 'bubble-user'} max-w-[85%]">
+      <div class="p-2 ${isAdm ? 'bubble-admin' : 'bubble-user'} max-w-[88%]">
         <div class="flex justify-between items-center gap-2 mb-0.5 text-[8px] font-bold">
-          <span class="${isAdm ? 'text-yellow-400' : 'text-cyan-400'}">${m.sender}</span>
+          <span class="${isAdm ? 'text-yellow-400 flex items-center gap-1' : 'text-cyan-400 flex items-center gap-1'}">
+            ${isAdm ? '<img src="cyberex-logo.png" class="w-3 h-3 object-contain inline-block"> CyberEx Destek' : '<i class="fas fa-user text-[9px]"></i> ' + (m.sender || 'Kullanıcı')}
+          </span>
           <span class="text-gray-400 font-mono text-[7px]">${m.time}</span>
         </div>
-        <p class="text-[10px] text-white leading-relaxed">${m.text}</p>
+        <p class="text-[10px] text-white leading-relaxed font-sans">${m.text}</p>
       </div>
     `;
   }).join('');
@@ -637,7 +669,7 @@ async function sendAdminChatMessage() {
 
   const curMsgs = parseChatFromNotes(detailTrade.admin_notes);
   const newMsg = {
-    sender: 'Destek/Admin',
+    sender: 'CyberEx Destek',
     text: txt,
     time: new Date().toLocaleTimeString('tr-TR', { hour:'2-digit', minute:'2-digit' })
   };
@@ -664,9 +696,9 @@ async function sendAdminChatMessage() {
   inp.value = '';
   renderAdminChat();
 
-  sendTGMsg(`💬 <b>ADMİN MESAJ GÖNDERDİ (#${detailTrade.trade_code})</b>
+  sendTGMsg(`💬 <b>CyberEx Destek MESAJ GÖNDERDİ (#${detailTrade.trade_code})</b>
 
-🛡️ <b>Destek:</b> "${txt}"`);
+🛡️ <b>CyberEx Destek:</b> "${txt}"`);
 }
 
 function renderTimeline(t) {
