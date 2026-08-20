@@ -236,10 +236,11 @@
       left: 0;
       right: 0;
       height: 80px;
-      padding: 0 40px;
+      padding: 0 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 15px;
       background: rgba(0, 5, 16, 0.95);
       border-bottom: 1px solid rgba(0, 240, 255, 0.1);
       backdrop-filter: blur(20px);
@@ -252,6 +253,7 @@
       flex-direction: column;
       align-items: center;
       text-decoration: none;
+      flex-shrink: 0;
     }
 
     .nav-logo-center img {
@@ -268,13 +270,11 @@
     }
 
     .nav-links {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
       display: flex;
-      gap: 30px;
+      gap: 16px;
       align-items: center;
       justify-content: center;
+      flex: 1;
       height: 100%;
     }
 
