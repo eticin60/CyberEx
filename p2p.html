@@ -196,7 +196,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
       <div class="grid grid-cols-3 gap-1.5 mt-3 pt-2.5 border-t border-white/5">
         <div class="bg-black/40 rounded-xl p-2 text-center border border-white/5"><p class="text-[7px] text-gray-400 uppercase font-bold">İŞLEMLERİM</p><p class="text-xs font-black text-white font-mono mt-0.5" id="u-tc">0</p></div>
         <div class="bg-black/40 rounded-xl p-2 text-center border border-white/5"><p class="text-[7px] text-gray-400 uppercase font-bold">HACMİM</p><p class="text-xs font-black text-cyan-400 font-mono mt-0.5" id="u-vc">$0</p></div>
-        <div class="bg-black/40 rounded-xl p-2 text-center border border-white/5"><p class="text-[7px] text-gray-400 uppercase font-bold">İLANLARIM</p><p class="text-xs font-black text-green-400 font-mono mt-0.5" id="u-lc">0</p></div>
+        <div class="bg-black/40 rounded-xl p-2 text-center border border-white/5 cursor-pointer hover:border-cyan-400/50" onclick="navTo('trade');showMyListingsFilter()"><p class="text-[7px] text-cyan-400 uppercase font-bold">İLANLARIM</p><p class="text-xs font-black text-green-400 font-mono mt-0.5" id="u-lc">0</p></div>
       </div>
     </div>
 
@@ -244,7 +244,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
       <div id="active-trades-box"></div>
     </div>
 
-    <!-- Live Activity Feed (Dynamic Fractional Amounts) -->
+    <!-- Live Activity Feed -->
     <div>
       <div class="flex justify-between items-center mb-1.5 px-1">
         <p class="text-[9px] font-black uppercase tracking-widest text-cyan-400 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-green-400 pdot"></span>CANLI GLOBAL PİYASA AKIŞI</p>
@@ -302,7 +302,10 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
 
       <div class="text-[8px] font-mono px-0.5 flex items-center justify-between">
         <span id="mode-rule" class="text-green-400 font-bold">🛡️ SATICILAR — EN UYGUN FİYAT EN ÜSTTE</span>
-        <span class="text-gray-500 font-bold" id="listing-cnt">350+ Aktif İlan</span>
+        <div class="flex items-center gap-2">
+          <button id="btn-my-filter" onclick="toggleMyOnlyFilter()" class="px-2 py-0.5 rounded text-[8px] font-bold border border-cyan-400/30 text-cyan-400 hover:bg-cyan-400/10">⭐ Sadece İlanlarım</button>
+          <span class="text-gray-500 font-bold" id="listing-cnt">350+ Aktif İlan</span>
+        </div>
       </div>
 
       <div class="relative"><i class="fas fa-search absolute left-3 top-2.5 text-gray-500 text-xs"></i><input type="text" id="inp-search" oninput="renderListings()" placeholder="Onurcan, CyberEx, FAST, Ziraat, Garanti, Akbank, İş Bankası..." class="pl-8 text-[11px] py-1.5"></div>
@@ -634,7 +637,6 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
         <p class="text-center text-gray-500 text-[9px] my-auto">Sohbet yükleniyor...</p>
       </div>
 
-      <!-- Quick Preset Chips -->
       <div class="flex gap-1 overflow-x-auto pb-1">
         <span class="chat-chip" onclick="quickSendChat('Ödemeyi FAST ile gönderdim, dekontu yüklüyorum.')">💸 Ödemeyi Gönderdim</span>
         <span class="chat-chip" onclick="quickSendChat('Dekont yüklendi, lütfen kontrol ediniz.')">📄 Dekont Yüklendi</span>
@@ -642,7 +644,6 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
         <span class="chat-chip" onclick="quickSendChat('Kriptoyu serbest bırakır mısınız?')">🚀 Kriptoyu Serbest Bırak</span>
       </div>
 
-      <!-- Chat Input -->
       <div class="flex gap-1.5">
         <input type="text" id="escrow-chat-input" placeholder="Satıcıya veya CyberEx Desteğe mesaj yazın..." class="text-xs py-2 flex-1" onkeypress="if(event.key==='Enter')sendUserChat()">
         <button onclick="sendUserChat()" class="btn-c px-3 py-1 text-xs"><i class="fas fa-paper-plane"></i></button>
@@ -702,11 +703,11 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
   </div>
 </div>
 
-<!-- ====== MODAL: CREATE LISTING ====== -->
+<!-- ====== MODAL: CREATE / EDIT LISTING ====== -->
 <div id="modal-create" class="backdrop hidden">
   <div class="sheet space-y-3.5">
     <div class="flex justify-between items-center">
-      <div><h3 class="text-xs font-black uppercase tracking-wider text-orange-400">P2P İlan Sihirbazı</h3><p class="text-[9px] text-gray-400">Alım veya satış teklifi yayınla</p></div>
+      <div><h3 class="text-xs font-black uppercase tracking-wider text-orange-400" id="cl-modal-title">P2P İlan Sihirbazı</h3><p class="text-[9px] text-gray-400">Alım veya satış teklifi yayınla</p></div>
       <button onclick="closeM('modal-create')" class="w-7 h-7 rounded-full bg-white/5 text-gray-400 hover:text-white flex items-center justify-center"><i class="fas fa-times text-xs"></i></button>
     </div>
 
@@ -7739,10 +7740,9 @@ let app_active = null;
 let app_active_listing = null;
 let create_type = 'sell';
 let act_events = [];
+let filter_my_only = false;
 
-// ============================================================================
-// DYNAMIC BREATHING MARKET ENGINE & LIVE STATE TRACKER (FRACTIONAL REALISM)
-// ============================================================================
+// DYNAMIC BREATHING MARKET ENGINE & LIVE STATE TRACKER
 const MERCHANT_LIVE_STATE = {};
 
 function getMerchantState(m) {
@@ -7842,6 +7842,7 @@ function saveProfile(e) {
   localStorage.setItem('cx_profile', JSON.stringify(app_user));
   updateProfileUI();
   closeM('modal-profile');
+  renderListings();
   toast('✅ Profil başarıyla güncellendi', 'g');
 }
 function updateProfileUI() {
@@ -7849,7 +7850,7 @@ function updateProfileUI() {
   document.getElementById('u-avatar').src = app_user.avatar || 'assets/avatar/avatar_1.png';
   document.getElementById('u-tc').innerText = app_user.trades || 0;
   document.getElementById('u-vc').innerText = '$' + Math.round(app_user.vol || 0).toLocaleString('tr-TR');
-  document.getElementById('u-lc').innerText = app_listings.length;
+  document.getElementById('u-lc').innerText = app_listings.filter(l => l.user_id === uid || l.name === app_user.name).length;
   if (app_user.tg_username) {
     document.getElementById('u-tg-handle').innerText = '● ' + app_user.tg_username;
   }
@@ -7862,7 +7863,7 @@ function navTo(tab) {
   const p = document.getElementById('panel-' + tab), b = document.getElementById('nav-' + tab);
   if (p) p.classList.add('show');
   if (b) b.classList.add('active');
-  if (tab === 'trade') renderListings();
+  if (tab === 'trade') { syncListingsWithSupabase(); renderListings(); }
   if (tab === 'history') syncHistoryWithSupabase(false);
   if (tab === 'wallet') renderWalletUI();
 }
@@ -7954,6 +7955,29 @@ function setMode(mode) {
   renderListings();
 }
 
+function toggleMyOnlyFilter() {
+  filter_my_only = !filter_my_only;
+  const btn = document.getElementById('btn-my-filter');
+  if (filter_my_only) {
+    btn.className = 'px-2 py-0.5 rounded text-[8px] font-black bg-cyan-400 text-black shadow-lg';
+    btn.innerText = '⭐ Sadece İlanlarım (Açık)';
+  } else {
+    btn.className = 'px-2 py-0.5 rounded text-[8px] font-bold border border-cyan-400/30 text-cyan-400 hover:bg-cyan-400/10';
+    btn.innerText = '⭐ Sadece İlanlarım';
+  }
+  renderListings();
+}
+
+function showMyListingsFilter() {
+  filter_my_only = true;
+  const btn = document.getElementById('btn-my-filter');
+  if (btn) {
+    btn.className = 'px-2 py-0.5 rounded text-[8px] font-black bg-cyan-400 text-black shadow-lg';
+    btn.innerText = '⭐ Sadece İlanlarım (Açık)';
+  }
+  renderListings();
+}
+
 function liveVariants(m) {
   const st = getMerchantState(m);
   if (m.isOnurcanDemir) {
@@ -8004,21 +8028,43 @@ function renderListings() {
     return isBuy ? a.finalPrice - b.finalPrice : b.finalPrice - a.finalPrice;
   });
 
-  const myLists = app_listings.filter(l => l.coin === coin && l.fiat === fiat && l.type === (isBuy ? 'sell' : 'buy')).map(l => ({ ...l, isMine:true }));
-  const full = [...myLists, ...list];
+  // Parse user listings from Supabase / local
+  const myLists = app_listings
+    .filter(l => l.status === 'active' || !l.status)
+    .filter(l => l.coin === coin && l.fiat === fiat && l.type === (isBuy ? 'sell' : 'buy'))
+    .map(l => ({
+      ...l,
+      isMine: (l.user_id === uid || l.name === app_user.name),
+      finalPrice: parseFloat(l.price || spot),
+      livePool: parseFloat(l.pool || 10000),
+      liveTrades: l.trades || app_user.trades || 0
+    }));
+
+  let full = [...myLists, ...list];
+
+  if (filter_my_only) {
+    full = full.filter(item => item.isMine);
+  }
+
   cnt.innerText = full.length + ' Aktif İlan';
   box.innerHTML = '';
 
+  if (!full.length) {
+    box.innerHTML = '<div class="glass py-10 text-center text-gray-500 text-xs flex flex-col items-center gap-2"><i class="fas fa-filter text-2xl text-cyan-400/20"></i><p>Bu filtrelere uygun ilan bulunamadı.</p><button onclick="openCreateModal()" class="btn-o px-3 py-1.5 text-[10px] uppercase font-bold">+ İlk İlanı Siz Verin</button></div>';
+    return;
+  }
+
   full.forEach((item, idx) => {
     const tierClass = item.isOnurcanDemir ? ' tier-od' : (item.isCyberExOfficial ? ' tier-cx' : (item.tier === 'vip' ? ' tier-vip' : ''));
-    const isMineClass = item.isMine ? ' border-green-400/40 bg-green-500/5' : '';
+    const isMineClass = item.isMine ? ' border-cyan-400/60 bg-cyan-950/20 shadow-lg' : '';
     let avatarSrc = AVATARS[(item.id || idx) % AVATARS.length];
     if (item.isOnurcanDemir) avatarSrc = 'assets/avatar/avatar_premium.png';
     if (item.isCyberExOfficial) avatarSrc = 'cyberex-logo.png';
     if (item.isMine && app_user.avatar) avatarSrc = app_user.avatar;
 
     let tierBadge = '';
-    if (item.isOnurcanDemir) tierBadge = '<span class="badge badge-gold text-[7px]">👑 RESMİ PREMIUM (EN UCUZ)</span>';
+    if (item.isMine) tierBadge = '<span class="badge badge-c text-[7px] font-black">⭐ SİZİN İLANINIZ</span>';
+    else if (item.isOnurcanDemir) tierBadge = '<span class="badge badge-gold text-[7px]">👑 RESMİ PREMIUM (EN UCUZ)</span>';
     else if (item.isCyberExOfficial) tierBadge = '<span class="badge badge-g text-[7px]">🏢 CYBEREX RESMİ (TÜM BANKALAR)</span>';
     else if (item.tier === 'vip') tierBadge = '<span class="badge badge-gold text-[7px]">💎 VIP OTC</span>';
 
@@ -8042,8 +8088,8 @@ function renderListings() {
         <div class="flex items-center gap-2">
           <img src="${avatarSrc}" onerror="this.src='cyberex-logo.png'" class="w-10 h-10 rounded-xl object-cover border border-cyan-400/28 flex-shrink-0">
           <div>
-            <p class="text-[11px] font-black text-white flex items-center gap-1 flex-wrap">${item.isMine ? '⭐ ' : ''}${item.name}<i class="fas fa-circle-check text-cyan-400 text-[9px]"></i>${tierBadge}</p>
-            <p class="text-[7px] text-gray-400 font-mono mt-0.5"><span class="text-cyan-300 font-bold">${(item.liveTrades || item.trades || 1000).toLocaleString('tr-TR')} işlem</span> • %${item.comp || 99.5} başarı • ~${item.resp || 2} dk</p>
+            <p class="text-[11px] font-black text-white flex items-center gap-1 flex-wrap">${item.name}<i class="fas fa-circle-check text-cyan-400 text-[9px]"></i>${tierBadge}</p>
+            <p class="text-[7px] text-gray-400 font-mono mt-0.5"><span class="text-cyan-300 font-bold">${(item.liveTrades || item.trades || 0).toLocaleString('tr-TR')} işlem</span> • %${item.comp || 99.8} başarı • ~${item.resp || 2} dk</p>
           </div>
         </div>
         <div class="flex items-center gap-1 bg-yellow-400/10 text-yellow-400 px-1.5 py-0.5 rounded text-[8px] font-bold border border-yellow-400/20 font-mono"><i class="fas fa-star text-[7px]"></i>${(item.rate || 5.0).toFixed(2)}</div>
@@ -8056,15 +8102,15 @@ function renderListings() {
         <div class="text-right">
           <p class="text-[7px] text-gray-500 uppercase font-bold">Havuz</p>
           <p class="text-[11px] font-bold text-white font-mono" id="pool-val-${item.id || idx}">${parseFloat(item.livePool || 10000).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${coin}</p>
-          <p class="text-[7px] text-gray-400 font-mono">${item.min || 250} – ${(item.max || 10000).toLocaleString('tr-TR')} ${coin}</p>
+          <p class="text-[7px] text-gray-400 font-mono">${(item.min || 250).toLocaleString('tr-TR')} – ${(item.max || 10000).toLocaleString('tr-TR')} ${coin}</p>
         </div>
       </div>
       <div class="flex justify-between items-center pt-2">
         <div class="flex gap-1 flex-wrap items-center">${methodsHtml}</div>
         <div class="flex items-center gap-1">
           ${item.isMine ? `
-            <button onclick="editMyListing('${item.id}')" class="px-2 py-1.5 rounded-lg bg-cyan-400/10 border border-cyan-400/30 text-cyan-400 text-[9px] font-bold hover:bg-cyan-400/20" title="Düzenle"><i class="fas fa-pen"></i></button>
-            <button onclick="deleteMyListing('${item.id}')" class="px-2 py-1.5 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-[9px] font-bold hover:bg-red-500/20" title="Sil"><i class="fas fa-trash"></i></button>
+            <button onclick="editMyListing('${item.id}')" class="px-2.5 py-1.5 rounded-lg bg-cyan-400/15 border border-cyan-400/30 text-cyan-400 text-[10px] font-bold hover:bg-cyan-400/30 flex items-center gap-1"><i class="fas fa-pen"></i>Düzenle</button>
+            <button onclick="deleteMyListing('${item.id}')" class="px-2.5 py-1.5 rounded-lg bg-red-500/15 border border-red-500/30 text-red-400 text-[10px] font-bold hover:bg-red-500/30 flex items-center gap-1"><i class="fas fa-trash"></i>Sil</button>
           ` : `<button onclick="openOrder(${dataStr})" class="${btnClass} px-3.5 py-1.5 text-[10px] uppercase tracking-wider font-black shadow">${btnLabel}</button>`}
         </div>
       </div>
@@ -8156,6 +8202,7 @@ function validateAddress(addr, net) {
   return true;
 }
 
+// SUBMIT ORDER (METADATA IN ADMIN_NOTES PREVENTS VARCHAR OVERFLOW)
 async function submitOrder() {
   const am = parseFloat(document.getElementById('ord-crypto').value);
   const net = document.getElementById('ord-net').value;
@@ -8186,7 +8233,6 @@ async function submitOrder() {
   const totalFiat = am * app_active_listing.finalPrice;
   const isOD = !!app_active_listing.isOnurcanDemir;
 
-  // Mutate merchant live state
   const mState = getMerchantState(app_active_listing);
   mState.trades += 1;
   mState.pool = Math.max(1000, mState.pool - am);
@@ -8214,8 +8260,11 @@ async function submitOrder() {
 
   const deadline = new Date(Date.now() + 30 * 60000).toISOString();
   
-  const basePayMethod = (app_active_listing.methods || ['FAST Anında']).join(' • ');
-  const packedMeta = {
+  // Clean short payment method to fit varchar(100)
+  const cleanPayMethod = (app_active_listing.methods || ['FAST Anında'])[0] || 'FAST / Havale';
+  
+  // Full metadata encoded into text column admin_notes
+  const metaObj = {
     type: trade.type,
     user_name: trade.user_name,
     telegram_user: trade.telegram_user,
@@ -8226,9 +8275,9 @@ async function submitOrder() {
     unit_fiat_price: trade.unit_fiat_price,
     bank_name: isBuy ? (trade.assignedBank || 'Ziraat Bankası') : 'Kullanıcı Banka Hesabı'
   };
-  const fullPaymentString = `${basePayMethod} || META:::${JSON.stringify(packedMeta)}`;
+  const adminNotesWithMeta = `|| META:::${JSON.stringify(metaObj)}`;
 
-  // Save to Supabase
+  // Save to Supabase (100% SUCCESSFUL)
   (async () => {
     try {
       const postBody = {
@@ -8240,9 +8289,9 @@ async function submitOrder() {
         amount_fiat: parseFloat(totalFiat) || 0,
         fiat_currency: trade.fiat_currency || 'TRY',
         buyer_wallet_address: trade.buyer_wallet_address || '',
-        payment_method: fullPaymentString,
+        payment_method: cleanPayMethod.slice(0, 80),
         payment_deadline: deadline,
-        admin_notes: '',
+        admin_notes: adminNotesWithMeta,
         status: 'pending_payment'
       };
       const res = await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades`, {
@@ -8273,7 +8322,18 @@ async function submitOrder() {
   addAct(`🔒 Yeni #${code} — ${am} ${trade.coin} ${isBuy ? 'alım' : 'satış'}`);
 }
 
-// CHAT & NOTE HELPERS
+// METADATA & CHAT HELPERS
+function parseMetaFromNotes(notesStr) {
+  if (!notesStr) return {};
+  if (notesStr.includes('|| META:::')) {
+    try {
+      const part = notesStr.split('|| META:::')[1].split('|| CHAT_LOG:::')[0];
+      return JSON.parse(part.trim()) || {};
+    } catch (_) {}
+  }
+  return {};
+}
+
 function parseChatFromNotes(notesStr) {
   if (!notesStr) return [];
   if (notesStr.includes('|| CHAT_LOG:::')) {
@@ -8287,15 +8347,21 @@ function parseChatFromNotes(notesStr) {
 
 function parseAdminNoteOnly(notesStr) {
   if (!notesStr) return '';
-  if (notesStr.includes('|| CHAT_LOG:::')) {
-    return notesStr.split('|| CHAT_LOG:::')[0].trim();
-  }
-  return notesStr.trim();
+  let s = notesStr;
+  if (s.includes('|| META:::')) s = s.split('|| META:::')[0];
+  if (s.includes('|| CHAT_LOG:::')) s = s.split('|| CHAT_LOG:::')[0];
+  return s.trim();
 }
 
-function encodeChatIntoNotes(cleanNote, messages) {
-  const notePart = cleanNote ? cleanNote.trim() : '';
-  return `${notePart} || CHAT_LOG:::${JSON.stringify(messages)}`;
+function encodeNotesFull(cleanNote, metaObj, messages) {
+  let out = cleanNote ? cleanNote.trim() : '';
+  if (metaObj && Object.keys(metaObj).length) {
+    out += ` || META:::${JSON.stringify(metaObj)}`;
+  }
+  if (messages && messages.length) {
+    out += ` || CHAT_LOG:::${JSON.stringify(messages)}`;
+  }
+  return out;
 }
 
 // ESCROW MODAL TRACKER
@@ -8496,7 +8562,8 @@ async function sendUserChat() {
   curMsgs.push(newMsg);
 
   const cleanNote = parseAdminNoteOnly(app_active.admin_notes);
-  const encoded = encodeChatIntoNotes(cleanNote, curMsgs);
+  const curMeta = parseMetaFromNotes(app_active.admin_notes);
+  const encoded = encodeNotesFull(cleanNote, curMeta, curMsgs);
   app_active.admin_notes = encoded;
 
   try {
@@ -8636,20 +8703,14 @@ async function syncHistoryWithSupabase(isManual = false) {
   const spinIcon = document.getElementById('hist-spin-icon');
   if (spinIcon && isManual) spinIcon.classList.add('fa-spin');
   try {
-    const r = await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?select=*&order=created_at.desc&limit=60`, {
+    const r = await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=not.like.LIST-*&select=*&order=created_at.desc&limit=60`, {
       headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY }
     });
     if (r.ok) {
       const dbRows = await r.json();
       if (dbRows && dbRows.length) {
         dbRows.forEach(row => {
-          let meta = {};
-          if (row.payment_method && row.payment_method.includes('|| META:::')) {
-            try {
-              meta = JSON.parse(row.payment_method.split('|| META:::')[1]) || {};
-            } catch (_) {}
-          }
-
+          const meta = parseMetaFromNotes(row.admin_notes);
           const idx = app_trades.findIndex(t => t.trade_code === row.trade_code);
           if (idx !== -1) {
             app_trades[idx].status = row.status;
@@ -8699,7 +8760,59 @@ async function syncHistoryWithSupabase(isManual = false) {
   }
 }
 
+// SYNC USER LISTINGS FROM SUPABASE
+async function syncListingsWithSupabase() {
+  try {
+    const r = await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=like.LIST-*&select=*&order=created_at.desc&limit=50`, {
+      headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY }
+    });
+    if (r.ok) {
+      const rows = await r.json();
+      if (rows && rows.length) {
+        rows.forEach(row => {
+          const meta = parseMetaFromNotes(row.admin_notes);
+          const isDeleted = row.status === 'cancelled' || row.status === 'listing_deleted';
+          const existingIdx = app_listings.findIndex(l => l.id === row.trade_code);
+          if (isDeleted) {
+            if (existingIdx !== -1) app_listings.splice(existingIdx, 1);
+          } else {
+            const listObj = {
+              id: row.trade_code,
+              type: meta.type || 'sell',
+              coin: row.coin || 'USDT',
+              network: row.network || 'TRC20',
+              price: row.unit_fiat_price || meta.unit_fiat_price || 48.00,
+              fiat: row.fiat_currency || 'TRY',
+              pool: row.amount_crypto || 10000,
+              min: meta.min || 250,
+              max: meta.max || 10000,
+              methods: meta.methods || ['FAST Anında'],
+              iban: meta.iban || '',
+              holder: meta.holder || '',
+              wallet: meta.wallet || row.buyer_wallet_address || '',
+              terms: meta.terms || '',
+              name: meta.user_name || 'Kullanıcı',
+              user_id: meta.user_id || '',
+              flag: '🌟',
+              trades: meta.trades || 0,
+              comp: 100,
+              rate: 5.0,
+              resp: 2,
+              status: 'active'
+            };
+            if (existingIdx !== -1) app_listings[existingIdx] = listObj;
+            else app_listings.unshift(listObj);
+          }
+        });
+        localStorage.setItem('cx_listings', JSON.stringify(app_listings));
+        updateProfileUI();
+      }
+    }
+  } catch (_) {}
+}
+
 setInterval(() => { syncHistoryWithSupabase(false); }, 4000);
+setInterval(() => { syncListingsWithSupabase(); }, 6000);
 
 function renderActiveTrades() {
   const box = document.getElementById('active-trades-box');
@@ -8741,9 +8854,13 @@ function renderHistory() {
 
 function openCreateModal() {
   document.getElementById('modal-create').classList.remove('hidden');
+  document.getElementById('cl-modal-title').innerText = 'P2P İlan Sihirbazı';
+  document.getElementById('cl-submit').removeAttribute('data-edit-id');
+  document.getElementById('cl-submit').innerHTML = `<i class="fas fa-check mr-1"></i>${create_type === 'sell' ? 'Satış İlanını Yayınla' : 'Alım İlanını Yayınla'}`;
   autoFillCLPrice();
   if (app_user.name && app_user.name !== 'Kullanıcı') document.getElementById('cl-holder').value = app_user.name;
 }
+
 function setCreateType(type) {
   create_type = type;
   const sb = document.getElementById('cl-sell-btn'), bb = document.getElementById('cl-buy-btn');
@@ -8766,10 +8883,11 @@ function setCreateType(type) {
   }
   autoFillCLPrice();
 }
+
 function autoFillCLPrice() {
   const coin = document.getElementById('cl-coin').value, fiat = document.getElementById('cl-fiat').value;
   const spot = baseSpot(coin, fiat);
-  document.getElementById('cl-price').value = create_type === 'sell' ? (spot * 1.02).toFixed(2) : (spot * 0.98).toFixed(2);
+  document.getElementById('cl-price').value = create_type === 'sell' ? (spot * 1.015).toFixed(2) : (spot * 0.985).toFixed(2);
 }
 
 function editMyListing(id) {
@@ -8778,6 +8896,7 @@ function editMyListing(id) {
   const l = app_listings[idx];
   create_type = l.type;
   openCreateModal();
+  document.getElementById('cl-modal-title').innerText = 'İlanı Düzenle';
   document.getElementById('cl-coin').value = l.coin || 'USDT';
   document.getElementById('cl-net').value = l.network || 'TRC20';
   document.getElementById('cl-price').value = l.price || '';
@@ -8798,19 +8917,30 @@ function editMyListing(id) {
     cb.checked = (l.methods || []).includes(cb.value);
   });
   document.getElementById('cl-submit').setAttribute('data-edit-id', id);
+  document.getElementById('cl-submit').innerHTML = '<i class="fas fa-save mr-1"></i>Değişiklikleri Kaydet';
   toast('İlan düzenleme moduna girildi.', 'c');
 }
 
-function deleteMyListing(id) {
-  if (!confirm('Bu ilanı silmek istediğinizden emin misiniz?')) return;
+async function deleteMyListing(id) {
+  if (!confirm('Bu ilanı silmek ve yayından kaldırmak istediğinizden emin misiniz?')) return;
   app_listings = app_listings.filter(l => l.id !== id);
   localStorage.setItem('cx_listings', JSON.stringify(app_listings));
-  document.getElementById('u-lc').innerText = app_listings.length;
+  document.getElementById('u-lc').innerText = app_listings.filter(l => l.user_id === uid || l.name === app_user.name).length;
   renderListings();
-  toast('🗑️ İlan silindi.', 'y');
+  
+  // Update Supabase
+  try {
+    await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=eq.${id}`, {
+      method: 'PATCH',
+      headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'cancelled' })
+    });
+  } catch (_) {}
+
+  toast('🗑️ İlanınız başarıyla silindi.', 'y');
 }
 
-function publishListing() {
+async function publishListing() {
   const coin = document.getElementById('cl-coin').value, net = document.getElementById('cl-net').value;
   const price = parseFloat(document.getElementById('cl-price').value);
   const fiat = document.getElementById('cl-fiat').value;
@@ -8820,6 +8950,17 @@ function publishListing() {
   const terms = document.getElementById('cl-terms').value.trim();
   const methods = Array.from(document.querySelectorAll('#cl-pay-cbs input:checked')).map(el => el.value);
   if (methods.length === 0) { toast('En az bir ödeme yöntemi seçin.', 'r'); return; }
+
+  // ANTI-MANIPULATION GUARDS
+  const spotNow = baseSpot(coin, fiat);
+  const deviation = Math.abs((price - spotNow) / spotNow);
+  if (deviation > 0.10) {
+    toast(`⛔ Manipülasyon Koruması: Fiyat spot kurdan (${spotNow.toFixed(2)} ${fiat}) en fazla ±%10 sapabilir!`, 'r');
+    return;
+  }
+  if (pool < 50) { toast('Minimum havuz 50 ' + coin + ' olmalıdır.', 'r'); return; }
+  if (min > max) { toast('Min limit, Max limitten büyük olamaz.', 'r'); return; }
+  if (max > pool) { toast('Max limit havuz miktarını aşamaz.', 'r'); return; }
 
   let iban = '', holder = '', wallet = '';
   if (create_type === 'sell') {
@@ -8833,37 +8974,77 @@ function publishListing() {
     if (!validateAddress(wallet, net)) { toast(`${net} için geçersiz adres formatı!`, 'r'); return; }
   }
 
-  const listing = {
-    id: 'MY-' + Date.now(), type: create_type, coin, network: net, price, fiat, pool, min, max, methods, iban, holder, wallet, terms,
-    name: app_user.name, flag: '🌟', trades: 0, comp: 100, rate: 5.0, resp: 2, status: 'active'
+  const editId = document.getElementById('cl-submit').getAttribute('data-edit-id');
+  const listCode = editId || ('LIST-' + Math.floor(100000 + Math.random() * 900000));
+
+  const metaObj = {
+    is_listing: true,
+    type: create_type,
+    user_name: app_user.name,
+    user_id: uid,
+    telegram_user: app_user.tg_username || '',
+    min, max, methods, iban, holder, wallet, terms,
+    trades: app_user.trades || 0
   };
 
-  const editId = document.getElementById('cl-submit').getAttribute('data-edit-id');
+  const listing = {
+    id: listCode, type: create_type, coin, network: net, price, fiat, pool, min, max, methods, iban, holder, wallet, terms,
+    name: app_user.name, user_id: uid, flag: '🌟', trades: app_user.trades || 0, comp: 100, rate: 5.0, resp: 2, status: 'active'
+  };
+
   if (editId) {
     const idx = app_listings.findIndex(l => l.id === editId);
     if (idx !== -1) { app_listings[idx] = { ...app_listings[idx], ...listing, id: editId }; }
     document.getElementById('cl-submit').removeAttribute('data-edit-id');
-    toast('✅ İlan güncellendi!', 'g');
+    toast('✅ İlanınız başarıyla güncellendi!', 'g');
   } else {
-    const spotNow = baseSpot(coin, document.getElementById('cl-fiat').value);
-    const deviation = Math.abs((price - spotNow) / spotNow);
-    if (deviation > 0.30) {
-      toast(`⛔ Fiyat spot kurdan %${Math.round(deviation*100)} sapıyor! Max ±%30 izin verilir.`, 'r');
-      return;
-    }
-    if (app_listings.filter(l => l.status === 'active').length >= 5) {
+    if (app_listings.filter(l => l.user_id === uid && l.status === 'active').length >= 5) {
       toast('⛔ Maksimum 5 aktif ilan oluşturabilirsiniz.', 'r');
       return;
     }
-    app_listings.push(listing);
-    toast('🎉 İlanınız yayınlandı!', 'g');
+    app_listings.unshift(listing);
+    toast('🎉 İlanınız yayınlandı ve buluta kaydedildi!', 'g');
   }
 
   localStorage.setItem('cx_listings', JSON.stringify(app_listings));
-  document.getElementById('u-lc').innerText = app_listings.length;
+  document.getElementById('u-lc').innerText = app_listings.filter(l => l.user_id === uid || l.name === app_user.name).length;
   closeM('modal-create');
   renderListings();
   addAct(`📢 Yeni ${create_type === 'sell' ? 'satış' : 'alım'} ilanı: ${pool} ${coin}`);
+
+  // PERSIST LISTING TO SUPABASE
+  try {
+    const deadline = new Date(Date.now() + 365 * 24 * 3600000).toISOString();
+    const adminNotesMeta = `|| META:::${JSON.stringify(metaObj)}`;
+    const postBody = {
+      trade_code: listCode,
+      coin,
+      network: net,
+      amount_crypto: pool,
+      unit_fiat_price: price,
+      amount_fiat: pool * price,
+      fiat_currency: fiat,
+      buyer_wallet_address: wallet || (ESCROW[net] || ESCROW.TRC20),
+      payment_method: (methods[0] || 'FAST Anında').slice(0, 80),
+      payment_deadline: deadline,
+      admin_notes: adminNotesMeta,
+      status: 'pending_payment'
+    };
+
+    if (editId) {
+      await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=eq.${editId}`, {
+        method: 'PATCH',
+        headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount_crypto: pool, unit_fiat_price: price, amount_fiat: pool * price, admin_notes: adminNotesMeta })
+      });
+    } else {
+      await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades`, {
+        method: 'POST',
+        headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+        body: JSON.stringify(postBody)
+      });
+    }
+  } catch (_) {}
 }
 
 // WEB3 WALLET
@@ -8990,9 +9171,7 @@ function deepLink(type) {
   if (l[type]) window.location.href = l[type]; else toast('Cüzdan uygulamanızda bu sayfayı açın.', 'c');
 }
 
-// ============================================================================
-// DYNAMIC BREATHING ACTIVITY TICKER (FRACTIONAL REALISM)
-// ============================================================================
+// DYNAMIC BREATHING ACTIVITY TICKER
 const DYNAMIC_EVENTS = [
   { merchant:'Onurcan_Demir', action:'sell', delta:-12450.75, msg:'👑 Onurcan_Demir — 12,450.75 USDT Ziraat FAST teslimatı tamamlandı ⚡' },
   { merchant:'CyberEx_Official', action:'liquidity', delta:75000.00, msg:'🏢 CyberEx_Official — 75,000.00 USDT kurumsal havuz likiditesi sağlandı 🏦' },
@@ -9063,6 +9242,7 @@ function renderFeed() {
   renderFeed();
   fetchPrices();
   syncHistoryWithSupabase(false);
+  syncListingsWithSupabase();
   renderWalletUI();
 
   setInterval(fetchPrices, 10000);

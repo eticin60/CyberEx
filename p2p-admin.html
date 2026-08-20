@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>CyberEx P2P — Yönetici Paneli v9</title>
+<title>CyberEx P2P — Yönetici Paneli v15</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -41,24 +41,22 @@ input:focus, select:focus, textarea:focus { border-color:#00f0ff; box-shadow:0 0
 .tbl-row:hover { background:rgba(0,240,255,.04); }
 .timeline-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; margin-top:3px; }
 .modal-backdrop { position:fixed; inset:0; background:rgba(0,3,12,.96); backdrop-filter:blur(18px); z-index:200; display:flex; align-items:center; justify-content:center; padding:16px; }
-.modal-box { width:100%; max-width:540px; background:#000c1e; border:1px solid rgba(0,240,255,.35); border-radius:24px; padding:22px; max-height:92vh; overflow-y:auto; box-shadow:0 0 40px rgba(0,240,255,.15); }
-
-/* Chat Bubbles */
-.bubble-user { background: rgba(0, 240, 255, 0.12); border: 1px solid rgba(0, 240, 255, 0.25); color: #e8f0ff; border-radius: 12px 12px 2px 12px; align-self: flex-end; }
-.bubble-admin { background: rgba(255, 215, 0, 0.12); border: 1px solid rgba(255, 215, 0, 0.3); color: #fff; border-radius: 12px 12px 12px 2px; align-self: flex-start; }
+.modal-box { width:100%; max-width:560px; background:#000c1e; border:1px solid rgba(0,240,255,.35); border-radius:24px; padding:22px; max-height:92vh; overflow-y:auto; box-shadow:0 0 40px rgba(0,240,255,.15); }
+.chat-user { background: rgba(0, 240, 255, 0.12); border: 1px solid rgba(0, 240, 255, 0.25); color: #e8f0ff; border-radius: 12px 12px 2px 12px; align-self: flex-end; }
+.chat-adm { background: rgba(255, 215, 0, 0.12); border: 1px solid rgba(255, 215, 0, 0.3); color: #fff; border-radius: 12px 12px 12px 2px; align-self: flex-start; }
 </style>
 </head>
 <body>
 
-<!-- SECURE SHA-256 GATEKEEPER -->
+<!-- GATEKEEPER -->
 <div id="adm-gate" class="fixed inset-0 z-[999] bg-[#000a1c] flex items-center justify-center p-4">
-  <div class="glass w-full max-w-sm p-7 text-center space-y-4 border-red-400/30" id="gate-box" style="border-color:rgba(255,77,77,.3)">
+  <div class="glass w-full max-w-sm p-7 text-center space-y-4 border-red-400/30" id="gate-box">
     <div class="w-14 h-14 rounded-2xl border border-red-400/40 bg-red-400/10 flex items-center justify-center mx-auto text-red-400 text-2xl shadow-lg">
       <i class="fas fa-user-shield"></i>
     </div>
     <div>
       <h2 class="text-sm font-black text-white tracking-widest">CYBEREX P2P</h2>
-      <p class="text-[9px] text-red-400 font-mono font-bold uppercase tracking-wider mt-0.5">SHA-256 ŞİFRELİ YÖNETİCİ GİRİŞİ</p>
+      <p class="text-[9px] text-red-400 font-mono font-bold uppercase tracking-wider mt-0.5">YÖNETİCİ KONSOLU (SHA-256)</p>
     </div>
     <form onsubmit="verifyAdminHash(event)" class="space-y-3 text-left">
       <div class="relative">
@@ -71,7 +69,7 @@ input:focus, select:focus, textarea:focus { border-color:#00f0ff; box-shadow:0 0
       </button>
     </form>
     <div class="flex justify-between text-[8px] font-mono text-gray-500 pt-2 border-t border-white/5">
-      <span>CyberEx SHA-256 Vault</span>
+      <span>CyberEx Cloud Vault</span>
       <a href="p2p.html" class="text-cyan-400 hover:underline">← P2P Platforma Dön</a>
     </div>
   </div>
@@ -80,7 +78,7 @@ input:focus, select:focus, textarea:focus { border-color:#00f0ff; box-shadow:0 0
 <!-- MAIN ADMIN PANEL -->
 <div id="admin-panel" class="hidden max-w-5xl mx-auto px-3 pt-2">
 
-  <!-- STICKY HEADER -->
+  <!-- HEADER -->
   <header class="sticky top-0 z-50 flex justify-between items-center py-3 mb-4" style="background:rgba(0,5,16,.98);border-bottom:1px solid rgba(0,240,255,.15);backdrop-filter:blur(20px)">
     <div class="flex items-center gap-2.5">
       <div class="w-9 h-9 rounded-xl bg-red-400/10 border border-red-400/30 flex items-center justify-center text-red-400 text-sm">
@@ -88,11 +86,11 @@ input:focus, select:focus, textarea:focus { border-color:#00f0ff; box-shadow:0 0
       </div>
       <div>
         <p class="text-[11px] font-black text-white tracking-widest">CYBEREX P2P — YÖNETİCİ KONSOLU</p>
-        <p class="text-[8px] text-gray-400 font-mono flex items-center gap-1"><img src="cyberex-logo.png" class="w-3 h-3"> CyberEx Yönetim & Destek Merkezi</p>
+        <p class="text-[8px] text-gray-400 font-mono flex items-center gap-1"><img src="cyberex-logo.png" class="w-3 h-3"> Canlı Supabase Bulut Veritabanı</p>
       </div>
     </div>
     <div class="flex items-center gap-2">
-      <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-green-400 pulse"></span><span class="text-[8px] text-green-400 font-bold font-mono">CANLI</span></span>
+      <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-green-400 pulse"></span><span class="text-[8px] text-green-400 font-bold font-mono">CANLI BULUT</span></span>
       <span class="text-[8px] text-gray-500 font-mono hidden sm:block" id="last-refresh-lbl">—</span>
       <button onclick="loadAll()" class="btn btn-c btn-sm"><i class="fas fa-rotate"></i>Yenile</button>
       <button onclick="adminLock()" class="w-8 h-8 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 flex items-center justify-center hover:bg-red-500/20 text-sm"><i class="fas fa-lock"></i></button>
@@ -151,46 +149,55 @@ input:focus, select:focus, textarea:focus { border-color:#00f0ff; box-shadow:0 0
   <!-- TRADE TABLE -->
   <div id="trade-table" class="space-y-2.5 fade-in"></div>
 
-  <!-- ACTIVITY LOG TAB -->
-  <div id="log-panel" class="hidden space-y-2 fade-in">
-    <div class="glass p-3 text-[9px] text-gray-400 font-mono space-y-1.5" id="log-box"></div>
-  </div>
-
   <!-- USER LISTINGS TAB -->
   <div id="listings-panel" class="hidden space-y-2.5 fade-in">
     <div class="glass p-3 flex justify-between items-center mb-1">
-      <p class="text-xs font-black text-white">Kullanıcıların Yayınladığı İlanlar</p>
+      <div>
+        <p class="text-xs font-black text-white">Kullanıcıların Yayınladığı İlanlar (Bulut)</p>
+        <p class="text-[9px] text-gray-400">Tüm kullanıcı ilanlarını yönetin, onaylayın veya silin</p>
+      </div>
       <button onclick="loadUserListings()" class="btn btn-c btn-sm"><i class="fas fa-rotate"></i>Yenile</button>
     </div>
-    <div id="user-listings-box" class="space-y-2">
-      <div class="glass py-8 text-center text-gray-500 text-xs">Kullanıcı ilanları yükleniyor...</div>
-    </div>
+    <div id="user-listings-box" class="space-y-2"></div>
+  </div>
+
+  <!-- ACTIVITY LOG TAB -->
+  <div id="log-panel" class="hidden space-y-2 fade-in">
+    <div class="glass p-3 text-[9px] text-gray-400 font-mono space-y-1.5" id="log-box"></div>
   </div>
 </div>
 
 <!-- DETAIL & CHAT MODAL -->
 <div id="modal-detail" class="modal-backdrop hidden">
   <div class="modal-box space-y-4">
-    <!-- MODAL HEADER -->
+    <!-- HEADER -->
     <div class="flex justify-between items-start">
       <div>
-        <p class="text-[7px] text-gray-500 uppercase font-mono">P2P Escrow İşlemi</p>
+        <p class="text-[7px] text-gray-500 uppercase font-mono">P2P Escrow Detayı</p>
         <h3 class="text-sm font-black text-cyan-400 font-mono" id="md-code">CX-000000</h3>
         <div class="flex items-center gap-1.5 mt-0.5" id="md-status-row"></div>
       </div>
       <button onclick="closeDetailModal()" class="w-7 h-7 rounded-full bg-white/5 text-gray-400 hover:text-white flex items-center justify-center"><i class="fas fa-times text-xs"></i></button>
     </div>
 
-    <!-- TRADE INFO GRID -->
-    <div class="grid grid-cols-2 gap-2 text-xs bg-black/40 p-3 rounded-xl border border-white/5">
-      <div><p class="text-[7px] text-gray-500 uppercase mb-0.5">Kullanıcı / Telegram</p><div class="flex items-center gap-1.5"><p class="font-bold text-white" id="md-user">—</p><a id="md-tg-btn" href="#" target="_blank" class="hidden text-[10px] text-[#0088cc] bg-[#0088cc]/15 px-1.5 py-0.5 rounded font-mono font-bold hover:underline"><i class="fab fa-telegram mr-0.5"></i>DM</a></div></div>
+    <!-- TRADE INFO GRID (FULL DATA FIDELITY) -->
+    <div class="grid grid-cols-2 gap-2 text-xs bg-black/40 p-3 rounded-xl border border-white/5 font-mono">
+      <div>
+        <p class="text-[7px] text-gray-500 uppercase mb-0.5">Kullanıcı / Telegram</p>
+        <div class="flex items-center gap-1.5">
+          <p class="font-bold text-white" id="md-user">—</p>
+          <a id="md-tg-btn" href="#" target="_blank" class="hidden text-[10px] text-[#0088cc] bg-[#0088cc]/15 px-1.5 py-0.5 rounded font-bold hover:underline"><i class="fab fa-telegram mr-0.5"></i>DM</a>
+        </div>
+      </div>
       <div><p class="text-[7px] text-gray-500 uppercase mb-0.5">Satıcı / Karşı Taraf</p><p class="font-bold text-white" id="md-seller">—</p></div>
-      <div><p class="text-[7px] text-gray-500 uppercase mb-0.5">Tür</p><p class="font-bold" id="md-type">—</p></div>
-      <div><p class="text-[7px] text-gray-500 uppercase mb-0.5">Network</p><p class="font-bold text-white font-mono" id="md-net">—</p></div>
+      <div><p class="text-[7px] text-gray-500 uppercase mb-0.5">İşlem Türü</p><p class="font-bold" id="md-type">—</p></div>
+      <div><p class="text-[7px] text-gray-500 uppercase mb-0.5">Transfer Ağı</p><p class="font-bold text-white font-mono" id="md-net">—</p></div>
+      <div><p class="text-[7px] text-gray-500 uppercase mb-0.5">Birim Spot Kur</p><p class="font-bold text-green-400 font-mono" id="md-unit-price">—</p></div>
       <div><p class="text-[7px] text-gray-500 uppercase mb-0.5">Kripto Miktar</p><p class="font-black text-cyan-400 font-mono" id="md-crypto">—</p></div>
-      <div><p class="text-[7px] text-gray-500 uppercase mb-0.5">Fiat Tutar</p><p class="font-black text-green-400 font-mono" id="md-fiat">—</p></div>
-      <div class="col-span-2"><p class="text-[7px] text-gray-500 uppercase mb-0.5">Ödeme / Transfer Hedefi</p><p class="font-mono text-cyan-300 break-all text-[11px]" id="md-target">—</p></div>
-      <div class="col-span-2"><p class="text-[7px] text-gray-500 uppercase mb-0.5">Oluşturulma</p><p class="font-mono text-gray-300" id="md-created">—</p></div>
+      <div class="col-span-2"><p class="text-[7px] text-gray-500 uppercase mb-0.5">Toplam TL / Fiat Tutar</p><p class="font-black text-green-400 text-sm font-mono" id="md-fiat">—</p></div>
+      <div class="col-span-2"><p class="text-[7px] text-gray-500 uppercase mb-0.5">Ödeme / Transfer Hedefi (IBAN / Cüzdan)</p><p class="font-mono text-cyan-300 break-all text-[11px]" id="md-target">—</p></div>
+      <div class="col-span-2" id="md-proof-row"><p class="text-[7px] text-gray-500 uppercase mb-0.5">Yüklenen Ödeme Kanıtı / Dekont</p><div id="md-proof-val" class="text-xs text-gray-400">Henüz kanıt yüklenmedi</div></div>
+      <div class="col-span-2"><p class="text-[7px] text-gray-500 uppercase mb-0.5">Oluşturulma Zamanı</p><p class="font-mono text-gray-300 text-[10px]" id="md-created">—</p></div>
     </div>
 
     <!-- LIVE P2P CHAT ENGINE IN ADMIN -->
@@ -199,7 +206,9 @@ input:focus, select:focus, textarea:focus { border-color:#00f0ff; box-shadow:0 0
         <p class="text-[9px] font-black text-cyan-400 uppercase flex items-center gap-1.5">
           <i class="fas fa-comments text-cyan-400"></i>Canlı P2P Escrow Sohbeti & Destek
         </p>
-        <span class="text-[8px] text-gray-400 font-mono" id="chat-status-tag">Canlı Bağlantı</span>
+        <span class="text-[8px] text-green-400 font-mono font-bold flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-green-400 pulse"></span>Bulut Aktif
+        </span>
       </div>
 
       <div id="admin-chat-messages" class="h-36 overflow-y-auto space-y-1.5 p-2 bg-black/60 rounded-xl border border-white/5 text-[11px] font-mono flex flex-col">
@@ -212,130 +221,46 @@ input:focus, select:focus, textarea:focus { border-color:#00f0ff; box-shadow:0 0
       </div>
     </div>
 
-    <!-- ADMIN NOTE -->
-    <div>
-      <div class="flex justify-between items-center mb-1">
-        <label class="text-[8px] text-gray-400 uppercase font-bold">Yönetici / Destek Notu</label>
+    <!-- ADMIN NOTE / STATUS NOTE -->
+    <div class="space-y-1.5">
+      <div class="flex justify-between items-center">
+        <label class="text-[8px] text-gray-400 uppercase font-bold">YÖNETİCİ / DESTEK NOTU</label>
         <span class="text-[7px] text-cyan-400 font-mono">Kullanıcı ekranında canlı görünür</span>
       </div>
       <textarea id="md-note" rows="2" placeholder="Kullanıcıya iletilecek yönetici notu, teyit veya uyarı mesajı..."></textarea>
-      <button onclick="saveAdminNoteOnly()" class="btn btn-c w-full justify-center text-xs py-2 mt-1.5 font-bold">
-        <i class="fas fa-floppy-disk mr-1"></i>Yönetici Notunu Kaydet & İlet
-      </button>
+      <button onclick="saveAdminNoteOnly()" class="btn btn-c btn-sm w-full justify-center"><i class="fas fa-floppy-disk"></i>Yönetici Notunu Kaydet & İlet</button>
     </div>
 
-    <!-- INLINE EDIT FIELDS -->
-    <div id="md-edit-section" class="hidden space-y-2.5 bg-cyan-400/5 p-3 rounded-xl border border-cyan-400/20">
-      <p class="text-[9px] font-black text-cyan-400 uppercase">🛠 İşlem Bilgilerini Düzenle</p>
-      <div>
-        <label class="text-[8px] text-gray-400 uppercase block mb-1">Durum (Status)</label>
-        <select id="edit-status" class="text-xs py-2">
-          <option value="pending_payment">Ödeme Bekleniyor</option>
-          <option value="proof_uploaded">Kanıt Yüklendi (Admin Bekleniyor)</option>
-          <option value="completed">Tamamlandı ✅</option>
-          <option value="cancelled">İptal Edildi ❌</option>
-        </select>
-      </div>
-      <div class="grid grid-cols-2 gap-2">
-        <div>
-          <label class="text-[8px] text-gray-400 uppercase block mb-1">Kripto Miktar</label>
-          <input type="number" id="edit-crypto" class="text-xs" step="0.001">
-        </div>
-        <div>
-          <label class="text-[8px] text-gray-400 uppercase block mb-1">Fiat Tutar</label>
-          <input type="number" id="edit-fiat" class="text-xs" step="0.01">
-        </div>
-      </div>
-      <div>
-        <label class="text-[8px] text-gray-400 uppercase block mb-1">Network</label>
-        <select id="edit-net" class="text-xs py-2">
-          <option value="TRC20">TRC20</option><option value="BEP20">BEP20</option><option value="ERC20">ERC20</option><option value="SOL">SOL</option>
-        </select>
-      </div>
-      <div id="edit-wallet-wrap">
-        <label class="text-[8px] text-gray-400 uppercase block mb-1">Alıcı Cüzdan Adresi</label>
-        <input type="text" id="edit-wallet" class="font-mono text-xs">
-      </div>
-      <div id="edit-iban-wrap" class="hidden space-y-2">
-        <div>
-          <label class="text-[8px] text-gray-400 uppercase block mb-1">Kullanıcı IBAN</label>
-          <input type="text" id="edit-iban" class="font-mono text-xs">
-        </div>
-        <div>
-          <label class="text-[8px] text-gray-400 uppercase block mb-1">Hesap Sahibi</label>
-          <input type="text" id="edit-holder" class="text-xs">
-        </div>
-      </div>
-      <button onclick="saveEditedTrade()" class="btn btn-c w-full justify-center text-xs py-2.5"><i class="fas fa-floppy-disk"></i>Değişiklikleri Kaydet & Senkronize Et</button>
-    </div>
-
-    <!-- STATUS HISTORY TIMELINE -->
-    <div>
-      <p class="text-[8px] text-gray-400 uppercase font-bold mb-2">📜 Durum Geçmişi / İşlem Logu</p>
-      <div id="md-timeline" class="space-y-2 text-xs"></div>
+    <!-- TIMELINE -->
+    <div class="space-y-1">
+      <p class="text-[8px] text-gray-400 uppercase font-bold">📜 DURUM GEÇMİŞİ / İŞLEM LOGU</p>
+      <div id="md-timeline" class="space-y-1 bg-black/30 p-2.5 rounded-xl border border-white/5 font-mono text-[9px]"></div>
     </div>
 
     <!-- ACTION BUTTONS -->
-    <div id="md-actions" class="pt-2 border-t border-white/10 space-y-2">
-      <!-- Approve Row -->
-      <div id="btn-approve-row" class="flex gap-2">
-        <button onclick="actionApprove()" class="btn btn-g flex-1 justify-center text-xs py-2.5">
-          <i class="fas fa-check-circle"></i>ONAYLA — İşlem Tamamlandı
-        </button>
-      </div>
-
-      <!-- Reject Row -->
-      <div id="btn-reject-row" class="flex gap-2">
-        <button onclick="actionReject()" class="btn btn-r flex-1 justify-center text-xs py-2.5">
-          <i class="fas fa-times-circle"></i>REDDET — Ödeme Geçersiz
-        </button>
-      </div>
-
-      <!-- Re-open / Undo Row -->
-      <div id="btn-undo-row" class="flex gap-2">
-        <button onclick="actionUndo()" class="btn btn-y flex-1 justify-center text-xs py-2.5">
-          <i class="fas fa-rotate-left"></i>GERİ AL / Yeniden Aç (Pending'e Döndür)
-        </button>
-      </div>
-
-      <!-- Cancel Row -->
-      <div id="btn-cancel-row" class="flex gap-2">
-        <button onclick="actionCancel()" class="btn btn-r flex-1 justify-center text-xs py-2.5" style="background:rgba(255,77,77,.15);color:#ff4d4d;border:1px solid rgba(255,77,77,.35)">
-          <i class="fas fa-ban"></i>İptal Et (Admin Kararı)
-        </button>
-      </div>
-
-      <!-- Edit Toggle -->
-      <div class="flex gap-2">
-        <button onclick="toggleEditSection()" class="btn btn-p flex-1 justify-center text-xs py-2.5">
-          <i class="fas fa-pen-to-square"></i>İşlem Bilgilerini Düzenle
-        </button>
-        <button onclick="sendTelegramAlert()" class="btn btn-c btn-sm px-4" title="Telegram Bildirim Gönder">
-          <i class="fab fa-telegram"></i>Bildirim Gönder
-        </button>
-      </div>
+    <div class="space-y-2 pt-2 border-t border-white/10">
+      <button onclick="approveTradeModal()" class="btn btn-g w-full py-3 justify-center text-xs uppercase"><i class="fas fa-check-circle mr-1"></i>ONAYLA — İşlem Tamamlandı</button>
+      <button onclick="rejectTradeModal()" class="btn btn-r w-full py-2.5 justify-center text-xs uppercase"><i class="fas fa-circle-xmark mr-1"></i>REDDET — Ödeme Geçersiz</button>
+      <button onclick="cancelTradeModal()" class="btn btn-sm w-full justify-center text-red-400 bg-red-500/10 border border-red-500/30 hover:bg-red-500/20"><i class="fas fa-ban mr-1"></i>İptal Et (Admin Kararı)</button>
     </div>
   </div>
 </div>
 
-<!-- TOAST -->
 <div id="toast-box" class="fixed top-4 left-1/2 -translate-x-1/2 z-[500] space-y-1.5 pointer-events-none"></div>
 
 <script>
-// CONFIG
 const SUPA_URL  = 'https://fkxynlctcbagfvpatzlb.supabase.co';
 const SUPA_KEY  = 'sb_publishable_eQK0Npo_3DnhQdZUAV5ZTw_SAj-zt_G';
 const BOT_TOKEN = '8078760711:AAFPhSfofYPeF3LSExVM7A9TinooXF3lH-o';
 const ADMIN_CID = 6453665842;
 
-// SHA-256 HASHES OF AUTHORIZED PASSWORDS
 const VALID_HASHES = [
-  '9c9a90a0debe094046d3d3331082f01fd594955f09a2e45c84725f1cbf123f43', // admin1923
-  '16d9cdb6814b712c41f76fec2ebe331d7912201de37b9d53464997ed8f5817fc', // root_admin
-  '4b8ceb08fee8cb25dd9db1cd4012f1abc32239930fdf9f5776c127a5388d1a92', // cyberexadmin
-  'd42ed19c0d9c80706b6b1484a97cf8634285d753ac079717aee8c651d54caef3', // 1923
-  '6dd454fcd40cdadbb52a7e893ace6f79c7d4ce254ce87d77045562c052ae4d9a', // cyberex
-  '676dcc25a044b7c5f54b61fba9f3c62efa63758a7dab7fc82ca3aa3945d6995b'  // cyberex2026
+  '9c9a90a0debe094046d3d3331082f01fd594955f09a2e45c84725f1cbf123f43',
+  '16d9cdb6814b712c41f76fec2ebe331d7912201de37b9d53464997ed8f5817fc',
+  '4b8ceb08fee8cb25dd9db1cd4012f1abc32239930fdf9f5776c127a5388d1a92',
+  'd42ed19c0d9c80706b6b1484a97cf8634285d753ac079717aee8c651d54caef3',
+  '6dd454fcd40cdadbb52a7e893ace6f79c7d4ce254ce87d77045562c052ae4d9a',
+  '676dcc25a044b7c5f54b61fba9f3c62efa63758a7dab7fc82ca3aa3945d6995b'
 ];
 
 const STATUS_META = {
@@ -345,15 +270,13 @@ const STATUS_META = {
   cancelled:       { label:'İptal Edildi ❌', color:'#ff4d4d', badge:'badge-r', icon:'fa-ban' }
 };
 
-// STATE
 let allTrades    = [];
+let userListings = [];
 let actionLogs   = JSON.parse(localStorage.getItem('cx_admin_logs') || '[]');
 let selectedIds  = new Set();
 let currentTab   = 'pending';
 let detailTrade  = null;
-let chatMessages = {};
 
-// CRYPTOGRAPHIC SHA-256 HASH FUNCTION
 async function sha256(str) {
   const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
   return Array.prototype.map.call(new Uint8Array(buf), x => (('00' + x.toString(16)).slice(-2))).join('');
@@ -398,13 +321,21 @@ async function loadAll() {
     const r = await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?order=id.desc&limit=500`, {
       headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY }
     });
-    if (r.ok) allTrades = await r.json(); else allTrades = [];
-  } catch (_) { allTrades = []; }
+    if (r.ok) {
+      const rows = await r.json();
+      allTrades = rows.filter(t => !t.trade_code.startsWith('LIST-'));
+      userListings = rows.filter(t => t.trade_code.startsWith('LIST-'));
+    } else {
+      allTrades = [];
+      userListings = [];
+    }
+  } catch (_) { allTrades = []; userListings = []; }
 
+  // Merge local backup
   const local = JSON.parse(localStorage.getItem('cx_trades') || '[]');
   const remoteCodes = new Set(allTrades.map(t => t.trade_code));
   local.forEach(t => {
-    if (!remoteCodes.has(t.trade_code)) {
+    if (!remoteCodes.has(t.trade_code) && !t.trade_code.startsWith('LIST-')) {
       allTrades.push({
         trade_code: t.trade_code, user_name: t.user_name || t.user_id || '?',
         coin: t.coin, network: t.network, amount_crypto: t.amount_crypto,
@@ -419,7 +350,7 @@ async function loadAll() {
 
   updateStats();
   renderCurrentTab();
-  document.getElementById('last-refresh-lbl').innerText = 'Son: ' + new Date().toLocaleTimeString('tr-TR', { hour:'2-digit', minute:'2-digit' });
+  document.getElementById('last-refresh-lbl').innerText = 'Son: ' + new Date().toLocaleTimeString('tr-TR', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
 }
 
 function updateStats() {
@@ -435,6 +366,7 @@ function updateStats() {
   document.getElementById('c-pending').innerText   = filtered('pending').length;
   document.getElementById('c-completed').innerText = filtered('completed').length;
   document.getElementById('c-cancelled').innerText = filtered('cancelled').length;
+  document.getElementById('c-listings').innerText  = userListings.length;
   document.getElementById('c-log').innerText        = actionLogs.length;
 }
 
@@ -444,14 +376,16 @@ function filtered(tab) {
   const tf = document.getElementById('type-filter')?.value || 'ALL';
   const cf = document.getElementById('coin-filter')?.value || 'ALL';
   return allTrades.filter(t => {
+    const meta = parseMetaFromNotes(t.admin_notes);
+    const tradeType = meta.type || t.type || (t.buyer_wallet_address && !t.buyer_wallet_address.startsWith('TYK8z') ? 'buy' : 'sell');
     if (tab === 'pending' && !(t.status === 'proof_uploaded' || t.status === 'pending_payment')) return false;
     if (tab === 'completed' && t.status !== 'completed') return false;
     if (tab === 'cancelled' && t.status !== 'cancelled') return false;
     if (sf !== 'ALL' && t.status !== sf) return false;
-    if (tf !== 'ALL' && t.type !== tf) return false;
+    if (tf !== 'ALL' && tradeType !== tf) return false;
     if (cf !== 'ALL' && (t.coin || '') !== cf) return false;
     if (q) {
-      const hay = [(t.trade_code || ''), (t.user_name || ''), (t.seller || ''), (t.coin || ''), (t.status || '')].join(' ').toLowerCase();
+      const hay = [(t.trade_code || ''), (meta.user_name || t.user_name || ''), (meta.seller || t.seller || ''), (t.coin || ''), (t.status || '')].join(' ').toLowerCase();
       if (!hay.includes(q)) return false;
     }
     return true;
@@ -486,7 +420,13 @@ function renderTable(list) {
   }
   list.forEach(t => {
     const sm = STATUS_META[t.status] || { label:'Bilinmiyor', color:'#888', badge:'badge-y', icon:'fa-question' };
-    const isBuy = t.type === 'buy';
+    const meta = parseMetaFromNotes(t.admin_notes);
+    const isBuy = (meta.type === 'buy' || t.type === 'buy') || (!meta.type && !t.type && t.buyer_wallet_address && !t.buyer_wallet_address.startsWith('TYK8z'));
+    const userName = meta.user_name || t.user_name || 'Kullanıcı';
+    const tgHandle = meta.telegram_user || t.telegram_user || '';
+    const counterParty = meta.seller || t.seller || 'CyberEx Official';
+    const unitPrice = parseFloat(meta.unit_fiat_price || t.unit_fiat_price || (t.amount_fiat / t.amount_crypto) || 47.93).toFixed(2);
+
     const card = document.createElement('div');
     card.className = 'glass p-3.5 fade-in tbl-row cursor-pointer';
     card.onclick   = (e) => { if (e.target.closest('input[type=checkbox]')) return; openDetail(t); };
@@ -498,22 +438,22 @@ function renderTable(list) {
             <div class="flex items-center gap-2 flex-wrap">
               <span class="text-xs font-black text-cyan-400 font-mono">${t.trade_code}</span>
               <span class="badge ${sm.badge}"><i class="fas ${sm.icon} mr-1"></i>${sm.label}</span>
-              <span class="badge ${isBuy?'badge-g':'badge-o'}">${isBuy?'📥 ALIM':'📤 SATIŞ'}</span>
+              <span class="badge ${isBuy?'badge-g':'badge-o'}">${isBuy?'📥 ALIM (Kullanıcı TL Öder)':'📤 SATIŞ (Kullanıcı Kripto Verir)'}</span>
             </div>
             <div class="text-right">
               <p class="text-sm font-black text-white font-mono">${parseFloat(t.amount_crypto||0).toLocaleString()} ${t.coin||'USDT'}</p>
-              <p class="text-[10px] font-bold text-green-400 font-mono">${parseFloat(t.amount_fiat||0).toLocaleString('tr-TR',{maximumFractionDigits:0})} ${t.fiat_currency||'TRY'}</p>
+              <p class="text-[10px] font-bold text-green-400 font-mono">${parseFloat(t.amount_fiat||0).toLocaleString('tr-TR',{maximumFractionDigits:2})} ${t.fiat_currency||'TRY'} (${unitPrice} TL/u)</p>
             </div>
           </div>
           <div class="grid grid-cols-2 gap-x-4 gap-y-0.5 text-[10px] font-mono text-gray-400">
-            <span>👤 ${t.user_name||'Kullanıcı'}</span>
-            <span>🏪 ${t.seller||'Satıcı'}</span>
-            <span>🌐 ${t.network||'—'}</span>
-            <span>⏰ ${t.created_at||'—'}</span>
+            <span>👤 Kullanıcı: <b class="text-white">${userName}</b> ${tgHandle ? `(${tgHandle})` : ''}</span>
+            <span>🏪 Karşı Taraf: <b class="text-white">${counterParty}</b></span>
+            <span>🌐 Ağ: <b class="text-cyan-300">${t.network||'TRC20'}</b></span>
+            <span>⏰ Zaman: ${t.created_at ? new Date(t.created_at).toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'}) : '—'}</span>
           </div>
           ${isBuy
-            ? `<p class="text-[9px] font-mono text-cyan-300 mt-1 truncate">👛 Cüzdan: ${t.buyer_wallet_address||'—'}</p>`
-            : `<p class="text-[9px] font-mono text-green-300 mt-1 truncate">🏦 IBAN: ${t.user_payout_iban||'—'} (${t.user_payout_holder||'—'})</p>`
+            ? `<p class="text-[9px] font-mono text-cyan-300 mt-1 truncate">👛 Teslim Cüzdanı: ${meta.user_wallet_to_receive || t.buyer_wallet_address || '—'}</p>`
+            : `<p class="text-[9px] font-mono text-green-300 mt-1 truncate">🏦 Ödeme IBAN: ${meta.user_payout_iban || t.user_payout_iban || '—'} (${meta.user_payout_holder || t.user_payout_holder || '—'})</p>`
           }
         </div>
         <i class="fas fa-chevron-right text-gray-600 text-xs mt-1 flex-shrink-0"></i>
@@ -523,95 +463,107 @@ function renderTable(list) {
   });
 }
 
-function renderLog() {
-  const box = document.getElementById('log-box');
-  if (!actionLogs.length) { box.innerHTML = '<p class="text-gray-500 text-center py-4">Henüz admin aksiyonu kaydedilmedi.</p>'; return; }
-  box.innerHTML = actionLogs.slice().reverse().map(l =>
-    `<div class="flex items-start gap-2 py-1 border-b border-white/5 last:border-0">
-      <span class="text-cyan-400 w-28 flex-shrink-0">${l.time}</span>
-      <span class="text-gray-300">${l.msg}</span>
-    </div>`
-  ).join('');
-}
-
-// DETAIL MODAL & P2P CHAT ENGINE
-function openDetail(t) {
-  detailTrade = t;
-  const isBuy = t.type === 'buy';
-  const sm = STATUS_META[t.status] || { label:'Bilinmiyor', color:'#888', badge:'badge-y', icon:'fa-question' };
-
-  document.getElementById('md-code').innerText = t.trade_code;
-  document.getElementById('md-status-row').innerHTML = `<span class="badge ${sm.badge}"><i class="fas ${sm.icon} mr-1"></i>${sm.label}</span><span class="badge ${isBuy?'badge-g':'badge-o'} ml-1">${isBuy?'📥 ALIM':'📤 SATIŞ'}</span>`;
-  document.getElementById('md-user').innerText    = t.user_name || '?';
-  document.getElementById('md-seller').innerText  = t.seller || '—';
-  document.getElementById('md-type').innerHTML    = isBuy ? '<span class="text-green-400 font-bold">KRİPTO ALIM (Kullanıcı TL öder)</span>' : '<span class="text-orange-400 font-bold">KRİPTO SATIŞ (Kullanıcı kripto gönderir)</span>';
-  document.getElementById('md-net').innerText     = t.network || '—';
-  document.getElementById('md-crypto').innerText  = `${parseFloat(t.amount_crypto||0).toLocaleString()} ${t.coin||'USDT'}`;
-  document.getElementById('md-fiat').innerText    = `${parseFloat(t.amount_fiat||0).toLocaleString('tr-TR',{minimumFractionDigits:2})} ${t.fiat_currency||'TRY'}`;
-  document.getElementById('md-created').innerText = t.created_at || '—';
-  document.getElementById('md-note').value        = '';
-  document.getElementById('md-target').innerText  = isBuy
-    ? ('Alıcı Cüzdan: ' + (t.buyer_wallet_address || '—'))
-    : ('Kullanıcı IBAN: ' + (t.user_payout_iban || '—') + ' (' + (t.user_payout_holder || '—') + ')');
-
-  document.getElementById('edit-status').value  = t.status;
-  document.getElementById('edit-crypto').value  = t.amount_crypto || '';
-  document.getElementById('edit-fiat').value    = t.amount_fiat || '';
-  document.getElementById('edit-net').value     = t.network || 'TRC20';
-  document.getElementById('edit-wallet').value  = t.buyer_wallet_address || '';
-  document.getElementById('edit-iban').value    = t.user_payout_iban || '';
-  document.getElementById('edit-holder').value  = t.user_payout_holder || '';
-  document.getElementById('edit-wallet-wrap').classList.toggle('hidden', !isBuy);
-  document.getElementById('edit-iban-wrap').classList.toggle('hidden', isBuy);
-  document.getElementById('md-edit-section').classList.add('hidden');
-
-  renderTimeline(t);
-  renderAdminChat();
-
-  const isCompleted = t.status === 'completed';
-  const isCancelled = t.status === 'cancelled';
-  const isPending   = t.status === 'pending_payment' || t.status === 'proof_uploaded';
-
-  document.getElementById('btn-approve-row').classList.toggle('hidden', isCompleted || isCancelled);
-  document.getElementById('btn-reject-row').classList.toggle('hidden', isCompleted || isCancelled);
-  document.getElementById('btn-cancel-row').classList.toggle('hidden', isCompleted || isCancelled);
-  document.getElementById('btn-undo-row').classList.toggle('hidden', isPending);
-
-  document.getElementById('modal-detail').classList.remove('hidden');
-}
-
-
-
-// PARSE TRADE METADATA & DATA UNPACKER
-function unpackTradeMeta(t) {
-  if (t._unpacked) return t;
-  let rawPay = t.payment_method || '';
-  let meta = {};
-  if (rawPay.includes('|| META:::')) {
-    try {
-      const parts = rawPay.split('|| META:::');
-      t.clean_payment_method = parts[0].trim();
-      meta = JSON.parse(parts[1]) || {};
-    } catch (_) {}
-  } else {
-    t.clean_payment_method = rawPay;
+function loadUserListings() {
+  const box = document.getElementById('user-listings-box');
+  box.innerHTML = '';
+  if (!userListings.length) {
+    box.innerHTML = '<div class="glass py-12 text-center text-gray-500"><i class="fas fa-rectangle-list text-3xl text-cyan-400/20 mb-2 block"></i><p class="text-xs">Henüz kullanıcı ilanı bulunamadı.</p></div>';
+    return;
   }
-
-  // Merge metadata fields
-  t.type = meta.type || t.type || (t.user_payout_iban ? 'sell' : 'buy');
-  t.user_name = meta.user_name || t.user_name || 'Kullanıcı';
-  t.telegram_user = meta.telegram_user || t.telegram_user || '';
-  t.seller = meta.seller || t.seller || 'CyberEx OTC Escrow';
-  t.user_payout_iban = meta.user_payout_iban || t.user_payout_iban || '';
-  t.user_payout_holder = meta.user_payout_holder || t.user_payout_holder || '';
-  t.user_wallet_to_receive = meta.user_wallet_to_receive || t.user_wallet_to_receive || t.buyer_wallet_address || '';
-  t.bank_name = meta.bank_name || t.bank_name || '';
-  t.unit_fiat_price = t.unit_fiat_price || meta.unit_fiat_price || (t.amount_crypto ? (t.amount_fiat / t.amount_crypto).toFixed(2) : 0);
-  t._unpacked = true;
-  return t;
+  userListings.forEach(l => {
+    const meta = parseMetaFromNotes(l.admin_notes);
+    const isSell = meta.type === 'sell';
+    const isCancelled = l.status === 'cancelled';
+    const card = document.createElement('div');
+    card.className = 'glass p-3.5 fade-in space-y-2';
+    card.innerHTML = `
+      <div class="flex justify-between items-start">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-black text-cyan-400 font-mono">${l.trade_code}</span>
+            <span class="badge ${isSell ? 'badge-o' : 'badge-g'}">${isSell ? '📤 SATIŞ İLANI' : '📥 ALIM İLANI'}</span>
+            <span class="badge ${isCancelled ? 'badge-r' : 'badge-g'}">${isCancelled ? '❌ Pasif / Silindi' : '✅ Aktif'}</span>
+          </div>
+          <p class="text-[11px] font-bold text-white mt-1">👤 ${meta.user_name || 'Kullanıcı'} ${meta.telegram_user ? `(${meta.telegram_user})` : ''}</p>
+        </div>
+        <div class="text-right">
+          <p class="text-xs font-black text-white font-mono">${parseFloat(l.amount_crypto).toLocaleString()} ${l.coin}</p>
+          <p class="text-[10px] font-bold text-green-400 font-mono">Birim: ${parseFloat(l.unit_fiat_price).toFixed(2)} ${l.fiat_currency}</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-2 text-[10px] font-mono text-gray-400 bg-black/40 p-2 rounded-xl border border-white/5">
+        <span>Ağ: ${l.network}</span>
+        <span>Limit: ${(meta.min || 250).toLocaleString()} - ${(meta.max || 10000).toLocaleString()} ${l.coin}</span>
+        <span class="col-span-2 truncate">Ödeme: ${(meta.methods || []).join(' • ') || l.payment_method}</span>
+        ${meta.iban ? `<span class="col-span-2 text-green-300 truncate">IBAN: ${meta.iban} (${meta.holder})</span>` : ''}
+      </div>
+      <div class="flex justify-end gap-2 pt-1 border-t border-white/5">
+        <button onclick="adminEditListing('${l.trade_code}')" class="btn btn-c btn-sm"><i class="fas fa-pen"></i>Fiyat/Havuz Düzenle</button>
+        <button onclick="adminDeleteListing('${l.trade_code}')" class="btn btn-r btn-sm"><i class="fas fa-trash"></i>İlanı Sil</button>
+      </div>
+    `;
+    box.appendChild(card);
+  });
 }
 
-// REAL-TIME SUPABASE CLOUD CHAT ENGINE WITH CYBEREX LOGO BRANDING
+async function adminEditListing(code) {
+  const l = userListings.find(x => x.trade_code === code);
+  if (!l) return;
+  const newPrice = prompt(`[${code}] Yeni Birim Fiyat giriniz (${l.fiat_currency}):`, l.unit_fiat_price);
+  if (!newPrice || isNaN(newPrice)) return;
+  const newPool = prompt(`[${code}] Yeni Havuz Miktarı giriniz (${l.coin}):`, l.amount_crypto);
+  if (!newPool || isNaN(newPool)) return;
+
+  const meta = parseMetaFromNotes(l.admin_notes);
+  meta.unit_fiat_price = parseFloat(newPrice);
+  const updatedNotes = `|| META:::${JSON.stringify(meta)}`;
+
+  try {
+    await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=eq.${code}`, {
+      method: 'PATCH',
+      headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        unit_fiat_price: parseFloat(newPrice),
+        amount_crypto: parseFloat(newPool),
+        amount_fiat: parseFloat(newPrice) * parseFloat(newPool),
+        admin_notes: updatedNotes
+      })
+    });
+    toast('✅ İlan bilgileri başarıyla güncellendi!', 'g');
+    addLog(`✏️ İlan #${code} admin tarafından güncellendi: ${newPrice} ${l.fiat_currency}`);
+    loadAll();
+  } catch (e) {
+    toast('⛔ Güncelleme hatası!', 'r');
+  }
+}
+
+async function adminDeleteListing(code) {
+  if (!confirm(`[${code}] nolu ilanı silmek istediğinizden emin misiniz?`)) return;
+  try {
+    await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=eq.${code}`, {
+      method: 'PATCH',
+      headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'cancelled' })
+    });
+    toast('🗑️ İlan yayından kaldırıldı.', 'y');
+    addLog(`🗑️ İlan #${code} admin tarafından silindi.`);
+    loadAll();
+  } catch (_) {
+    toast('⛔ Silme hatası!', 'r');
+  }
+}
+
+function parseMetaFromNotes(notesStr) {
+  if (!notesStr) return {};
+  if (notesStr.includes('|| META:::')) {
+    try {
+      const part = notesStr.split('|| META:::')[1].split('|| CHAT_LOG:::')[0];
+      return JSON.parse(part.trim()) || {};
+    } catch (_) {}
+  }
+  return {};
+}
+
 function parseChatFromNotes(notesStr) {
   if (!notesStr) return [];
   if (notesStr.includes('|| CHAT_LOG:::')) {
@@ -625,51 +577,101 @@ function parseChatFromNotes(notesStr) {
 
 function parseAdminNoteOnly(notesStr) {
   if (!notesStr) return '';
-  if (notesStr.includes('|| CHAT_LOG:::')) {
-    return notesStr.split('|| CHAT_LOG:::')[0].trim();
-  }
-  return notesStr.trim();
+  let s = notesStr;
+  if (s.includes('|| META:::')) s = s.split('|| META:::')[0];
+  if (s.includes('|| CHAT_LOG:::')) s = s.split('|| CHAT_LOG:::')[0];
+  return s.trim();
 }
 
-function encodeChatIntoNotes(cleanNote, messages) {
-  const notePart = cleanNote ? cleanNote.trim() : '';
-  return `${notePart} || CHAT_LOG:::${JSON.stringify(messages)}`;
+function encodeNotesFull(cleanNote, metaObj, messages) {
+  let out = cleanNote ? cleanNote.trim() : '';
+  if (metaObj && Object.keys(metaObj).length) {
+    out += ` || META:::${JSON.stringify(metaObj)}`;
+  }
+  if (messages && messages.length) {
+    out += ` || CHAT_LOG:::${JSON.stringify(messages)}`;
+  }
+  return out;
+}
+
+// DETAIL MODAL
+function openDetail(t) {
+  detailTrade = t;
+  const sm = STATUS_META[t.status] || { label:'Bilinmiyor', color:'#888', badge:'badge-y', icon:'fa-question' };
+  const meta = parseMetaFromNotes(t.admin_notes);
+  const isBuy = (meta.type === 'buy' || t.type === 'buy') || (!meta.type && !t.type && t.buyer_wallet_address && !t.buyer_wallet_address.startsWith('TYK8z'));
+  const userName = meta.user_name || t.user_name || 'Kullanıcı';
+  const tgHandle = meta.telegram_user || t.telegram_user || '';
+  const counterParty = meta.seller || t.seller || 'CyberEx Official';
+  const unitPrice = parseFloat(meta.unit_fiat_price || t.unit_fiat_price || (t.amount_fiat / t.amount_crypto) || 47.93).toFixed(2);
+
+  document.getElementById('md-code').innerText = t.trade_code;
+  document.getElementById('md-status-row').innerHTML = `<span class="badge ${sm.badge}"><i class="fas ${sm.icon} mr-1"></i>${sm.label}</span><span class="badge ${isBuy?'badge-g':'badge-o'}">${isBuy?'📥 ALIM':'📤 SATIŞ'}</span>`;
+  document.getElementById('md-user').innerText = userName;
+
+  const tgBtn = document.getElementById('md-tg-btn');
+  if (tgHandle) {
+    tgBtn.classList.remove('hidden');
+    tgBtn.href = `https://t.me/${tgHandle.replace('@','')}`;
+    tgBtn.innerText = tgHandle;
+  } else {
+    tgBtn.classList.add('hidden');
+  }
+
+  document.getElementById('md-seller').innerText = counterParty;
+  document.getElementById('md-type').innerHTML = isBuy ? '<span class="text-green-400 font-bold">KRİPTO ALIM (Kullanıcı TL öder)</span>' : '<span class="text-orange-400 font-bold">KRİPTO SATIŞ (Kullanıcı kripto gönderir)</span>';
+  document.getElementById('md-net').innerText = t.network || 'TRC20';
+  document.getElementById('md-unit-price').innerText = `1 ${t.coin} = ${unitPrice} ${t.fiat_currency || 'TRY'}`;
+  document.getElementById('md-crypto').innerText = `${parseFloat(t.amount_crypto).toLocaleString()} ${t.coin}`;
+  document.getElementById('md-fiat').innerText = `${parseFloat(t.amount_fiat).toLocaleString('tr-TR', { minimumFractionDigits: 2 })} ${t.fiat_currency || 'TRY'}`;
+
+  const targetEl = document.getElementById('md-target');
+  if (isBuy) {
+    targetEl.innerHTML = `👛 <b>Alıcı Cüzdanı:</b> ${meta.user_wallet_to_receive || t.buyer_wallet_address || '—'}<br>🏦 <b>Ödeme Yapılan Banka:</b> ${meta.bank_name || 'Ziraat Bankası (Onurcan Demir)'}`;
+  } else {
+    targetEl.innerHTML = `🏦 <b>Kullanıcı IBAN:</b> ${meta.user_payout_iban || t.user_payout_iban || '—'} (${meta.user_payout_holder || t.user_payout_holder || '—'})<br>🔒 <b>Escrow Emanet Adresi:</b> ${t.buyer_wallet_address || 'TYK8zXN8vK2rW9qP4mZ7bC5vL1xY3sA6tD'}`;
+  }
+
+  // Proof
+  const proofVal = document.getElementById('md-proof-val');
+  if (t.payment_proof_url) {
+    proofVal.innerHTML = `<a href="${t.payment_proof_url}" target="_blank" class="text-cyan-400 font-bold hover:underline flex items-center gap-1.5"><i class="fas fa-file-image"></i>Dekontu Yeni Sekmede Görüntüle / İndir</a>`;
+  } else if (t.tx_hash) {
+    proofVal.innerHTML = `<span class="text-green-400 font-mono">TXID: ${t.tx_hash}</span>`;
+  } else {
+    proofVal.innerText = 'Henüz dekont / TXID kanıtı yüklenmedi.';
+  }
+
+  document.getElementById('md-created').innerText = t.created_at ? new Date(t.created_at).toLocaleString('tr-TR') : '—';
+  document.getElementById('md-note').value = parseAdminNoteOnly(t.admin_notes);
+
+  renderTimeline(t);
+  renderAdminChat();
+  document.getElementById('modal-detail').classList.remove('hidden');
+}
+
+function closeDetailModal() {
+  document.getElementById('modal-detail').classList.add('hidden');
+  detailTrade = null;
 }
 
 function renderAdminChat() {
   if (!detailTrade) return;
   const box = document.getElementById('admin-chat-messages');
-  const cloudMsgs = parseChatFromNotes(detailTrade.admin_notes);
-  const localChats = JSON.parse(localStorage.getItem('cx_chat_messages') || '{}');
-  const localMsgs = localChats[detailTrade.trade_code] || [];
-  
-  // Merge and deduplicate
-  const combined = [...cloudMsgs];
-  localMsgs.forEach(lm => {
-    if (!combined.some(cm => cm.text === lm.text && cm.sender === lm.sender)) {
-      combined.push(lm);
-    }
-  });
-
-  const finalMsgs = combined.length ? combined : [
-    { sender: 'System', text: '🔒 Smart Escrow oturumu başlatıldı. Karşı taraf ve CyberEx Destek ekibi bu kanalı izlemektedir.', time: detailTrade.created_at || '12:00' }
-  ];
-
-  box.innerHTML = finalMsgs.map(m => {
-    const isAdm = m.sender === 'Admin' || m.sender === 'Destek' || m.sender === 'Destek/Admin' || m.sender.includes('CyberEx Destek');
-    const isSys = m.sender === 'System';
-    if (isSys) {
-      return `<div class="text-center text-[9px] text-gray-500 my-1 font-mono">${m.text}</div>`;
-    }
+  const msgs = parseChatFromNotes(detailTrade.admin_notes);
+  if (!msgs.length) {
+    box.innerHTML = '<p class="text-center text-gray-500 text-[10px] my-auto">Bu sipariş için henüz sohbet mesajı yok.</p>';
+    return;
+  }
+  box.innerHTML = msgs.map(m => {
+    const isAdm = m.sender.includes('CyberEx Destek') || m.sender === 'Admin';
     return `
-      <div class="p-2 ${isAdm ? 'bubble-admin' : 'bubble-user'} max-w-[88%]">
+      <div class="p-1.5 ${isAdm ? 'chat-adm' : 'chat-user'} max-w-[85%]">
         <div class="flex justify-between items-center gap-2 mb-0.5 text-[8px] font-bold">
-          <span class="${isAdm ? 'text-yellow-400 flex items-center gap-1' : 'text-cyan-400 flex items-center gap-1'}">
-            ${isAdm ? '<img src="cyberex-logo.png" class="w-3 h-3 object-contain inline-block"> CyberEx Destek' : '<i class="fas fa-user text-[9px]"></i> ' + (m.sender || 'Kullanıcı')}
-          </span>
+          <span class="${isAdm ? 'text-yellow-400' : 'text-cyan-300'}">${m.sender}</span>
           <span class="text-gray-400 font-mono text-[7px]">${m.time}</span>
         </div>
-        <p class="text-[10px] text-white leading-relaxed font-sans">${m.text}</p>
+        <p class="text-[10px] text-white leading-tight font-sans">${m.text}</p>
       </div>
     `;
   }).join('');
@@ -683,18 +685,17 @@ async function sendAdminChatMessage() {
   if (!txt) return;
 
   const curMsgs = parseChatFromNotes(detailTrade.admin_notes);
-  const newMsg = {
+  curMsgs.push({
     sender: 'CyberEx Destek',
     text: txt,
     time: new Date().toLocaleTimeString('tr-TR', { hour:'2-digit', minute:'2-digit' })
-  };
-  curMsgs.push(newMsg);
+  });
 
   const cleanNote = parseAdminNoteOnly(detailTrade.admin_notes);
-  const encoded = encodeChatIntoNotes(cleanNote, curMsgs);
+  const curMeta = parseMetaFromNotes(detailTrade.admin_notes);
+  const encoded = encodeNotesFull(cleanNote, curMeta, curMsgs);
   detailTrade.admin_notes = encoded;
 
-  // Save to Supabase
   try {
     await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=eq.${detailTrade.trade_code}`, {
       method: 'PATCH',
@@ -703,172 +704,83 @@ async function sendAdminChatMessage() {
     });
   } catch (_) {}
 
-  // Cache locally
-  const localChats = JSON.parse(localStorage.getItem('cx_chat_messages') || '{}');
-  localChats[detailTrade.trade_code] = curMsgs;
-  localStorage.setItem('cx_chat_messages', JSON.stringify(localChats));
-
   inp.value = '';
   renderAdminChat();
-
-  sendTGMsg(`💬 <b>CyberEx Destek MESAJ GÖNDERDİ (#${detailTrade.trade_code})</b>
-
-🛡️ <b>CyberEx Destek:</b> "${txt}"`, false);
+  sendTGMsg(`💬 <b>CyberEx Destek MESAJ GÖNDERDİ (#${detailTrade.trade_code})</b>\n\n🛡️ <b>CyberEx Destek:</b> "${txt}"`, false);
 }
 
 function renderTimeline(t) {
   const box = document.getElementById('md-timeline');
-  const logs = (t._logs || []);
-  const base = [
-    { color:'#00ff88', text:`İşlem oluşturuldu — ${t.created_at||'—'} (${t.type==='buy'?'Alım':'Satış'}: ${t.amount_crypto} ${t.coin})` }
+  const items = [
+    { color:'#00ff88', text:`İşlem oluşturuldu — ${t.created_at ? new Date(t.created_at).toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'}) : '—'}` }
   ];
-  if (t.status === 'proof_uploaded' || t.status === 'completed' || t.status === 'cancelled') {
-    base.push({ color:'#00f0ff', text:'Kullanıcı ödeme/transfer kanıtı yükledi.' });
-  }
-  if (t.status === 'completed') {
-    base.push({ color:'#00ff88', text:'✅ Admin tarafından ONAYLANDI — Transfer tamamlandı.' });
-  }
-  if (t.status === 'cancelled') {
-    base.push({ color:'#ff4d4d', text:'❌ İşlem iptal edildi.' });
-  }
-  const all = [...base, ...logs.map(l => ({ color:'#b464ff', text:l }))];
-  box.innerHTML = all.map(item => `
-    <div class="flex items-start gap-2.5">
-      <div class="timeline-dot mt-1" style="background:${item.color};box-shadow:0 0 6px ${item.color}55"></div>
-      <p class="text-gray-300 text-[10px] leading-relaxed">${item.text}</p>
-    </div>
-  `).join('<div class="ml-1.5 border-l border-white/10 h-2.5"></div>');
+  if (t.status === 'proof_uploaded' || t.status === 'completed') items.push({ color:'#00f0ff', text:'Kullanıcı ödeme/transfer kanıtı yükledi.' });
+  if (t.status === 'completed') items.push({ color:'#00ff88', text:'✅ Admin tarafından ONAYLANDI — Kripto/TL teslim edildi.' });
+  if (t.status === 'cancelled') items.push({ color:'#ff4d4d', text:'❌ İşlem iptal edildi.' });
+  box.innerHTML = items.map(i => `<div class="flex items-center gap-2 py-0.5"><div class="timeline-dot" style="background:${i.color}"></div><span class="text-gray-300">${i.text}</span></div>`).join('');
 }
-
 
 async function saveAdminNoteOnly() {
   if (!detailTrade) return;
   const note = document.getElementById('md-note').value.trim();
-  if (!note) { toast('Lütfen bir not yazınız.', 'r'); return; }
-  
-  detailTrade.admin_notes = note;
-  try {
-    await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=eq.${detailTrade.trade_code}`, {
-      method: 'PATCH',
-      headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ admin_notes: note })
-    });
-  } catch (_) {}
-
-  const local = JSON.parse(localStorage.getItem('cx_trades') || '[]');
-  const idx = local.findIndex(x => x.trade_code === detailTrade.trade_code);
-  if (idx !== -1) { local[idx].admin_notes = note; localStorage.setItem('cx_trades', JSON.stringify(local)); }
-  
-  sendTGMsg(`📝 <b>ADMİN NOTU EKLENDİ (#${detailTrade.trade_code})</b>\n\n📌 "${note}"`);
-  toast('💾 Yönetici notu kaydedildi & kullanıcıya iletildi!', 'g');
-}
-
-function closeDetailModal() {
-  document.getElementById('modal-detail').classList.add('hidden');
-  detailTrade = null;
-}
-
-function toggleEditSection() {
-  const s = document.getElementById('md-edit-section');
-  s.classList.toggle('hidden');
-}
-
-async function actionApprove() {
-  if (!detailTrade) return;
-  const note = document.getElementById('md-note').value.trim() || 'Admin tarafından onaylandı.';
-  await updateTradeStatus(detailTrade, 'completed', `✅ ONAYLANDI — ${note}`);
-  sendTGMsg(`✅ <b>ONAYLANDI!</b>\n\n📋 <code>${detailTrade.trade_code}</code>\n💰 ${detailTrade.amount_crypto} ${detailTrade.coin}\n💵 ${detailTrade.amount_fiat} ${detailTrade.fiat_currency}\n📝 Not: ${note}`);
-  closeDetailModal(); loadAll(); toast('✅ İşlem başarıyla onaylandı!', 'g');
-}
-
-async function actionReject() {
-  if (!detailTrade) return;
-  const note = document.getElementById('md-note').value.trim() || 'Ödeme doğrulanamadı.';
-  await updateTradeStatus(detailTrade, 'cancelled', `❌ REDDEDİLDİ — ${note}`);
-  sendTGMsg(`❌ <b>REDDEDİLDİ</b>\n\n📋 <code>${detailTrade.trade_code}</code>\n📝 Sebep: ${note}`);
-  closeDetailModal(); loadAll(); toast('❌ İşlem reddedildi.', 'r');
-}
-
-async function actionUndo() {
-  if (!detailTrade) return;
-  const note = document.getElementById('md-note').value.trim() || 'Admin geri aldı, işlem yeniden inceleniyor.';
-  await updateTradeStatus(detailTrade, 'pending_payment', `↩ GERİ ALINDI — ${note}`);
-  sendTGMsg(`↩ <b>İŞLEM GERİ ALINDI / YENİDEN AÇILDI</b>\n\n📋 <code>${detailTrade.trade_code}</code>\n📝 Not: ${note}`);
-  closeDetailModal(); loadAll(); toast('↩ İşlem pending\'e geri alındı.', 'y');
-}
-
-async function actionCancel() {
-  if (!detailTrade) return;
-  const note = document.getElementById('md-note').value.trim() || 'Admin tarafından iptal edildi.';
-  if (!confirm(`"${detailTrade.trade_code}" işlemini iptal etmek istiyor musunuz?`)) return;
-  await updateTradeStatus(detailTrade, 'cancelled', `🚫 ADMİN İPTALİ — ${note}`);
-  sendTGMsg(`🚫 <b>ADMİN TARAFINDAN İPTAL EDİLDİ</b>\n\n📋 <code>${detailTrade.trade_code}</code>\n📝 Sebep: ${note}`);
-  closeDetailModal(); loadAll(); toast('🚫 İşlem iptal edildi.', 'r');
-}
-
-async function saveEditedTrade() {
-  if (!detailTrade) return;
-  const newStatus = document.getElementById('edit-status').value;
-  const newCrypto = parseFloat(document.getElementById('edit-crypto').value) || detailTrade.amount_crypto;
-  const newFiat   = parseFloat(document.getElementById('edit-fiat').value) || detailTrade.amount_fiat;
-  const newNet    = document.getElementById('edit-net').value;
-  const isBuy     = detailTrade.type === 'buy';
-  const newWallet = isBuy ? document.getElementById('edit-wallet').value : null;
-  const newIban   = !isBuy ? document.getElementById('edit-iban').value : null;
-  const newHolder = !isBuy ? document.getElementById('edit-holder').value : null;
-
-  const patch = {
-    status: newStatus,
-    amount_crypto: newCrypto,
-    amount_fiat: newFiat,
-    network: newNet,
-    ...(newWallet ? { buyer_wallet_address: newWallet } : {}),
-    ...(newIban ? { user_payout_iban: newIban } : {}),
-    ...(newHolder ? { user_payout_holder: newHolder } : {})
-  };
+  const curMeta = parseMetaFromNotes(detailTrade.admin_notes);
+  const curMsgs = parseChatFromNotes(detailTrade.admin_notes);
+  const encoded = encodeNotesFull(note, curMeta, curMsgs);
+  detailTrade.admin_notes = encoded;
 
   try {
     await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=eq.${detailTrade.trade_code}`, {
       method: 'PATCH',
       headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify(patch)
+      body: JSON.stringify({ admin_notes: encoded })
     });
-  } catch (_) {}
-
-  const local = JSON.parse(localStorage.getItem('cx_trades') || '[]');
-  const idx = local.findIndex(x => x.trade_code === detailTrade.trade_code);
-  if (idx !== -1) { Object.assign(local[idx], patch); localStorage.setItem('cx_trades', JSON.stringify(local)); }
-  Object.assign(detailTrade, patch);
-
-  const logMsg = `🛠 DÜZENLENDİ: ${detailTrade.trade_code} → Durum:${newStatus} | Kripto:${newCrypto} | Fiat:${newFiat} | Ağ:${newNet}`;
-  addLog(logMsg);
-  renderTimeline(detailTrade);
-  document.getElementById('md-status-row').innerHTML = `<span class="badge ${(STATUS_META[newStatus]||{badge:'badge-y'}).badge}">${(STATUS_META[newStatus]||{label:'?'}).label}</span>`;
-  document.getElementById('md-edit-section').classList.add('hidden');
-  toast('🛠 İşlem başarıyla düzenlendi!', 'c');
-  loadAll();
+    toast('✅ Yönetici notu kullanıcıya iletildi.', 'g');
+    addLog(`📝 #${detailTrade.trade_code} için not güncellendi.`);
+  } catch (_) {
+    toast('⛔ Kayıt hatası!', 'r');
+  }
 }
 
-async function updateTradeStatus(t, newStatus, logEntry) {
+async function updateTradeStatus(t, newStatus, logMsg) {
+  t.status = newStatus;
   try {
     await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=eq.${t.trade_code}`, {
       method: 'PATCH',
       headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status: newStatus })
+      body: JSON.stringify({ status: newStatus, completed_at: newStatus === 'completed' ? new Date().toISOString() : null })
     });
   } catch (_) {}
+  addLog(logMsg);
+}
 
-  const local = JSON.parse(localStorage.getItem('cx_trades') || '[]');
-  const idx = local.findIndex(x => x.trade_code === t.trade_code);
-  if (idx !== -1) {
-    local[idx].status = newStatus;
-    if (newStatus === 'completed') local[idx].step = 4;
-    if (newStatus === 'cancelled') local[idx].step = 0;
-    if (newStatus === 'pending_payment') local[idx].step = 2;
-    localStorage.setItem('cx_trades', JSON.stringify(local));
-  }
-  t.status = newStatus;
-  addLog(`${logEntry} [${t.trade_code}]`);
+async function approveTradeModal() {
+  if (!detailTrade) return;
+  await updateTradeStatus(detailTrade, 'completed', `✅ ONAYLANDI: #${detailTrade.trade_code} (${detailTrade.amount_crypto} ${detailTrade.coin})`);
+  toast('✅ İşlem onaylandı ve tamamlandı!', 'g');
+  closeDetailModal();
+  loadAll();
+}
+
+async function rejectTradeModal() {
+  if (!detailTrade) return;
+  const reason = prompt('Reddetme sebebini girin (Kullanıcıya iletilir):', 'Ödeme dekontu teyit edilemedi.');
+  if (!reason) return;
+  const curMeta = parseMetaFromNotes(detailTrade.admin_notes);
+  const curMsgs = parseChatFromNotes(detailTrade.admin_notes);
+  detailTrade.admin_notes = encodeNotesFull(`Yönetici Reddi: ${reason}`, curMeta, curMsgs);
+  await updateTradeStatus(detailTrade, 'cancelled', `❌ REDDEDİLDİ: #${detailTrade.trade_code} (${reason})`);
+  toast('❌ İşlem reddedildi.', 'r');
+  closeDetailModal();
+  loadAll();
+}
+
+async function cancelTradeModal() {
+  if (!detailTrade) return;
+  if (!confirm('İşlemi iptal etmek istiyor musunuz?')) return;
+  await updateTradeStatus(detailTrade, 'cancelled', `🚫 İPTAL EDİLDİ: #${detailTrade.trade_code}`);
+  toast('🚫 İşlem iptal edildi.', 'r');
+  closeDetailModal();
+  loadAll();
 }
 
 function toggleSelect(code, checked) {
@@ -876,17 +788,51 @@ function toggleSelect(code, checked) {
 }
 
 async function bulkApproveSelected() {
-  if (!selectedIds.size) { toast('Önce işlemleri seçin (checkbox).', 'r'); return; }
+  if (!selectedIds.size) { toast('Lütfen en az bir işlem seçin.', 'y'); return; }
   if (!confirm(`${selectedIds.size} işlemi toplu onaylamak istiyor musunuz?`)) return;
   for (const code of selectedIds) {
     const t = allTrades.find(x => x.trade_code === code);
     if (t && t.status !== 'completed' && t.status !== 'cancelled') {
-      await updateTradeStatus(t, 'completed', `✅ TOPLU ONAY [${code}]`);
+      await updateTradeStatus(t, 'completed', `✅ TOPLU ONAY: #${code}`);
     }
   }
   selectedIds.clear();
   loadAll();
-  toast(`✅ ${selectedIds.size || 'Seçili'} işlem toplu onaylandı!`, 'g');
+  toast('✅ Seçilen işlemler toplu onaylandı!', 'g');
+}
+
+function exportCSV() {
+  const rows = [['Kod','Kullanıcı','Satıcı','Tür','Coin','Miktar','Kur','Tutar','Durum','Zaman']];
+  allTrades.forEach(t => {
+    const meta = parseMetaFromNotes(t.admin_notes);
+    rows.push([t.trade_code, meta.user_name || t.user_name || '', meta.seller || t.seller || '', meta.type || t.type || '', t.coin, t.amount_crypto, meta.unit_fiat_price || t.unit_fiat_price || '', t.amount_fiat, t.status, t.created_at]);
+  });
+  const csvContent = 'data:text/csv;charset=utf-8,' + rows.map(e => e.join(',')).join('\n');
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement('a');
+  link.setAttribute('href', encodedUri);
+  link.setAttribute('download', `cyberex_p2p_trades_${Date.now()}.csv`);
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+}
+
+function addLog(msg) {
+  const entry = { time: new Date().toLocaleTimeString('tr-TR'), msg };
+  actionLogs.unshift(entry);
+  if (actionLogs.length > 200) actionLogs.pop();
+  localStorage.setItem('cx_admin_logs', JSON.stringify(actionLogs));
+}
+
+function renderLog() {
+  const box = document.getElementById('log-box');
+  if (!actionLogs.length) { box.innerHTML = '<p class="text-gray-500 text-center py-4">Henüz admin aksiyonu kaydedilmedi.</p>'; return; }
+  box.innerHTML = actionLogs.slice(0, 60).map(l =>
+    `<div class="flex items-start gap-2 py-1 border-b border-white/5 last:border-0">
+      <span class="text-cyan-400 w-20 flex-shrink-0">${l.time}</span>
+      <span class="text-gray-300">${l.msg}</span>
+    </div>`
+  ).join('');
 }
 
 async function sendTGMsg(text, isExplicit = false) {
@@ -898,10 +844,10 @@ async function sendTGMsg(text, isExplicit = false) {
     });
     const data = await res.json();
     if (data.ok) {
-      if (isExplicit) toast('📢 Telegram bildirimi başarıyla iletildi!', 'g');
+      if (isExplicit) toast('📢 Telegram bildirimi iletildi!', 'g');
       return true;
     } else {
-      if (isExplicit) toast('⚠️ Telegram API: ' + (data.description || 'İletilemedi'), 'r');
+      if (isExplicit) toast('⚠️ Telegram: ' + (data.description || 'İletilemedi'), 'r');
       return false;
     }
   } catch (err) {
@@ -910,54 +856,14 @@ async function sendTGMsg(text, isExplicit = false) {
   }
 }
 
-async function sendTelegramAlert() {
-  if (!detailTrade) { toast('Açık bir işlem bulunamadı.', 'r'); return; }
-  const t = detailTrade;
-  const sm = STATUS_META[t.status] || { label:'?' };
-  const note = (document.getElementById('md-note').value || t.admin_notes || '').trim();
-  const isBuy = t.type === 'buy';
-  
-  const msg = `📢 <b>CYBEREX ADMİN BİLDİRİMİ (#${t.trade_code})</b>\n\n` +
-              `👤 <b>Kullanıcı:</b> ${t.user_name || 'Kullanıcı'}\n` +
-              `📊 <b>Tür / Durum:</b> ${isBuy ? '📥 Kripto Alım' : '📤 Kripto Satış'} — <b>${sm.label}</b>\n` +
-              `💰 <b>Miktar:</b> ${t.amount_crypto} ${t.coin} (${t.network || 'TRC20'})\n` +
-              `💵 <b>Tutar:</b> ${parseFloat(t.amount_fiat).toLocaleString('tr-TR')} ${t.fiat_currency}\n` +
-              (isBuy ? `👛 <b>Alıcı Cüzdan:</b> <code>${t.buyer_wallet_address || t.user_wallet_to_receive || '—'}</code>\n` : `🏦 <b>Kullanıcı IBAN:</b> <code>${t.user_payout_iban || '—'}</code> (${t.user_payout_holder || '—'})\n`) +
-              (t.tx_hash ? `🔗 <b>TXID:</b> <code>${t.tx_hash}</code>\n` : '') +
-              (note ? `📝 <b>Yönetici Notu:</b> ${note}\n` : '') +
-              `\n⚡ Yönetici ID: ${ADMIN_CID} | Tarih: ${new Date().toLocaleTimeString('tr-TR')}`;
-
-  await sendTGMsg(msg);
-}
-
-function exportCSV() {
-  const list = filtered(currentTab === 'log' ? 'all' : currentTab);
-  const rows = [['Kod','Kullanıcı','Satıcı','Tür','Coin','Ağ','Kripto','Fiat','Para Birimi','Durum','Tarih','Cüzdan/IBAN']];
-  list.forEach(t => rows.push([
-    t.trade_code, t.user_name || '', t.seller || '', t.type, t.coin, t.network,
-    t.amount_crypto, t.amount_fiat, t.fiat_currency, t.status, t.created_at,
-    t.type === 'buy' ? (t.buyer_wallet_address || '') : (t.user_payout_iban || '')
-  ]));
-  const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
-  const a = Object.assign(document.createElement('a'), { href:'data:text/csv;charset=utf-8,\uFEFF' + encodeURIComponent(csv), download:`cyberex_p2p_${Date.now()}.csv` });
-  a.click();
-  toast('📄 CSV dosyası indirildi!', 'p');
-}
-
-function addLog(msg) {
-  const now = new Date().toLocaleString('tr-TR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit', second:'2-digit' });
-  actionLogs.push({ time: now, msg });
-  localStorage.setItem('cx_admin_logs', JSON.stringify(actionLogs.slice(-500)));
-  document.getElementById('c-log').innerText = actionLogs.length;
-}
-
 function toast(msg, type='c') {
-  const colors = { c:'text-cyan-400 border-cyan-400/50', g:'text-green-400 border-green-400/50', r:'text-red-400 border-red-400/50', y:'text-yellow-400 border-yellow-400/50', p:'text-purple-400 border-purple-400/50' };
+  const colors = { c:'text-cyan-400 border-cyan-400/50', g:'text-green-400 border-green-400/50', r:'text-red-400 border-red-400/50', y:'text-yellow-400 border-yellow-400/50' };
+  const box = document.getElementById('toast-box');
   const el = document.createElement('div');
-  el.className = `pointer-events-auto bg-black/95 border ${colors[type]||colors.c} text-[11px] font-bold px-4 py-2 rounded-xl backdrop-blur-sm shadow-2xl transition-all`;
+  el.className = `glass px-4 py-2.5 rounded-xl text-xs font-bold ${colors[type]||colors.c} border shadow-2xl pointer-events-auto`;
   el.textContent = msg;
-  document.getElementById('toast-box').appendChild(el);
-  setTimeout(() => el.remove(), 3500);
+  box.appendChild(el);
+  setTimeout(() => el.remove(), 3200);
 }
 
 setInterval(loadAll, 5000);
