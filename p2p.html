@@ -81,6 +81,14 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
 .tier-official-cyberex { border: 2px solid rgba(0, 255, 136, 0.7) !important; box-shadow: 0 0 22px rgba(0, 255, 136, 0.3), inset 0 0 15px rgba(0, 255, 136, 0.08); background: radial-gradient(circle at top right, rgba(0, 255, 136, 0.12), rgba(0, 12, 30, 0.95)); }
 
 .avatar-initial { width: 38px; height: 38px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.95rem; color: #000510; border: 1px solid rgba(255,255,255,0.2); flex-shrink: 0; }
+
+/* Custom Coin Select Dropdown */
+.custom-select-btn { background: rgba(0, 10, 26, 0.92); border: 1px solid rgba(0, 240, 255, 0.22); color: #fff; border-radius: 12px; padding: 7px 10px; font-size: 0.78rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.custom-select-btn:hover { border-color: #00f0ff; }
+.custom-dropdown-menu { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: #000c1e; border: 1px solid rgba(0, 240, 255, 0.35); border-radius: 14px; padding: 4px; z-index: 80; box-shadow: 0 10px 25px rgba(0,0,0,0.8); display: none; }
+.custom-dropdown-menu.active { display: block; animation: fadeIn 0.15s ease-out; }
+.dropdown-item { padding: 8px 10px; border-radius: 9px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.78rem; font-weight: 700; transition: background 0.15s; }
+.dropdown-item:hover { background: rgba(0, 240, 255, 0.12); color: #00f0ff; }
 </style>
 </head>
 <body>
@@ -124,7 +132,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
     </form>
 
     <div class="pt-2 border-t border-white/5 flex justify-between items-center text-[9px] font-mono text-gray-500">
-      <span>CyberEx OTC Protocol</span>
+      <a href="p2p-admin.html" class="text-yellow-400 hover:underline">🔐 Admin Paneli</a>
       <a href="index.html" class="text-cyan-400 hover:underline">← Ana Sayfa</a>
     </div>
   </div>
@@ -159,6 +167,9 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
       <button onclick="openWalletModal()" class="btn-c px-2.5 py-1.5 text-[9px] font-black uppercase tracking-wider flex items-center gap-1 shadow-md">
         <i class="fas fa-wallet text-[10px]"></i><span id="hdr-w-label">CÜZDAN</span>
       </button>
+      <a href="p2p-admin.html" title="P2P Admin Paneli" class="w-7 h-7 rounded-lg bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 flex items-center justify-center hover:bg-yellow-500/20 text-xs">
+        <i class="fas fa-user-shield"></i>
+      </a>
       <button onclick="lockGatekeeper()" title="Çıkış Yap / Kilitle" class="w-7 h-7 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 flex items-center justify-center hover:bg-red-500/20 text-xs">
         <i class="fas fa-lock"></i>
       </button>
@@ -313,7 +324,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
   </section>
 
   <!-- ========================================== -->
-  <!--  PANEL 2: TRADE (160+ İLAN VE TİCARET)     -->
+  <!--  PANEL 2: TRADE (CUSTOM LOGO SELECTOR)     -->
   <!-- ========================================== -->
   <section id="panel-trade" class="panel space-y-3">
 
@@ -346,16 +357,47 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
         <input type="text" id="inp-search" oninput="renderListings()" placeholder="Onurcan Demir, CyberEx, FAST, Papara..." class="pl-8 text-[11px] py-1.5">
       </div>
 
-      <!-- Coin, Currency & Payment Filter -->
+      <!-- Coin, Currency & Payment Filter with Real Logos -->
       <div class="grid grid-cols-3 gap-1.5">
-        <select id="sel-coin" onchange="renderListings()" class="font-bold text-[10px] py-1.5 px-2">
-          <option value="USDT">USDT</option>
-          <option value="BTC">BTC</option>
-          <option value="ETH">ETH</option>
-          <option value="BNB">BNB</option>
-          <option value="TRX">TRX</option>
-          <option value="SOL">SOL</option>
-        </select>
+        
+        <!-- Custom Coin Dropdown with REAL LOGOS -->
+        <div class="relative">
+          <button type="button" id="coin-dropdown-btn" onclick="toggleCoinDropdown()" class="custom-select-btn w-full">
+            <div class="flex items-center gap-1.5 truncate">
+              <img id="selected-coin-icon" src="assets/USDT.png" onerror="this.src='cyberex-logo.png'" class="w-4 h-4 rounded-full flex-shrink-0">
+              <span id="selected-coin-text" class="text-[11px] font-mono font-bold">USDT</span>
+            </div>
+            <i class="fas fa-chevron-down text-[9px] text-gray-400"></i>
+          </button>
+          
+          <div id="coin-dropdown-menu" class="custom-dropdown-menu">
+            <div class="dropdown-item" onclick="selectCoin('USDT', 'assets/USDT.png')">
+              <img src="assets/USDT.png" onerror="this.src='cyberex-logo.png'" class="w-4 h-4 rounded-full">
+              <span>USDT (Tether)</span>
+            </div>
+            <div class="dropdown-item" onclick="selectCoin('BTC', 'assets/btc.png')">
+              <img src="assets/btc.png" onerror="this.src='cyberex-logo.png'" class="w-4 h-4 rounded-full">
+              <span>BTC (Bitcoin)</span>
+            </div>
+            <div class="dropdown-item" onclick="selectCoin('ETH', 'assets/ethereum-logo.svg')">
+              <img src="assets/ethereum-logo.svg" onerror="this.src='cyberex-logo.png'" class="w-4 h-4 rounded-full">
+              <span>ETH (Ethereum)</span>
+            </div>
+            <div class="dropdown-item" onclick="selectCoin('BNB', 'assets/bnb-bnb-logo.svg')">
+              <img src="assets/bnb-bnb-logo.svg" onerror="this.src='cyberex-logo.png'" class="w-4 h-4 rounded-full">
+              <span>BNB (Binance)</span>
+            </div>
+            <div class="dropdown-item" onclick="selectCoin('TRX', 'assets/tron-trx-logo.svg')">
+              <img src="assets/tron-trx-logo.svg" onerror="this.src='cyberex-logo.png'" class="w-4 h-4 rounded-full">
+              <span>TRX (Tron)</span>
+            </div>
+            <div class="dropdown-item" onclick="selectCoin('SOL', 'assets/solana-sol-logo.svg')">
+              <img src="assets/solana-sol-logo.svg" onerror="this.src='cyberex-logo.png'" class="w-4 h-4 rounded-full">
+              <span>SOL (Solana)</span>
+            </div>
+          </div>
+          <input type="hidden" id="sel-coin" value="USDT">
+        </div>
 
         <select id="sel-fiat" onchange="renderListings()" class="font-bold text-[10px] py-1.5 px-2">
           <option value="TRY">TRY (₺ TL)</option>
@@ -985,6 +1027,13 @@ const AVATAR_GRADIENTS = [
   ['#7FFF00', '#228B22']
 ];
 
+// IMMUTABLE USER ID (TG User ID or Persistent Device ID)
+let persistentUserId = localStorage.getItem('cx_persistent_user_id');
+if (!persistentUserId) {
+  persistentUserId = 'cx_user_' + Math.random().toString(36).substr(2, 9);
+  localStorage.setItem('cx_persistent_user_id', persistentUserId);
+}
+
 // STATE
 const app = {
   mode: 'buy', // 'buy' -> Buying crypto, 'sell' -> Selling crypto
@@ -1003,6 +1052,7 @@ const app = {
     TRX_USD: 0.245,
     SOL_USD: 184.0
   },
+  userId: persistentUserId,
   user: JSON.parse(localStorage.getItem('cx_user_profile') || '{"name":"CyberEx Kullanıcısı","avatarGrad":0,"trades":0,"volume":0}'),
   wallet: { addr: null, provider: null, chainId: null, ethBal: 0, usdtBal: 0, rawProvider: null },
   activeListing: null,
@@ -1012,6 +1062,29 @@ const app = {
   myListings: JSON.parse(localStorage.getItem('cx_mylistings') || '[]'),
   activityEvents: []
 };
+
+// CUSTOM COIN DROPDOWN
+function toggleCoinDropdown() {
+  const menu = document.getElementById('coin-dropdown-menu');
+  menu.classList.toggle('active');
+}
+
+function selectCoin(coin, iconSrc) {
+  document.getElementById('sel-coin').value = coin;
+  document.getElementById('selected-coin-text').innerText = coin;
+  document.getElementById('selected-coin-icon').src = iconSrc;
+  document.getElementById('coin-dropdown-menu').classList.remove('active');
+  renderListings();
+}
+
+// Close dropdown on outside click
+document.addEventListener('click', function(e) {
+  const btn = document.getElementById('coin-dropdown-btn');
+  const menu = document.getElementById('coin-dropdown-menu');
+  if (btn && menu && !btn.contains(e.target) && !menu.contains(e.target)) {
+    menu.classList.remove('active');
+  }
+});
 
 // GATEKEEPER PASSCODE AUTH
 function verifyGatekeeper(e) {
@@ -1454,6 +1527,8 @@ async function submitOrder() {
 
   const trade = {
     trade_code: code,
+    user_id: app.userId,
+    user_name: app.user.name,
     seller: app.activeListing.name,
     coin: app.activeListing.coin,
     network: network,
@@ -1501,7 +1576,7 @@ async function submitOrder() {
   try {
     const adminMsg = `🔔 <b>YENİ P2P ESCROW SİPARİŞİ (${isBuy ? 'ALIM' : 'SATIŞ'})</b>\n\n` +
       `📋 <b>Sipariş:</b> <code>${code}</code>\n` +
-      `👤 <b>Kullanıcı:</b> ${app.user.name}\n` +
+      `👤 <b>Kullanıcı:</b> ${app.user.name} (ID: ${app.userId})\n` +
       `🏪 <b>Satıcı/Karşı Taraf:</b> ${trade.seller} ${isOD ? '👑 (Özel Hesap)' : ''}\n` +
       `🌐 <b>Ağ:</b> ${trade.network}\n` +
       `💰 <b>Miktar:</b> ${crypto} ${trade.coin}\n` +
@@ -1688,7 +1763,6 @@ function cancelActiveOrder() {
     renderActiveTrades();
     renderHistory();
 
-    // Supabase update
     try {
       fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=eq.${app.activeTrade.trade_code}`, {
         method: 'PATCH',
@@ -1730,7 +1804,7 @@ async function uploadProof(input) {
     const isBuy = app.activeTrade.type === 'buy';
     const proofMsg = `📨 <b>${isBuy ? 'ÖDEME DEKONTU' : 'KRİPTO TRANSFER KANITI'} İLETİLDİ — ONAY BEKLİYOR!</b>\n\n` +
       `📋 <b>Sipariş:</b> <code>${app.activeTrade.trade_code}</code>\n` +
-      `👤 <b>Kullanıcı:</b> ${app.user.name}\n` +
+      `👤 <b>Kullanıcı:</b> ${app.user.name} (ID: ${app.userId})\n` +
       `🏪 <b>Satıcı/Alıcı:</b> ${app.activeTrade.seller}\n` +
       `💰 <b>Miktar:</b> ${app.activeTrade.amount_crypto} ${app.activeTrade.coin}\n` +
       `💵 <b>Tutar:</b> ${app.activeTrade.amount_fiat.toLocaleString('tr-TR')} ${app.activeTrade.fiat_currency}\n` +
@@ -2140,6 +2214,11 @@ if (window.Telegram?.WebApp) {
   twa.ready(); twa.expand();
   const u = twa.initDataUnsafe?.user;
   if (u) {
+    // Immutable TG user id
+    if (u.id) {
+      app.userId = 'tg_' + u.id;
+      localStorage.setItem('cx_persistent_user_id', app.userId);
+    }
     app.user.name = u.username ? '@'+u.username : (u.first_name + (u.last_name?' '+u.last_name:''));
     document.getElementById('u-name').innerText = app.user.name;
     document.getElementById('u-avatar').innerText = (u.first_name||'C')[0].toUpperCase();
