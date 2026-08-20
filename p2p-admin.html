@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>CyberEx P2P — Admin Paneli</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; }
+body { background: #000a1c; color: #e8f0ff; font-family: 'Inter', sans-serif; overflow-x: hidden; padding-bottom: 30px; }
+.glass { background: rgba(0, 14, 34, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(0, 240, 255, 0.18); border-radius: 16px; }
+.glass:hover { border-color: rgba(0, 240, 255, 0.35); }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.pulse { animation: pulse 1.8s infinite; }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 25%, 75% { transform: translateX(-8px); } 50% { transform: translateX(8px); } }
+.shake { animation: shake 0.4s ease; }
+.badge { font-size: 0.6rem; font-weight: 700; padding: 2px 8px; border-radius: 99px; }
+.badge-g { background: rgba(0, 255, 136, 0.12); color: #00ff88; border: 1px solid rgba(0, 255, 136, 0.3); }
+.badge-y { background: rgba(255, 179, 0, 0.12); color: #FFB300; border: 1px solid rgba(255, 179, 0, 0.3); }
+.badge-r { background: rgba(255, 77, 77, 0.12); color: #ff4d4d; border: 1px solid rgba(255, 77, 77, 0.3); }
+.badge-c { background: rgba(0, 240, 255, 0.12); color: #00f0ff; border: 1px solid rgba(0, 240, 255, 0.3); }
+.btn-g { background: linear-gradient(135deg, #00ff88, #00b060); color: #000510; font-weight: 900; border: none; cursor: pointer; transition: all 0.2s; border-radius: 12px; }
+.btn-g:hover { opacity: 0.92; transform: scale(1.01); }
+.btn-r { background: linear-gradient(135deg, #ff4d4d, #cc0000); color: #fff; font-weight: 900; border: none; cursor: pointer; transition: all 0.2s; border-radius: 12px; }
+.btn-r:hover { opacity: 0.92; transform: scale(1.01); }
+.btn-c { background: linear-gradient(135deg, #00f0ff, #0072ff); color: #000510; font-weight: 900; border: none; cursor: pointer; transition: all 0.2s; border-radius: 12px; }
+input { background: rgba(0, 10, 26, 0.9); border: 1px solid rgba(0, 240, 255, 0.22); color: #fff; border-radius: 12px; padding: 10px 14px; width: 100%; font-size: 0.82rem; outline: none; transition: all 0.2s; font-family: 'JetBrains Mono', monospace; }
+input:focus { border-color: #00f0ff; box-shadow: 0 0 12px rgba(0, 240, 255, 0.2); }
+.tab-active { color: #00f0ff; border-bottom: 2px solid #00f0ff; }
+</style>
+</head>
+<body>
+
+<!-- ADMIN GATEKEEPER -->
+<div id="adm-gate" class="fixed inset-0 z-[999] bg-[#000a1c] flex items-center justify-center p-4">
+  <div class="glass w-full max-w-xs p-7 text-center space-y-4" id="adm-gate-box">
+    <div class="w-14 h-14 rounded-2xl border border-red-400/30 bg-red-400/10 flex items-center justify-center mx-auto text-red-400 text-2xl">
+      <i class="fas fa-user-shield"></i>
+    </div>
+    <div>
+      <h2 class="text-base font-black text-white tracking-wider">P2P ADMİN PANELİ</h2>
+      <p class="text-[10px] font-mono text-gray-400 mt-1">@soulflyss Yönetici Girişi</p>
+    </div>
+    <form onsubmit="verifyAdmin(event)" class="space-y-3 text-left">
+      <div class="relative">
+        <i class="fas fa-lock absolute left-3 top-3.5 text-red-400/50 text-xs"></i>
+        <input type="password" id="adm-pass" placeholder="Admin Şifresi..." class="pl-9 font-mono font-bold text-sm" required autocomplete="off">
+      </div>
+      <p id="adm-err" class="text-[10px] text-red-400 font-bold hidden text-center">⛔ Hatalı şifre!</p>
+      <button type="submit" class="btn-r w-full py-3.5 text-sm font-black uppercase tracking-widest">
+        <i class="fas fa-key mr-2"></i>ADMİN GİRİŞİ
+      </button>
+    </form>
+    <div class="flex justify-between text-[9px] font-mono text-gray-500 pt-2 border-t border-white/5">
+      <span>CyberEx P2P Admin v7</span>
+      <a href="p2p.html" class="text-cyan-400 hover:underline">← P2P Platforma Dön</a>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL MAIN -->
+<div id="admin-panel" class="hidden">
+  <header class="glass sticky top-0 z-50 px-5 py-3 flex justify-between items-center rounded-none border-t-0 border-x-0 border-b border-cyan-400/20" style="backdrop-filter:blur(24px);background:rgba(0,5,16,0.95)">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-red-400/10 border border-red-400/30 flex items-center justify-center text-red-400 text-sm">
+        <i class="fas fa-user-shield"></i>
+      </div>
+      <div>
+        <p class="text-xs font-black text-white tracking-wider">CYBEREX P2P — ADMİN PANELİ</p>
+        <p class="text-[8px] text-gray-400 font-mono">@soulflyss Yönetici Konsolu</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-1.5">
+        <span class="w-2 h-2 rounded-full bg-green-400 pulse"></span>
+        <span class="text-[9px] text-green-400 font-bold font-mono">CANLI</span>
+      </div>
+      <span class="text-[9px] text-gray-500 font-mono" id="last-refresh">—</span>
+      <button onclick="loadAll()" class="btn-c px-3 py-1.5 text-[10px] font-black flex items-center gap-1.5"><i class="fas fa-rotate"></i>Yenile</button>
+      <button onclick="adminLock()" class="w-8 h-8 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 flex items-center justify-center hover:bg-red-500/20 text-sm"><i class="fas fa-lock"></i></button>
+    </div>
+  </header>
+
+  <!-- STATS BAR -->
+  <div class="max-w-4xl mx-auto px-4 pt-5 grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
+    <div class="glass p-4 text-center">
+      <p class="text-[8px] text-gray-400 uppercase font-bold mb-1">TOPLAM İŞLEM</p>
+      <p class="text-2xl font-black text-white font-mono" id="stat-total">0</p>
+    </div>
+    <div class="glass p-4 text-center border-yellow-400/30">
+      <p class="text-[8px] text-yellow-400 uppercase font-bold mb-1">ONAY BEKLİYOR</p>
+      <p class="text-2xl font-black text-yellow-400 font-mono pulse" id="stat-pending">0</p>
+    </div>
+    <div class="glass p-4 text-center border-green-400/30">
+      <p class="text-[8px] text-green-400 uppercase font-bold mb-1">ONAYLANDI</p>
+      <p class="text-2xl font-black text-green-400 font-mono" id="stat-done">0</p>
+    </div>
+    <div class="glass p-4 text-center border-cyan-400/30">
+      <p class="text-[8px] text-cyan-400 uppercase font-bold mb-1">TOPLAM HACİM</p>
+      <p class="text-xl font-black text-cyan-400 font-mono" id="stat-vol">$0</p>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="max-w-4xl mx-auto px-4">
+    <div class="flex border-b border-white/10 mb-5 gap-6 text-sm font-bold">
+      <button onclick="showTab('pending')" id="tab-pending" class="py-2 tab-active text-[11px] font-black uppercase tracking-wider">⏳ Onay Bekleyenler</button>
+      <button onclick="showTab('all')" id="tab-all" class="py-2 text-gray-400 hover:text-white text-[11px] font-black uppercase tracking-wider">📋 Tüm İşlemler</button>
+      <button onclick="showTab('completed')" id="tab-completed" class="py-2 text-gray-400 hover:text-white text-[11px] font-black uppercase tracking-wider">✅ Tamamlananlar</button>
+    </div>
+
+    <!-- PENDING TAB -->
+    <div id="tab-content-pending" class="space-y-3">
+      <div id="pending-box" class="space-y-3">
+        <div class="glass py-12 text-center text-gray-500">
+          <i class="fas fa-rotate fa-spin text-3xl text-cyan-400/30 mb-3 block"></i>
+          <p class="text-xs">Veriler yükleniyor...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALL TAB -->
+    <div id="tab-content-all" class="hidden space-y-3">
+      <div class="glass p-3 flex gap-3 items-center">
+        <div class="relative flex-1"><i class="fas fa-search absolute left-3 top-3 text-gray-500 text-xs"></i><input type="text" id="all-search" oninput="renderAllTable()" placeholder="İşlem kodu, satıcı ara..." class="pl-8 text-xs py-2"></div>
+        <select id="all-status-filter" onchange="renderAllTable()" class="text-xs py-2 px-3 w-40" style="background:rgba(0,10,26,.9);border:1px solid rgba(0,240,255,.22);color:#fff;border-radius:12px;outline:none">
+          <option value="ALL">Tüm Durumlar</option>
+          <option value="pending_payment">Ödeme Bekleniyor</option>
+          <option value="proof_uploaded">Dekont Yüklendi</option>
+          <option value="completed">Tamamlandı</option>
+          <option value="cancelled">İptal Edildi</option>
+        </select>
+      </div>
+      <div id="all-box" class="space-y-3"></div>
+    </div>
+
+    <!-- COMPLETED TAB -->
+    <div id="tab-content-completed" class="hidden space-y-3">
+      <div id="completed-box" class="space-y-3"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SCRIPT -->
+<script>
+const SUPA_URL  = 'https://fkxynlctcbagfvpatzlb.supabase.co';
+const SUPA_KEY  = 'sb_publishable_eQK0Npo_3DnhQdZUAV5ZTw_SAj-zt_G';
+const BOT_TOKEN = '8078760711:AAFPhSfofYPeF3LSExVM7A9TinooXF3lH-o';
+const ADMIN_ID  = 6453665842;
+
+const ADMIN_PASSWORDS = ['admin1923', 'soulflyss', 'cyberexadmin', '1923', 'admin'];
+
+function verifyAdmin(e) {
+  e.preventDefault();
+  const p = (document.getElementById('adm-pass').value || '').trim();
+  if (ADMIN_PASSWORDS.includes(p.toLowerCase())) {
+    sessionStorage.setItem('cx_admin', '1');
+    document.getElementById('adm-gate').classList.add('hidden');
+    document.getElementById('admin-panel').classList.remove('hidden');
+    loadAll();
+  } else {
+    document.getElementById('adm-err').classList.remove('hidden');
+    const b = document.getElementById('adm-gate-box');
+    b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake');
+    setTimeout(() => document.getElementById('adm-err').classList.add('hidden'), 3000);
+  }
+}
+
+function adminLock() {
+  sessionStorage.removeItem('cx_admin');
+  document.getElementById('adm-gate').classList.remove('hidden');
+  document.getElementById('admin-panel').classList.add('hidden');
+}
+
+(function checkAdminAuth() {
+  if (sessionStorage.getItem('cx_admin') === '1') {
+    document.getElementById('adm-gate').classList.add('hidden');
+    document.getElementById('admin-panel').classList.remove('hidden');
+    loadAll();
+  }
+})();
+
+let allTrades = [];
+
+async function loadAll() {
+  document.getElementById('last-refresh').innerText = 'Yükleniyor...';
+  try {
+    const r = await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?order=id.desc&limit=200`, {
+      headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY }
+    });
+    if (r.ok) allTrades = await r.json(); else allTrades = [];
+  } catch(_) { allTrades = []; }
+
+  // Fallback localStorage
+  const local = JSON.parse(localStorage.getItem('cx_trades') || '[]');
+  const remoteCodes = new Set(allTrades.map(t => t.trade_code));
+  local.forEach(t => {
+    if (!remoteCodes.has(t.trade_code)) {
+      allTrades.push({
+        trade_code: t.trade_code,
+        coin: t.coin,
+        network: t.network,
+        amount_crypto: t.amount_crypto,
+        unit_fiat_price: t.unit_fiat_price,
+        amount_fiat: t.amount_fiat,
+        fiat_currency: t.fiat_currency,
+        buyer_wallet_address: t.buyer_wallet_address,
+        user_payout_iban: t.user_payout_iban,
+        user_payout_holder: t.user_payout_holder,
+        status: t.status,
+        created_at: t.createdAt,
+        type: t.type
+      });
+    }
+  });
+
+  updateStats();
+  renderPending();
+  renderAllTable();
+  renderCompleted();
+  document.getElementById('last-refresh').innerText = 'Son: ' + new Date().toLocaleTimeString('tr-TR', { hour:'2-digit', minute:'2-digit' });
+}
+
+function updateStats() {
+  document.getElementById('stat-total').innerText = allTrades.length;
+  document.getElementById('stat-pending').innerText = allTrades.filter(t => t.status === 'proof_uploaded' || t.status === 'pending_payment').length;
+  document.getElementById('stat-done').innerText = allTrades.filter(t => t.status === 'completed').length;
+  const vol = allTrades.reduce((s, t) => s + (parseFloat(t.amount_crypto) || 0), 0);
+  document.getElementById('stat-vol').innerText = '$' + Math.round(vol).toLocaleString('tr-TR');
+}
+
+function renderPending() {
+  const box = document.getElementById('pending-box');
+  const pending = allTrades.filter(t => t.status === 'proof_uploaded' || t.status === 'pending_payment');
+  if (!pending.length) {
+    box.innerHTML = '<div class="glass py-12 text-center text-gray-500"><i class="fas fa-check-circle text-4xl text-green-400/30 mb-3 block"></i><p class="text-sm font-bold">Onay bekleyen işlem bulunmuyor 🎉</p></div>';
+    return;
+  }
+  box.innerHTML = '';
+  pending.forEach(t => box.appendChild(makeCard(t, true)));
+}
+
+function renderAllTable() {
+  const box = document.getElementById('all-box');
+  const q = (document.getElementById('all-search')?.value || '').toLowerCase();
+  const sf = document.getElementById('all-status-filter')?.value || 'ALL';
+  let list = allTrades.filter(t => {
+    if (sf !== 'ALL' && t.status !== sf) return false;
+    if (q && !(t.trade_code || '').toLowerCase().includes(q)) return false;
+    return true;
+  });
+  box.innerHTML = '';
+  if (!list.length) { box.innerHTML = '<div class="glass py-8 text-center text-gray-500 text-xs">İşlem bulunamadı.</div>'; return; }
+  list.forEach(t => box.appendChild(makeCard(t, false)));
+}
+
+function renderCompleted() {
+  const box = document.getElementById('completed-box');
+  const done = allTrades.filter(t => t.status === 'completed');
+  box.innerHTML = '';
+  if (!done.length) { box.innerHTML = '<div class="glass py-10 text-center text-gray-500 text-xs">Tamamlanan işlem yok.</div>'; return; }
+  done.forEach(t => box.appendChild(makeCard(t, false)));
+}
+
+function makeCard(t, isPending) {
+  const stMap = {
+    pending_payment: ['⏳ ÖDEME BEKLİYOR', 'badge-y'],
+    proof_uploaded: ['📨 KANIT YÜKLENDİ (ONAYLA)', 'badge-c'],
+    completed: ['✅ TAMAMLANDI', 'badge-g'],
+    cancelled: ['❌ İPTAL EDİLDİ', 'badge-r']
+  };
+  const [sl, sc] = stMap[t.status] || ['BEKLEMEDE', 'badge-y'];
+  const card = document.createElement('div');
+  card.className = 'glass p-4 space-y-3';
+  const isBuy = t.type === 'buy';
+
+  card.innerHTML = `
+    <div class="flex justify-between items-start">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="text-sm font-black text-cyan-400 font-mono">${t.trade_code}</span>
+          <span class="badge ${sc}">${sl}</span>
+          <span class="text-[9px] text-gray-400 font-bold">${isBuy ? '📥 ALIM' : '📤 SATIŞ'}</span>
+        </div>
+        <p class="text-[8px] text-gray-400 font-mono mt-1">${t.created_at || '—'} • ${t.network || 'TRC20'}</p>
+      </div>
+      <div class="text-right">
+        <p class="text-base font-black text-white font-mono">${parseFloat(t.amount_crypto||0).toLocaleString()} ${t.coin||'USDT'}</p>
+        <p class="text-xs font-bold text-green-400 font-mono">${parseFloat(t.amount_fiat||0).toLocaleString('tr-TR', {maximumFractionDigits:0})} ${t.fiat_currency||'TRY'}</p>
+      </div>
+    </div>
+    <div class="text-xs bg-black/40 p-2 rounded-lg font-mono text-gray-300">
+      ${isBuy ? `Alıcı Cüzdan: <span class="text-cyan-400">${t.buyer_wallet_address||'—'}</span>` : `Kullanıcı IBAN: <span class="text-green-400">${t.user_payout_iban||'—'}</span> (${t.user_payout_holder||'—'})`}
+    </div>
+    ${isPending ? `
+      <div class="flex justify-end gap-2 pt-1 border-t border-white/5">
+        <button onclick="approveTrade('${t.trade_code}')" class="btn-g px-4 py-2 text-xs font-black"><i class="fas fa-check mr-1"></i>ONAYLA</button>
+        <button onclick="rejectTrade('${t.trade_code}')" class="btn-r px-4 py-2 text-xs font-black"><i class="fas fa-times mr-1"></i>REDDET</button>
+      </div>
+    ` : ''}
+  `;
+  return card;
+}
+
+function showTab(tab) {
+  ['pending', 'all', 'completed'].forEach(t => {
+    const btn = document.getElementById('tab-' + t);
+    const cont = document.getElementById('tab-content-' + t);
+    if (t === tab) { btn.className = 'py-2 tab-active text-[11px] font-black uppercase tracking-wider'; cont.classList.remove('hidden'); }
+    else { btn.className = 'py-2 text-gray-400 hover:text-white text-[11px] font-black uppercase tracking-wider'; cont.classList.add('hidden'); }
+  });
+}
+
+async function approveTrade(code) {
+  const t = allTrades.find(x => x.trade_code === code);
+  if (!t) return;
+  await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=eq.${code}`, {
+    method: 'PATCH',
+    headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status: 'completed' })
+  }).catch(()=>{});
+
+  t.status = 'completed';
+  const local = JSON.parse(localStorage.getItem('cx_trades') || '[]');
+  const lidx = local.findIndex(x => x.trade_code === code);
+  if (lidx !== -1) { local[lidx].status = 'completed'; local[lidx].step = 4; localStorage.setItem('cx_trades', JSON.stringify(local)); }
+
+  // Telegram alert
+  const msg = `✅ <b>P2P İŞLEMİ ONAYLANDI!</b>\n\n📋 Sipariş: <code>${code}</code>\n💰 ${t.amount_crypto} ${t.coin}\n💵 ${t.amount_fiat} ${t.fiat_currency}\n⚡ İşlem başarıyla tamamlandı.`;
+  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: ADMIN_ID, text: msg, parse_mode: 'HTML' })
+  }).catch(()=>{});
+
+  loadAll();
+}
+
+async function rejectTrade(code) {
+  const t = allTrades.find(x => x.trade_code === code);
+  if (!t) return;
+  await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=eq.${code}`, {
+    method: 'PATCH',
+    headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status: 'cancelled' })
+  }).catch(()=>{});
+
+  t.status = 'cancelled';
+  const local = JSON.parse(localStorage.getItem('cx_trades') || '[]');
+  const lidx = local.findIndex(x => x.trade_code === code);
+  if (lidx !== -1) { local[lidx].status = 'cancelled'; localStorage.setItem('cx_trades', JSON.stringify(local)); }
+
+  loadAll();
+}
+
+setInterval(loadAll, 20000);
+</script>
+</body>
+</html>
