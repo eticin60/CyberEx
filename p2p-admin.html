@@ -420,10 +420,8 @@ function renderTable(list) {
   }
   list.forEach(t => {
     const sm = STATUS_META[t.status] || { label:'Bilinmiyor', color:'#888', badge:'badge-y', icon:'fa-question' };
-    const meta = parseMetaFromNotes(t.admin_notes);
+    const { name: userName, tg: tgHandle, meta } = extractUserInfo(t);
     const isBuy = (meta.type === 'buy' || t.type === 'buy') || (!meta.type && !t.type && t.buyer_wallet_address && !t.buyer_wallet_address.startsWith('TYK8z'));
-    const userName = meta.user_name || t.user_name || 'Kullanıcı';
-    const tgHandle = meta.telegram_user || t.telegram_user || '';
     const counterParty = meta.seller || t.seller || 'CyberEx Official';
     const unitPrice = parseFloat(meta.unit_fiat_price || t.unit_fiat_price || (t.amount_fiat / t.amount_crypto) || 47.93).toFixed(2);
 
@@ -466,11 +464,38 @@ function renderTable(list) {
 function loadUserListings() {
   const box = document.getElementById('user-listings-box');
   box.innerHTML = '';
-  if (!userListings.length) {
+
+  // Merge Supabase + Local storage listings
+  const localListings = JSON.parse(localStorage.getItem('cx_listings') || '[]');
+  const combinedListings = [...userListings];
+  localListings.forEach(ll => {
+    if (!combinedListings.some(cl => cl.trade_code === ll.id || cl.trade_code === ll.trade_code)) {
+      const metaObj = {
+        is_listing: true,
+        type: ll.type,
+        user_name: ll.name || 'Kullanıcı',
+        telegram_user: ll.telegram_user || '',
+        min: ll.min, max: ll.max, methods: ll.methods, iban: ll.iban, holder: ll.holder,
+        unit_fiat_price: ll.price
+      };
+      combinedListings.push({
+        trade_code: ll.id || ('LIST-' + Date.now()),
+        coin: ll.coin,
+        network: ll.network,
+        amount_crypto: ll.pool,
+        unit_fiat_price: ll.price,
+        fiat_currency: ll.fiat || 'TRY',
+        status: ll.status || 'pending_payment',
+        admin_notes: `|| META:::${JSON.stringify(metaObj)}`
+      });
+    }
+  });
+
+  if (!combinedListings.length) {
     box.innerHTML = '<div class="glass py-12 text-center text-gray-500"><i class="fas fa-rectangle-list text-3xl text-cyan-400/20 mb-2 block"></i><p class="text-xs">Henüz kullanıcı ilanı bulunamadı.</p></div>';
     return;
   }
-  userListings.forEach(l => {
+  combinedListings.forEach(l => {
     const meta = parseMetaFromNotes(l.admin_notes);
     const isSell = meta.type === 'sell';
     const isCancelled = l.status === 'cancelled';
@@ -553,6 +578,37 @@ async function adminDeleteListing(code) {
   }
 }
 
+
+function extractUserInfo(t) {
+  const meta = parseMetaFromNotes(t.admin_notes);
+  const msgs = parseChatFromNotes(t.admin_notes);
+  
+  let name = meta.user_name || t.user_name || '';
+  let tg = meta.telegram_user || t.telegram_user || '';
+
+  // Extract from chat messages if real handle exists
+  const userMsg = msgs.find(m => m.sender && !m.sender.includes('CyberEx Destek') && m.sender !== 'Admin' && m.sender !== 'System');
+  if (userMsg && userMsg.sender) {
+    if (userMsg.sender.startsWith('@') && !tg) tg = userMsg.sender;
+    if ((!name || name === 'Kullanıcı' || name === '?') && userMsg.sender !== 'Kullanıcı') {
+      name = userMsg.sender;
+    }
+  }
+
+  // Extract from IBAN holder if name is generic
+  if ((!name || name === 'Kullanıcı' || name === '?') && meta.user_payout_holder && meta.user_payout_holder !== '—') {
+    name = meta.user_payout_holder;
+  }
+  if ((!name || name === 'Kullanıcı' || name === '?') && t.user_payout_holder && t.user_payout_holder !== '—') {
+    name = t.user_payout_holder;
+  }
+
+  if (!tg && name.startsWith('@')) tg = name;
+  if (!name) name = 'Kullanıcı';
+
+  return { name, tg, meta };
+}
+
 function parseMetaFromNotes(notesStr) {
   if (!notesStr) return {};
   if (notesStr.includes('|| META:::')) {
@@ -598,10 +654,8 @@ function encodeNotesFull(cleanNote, metaObj, messages) {
 function openDetail(t) {
   detailTrade = t;
   const sm = STATUS_META[t.status] || { label:'Bilinmiyor', color:'#888', badge:'badge-y', icon:'fa-question' };
-  const meta = parseMetaFromNotes(t.admin_notes);
+  const { name: userName, tg: tgHandle, meta } = extractUserInfo(t);
   const isBuy = (meta.type === 'buy' || t.type === 'buy') || (!meta.type && !t.type && t.buyer_wallet_address && !t.buyer_wallet_address.startsWith('TYK8z'));
-  const userName = meta.user_name || t.user_name || 'Kullanıcı';
-  const tgHandle = meta.telegram_user || t.telegram_user || '';
   const counterParty = meta.seller || t.seller || 'CyberEx Official';
   const unitPrice = parseFloat(meta.unit_fiat_price || t.unit_fiat_price || (t.amount_fiat / t.amount_crypto) || 47.93).toFixed(2);
 
@@ -613,7 +667,7 @@ function openDetail(t) {
   if (tgHandle) {
     tgBtn.classList.remove('hidden');
     tgBtn.href = `https://t.me/${tgHandle.replace('@','')}`;
-    tgBtn.innerText = tgHandle;
+    tgBtn.innerHTML = `<i class="fab fa-telegram mr-1"></i>${tgHandle}`;
   } else {
     tgBtn.classList.add('hidden');
   }
