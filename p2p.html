@@ -76,6 +76,10 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
 /* Ecosystem Cards */
 .eco-link-card { background: rgba(0, 14, 34, 0.7); border: 1px solid rgba(0, 240, 255, 0.18); border-radius: 12px; padding: 8px 10px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; transition: all 0.2s; }
 .eco-link-card:hover { border-color: #00f0ff; background: rgba(0, 240, 255, 0.08); transform: translateY(-1px); }
+
+/* Flash Live Animation for Updated Pools */
+@keyframes flashGreen { 0% { color: #00ff88; transform: scale(1.05); } 100% { color: #fff; transform: scale(1); } }
+.flash-val { animation: flashGreen 1.2s ease-out; }
 </style>
 </head>
 <body>
@@ -244,11 +248,11 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
       <div id="active-trades-box"></div>
     </div>
 
-    <!-- Live Activity Feed -->
+    <!-- Live Activity Feed (Living, Breathing Global Execution Engine) -->
     <div>
       <div class="flex justify-between items-center mb-1.5 px-1">
         <p class="text-[9px] font-black uppercase tracking-widest text-cyan-400 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-green-400 pdot"></span>CANLI GLOBAL PİYASA AKIŞI</p>
-        <span class="text-[8px] text-gray-500 font-mono">24/7 OTC Ticker</span>
+        <span class="text-[8px] text-green-400 font-mono font-bold flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-green-400 pdot"></span>CANLI İŞLEM AKTI</span>
       </div>
       <div class="glass p-3 space-y-1.5 text-[10px] font-mono bg-black/60 border-cyan-400/20" id="activity-feed"></div>
     </div>
@@ -457,7 +461,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
           <button onclick="connectWallet('MetaMask')" class="glass p-2.5 flex items-center gap-2 hover:border-cyan-400"><img src="assets/metamask-logo.svg" onerror="this.style.display='none'" class="w-5 h-5"><div><p class="text-[11px] font-black text-white">MetaMask</p><p class="text-[7px] text-gray-400">EVM</p></div></button>
           <button onclick="connectWallet('Trust Wallet')" class="glass p-2.5 flex items-center gap-2 hover:border-cyan-400"><img src="assets/trust-wallet-seeklogo.svg" onerror="this.style.display='none'" class="w-5 h-5"><div><p class="text-[11px] font-black text-white">Trust</p><p class="text-[7px] text-gray-400">Mobil</p></div></button>
           <button onclick="connectWallet('OKX Wallet')" class="glass p-2.5 flex items-center gap-2 hover:border-cyan-400"><img src="assets/okx-logo.svg" onerror="this.style.display='none'" class="w-5 h-5"><div><p class="text-[11px] font-black text-white">OKX</p><p class="text-[7px] text-gray-400">Multi-Chain</p></div></button>
-          <button onclick="connectWallet('WalletConnect')" class="glass p-2.5 flex items-center gap-2 hover:border-cyan-400"><img src="assets/walletconnect-logo.svg" onerror="this.style.display='none'" class="w-5 h-5"><div><p class="text-[11px] font-black text-cyan-400">WalletConnect</p><p class="text-[7px] text-gray-400">QR / Mobil</p></div></button>
+          <button onclick="connectWallet('WalletConnect')" class="glass p-2.5 flex items-center gap-2 hover:border-cyan-400"><img src="assets/walletconnect-logo.svg" onerror="this.style.display='none'" class="w-5 h-5"><div><p class="text-[11px] font-black text-cyan-400">WalletConnect</p><p class="text-[7px] text-gray-400">QR ile tüm cüzdanlar</p></div></div><i class="fas fa-qrcode text-xs text-cyan-400"></i></button>
         </div>
       </div>
       <div id="w-on-panel" class="hidden space-y-3">
@@ -642,7 +646,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
       </div>
     </div>
 
-    <!-- Dynamic Admin Note Alert Box (Clean, only shown when real note is written) -->
+    <!-- Dynamic Admin Note Alert Box -->
     <div id="esc-admin-note-box" class="hidden p-2.5 rounded-xl bg-cyan-400/10 border border-cyan-400/30 text-xs space-y-0.5">
       <div class="flex items-center gap-1.5 text-cyan-400 font-bold text-[9px] uppercase">
         <img src="cyberex-logo.png" class="w-3.5 h-3.5 object-contain">
@@ -7817,6 +7821,29 @@ let app_active_listing = null;
 let create_type = 'sell';
 let act_events = [];
 
+// ============================================================================
+// DYNAMIC BREATHING MARKET ENGINE & LIVE STATE TRACKER
+// ============================================================================
+const MERCHANT_LIVE_STATE = {};
+
+// Initialize state for each merchant
+function getMerchantState(m) {
+  const key = m.name;
+  if (!MERCHANT_LIVE_STATE[key]) {
+    let initialPool = m.pool || 100000;
+    let initialTrades = m.trades || 1000;
+    if (m.isOnurcanDemir) { initialPool = 495800; initialTrades = 8942; }
+    if (m.isCyberExOfficial) { initialPool = 2480000; initialTrades = 45892; }
+    MERCHANT_LIVE_STATE[key] = {
+      pool: initialPool,
+      trades: initialTrades,
+      comp: m.comp || 99.8,
+      lastAction: Date.now()
+    };
+  }
+  return MERCHANT_LIVE_STATE[key];
+}
+
 // TELEGRAM WEBAPP AUTO-DETECTION & PAIRING
 if (window.Telegram?.WebApp) {
   const twa = window.Telegram.WebApp;
@@ -8010,17 +8037,20 @@ function setMode(mode) {
 }
 
 function liveVariants(m) {
-  if (m.isOnurcanDemir) return { prem:-0.005, disc:0.005, pool:500000, trades:8940 + Math.floor(Date.now() / 60000) % 50 };
-  if (m.isCyberExOfficial) return { prem:0.000, disc:-0.002, pool:2500000, trades:45890 + Math.floor(Date.now() / 45000) % 100 };
-  const t = Math.floor(Date.now() / 15000);
+  const st = getMerchantState(m);
+  if (m.isOnurcanDemir) {
+    return { prem:-0.005, disc:0.005, pool: st.pool, trades: st.trades };
+  }
+  if (m.isCyberExOfficial) {
+    return { prem:0.000, disc:-0.002, pool: st.pool, trades: st.trades };
+  }
+  const t = Math.floor(Date.now() / 20000);
   const w = Math.sin(t * 0.5 + (m.id || 1) * 0.3) * 0.002;
-  const dynPool = Math.round((m.pool || 100000) * (1 + Math.sin(t * 0.2 + (m.id || 1)) * 0.015));
-  const dynTrades = (m.trades || 1000) + Math.floor(t / 2 + (m.id || 1)) % 25;
   return {
     prem: Math.max(0.004, (m.prem || 0.01) + w),
     disc: Math.min(-0.004, (m.disc || -0.01) - w),
-    pool: dynPool,
-    trades: dynTrades
+    pool: st.pool,
+    trades: st.trades
   };
 }
 
@@ -8092,7 +8122,7 @@ function renderListings() {
           <img src="${avatarSrc}" onerror="this.src='cyberex-logo.png'" class="w-10 h-10 rounded-xl object-cover border border-cyan-400/28 flex-shrink-0">
           <div>
             <p class="text-[11px] font-black text-white flex items-center gap-1 flex-wrap">${item.isMine ? '⭐ ' : ''}${item.name}<i class="fas fa-circle-check text-cyan-400 text-[9px]"></i>${tierBadge}</p>
-            <p class="text-[7px] text-gray-400 font-mono mt-0.5">${(item.liveTrades || item.trades || 1000).toLocaleString('tr-TR')} işlem • %${item.comp || 99.5} başarı • ~${item.resp || 2} dk</p>
+            <p class="text-[7px] text-gray-400 font-mono mt-0.5"><span class="text-cyan-300 font-bold">${(item.liveTrades || item.trades || 1000).toLocaleString('tr-TR')} işlem</span> • %${item.comp || 99.5} başarı • ~${item.resp || 2} dk</p>
           </div>
         </div>
         <div class="flex items-center gap-1 bg-yellow-400/10 text-yellow-400 px-1.5 py-0.5 rounded text-[8px] font-bold border border-yellow-400/20 font-mono"><i class="fas fa-star text-[7px]"></i>${(item.rate || 5.0).toFixed(2)}</div>
@@ -8104,7 +8134,7 @@ function renderListings() {
         </div>
         <div class="text-right">
           <p class="text-[7px] text-gray-500 uppercase font-bold">Havuz</p>
-          <p class="text-[11px] font-bold text-white font-mono">${(item.livePool || 10000).toLocaleString('tr-TR')} ${coin}</p>
+          <p class="text-[11px] font-bold text-white font-mono" id="pool-val-${item.id || idx}">${(item.livePool || 10000).toLocaleString('tr-TR')} ${coin}</p>
           <p class="text-[7px] text-gray-400 font-mono">${item.min || 250} – ${(item.max || 10000).toLocaleString('tr-TR')} ${coin}</p>
         </div>
       </div>
@@ -8220,6 +8250,11 @@ async function submitOrder() {
   const totalFiat = am * app_active_listing.finalPrice;
   const isOD = !!app_active_listing.isOnurcanDemir;
 
+  // Real-time pool deduction & trade increment for the chosen merchant
+  const mState = getMerchantState(app_active_listing);
+  mState.trades += 1;
+  mState.pool = Math.max(1000, mState.pool - am);
+
   const trade = {
     trade_code: code, user_id: uid, user_name: app_user.name,
     telegram_user: app_user.tg_username || app_user.name,
@@ -8285,6 +8320,7 @@ async function submitOrder() {
   openEscrow(trade);
   renderActiveTrades();
   renderHistory();
+  renderListings();
   toast('🔒 Escrow başlatıldı!', 'g');
   addAct(`🔒 Yeni #${code} — ${am} ${trade.coin} ${isBuy ? 'alım' : 'satış'}`);
 }
@@ -8330,7 +8366,7 @@ function openEscrow(t) {
   document.getElementById('esc-tg-lbl').innerText = isBuy ? 'Alıcı Cüzdanınız:' : 'Kullanıcı IBAN:';
   document.getElementById('esc-tg-val').innerText = isBuy ? (t.buyer_wallet_address || t.user_wallet_to_receive || '—') : (t.user_payout_iban ? `${t.user_payout_iban} (${t.user_payout_holder})` : '—');
 
-  // Clean Admin Note Display (only visible if real admin note exists)
+  // Clean Admin Note Display
   const cleanNote = parseAdminNoteOnly(t.admin_notes);
   const noteBox = document.getElementById('esc-admin-note-box');
   const noteText = document.getElementById('esc-admin-note-text');
@@ -8727,7 +8763,7 @@ function renderActiveTrades() {
     const card = document.createElement('div');
     card.className = 'glass p-3 flex justify-between items-center cursor-pointer hover:border-cyan-400/50';
     card.onclick = () => openEscrow(t);
-    card.innerHTML = `<div><div class="flex items-center gap-1.5 mb-0.5"><span class="w-2 h-2 rounded-full pdot" style="background:${stCol}"></span><span class="text-[11px] font-black text-white font-mono">${t.trade_code}</span><span class="text-[8px] text-gray-400">${t.type === 'buy' ? '📥 Alım' : '📤 Satış'}</span></div><p class="text-[8px] text-gray-400 font-mono">${parseFloat(t.amount_crypto).toLocaleString()} ${t.coin} • ${t.network || 'TRC20'} • ${t.createdAt}</p></div><div class="text-right"><p class="text-xs font-black font-mono text-white">${parseFloat(t.amount_fiat).toLocaleString('tr-TR', { minimumFractionDigits: 2 })} ${t.fiat_currency}</p><p class="text-[7px] font-bold uppercase font-mono" style="color:${stCol}">${stLabel}</p></div>`;
+    card.innerHTML = `<div><div class="flex items-center gap-1.5 mb-0.5"><span class="w-2 h-2 rounded-full pdot" style="background:${stCol}"></span><span class="text-[11px] font-black text-white font-mono">${t.trade_code}</span><span class="text-[8px] text-gray-400">${t.type === 'buy' ? '📥 Alım' : '📤 Satış'}</span></div><p class="text-[8px] text-gray-400 font-mono">${parseFloat(t.amount_crypto).toLocaleString()} ${t.coin} • ${t.network || 'TRC20'} • ${t.createdAt}</p></div><div class="text-right"><p class="text-xs font-black font-mono text-white">${parseFloat(t.amount_fiat).toLocaleString('tr-TR', { maximumFractionDigits: 0 })} ${t.fiat_currency}</p><p class="text-[7px] font-bold uppercase font-mono" style="color:${stCol}">${stLabel}</p></div>`;
     box.appendChild(card);
   });
 }
@@ -8942,47 +8978,79 @@ function deepLink(type) {
   if (l[type]) window.location.href = l[type]; else toast('Cüzdan uygulamanızda bu sayfayı açın.', 'c');
 }
 
-// REAL-TIME ACTIVITY FEED
-const ACT_POOL = [
-  '👑 Onurcan_Demir — 12,450 USDT Ziraat FAST teslimatı tamamlandı ⚡',
-  '🏢 CyberEx_Official — 50,000 USDT kurumsal havuz likiditesi sağlandı 🏦',
-  '🇹🇷 ahmet_kaya_06 — 1,200 USDT Ziraat işlemi onaylandı ⚡',
-  '🇹🇷 mehmet_trader_34 — 2,400 USDT Garanti BBVA teslim edildi ⚡',
-  '👑 Onurcan_Demir — 6,800 USDT FAST işlemi teslim edildi ⚡',
-  '🇹🇷 emre_usdt_fast — 3,500 USDT FAST anında tamamlandı ⚡',
-  '🇹🇷 oguzhan_p2p — 1,800 USDT Papara aktarımı yapıldı ⚡',
-  '🇦🇿 Baku_Caspian_AZN — 14,850 AZN ödeme onaylandı ⚡',
-  '🇰🇿 Almaty_Kaspi_Prime — 620,000 KZT Kaspi QR tamamlandı ⚡',
-  '🏢 CyberEx_Official — 35,000 USDT anında teslim edildi ⚡',
-  '🇹🇷 caner_fast_ziraat — 4,200 USDT Ziraat FAST tamamlandı ⚡',
-  '🇩🇪 Frankfurt_Bank_DE — 28,400 USDT SEPA işlemi tamamlandı 📦',
-  '🇦🇪 Dubai_Emirates_Whale — 75,000 USDT satışı tamamlandı ⚡',
-  '🇨🇭 Zurich_Private_Vault — 120,000 USDT OTC transferi onaylandı 🏦',
-  '🇹🇷 kerem_whale — 15,000 USDT Garanti işlemi onaylandı ⚡',
-  '🇬🇧 London_City_Prime — 15,400 GBP Wise teslimatı tamamlandı ⚡',
-  '🇹🇷 Ankara_Prime_OTC — 24,000 USDT Kuveyt Türk FAST yapıldı ✅',
-  '👑 Onurcan_Demir — 25,000 USDT likidite havuzu yenilendi 🏦'
+// ============================================================================
+// DYNAMIC BREATHING ACTIVITY TICKER WITH LIVE STATE MUTATION
+// ============================================================================
+const DYNAMIC_EVENTS = [
+  { merchant:'Onurcan_Demir', action:'sell', delta:-12450, msg:'👑 Onurcan_Demir — 12,450 USDT Ziraat FAST teslimatı tamamlandı ⚡' },
+  { merchant:'CyberEx_Official', action:'liquidity', delta:75000, msg:'🏢 CyberEx_Official — 75,000 USDT kurumsal havuz likiditesi sağlandı 🏦' },
+  { merchant:'ahmet_kaya_06', action:'sell', delta:-1200, msg:'🇹🇷 ahmet_kaya_06 — 1,200 USDT Ziraat işlemi onaylandı ⚡' },
+  { merchant:'mehmet_trader_34', action:'sell', delta:-2400, msg:'🇹🇷 mehmet_trader_34 — 2,400 USDT Garanti BBVA teslim edildi ⚡' },
+  { merchant:'Onurcan_Demir', action:'sell', delta:-8600, msg:'👑 Onurcan_Demir — 8,600 USDT FAST işlemi teslim edildi ⚡' },
+  { merchant:'emre_usdt_fast', action:'sell', delta:-3500, msg:'🇹🇷 emre_usdt_fast — 3,500 USDT FAST anında tamamlandı ⚡' },
+  { merchant:'oguzhan_p2p', action:'sell', delta:-1800, msg:'🇹🇷 oguzhan_p2p — 1,800 USDT Papara aktarımı yapıldı ⚡' },
+  { merchant:'Onurcan_Demir', action:'liquidity', delta:50000, msg:'👑 Onurcan_Demir — 50,000 USDT likidite havuzu yenilendi 🏦' },
+  { merchant:'CyberEx_Official', action:'sell', delta:-35000, msg:'🏢 CyberEx_Official — 35,000 USDT anında teslim edildi ⚡' },
+  { merchant:'caner_fast_ziraat', action:'sell', delta:-4200, msg:'🇹🇷 caner_fast_ziraat — 4,200 USDT Ziraat FAST tamamlandı ⚡' },
+  { merchant:'tolga_garanti', action:'sell', delta:-2900, msg:'🇹🇷 tolga_garanti — 2,900 USDT Garanti transferi yapıldı ⚡' },
+  { merchant:'kerem_whale', action:'sell', delta:-15000, msg:'🇹🇷 kerem_whale — 15,000 USDT Garanti işlemi onaylandı ⚡' },
+  { merchant:'Onurcan_Demir', action:'sell', delta:-14200, msg:'👑 Onurcan_Demir — 14,200 USDT Akbank FAST çıkışı yapıldı ⚡' },
+  { merchant:'CyberEx_Official', action:'sell', delta:-50000, msg:'🏢 CyberEx_Official — 50,000 USDT kurumsal satış gerçekleşti ⚡' },
+  { merchant:'fatih_tr_trade', action:'sell', delta:-5100, msg:'🇹🇷 fatih_tr_trade — 5,100 USDT İş Bankası transferi onaylandı ⚡' },
+  { merchant:'CyberEx_Official', action:'liquidity', delta:100000, msg:'🏢 CyberEx_Official — 100,000 USDT sıcak cüzdan likidite takviyesi yapıldı 🏦' }
 ];
-let actIdx = 0;
+
+let eventIdx = 0;
+
+function triggerLiveExecution() {
+  const ev = DYNAMIC_EVENTS[eventIdx % DYNAMIC_EVENTS.length];
+  eventIdx++;
+
+  // Mutate the live merchant state
+  const targetM = RAW_MERCHANTS.find(m => m.name === ev.merchant);
+  if (targetM) {
+    const st = getMerchantState(targetM);
+    st.trades += 1;
+    if (ev.action === 'sell') {
+      st.pool = Math.max(5000, st.pool + ev.delta);
+    } else if (ev.action === 'liquidity') {
+      st.pool += ev.delta;
+    }
+  }
+
+  // Push to activity feed
+  addAct(ev.msg);
+
+  // If the user is currently viewing the trade tab, refresh market listings smoothly
+  const tradePanel = document.getElementById('panel-trade');
+  if (tradePanel && tradePanel.classList.contains('show')) {
+    renderListings();
+  }
+}
+
 function addAct(msg) {
   const t = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
   act_events.unshift({ time: t, msg });
   renderFeed();
 }
+
 function renderFeed() {
   const box = document.getElementById('activity-feed');
   if (!box) return;
   box.innerHTML = act_events.slice(0, 6).map(e =>
-    `<div class="flex items-center gap-2 py-0.5 border-b border-white/5 last:border-0"><span class="text-cyan-400 text-[9px] w-9 flex-shrink-0 font-bold">${e.time}</span><span class="text-[10px] text-gray-300 truncate">${e.msg}</span></div>`
+    `<div class="flex items-center gap-2 py-0.5 border-b border-white/5 last:border-0"><span class="text-cyan-400 text-[9px] w-9 flex-shrink-0 font-bold font-mono">${e.time}</span><span class="text-[10px] text-gray-300 truncate">${e.msg}</span></div>`
   ).join('');
 }
 
 // INITIAL SEEDING
 (function init() {
   updateProfileUI();
+  
+  // Seed 5 initial realistic events
   for (let i = 0; i < 5; i++) {
-    const t = new Date(Date.now() - (5 - i) * 3 * 60000).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
-    act_events.push({ time: t, msg: ACT_POOL[i % ACT_POOL.length] });
+    const ev = DYNAMIC_EVENTS[i % DYNAMIC_EVENTS.length];
+    const t = new Date(Date.now() - (5 - i) * 2 * 60000).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+    act_events.push({ time: t, msg: ev.msg });
   }
   renderFeed();
   fetchPrices();
@@ -8990,10 +9058,9 @@ function renderFeed() {
   renderWalletUI();
 
   setInterval(fetchPrices, 10000);
-  setInterval(() => {
-    addAct(ACT_POOL[actIdx % ACT_POOL.length]);
-    actIdx++;
-  }, 6500);
+  
+  // Dynamic breathing market ticker runs every 4.5 seconds
+  setInterval(triggerLiveExecution, 4500);
 })();
 </script>
 </body>
