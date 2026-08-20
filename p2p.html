@@ -72,6 +72,10 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
 .chat-msg-other { background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.25); color: #fff; border-radius: 12px 12px 12px 2px; align-self: flex-start; }
 .chat-chip { font-size: 0.62rem; font-weight: 700; padding: 3px 8px; border-radius: 99px; background: rgba(0, 240, 255, 0.08); border: 1px solid rgba(0, 240, 255, 0.25); color: #00f0ff; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
 .chat-chip:hover { background: rgba(0, 240, 255, 0.2); }
+
+/* Ecosystem Cards */
+.eco-link-card { background: rgba(0, 14, 34, 0.7); border: 1px solid rgba(0, 240, 255, 0.18); border-radius: 12px; padding: 8px 10px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; transition: all 0.2s; }
+.eco-link-card:hover { border-color: #00f0ff; background: rgba(0, 240, 255, 0.08); transform: translateY(-1px); }
 </style>
 </head>
 <body>
@@ -183,8 +187,8 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
             <div class="flex justify-between pt-1 border-t border-white/5"><span class="text-cyan-400 font-bold text-[9px]">Toplam ~:</span><span class="text-cyan-400 font-black" id="w-mini-total">0 TL</span></div>
           </div>
           <div class="flex justify-between text-[9px] font-mono text-gray-400">
-            <span class="truncate w-48" id="w-mini-addr">0x…</span>
-            <button onclick="disconnectWallet()" class="text-red-400 hover:underline">Kes</button>
+            <span class="truncate w-48 font-bold text-cyan-300" id="w-mini-addr">0x…</span>
+            <button onclick="disconnectWallet()" class="text-red-400 font-bold hover:underline">Bağlantıyı Kes</button>
           </div>
         </div>
       </div>
@@ -233,21 +237,115 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
       <div class="glass p-3 space-y-1.5 text-[10px] font-mono bg-black/60 border-cyan-400/20" id="activity-feed"></div>
     </div>
 
-    <!-- Legal & Compliance Accordion Notice (MASAK, KVKK, 18+, AML) -->
-    <div class="glass p-3.5 text-[8px] text-gray-400 space-y-2 border-white/5 bg-black/40">
-      <div class="flex items-center justify-between cursor-pointer" onclick="document.getElementById('legal-details').classList.toggle('hidden')">
-        <div class="flex items-center gap-1 text-cyan-400 font-bold uppercase text-[9px]">
-          <i class="fas fa-scale-balanced"></i><span>5549 Sayılı MASAK, KVKK & Smart Escrow Güvenlik İlkeleri</span>
-        </div>
-        <i class="fas fa-chevron-down text-cyan-400 text-xs"></i>
-      </div>
+    <!-- ======================================================== -->
+    <!-- CYBEREX.COM.TR OFFICIAL ECOSYSTEM & CORPORATE ARCHITECTURE -->
+    <!-- ======================================================== -->
+    <div class="glass p-4 space-y-3.5 border-cyan-400/30 bg-black/60 relative overflow-hidden">
+      <div class="absolute -bottom-10 -right-10 w-36 h-36 bg-cyan-400/10 rounded-full blur-3xl pointer-events-none"></div>
       
-      <div id="legal-details" class="space-y-1.5 pt-1 border-t border-white/5 text-[8px] text-gray-300 leading-relaxed">
-        <p><strong class="text-yellow-400">⚖️ 1. Kimlik ve Hesap Eşleşmesi (AML / Kara Para Önleme):</strong> 5549 Sayılı Kanun gereğince, banka transferi yapacak hesap sahibi ile CyberEx platformundaki kullanıcı adı birebir eşleşmelidir. 3. şahıslar adına yapılan ödemeler tespit edildiğinde transfer anında bloke edilir.</p>
-        <p><strong class="text-green-400">🔒 2. Smart Escrow Fon Koruması:</strong> Kripto varlıklar işlem sonuçlanana dek çoklu imzalı emanet cüzdanında kilit altında tutulur. Satıcı onayı veya dekont doğrulaması olmadan serbest bırakılmaz.</p>
-        <p><strong class="text-cyan-400">🔞 3. 18 Yaş Sınırı:</strong> Platformumuzda yalnızca 18 yaşını doldurmuş bireyler işlem yapabilir.</p>
-        <p><strong class="text-purple-400">🍪 4. Çerez & KVKK Politikası:</strong> Oturum bilgileri ve Web3 cüzdan adresiniz 6698 sayılı KVKK kapsamında yalnızca işlem güvenliği amacıyla saklanır.</p>
-        <p><strong class="text-red-400">⚠️ 5. Açıklama Kuralı:</strong> Banka transferi yaparken açıklama kısmına yalnızca sistemin size verdiği sipariş kodunu yazınız. Kripto, BTC, USDT gibi kelimeler yazmayınız.</p>
+      <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
+        <div class="flex items-center gap-2">
+          <img src="cyberex-logo.png" alt="CyberEx" class="w-6 h-6 object-contain" onerror="this.style.display='none'">
+          <div>
+            <h4 class="text-xs font-black text-white tracking-wider">CYBEREX EKOSİSTEMİ</h4>
+            <p class="text-[8px] text-gray-400 font-mono">Next-Gen FinTech & AI Trading Protocol</p>
+          </div>
+        </div>
+        <span class="badge badge-c text-[8px]">PROD v2.8</span>
+      </div>
+
+      <!-- Ecosystem Products Grid -->
+      <div class="grid grid-cols-2 gap-2 text-xs">
+        <a href="https://cyberex.com.tr" target="_blank" class="eco-link-card">
+          <div class="flex items-center gap-2">
+            <i class="fas fa-globe text-cyan-400 text-sm"></i>
+            <div>
+              <p class="text-[10px] font-black text-white">CyberEx Platform</p>
+              <p class="text-[7px] text-gray-400">Ana Web OTC & Spot</p>
+            </div>
+          </div>
+          <i class="fas fa-arrow-up-right-from-square text-[8px] text-cyan-400/70"></i>
+        </a>
+
+        <a href="download.html" class="eco-link-card">
+          <div class="flex items-center gap-2">
+            <i class="fas fa-mobile-screen-button text-pink-400 text-sm"></i>
+            <div>
+              <p class="text-[10px] font-black text-white">CyberEx App</p>
+              <p class="text-[7px] text-gray-400">Android APK & Mobil</p>
+            </div>
+          </div>
+          <i class="fas fa-download text-[8px] text-pink-400/70"></i>
+        </a>
+
+        <a href="https://cyberex.com.tr/web3wallet/" target="_blank" class="eco-link-card">
+          <div class="flex items-center gap-2">
+            <i class="fas fa-wallet text-purple-400 text-sm"></i>
+            <div>
+              <p class="text-[10px] font-black text-white">Web3 Wallet</p>
+              <p class="text-[7px] text-gray-400">Non-Custodial Cüzdan</p>
+            </div>
+          </div>
+          <i class="fas fa-arrow-up-right-from-square text-[8px] text-purple-400/70"></i>
+        </a>
+
+        <a href="https://analyticax.com.tr" target="_blank" class="eco-link-card">
+          <div class="flex items-center gap-2">
+            <i class="fas fa-brain text-green-400 text-sm"></i>
+            <div>
+              <p class="text-[10px] font-black text-white">AnalyticaX Intel</p>
+              <p class="text-[7px] text-gray-400">AI Piyasa Analitiği</p>
+            </div>
+          </div>
+          <i class="fas fa-arrow-up-right-from-square text-[8px] text-green-400/70"></i>
+        </a>
+      </div>
+
+      <!-- Corporate & Legal Accordion -->
+      <div class="bg-black/50 rounded-xl p-3 border border-white/5 space-y-2 text-[8px]">
+        <div class="flex items-center justify-between cursor-pointer" onclick="document.getElementById('corp-legal-details').classList.toggle('hidden')">
+          <div class="flex items-center gap-1.5 text-cyan-400 font-bold uppercase text-[9px]">
+            <i class="fas fa-scale-balanced text-sm"></i>
+            <span>Kurumsal, 5549 Sayılı MASAK & Hukuki Bilgilendirme</span>
+          </div>
+          <i class="fas fa-chevron-down text-cyan-400 text-xs"></i>
+        </div>
+
+        <div id="corp-legal-details" class="space-y-2 pt-2 border-t border-white/5 text-gray-300 leading-relaxed">
+          <div class="p-2 rounded-lg bg-yellow-400/5 border border-yellow-400/20">
+            <p class="font-bold text-yellow-400 mb-0.5">⚖️ 5549 Sayılı MASAK & AML (Kara Para Önleme) Uyarısı:</p>
+            <p class="text-gray-300">Banka transferlerinde hesap sahibi ile CyberEx kullanıcı adı birebir eşleşmelidir. 3. şahıslar adına yapılan ödemeler tespit edildiğinde derhal dondurulur ve yasal mercilere bildirilir.</p>
+          </div>
+
+          <div class="p-2 rounded-lg bg-green-400/5 border border-green-400/20">
+            <p class="font-bold text-green-400 mb-0.5">🔒 Smart Escrow Fon Koruması & Multi-Sig Emanet:</p>
+            <p class="text-gray-300">Tüm kripto varlıklar işlem sonuçlanana dek CyberEx akıllı sözleşme emanet havuzunda kilit altında tutulur. Satıcı onayı ve dekont teyidi olmadan asla serbest bırakılmaz.</p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-1.5 pt-1 text-[8px]">
+            <a href="terms.html" class="p-2 rounded bg-black/40 border border-white/5 text-gray-300 hover:text-cyan-400 flex items-center justify-between"><span class="font-bold">Kullanım Şartları</span><i class="fas fa-file-contract text-cyan-400/60"></i></a>
+            <a href="legal.html" class="p-2 rounded bg-black/40 border border-white/5 text-gray-300 hover:text-cyan-400 flex items-center justify-between"><span class="font-bold">Yasal Uyarı</span><i class="fas fa-gavel text-cyan-400/60"></i></a>
+            <a href="privacy.html" class="p-2 rounded bg-black/40 border border-white/5 text-gray-300 hover:text-cyan-400 flex items-center justify-between"><span class="font-bold">Gizlilik Politikası</span><i class="fas fa-shield-cat text-cyan-400/60"></i></a>
+            <a href="kvkk.html" class="p-2 rounded bg-black/40 border border-white/5 text-gray-300 hover:text-cyan-400 flex items-center justify-between"><span class="font-bold">KVKK Metni</span><i class="fas fa-id-card text-cyan-400/60"></i></a>
+            <a href="risk.html" class="p-2 rounded bg-black/40 border border-white/5 text-gray-300 hover:text-cyan-400 flex items-center justify-between"><span class="font-bold">Risk Bildirimi</span><i class="fas fa-triangle-exclamation text-yellow-400/60"></i></a>
+            <a href="cookie-policy.html" class="p-2 rounded bg-black/40 border border-white/5 text-gray-300 hover:text-cyan-400 flex items-center justify-between"><span class="font-bold">Çerez Politikası</span><i class="fas fa-cookie-bite text-cyan-400/60"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social & Community Links -->
+      <div class="flex justify-between items-center pt-2 border-t border-white/5">
+        <p class="text-[8px] font-bold text-gray-400 font-mono">RESMİ KANALLAR</p>
+        <div class="flex gap-2">
+          <a href="https://t.me/soulflyss" target="_blank" class="w-7 h-7 rounded-lg bg-[#0088cc]/15 border border-[#0088cc]/30 text-[#0088cc] flex items-center justify-center text-xs hover:scale-110 transition-transform"><i class="fab fa-telegram"></i></a>
+          <a href="https://twitter.com/cyberex" target="_blank" class="w-7 h-7 rounded-lg bg-white/10 border border-white/20 text-white flex items-center justify-center text-xs hover:scale-110 transition-transform"><i class="fab fa-x-twitter"></i></a>
+          <a href="https://github.com/eticin60/CyberEx" target="_blank" class="w-7 h-7 rounded-lg bg-white/10 border border-white/20 text-white flex items-center justify-center text-xs hover:scale-110 transition-transform"><i class="fab fa-github"></i></a>
+          <a href="https://linkedin.com/company/cyberex" target="_blank" class="w-7 h-7 rounded-lg bg-[#0077b5]/15 border border-[#0077b5]/30 text-[#0077b5] flex items-center justify-center text-xs hover:scale-110 transition-transform"><i class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+
+      <div class="text-center pt-1 border-t border-white/5">
+        <p class="text-[8px] text-gray-500 font-mono leading-tight">© 2026 CyberEx Teknoloji Anonim Şirketi. Tüm Hakları Saklıdır.<br>Varlıklarınız şirket güvencemiz altındadır.</p>
       </div>
     </div>
   </section>
@@ -1638,7 +1736,7 @@ function publishListing() {
   addAct(`📢 Yeni ${create_type === 'sell' ? 'satış' : 'alım'} ilanı: ${pool} ${coin}`);
 }
 
-// WEB3 WALLET ENGINE
+// WEB3 WALLET ENGINE & DISCONNECT REPAIR
 const eip6963 = {};
 window.addEventListener('eip6963:announceProvider', e => { eip6963[e.detail.info.rdns] = e.detail; });
 window.dispatchEvent(new Event('eip6963:requestProvider'));
@@ -1660,6 +1758,8 @@ async function useProvider(provider, type) {
   const accs = await provider.request({ method: 'eth_requestAccounts' });
   if (!accs?.length) throw new Error('Hesap bulunamadı.');
   app_wallet.addr = accs[0]; app_wallet.provider = type; app_wallet.raw = provider;
+  localStorage.setItem('cx_wallet_connected', '1');
+  localStorage.setItem('cx_wallet_provider', type);
   try { app_wallet.chain = await provider.request({ method: 'eth_chainId' }); } catch (_) {}
   if (provider.on) {
     provider.on('accountsChanged', newAccs => {
@@ -1706,12 +1806,20 @@ function renderWalletUI() {
   const usdtTry = usdt * (R.USDT_TRY || 47.69);
   const totalTry = ethTry + usdtTry;
 
-  document.getElementById('hdr-w').innerText = on ? (app_wallet.addr.slice(0, 4) + '…' + app_wallet.addr.slice(-3)) : 'CÜZDAN';
-  document.getElementById('u-net-badge').innerText = on ? ((app_wallet.provider || 'WEB3').toUpperCase() + ' BAĞLI') : 'BAĞLI DEĞİL';
-  document.getElementById('w-off-mini').classList.toggle('hidden', on);
-  document.getElementById('w-on-mini').classList.toggle('hidden', !on);
-  document.getElementById('w-off-panel').classList.toggle('hidden', on);
-  document.getElementById('w-on-panel').classList.toggle('hidden', !on);
+  const hdrW = document.getElementById('hdr-w');
+  const uNet = document.getElementById('u-net-badge');
+  const wOffMini = document.getElementById('w-off-mini');
+  const wOnMini = document.getElementById('w-on-mini');
+  const wOffPanel = document.getElementById('w-off-panel');
+  const wOnPanel = document.getElementById('w-on-panel');
+  const wPanelBadge = document.getElementById('w-panel-badge');
+
+  if (hdrW) hdrW.innerText = on ? (app_wallet.addr.slice(0, 4) + '…' + app_wallet.addr.slice(-3)) : 'CÜZDAN';
+  if (uNet) uNet.innerText = on ? ((app_wallet.provider || 'WEB3').toUpperCase() + ' BAĞLI') : 'BAĞLI DEĞİL';
+  if (wOffMini) wOffMini.classList.toggle('hidden', on);
+  if (wOnMini) wOnMini.classList.toggle('hidden', !on);
+  if (wOffPanel) wOffPanel.classList.toggle('hidden', on);
+  if (wOnPanel) wOnPanel.classList.toggle('hidden', !on);
 
   if (on) {
     document.getElementById('w-mini-eth').innerText = eth.toFixed(4);
@@ -1724,12 +1832,28 @@ function renderWalletUI() {
     document.getElementById('w-p-eth').innerText = eth.toFixed(4);
     document.getElementById('w-p-usdt').innerText = usdt.toFixed(2) + ' USDT';
     document.getElementById('w-p-try').innerText = totalTry.toLocaleString('tr-TR', { maximumFractionDigits: 2 }) + ' TL';
-    document.getElementById('w-panel-badge').className = 'badge badge-g'; document.getElementById('w-panel-badge').innerText = 'BAĞLI ✅';
+    if (wPanelBadge) { wPanelBadge.className = 'badge badge-g'; wPanelBadge.innerText = 'BAĞLI ✅'; }
   } else {
-    document.getElementById('w-panel-badge').className = 'badge badge-y'; document.getElementById('w-panel-badge').innerText = 'BAĞLI DEĞİL';
+    document.getElementById('w-mini-eth').innerText = '0.0000';
+    document.getElementById('w-mini-usdt').innerText = '0.00 USDT';
+    document.getElementById('w-mini-total').innerText = '0 TL';
+    document.getElementById('w-mini-addr').innerText = '0x…';
+    document.getElementById('w-p-eth').innerText = '0.0000';
+    document.getElementById('w-p-usdt').innerText = '0.00 USDT';
+    document.getElementById('w-p-try').innerText = '0 TL';
+    document.getElementById('w-p-addr').innerText = '0x…';
+    if (wPanelBadge) { wPanelBadge.className = 'badge badge-y'; wPanelBadge.innerText = 'BAĞLI DEĞİL'; }
   }
 }
-function disconnectWallet() { app_wallet = { addr:null, provider:null, chain:null, eth:0, usdt:0, raw:null }; renderWalletUI(); toast('Cüzdan bağlantısı kesildi.', 'y'); }
+
+function disconnectWallet() {
+  app_wallet = { addr: null, provider: null, chain: null, eth: 0, usdt: 0, raw: null };
+  localStorage.removeItem('cx_wallet_connected');
+  localStorage.removeItem('cx_wallet_provider');
+  renderWalletUI();
+  toast('🔌 Cüzdan bağlantısı başarıyla kesildi.', 'y');
+}
+
 function deepLink(type) {
   const u = encodeURIComponent(window.location.href);
   const l = { MetaMask:`https://metamask.app.link/dapp/${location.host + location.pathname}`, 'Trust Wallet':`https://link.trustwallet.com/open_url?url=${u}`, 'OKX Wallet':`okx://wallet/dapp/url?dappUrl=${u}` };
