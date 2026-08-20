@@ -51,8 +51,8 @@ body { background: #000510; color: #e8f0ff; font-family: 'Inter', sans-serif; ov
 .floating { animation: float 3.5s ease-in-out infinite; }
 @keyframes priceFlash { 0% { background: rgba(255, 179, 0, 0.3); border-color: rgba(255, 179, 0, 0.9); } 100% { background: rgba(0, 14, 34, 0.78); border-color: rgba(0, 240, 255, 0.12); } }
 .price-flash { animation: priceFlash 0.7s ease-out; }
-@keyframes drainFlash { 0% { color: #ff4d4d; transform: scale(1.08); } 100% { color: #fff; transform: scale(1); } }
-.drain-anim { animation: drainFlash 0.5s ease; }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
+.shake-anim { animation: shake 0.4s ease; }
 
 .btn-c { background: linear-gradient(135deg, #00f0ff 0%, #0072ff 100%); color: #000510; font-weight: 900; border: none; cursor: pointer; transition: all 0.2s; border-radius: 14px; }
 .btn-c:hover { opacity: 0.94; transform: scale(1.01); box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); }
@@ -92,6 +92,55 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
 </head>
 <body>
 
+<!-- ========================================== -->
+<!--  CYBEREX VIP P2P GATEKEEPER PASSCODE MODAL -->
+<!-- ========================================== -->
+<div id="p2p-gatekeeper" class="fixed inset-0 z-[999] bg-[#000510] flex items-center justify-center p-4">
+  <div class="glass w-full max-w-sm p-6 text-center space-y-4 border border-cyan-400/40 relative overflow-hidden shadow-2xl" id="gate-box">
+    <div class="absolute -top-10 -right-10 w-32 h-32 bg-cyan-400/15 rounded-full blur-2xl pointer-events-none"></div>
+    
+    <div class="w-14 h-14 rounded-2xl bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center mx-auto text-cyan-400 text-2xl shadow-lg">
+      <i class="fas fa-shield-halved floating"></i>
+    </div>
+
+    <div>
+      <h2 class="text-base font-black text-white tracking-wider flex items-center justify-center gap-1.5">
+        CYBEREX P2P VIP ACCESS
+      </h2>
+      <p class="text-[10px] text-gray-400 font-mono mt-1">Bu alana erişim için CyberEx Giriş Bilgileri gereklidir.</p>
+    </div>
+
+    <form onsubmit="verifyGatekeeper(event)" class="space-y-3 pt-2 text-left">
+      <div>
+        <label class="text-[9px] text-gray-400 font-bold uppercase font-mono block mb-1">Yetkili Kullanıcı Adı</label>
+        <div class="relative">
+          <i class="fas fa-user absolute left-3 top-3 text-cyan-400/60 text-xs"></i>
+          <input type="text" id="gate-user" placeholder="cyberex" class="pl-8 text-xs font-mono font-bold" required>
+        </div>
+      </div>
+
+      <div>
+        <label class="text-[9px] text-gray-400 font-bold uppercase font-mono block mb-1">Erişim Şifresi / PIN</label>
+        <div class="relative">
+          <i class="fas fa-lock absolute left-3 top-3 text-cyan-400/60 text-xs"></i>
+          <input type="password" id="gate-pass" placeholder="••••" class="pl-8 text-xs font-mono font-bold" required>
+        </div>
+      </div>
+
+      <p class="text-[8px] text-gray-500 italic text-center">* Yetkili giriş bilgilerinizi bilmiyorsanız yönetici ile iletişime geçiniz.</p>
+
+      <button type="submit" class="btn-c w-full py-3.5 text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg">
+        <i class="fas fa-key"></i>Yetkili Girişi Yap
+      </button>
+    </form>
+
+    <div class="pt-2 border-t border-white/5 flex justify-between items-center text-[9px] font-mono text-gray-500">
+      <span>CyberEx OTC Protocol</span>
+      <a href="index.html" class="text-cyan-400 hover:underline">← Ana Sayfaya Dön</a>
+    </div>
+  </div>
+</div>
+
 <!-- TOP STICKY NAVBAR -->
 <header class="glass fixed top-0 left-0 right-0 z-50 px-4 py-3 flex justify-between items-center" style="border-radius:0;border-top:0;border-x:0;border-bottom:1px solid rgba(0,240,255,.18)">
   <div class="flex items-center gap-2.5">
@@ -116,9 +165,12 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
       <p class="text-xs font-mono font-black text-green-400" id="hdr-spot-rate">47.61 TL</p>
     </div>
     
-    <div id="hdr-wallet-btn-wrap">
+    <div id="hdr-wallet-btn-wrap" class="flex items-center gap-1.5">
       <button onclick="openWalletModal()" class="btn-c px-3 py-1.5 text-[10px] font-black uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
         <i class="fas fa-wallet text-xs"></i><span id="hdr-w-label">CÜZDAN BAĞLA</span>
+      </button>
+      <button onclick="lockGatekeeper()" title="Kilitle / Çıkış Yap" class="w-7 h-7 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 flex items-center justify-center hover:bg-red-500/20 text-xs">
+        <i class="fas fa-lock"></i>
       </button>
     </div>
   </div>
@@ -308,7 +360,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
 
     <!-- Rule Badge -->
     <div class="text-[9px] font-mono px-1 flex items-center justify-between">
-      <span id="mode-rule-badge" class="text-green-400 font-bold">🛡️ SATICILAR LİSTELENİR (EN İYİ FİYATLAR EN ÜSTTE)</span>
+      <span id="mode-rule-badge" class="text-green-400 font-bold">🛡️ SATICILAR LİSTELENİR (EN UYGUN LİKİDİTE EN ÜSTTE)</span>
       <span class="text-gray-500 font-bold" id="listing-count-tag">100+ Aktif İlan</span>
     </div>
 
@@ -895,6 +947,49 @@ const SUPA_URL  = 'https://fkxynlctcbagfvpatzlb.supabase.co';
 const SUPA_ANON = 'sb_publishable_eQK0Npo_3DnhQdZUAV5ZTw_SAj-zt_G';
 const WC_PID    = '2ca90b07e9d94f57b254e71e8264d7dc';
 const BOT_TOKEN = '8078760711:AAFPhSfofYPeF3LSExVM7A9TinooXF3lH-o';
+
+// GATEKEEPER PASSCODE AUTH
+function verifyGatekeeper(e) {
+  if (e) e.preventDefault();
+  const u = (document.getElementById('gate-user').value || '').trim().toLowerCase();
+  const p = (document.getElementById('gate-pass').value || '').trim();
+  const box = document.getElementById('gate-box');
+
+  const validUsers = ['cyberex', 'admin', 'onurcan', 'onurcandemir'];
+  const validPass = ['1923', 'cyberex', 'cyberex2026', 'admin'];
+
+  if (validUsers.includes(u) && validPass.includes(p)) {
+    sessionStorage.setItem('cx_p2p_authenticated', 'true');
+    document.getElementById('p2p-gatekeeper').style.opacity = '0';
+    document.getElementById('p2p-gatekeeper').style.transition = 'opacity 0.3s ease';
+    setTimeout(() => {
+      document.getElementById('p2p-gatekeeper').classList.add('hidden');
+    }, 300);
+    showToast('🔓 CyberEx VIP P2P Erişimi Onaylandı!', 'success');
+  } else {
+    box.classList.remove('shake-anim');
+    void box.offsetWidth;
+    box.classList.add('shake-anim');
+    showToast('⛔ Hatalı Kullanıcı Adı veya Şifre!', 'error');
+  }
+}
+
+function checkGatekeeperStatus() {
+  if (sessionStorage.getItem('cx_p2p_authenticated') === 'true') {
+    document.getElementById('p2p-gatekeeper').classList.add('hidden');
+  } else {
+    document.getElementById('p2p-gatekeeper').classList.remove('hidden');
+  }
+}
+
+function lockGatekeeper() {
+  sessionStorage.removeItem('cx_p2p_authenticated');
+  document.getElementById('p2p-gatekeeper').style.opacity = '1';
+  document.getElementById('p2p-gatekeeper').classList.remove('hidden');
+  document.getElementById('gate-user').value = '';
+  document.getElementById('gate-pass').value = '';
+  showToast('🔒 P2P Ekranı Kilitlendi.', 'info');
+}
 
 // STATE
 const app = {
@@ -2043,6 +2138,7 @@ if (window.Telegram?.WebApp) {
 
 // INITIAL SEEDING & RAPID TIMERS
 (function init() {
+  checkGatekeeperStatus();
   for (let i=0; i<6; i++) {
     const t = new Date(Date.now() - (6-i)*4*60000).toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'});
     app.activityEvents.push({ time: t, msg: ACTIVITIES[i % ACTIVITIES.length] });
