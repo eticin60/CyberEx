@@ -1140,13 +1140,20 @@ async function submitOrder() {
   app_active = trade;
   localStorage.setItem('cx_trades', JSON.stringify(app_trades));
 
+  const deadline = new Date(Date.now() + 30 * 60000).toISOString();
+  const paymentMethod = (app_active_listing.methods || ['FAST Anında']).join(' • ');
+  const adminNotes = isBuy ? ('Alıcı Cüzdan: ' + buyerWallet) : ('Kullanıcı IBAN: ' + sellerIban + ' - ' + sellerHolder);
+
   fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades`, {
     method: 'POST',
     headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
     body: JSON.stringify({
       trade_code: code, coin: trade.coin, network: net, amount_crypto: am,
       unit_fiat_price: trade.unit_fiat_price, amount_fiat: totalFiat, fiat_currency: trade.fiat_currency,
-      buyer_wallet_address: trade.buyer_wallet_address, user_payout_iban: sellerIban, user_payout_holder: sellerHolder,
+      buyer_wallet_address: trade.buyer_wallet_address,
+      payment_method: paymentMethod,
+      payment_deadline: deadline,
+      admin_notes: adminNotes,
       status: 'pending_payment'
     })
   }).catch(()=>{});
