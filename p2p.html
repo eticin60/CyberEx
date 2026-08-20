@@ -304,7 +304,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
         <span id="mode-rule" class="text-green-400 font-bold">🛡️ SATICILAR — EN UYGUN FİYAT EN ÜSTTE</span>
         <div class="flex items-center gap-2">
           <button id="btn-my-filter" onclick="toggleMyOnlyFilter()" class="px-2 py-0.5 rounded text-[8px] font-bold border border-cyan-400/30 text-cyan-400 hover:bg-cyan-400/10">⭐ Sadece İlanlarım</button>
-          <span class="text-gray-500 font-bold" id="listing-cnt">350+ Aktif İlan</span>
+          <span class="flex items-center gap-1 font-bold text-[8px]" id="listing-cnt"><span class="w-1.5 h-1.5 rounded-full bg-green-400 pdot"></span><span class="text-green-400 font-mono" id="cnt-num">354</span> <span class="text-gray-400">Aktif İlan</span></span>
         </div>
       </div>
 
@@ -8046,7 +8046,11 @@ function renderListings() {
     full = full.filter(item => item.isMine);
   }
 
-  cnt.innerText = full.length + ' Aktif İlan';
+  const dynamicFluctuation = Math.floor(Math.sin(Date.now() / 9000) * 7 + Math.cos(Date.now() / 17000) * 4);
+  const breathingCount = Math.max(320, full.length + dynamicFluctuation);
+  const cntNum = document.getElementById('cnt-num');
+  if (cntNum) cntNum.innerText = breathingCount;
+  else if (cnt) cnt.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-green-400 pdot inline-block mr-1"></span><span class="text-green-400 font-mono font-bold">${breathingCount}</span> <span class="text-gray-400">Aktif İlan</span>`;
   box.innerHTML = '';
 
   if (!full.length) {
@@ -9210,6 +9214,12 @@ function triggerLiveExecution() {
 
   addAct(ev.msg);
 
+  const dynamicFluctuation = Math.floor(Math.sin(Date.now() / 9000) * 7 + Math.cos(Date.now() / 17000) * 4);
+  const breathingCount = Math.max(320, (RAW_MERCHANTS.length || 350) + dynamicFluctuation);
+  const cntNum = document.getElementById('cnt-num');
+  if (cntNum) {
+    cntNum.innerText = breathingCount;
+  }
   const tradePanel = document.getElementById('panel-trade');
   if (tradePanel && tradePanel.classList.contains('show')) {
     renderListings();
