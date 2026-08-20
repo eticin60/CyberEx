@@ -202,8 +202,14 @@ input:focus, select:focus, textarea:focus { border-color:#00f0ff; box-shadow:0 0
 
     <!-- ADMIN NOTE -->
     <div>
-      <label class="text-[8px] text-gray-400 uppercase font-bold block mb-1">Yönetici Notu (Opsiyonel)</label>
-      <textarea id="md-note" rows="2" placeholder="Onay nedeni, özel not, uyarı..."></textarea>
+      <div class="flex justify-between items-center mb-1">
+        <label class="text-[8px] text-gray-400 uppercase font-bold">Yönetici / Destek Notu</label>
+        <span class="text-[7px] text-cyan-400 font-mono">Kullanıcı ekranında canlı görünür</span>
+      </div>
+      <textarea id="md-note" rows="2" placeholder="Kullanıcıya iletilecek yönetici notu, teyit veya uyarı mesajı..."></textarea>
+      <button onclick="saveAdminNoteOnly()" class="btn btn-c w-full justify-center text-xs py-2 mt-1.5 font-bold">
+        <i class="fas fa-floppy-disk mr-1"></i>Yönetici Notunu Kaydet & İlet
+      </button>
     </div>
 
     <!-- INLINE EDIT FIELDS -->
@@ -631,6 +637,29 @@ function renderTimeline(t) {
       <p class="text-gray-300 text-[10px] leading-relaxed">${item.text}</p>
     </div>
   `).join('<div class="ml-1.5 border-l border-white/10 h-2.5"></div>');
+}
+
+
+async function saveAdminNoteOnly() {
+  if (!detailTrade) return;
+  const note = document.getElementById('md-note').value.trim();
+  if (!note) { toast('Lütfen bir not yazınız.', 'r'); return; }
+  
+  detailTrade.admin_notes = note;
+  try {
+    await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=eq.${detailTrade.trade_code}`, {
+      method: 'PATCH',
+      headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ admin_notes: note })
+    });
+  } catch (_) {}
+
+  const local = JSON.parse(localStorage.getItem('cx_trades') || '[]');
+  const idx = local.findIndex(x => x.trade_code === detailTrade.trade_code);
+  if (idx !== -1) { local[idx].admin_notes = note; localStorage.setItem('cx_trades', JSON.stringify(local)); }
+  
+  sendTGMsg(`📝 <b>ADMİN NOTU EKLENDİ (#${detailTrade.trade_code})</b>\n\n📌 "${note}"`);
+  toast('💾 Yönetici notu kaydedildi & kullanıcıya iletildi!', 'g');
 }
 
 function closeDetailModal() {
