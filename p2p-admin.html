@@ -171,7 +171,7 @@ input:focus, select:focus, textarea:focus { border-color:#00f0ff; box-shadow:0 0
 
     <!-- TRADE INFO GRID -->
     <div class="grid grid-cols-2 gap-2 text-xs bg-black/40 p-3 rounded-xl border border-white/5">
-      <div><p class="text-[7px] text-gray-500 uppercase mb-0.5">Kullanıcı</p><p class="font-bold text-white" id="md-user">—</p></div>
+      <div><p class="text-[7px] text-gray-500 uppercase mb-0.5">Kullanıcı / Telegram</p><div class="flex items-center gap-1.5"><p class="font-bold text-white" id="md-user">—</p><a id="md-tg-btn" href="#" target="_blank" class="hidden text-[10px] text-[#0088cc] bg-[#0088cc]/15 px-1.5 py-0.5 rounded font-mono font-bold hover:underline"><i class="fab fa-telegram mr-0.5"></i>DM</a></div></div>
       <div><p class="text-[7px] text-gray-500 uppercase mb-0.5">Satıcı / Karşı Taraf</p><p class="font-bold text-white" id="md-seller">—</p></div>
       <div><p class="text-[7px] text-gray-500 uppercase mb-0.5">Tür</p><p class="font-bold" id="md-type">—</p></div>
       <div><p class="text-[7px] text-gray-500 uppercase mb-0.5">Network</p><p class="font-bold text-white font-mono" id="md-net">—</p></div>
@@ -565,16 +565,53 @@ function openDetail(t) {
   document.getElementById('modal-detail').classList.remove('hidden');
 }
 
+
+// REAL-TIME SUPABASE CLOUD CHAT ENGINE
+function parseChatFromNotes(notesStr) {
+  if (!notesStr) return [];
+  if (notesStr.includes('|| CHAT_LOG:::')) {
+    try {
+      const parts = notesStr.split('|| CHAT_LOG:::');
+      return JSON.parse(parts[1]) || [];
+    } catch (_) {}
+  }
+  return [];
+}
+
+function parseAdminNoteOnly(notesStr) {
+  if (!notesStr) return '';
+  if (notesStr.includes('|| CHAT_LOG:::')) {
+    return notesStr.split('|| CHAT_LOG:::')[0].trim();
+  }
+  return notesStr.trim();
+}
+
+function encodeChatIntoNotes(cleanNote, messages) {
+  const notePart = cleanNote ? cleanNote.trim() : '';
+  return `${notePart} || CHAT_LOG:::${JSON.stringify(messages)}`;
+}
+
 function renderAdminChat() {
   if (!detailTrade) return;
   const box = document.getElementById('admin-chat-messages');
-  const allChats = JSON.parse(localStorage.getItem('cx_chat_messages') || '{}');
-  const msgs = allChats[detailTrade.trade_code] || [
-    { sender: 'System', text: '🔒 Smart Escrow oturumu başlatıldı. Mesajlaşmalar şifrelenmektedir.', time: detailTrade.created_at || '12:00' }
+  const cloudMsgs = parseChatFromNotes(detailTrade.admin_notes);
+  const localChats = JSON.parse(localStorage.getItem('cx_chat_messages') || '{}');
+  const localMsgs = localChats[detailTrade.trade_code] || [];
+  
+  // Merge and deduplicate
+  const combined = [...cloudMsgs];
+  localMsgs.forEach(lm => {
+    if (!combined.some(cm => cm.text === lm.text && cm.sender === lm.sender)) {
+      combined.push(lm);
+    }
+  });
+
+  const finalMsgs = combined.length ? combined : [
+    { sender: 'System', text: '🔒 Smart Escrow oturumu başlatıldı. Karşı taraf ve CyberEx Destek ekibi bu kanalı izlemektedir.', time: detailTrade.created_at || '12:00' }
   ];
 
-  box.innerHTML = msgs.map(m => {
-    const isAdm = m.sender === 'Admin' || m.sender === 'Destek';
+  box.innerHTML = finalMsgs.map(m => {
+    const isAdm = m.sender === 'Admin' || m.sender === 'Destek' || m.sender === 'Destek/Admin';
     const isSys = m.sender === 'System';
     if (isSys) {
       return `<div class="text-center text-[9px] text-gray-500 my-1 font-mono">${m.text}</div>`;
@@ -583,7 +620,7 @@ function renderAdminChat() {
       <div class="p-2 ${isAdm ? 'bubble-admin' : 'bubble-user'} max-w-[85%]">
         <div class="flex justify-between items-center gap-2 mb-0.5 text-[8px] font-bold">
           <span class="${isAdm ? 'text-yellow-400' : 'text-cyan-400'}">${m.sender}</span>
-          <span class="text-gray-400 font-mono">${m.time}</span>
+          <span class="text-gray-400 font-mono text-[7px]">${m.time}</span>
         </div>
         <p class="text-[10px] text-white leading-relaxed">${m.text}</p>
       </div>
@@ -592,27 +629,44 @@ function renderAdminChat() {
   box.scrollTop = box.scrollHeight;
 }
 
-function sendAdminChatMessage() {
+async function sendAdminChatMessage() {
   if (!detailTrade) return;
   const inp = document.getElementById('admin-chat-input');
   const txt = inp.value.trim();
   if (!txt) return;
 
-  const allChats = JSON.parse(localStorage.getItem('cx_chat_messages') || '{}');
-  if (!allChats[detailTrade.trade_code]) allChats[detailTrade.trade_code] = [];
-
+  const curMsgs = parseChatFromNotes(detailTrade.admin_notes);
   const newMsg = {
     sender: 'Destek/Admin',
     text: txt,
     time: new Date().toLocaleTimeString('tr-TR', { hour:'2-digit', minute:'2-digit' })
   };
+  curMsgs.push(newMsg);
 
-  allChats[detailTrade.trade_code].push(newMsg);
-  localStorage.setItem('cx_chat_messages', JSON.stringify(allChats));
+  const cleanNote = parseAdminNoteOnly(detailTrade.admin_notes);
+  const encoded = encodeChatIntoNotes(cleanNote, curMsgs);
+  detailTrade.admin_notes = encoded;
+
+  // Save to Supabase
+  try {
+    await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=eq.${detailTrade.trade_code}`, {
+      method: 'PATCH',
+      headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ admin_notes: encoded })
+    });
+  } catch (_) {}
+
+  // Cache locally
+  const localChats = JSON.parse(localStorage.getItem('cx_chat_messages') || '{}');
+  localChats[detailTrade.trade_code] = curMsgs;
+  localStorage.setItem('cx_chat_messages', JSON.stringify(localChats));
+
   inp.value = '';
   renderAdminChat();
 
-  sendTGMsg(`💬 <b>ADMİN MESAJ GÖNDERDİ (#${detailTrade.trade_code})</b>\n\n✉️ "${txt}"`);
+  sendTGMsg(`💬 <b>ADMİN MESAJ GÖNDERDİ (#${detailTrade.trade_code})</b>
+
+🛡️ <b>Destek:</b> "${txt}"`);
 }
 
 function renderTimeline(t) {
