@@ -62,12 +62,12 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
 .info-sell { background: rgba(255, 140, 0, 0.07); border: 1px solid rgba(255, 140, 0, 0.28); border-radius: 14px; padding: 12px; }
 .net-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(0, 240, 255, 0.1); color: #00f0ff; border: 1px solid rgba(0, 240, 255, 0.25); border-radius: 99px; padding: 2px 8px; font-size: 0.6rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; }
 
-/* Real Bank Badges with Android Assets */
+/* Real Bank Badges */
 .bank-badge { display: inline-flex; align-items: center; gap: 5px; padding: 2.5px 7px; border-radius: 8px; font-size: 0.62rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; background: rgba(0, 18, 42, 0.85); border: 1px solid rgba(0, 240, 255, 0.2); color: #e8f0ff; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
 .bank-badge img { width: 14px; height: 14px; border-radius: 3px; object-fit: contain; flex-shrink: 0; }
 .bank-fast { background: rgba(0, 240, 255, 0.12); color: #00f0ff; border-color: rgba(0, 240, 255, 0.35); }
 
-/* Escrow Chat Styles */
+/* Escrow Chat */
 .chat-msg-user { background: rgba(0, 240, 255, 0.12); border: 1px solid rgba(0, 240, 255, 0.28); color: #fff; border-radius: 12px 12px 2px 12px; align-self: flex-end; }
 .chat-msg-other { background: rgba(255, 215, 0, 0.12); border: 1px solid rgba(255, 215, 0, 0.3); color: #fff; border-radius: 12px 12px 12px 2px; align-self: flex-start; }
 .chat-chip { font-size: 0.62rem; font-weight: 700; padding: 3px 8px; border-radius: 99px; background: rgba(0, 240, 255, 0.08); border: 1px solid rgba(0, 240, 255, 0.25); color: #00f0ff; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
@@ -76,15 +76,11 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
 /* Ecosystem Cards */
 .eco-link-card { background: rgba(0, 14, 34, 0.7); border: 1px solid rgba(0, 240, 255, 0.18); border-radius: 12px; padding: 8px 10px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; transition: all 0.2s; }
 .eco-link-card:hover { border-color: #00f0ff; background: rgba(0, 240, 255, 0.08); transform: translateY(-1px); }
-
-/* Flash Live Animation for Updated Pools */
-@keyframes flashGreen { 0% { color: #00ff88; transform: scale(1.05); } 100% { color: #fff; transform: scale(1); } }
-.flash-val { animation: flashGreen 1.2s ease-out; }
 </style>
 </head>
 <body>
 
-<!-- GATEKEEPER PASSCODE (SHA-256 HASH VERIFICATION) -->
+<!-- GATEKEEPER PASSCODE -->
 <div id="p2p-gate" class="fixed inset-0 z-[999] bg-[#000510] flex items-center justify-center p-4">
   <div class="glass w-full max-w-sm p-6 text-center space-y-4 border-cyan-400/35" id="gate-box">
     <div class="absolute -top-8 -right-8 w-28 h-28 bg-cyan-400/12 rounded-full blur-3xl pointer-events-none"></div>
@@ -204,7 +200,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
       </div>
     </div>
 
-    <!-- KYC-FREE & UID Banner -->
+    <!-- KYC-FREE Banner -->
     <div class="glass p-3 border-green-400/30 bg-green-950/20 flex items-center justify-between">
       <div class="flex items-center gap-2.5">
         <div class="w-8 h-8 rounded-xl bg-green-400/15 border border-green-400/35 flex items-center justify-center text-green-400 text-sm flex-shrink-0">
@@ -234,8 +230,8 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
 
     <!-- Spot Tickers -->
     <div class="grid grid-cols-3 gap-1.5">
-      <div class="glass text-center p-2.5"><div class="flex items-center justify-center gap-1 mb-0.5"><img src="assets/btc.png" onerror="this.style.display='none'" class="w-3.5 h-3.5"><span class="text-[7px] text-gray-400 uppercase font-bold">BTC/USD</span></div><p class="text-[11px] font-black font-mono text-white mt-0.5" id="tick-btc">$94,821</p><p class="text-[7px] font-bold text-green-400 mt-0.5" id="tick-btc-c">+1.4% ⚡</p></div>
-      <div class="glass text-center p-2.5"><div class="flex items-center justify-center gap-1 mb-0.5"><img src="assets/ethereum-logo.svg" onerror="this.style.display='none'" class="w-3.5 h-3.5"><span class="text-[7px] text-gray-400 uppercase font-bold">ETH/USD</span></div><p class="text-[11px] font-black font-mono text-white mt-0.5" id="tick-eth">$3,342</p><p class="text-[7px] font-bold text-green-400 mt-0.5" id="tick-eth-c">+0.8% ⚡</p></div>
+      <div class="glass text-center p-2.5"><div class="flex items-center justify-center gap-1 mb-0.5"><img src="assets/btc.png" onerror="this.style.display='none'" class="w-3.5 h-3.5"><span class="text-[7px] text-gray-400 uppercase font-bold">BTC/USD</span></div><p class="text-[11px] font-black font-mono text-white mt-0.5" id="tick-btc">$94,821</p><p class="text-[7px] font-bold text-green-400 mt-0.5">+1.4% ⚡</p></div>
+      <div class="glass text-center p-2.5"><div class="flex items-center justify-center gap-1 mb-0.5"><img src="assets/ethereum-logo.svg" onerror="this.style.display='none'" class="w-3.5 h-3.5"><span class="text-[7px] text-gray-400 uppercase font-bold">ETH/USD</span></div><p class="text-[11px] font-black font-mono text-white mt-0.5" id="tick-eth">$3,342</p><p class="text-[7px] font-bold text-green-400 mt-0.5">+0.8% ⚡</p></div>
       <div class="glass text-center p-2.5" style="border-color:rgba(0,240,255,0.3)"><div class="flex items-center justify-center gap-1 mb-0.5"><img src="assets/USDT.png" onerror="this.style.display='none'" class="w-3.5 h-3.5"><span class="text-[7px] text-cyan-400 uppercase font-bold">USDT/TRY</span></div><p class="text-[11px] font-black font-mono text-green-400 mt-0.5" id="tick-try">47.69 TL</p><p class="text-[7px] text-cyan-400 font-bold mt-0.5">CyberEx</p></div>
     </div>
 
@@ -248,7 +244,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
       <div id="active-trades-box"></div>
     </div>
 
-    <!-- Live Activity Feed (Living, Breathing Global Execution Engine) -->
+    <!-- Live Activity Feed (Dynamic Fractional Amounts) -->
     <div>
       <div class="flex justify-between items-center mb-1.5 px-1">
         <p class="text-[9px] font-black uppercase tracking-widest text-cyan-400 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-green-400 pdot"></span>CANLI GLOBAL PİYASA AKIŞI</p>
@@ -257,10 +253,8 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
       <div class="glass p-3 space-y-1.5 text-[10px] font-mono bg-black/60 border-cyan-400/20" id="activity-feed"></div>
     </div>
 
-    <!-- CYBEREX.COM.TR OFFICIAL ECOSYSTEM & CORPORATE ARCHITECTURE -->
+    <!-- OFFICIAL ECOSYSTEM -->
     <div class="glass p-4 space-y-3.5 border-cyan-400/30 bg-black/60 relative overflow-hidden">
-      <div class="absolute -bottom-10 -right-10 w-36 h-36 bg-cyan-400/10 rounded-full blur-3xl pointer-events-none"></div>
-      
       <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
         <div class="flex items-center gap-2">
           <img src="cyberex-logo.png" alt="CyberEx" class="w-6 h-6 object-contain" onerror="this.style.display='none'">
@@ -272,93 +266,20 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
         <span class="badge badge-c text-[8px]">PROD v2.8</span>
       </div>
 
-      <!-- Ecosystem Products Grid -->
       <div class="grid grid-cols-2 gap-2 text-xs">
-        <a href="https://cyberex.com.tr" target="_blank" class="eco-link-card">
-          <div class="flex items-center gap-2">
-            <i class="fas fa-globe text-cyan-400 text-sm"></i>
-            <div>
-              <p class="text-[10px] font-black text-white">CyberEx Platform</p>
-              <p class="text-[7px] text-gray-400">Ana Web OTC & Spot</p>
-            </div>
-          </div>
-          <i class="fas fa-arrow-up-right-from-square text-[8px] text-cyan-400/70"></i>
-        </a>
-
-        <a href="download.html" class="eco-link-card">
-          <div class="flex items-center gap-2">
-            <i class="fas fa-mobile-screen-button text-pink-400 text-sm"></i>
-            <div>
-              <p class="text-[10px] font-black text-white">CyberEx App</p>
-              <p class="text-[7px] text-gray-400">Android APK & Mobil</p>
-            </div>
-          </div>
-          <i class="fas fa-download text-[8px] text-pink-400/70"></i>
-        </a>
-
-        <a href="https://cyberex.com.tr/web3wallet/" target="_blank" class="eco-link-card">
-          <div class="flex items-center gap-2">
-            <i class="fas fa-wallet text-purple-400 text-sm"></i>
-            <div>
-              <p class="text-[10px] font-black text-white">Web3 Wallet</p>
-              <p class="text-[7px] text-gray-400">Non-Custodial Cüzdan</p>
-            </div>
-          </div>
-          <i class="fas fa-arrow-up-right-from-square text-[8px] text-purple-400/70"></i>
-        </a>
-
-        <a href="https://analyticax.com.tr" target="_blank" class="eco-link-card">
-          <div class="flex items-center gap-2">
-            <i class="fas fa-brain text-green-400 text-sm"></i>
-            <div>
-              <p class="text-[10px] font-black text-white">AnalyticaX Intel</p>
-              <p class="text-[7px] text-gray-400">AI Piyasa Analitiği</p>
-            </div>
-          </div>
-          <i class="fas fa-arrow-up-right-from-square text-[8px] text-green-400/70"></i>
-        </a>
+        <a href="https://cyberex.com.tr" target="_blank" class="eco-link-card"><div class="flex items-center gap-2"><i class="fas fa-globe text-cyan-400 text-sm"></i><div><p class="text-[10px] font-black text-white">CyberEx Platform</p><p class="text-[7px] text-gray-400">Ana Web OTC & Spot</p></div></div><i class="fas fa-arrow-up-right-from-square text-[8px] text-cyan-400/70"></i></a>
+        <a href="download.html" class="eco-link-card"><div class="flex items-center gap-2"><i class="fas fa-mobile-screen-button text-pink-400 text-sm"></i><div><p class="text-[10px] font-black text-white">CyberEx App</p><p class="text-[7px] text-gray-400">Android APK & Mobil</p></div></div><i class="fas fa-download text-[8px] text-pink-400/70"></i></a>
+        <a href="https://cyberex.com.tr/web3wallet/" target="_blank" class="eco-link-card"><div class="flex items-center gap-2"><i class="fas fa-wallet text-purple-400 text-sm"></i><div><p class="text-[10px] font-black text-white">Web3 Wallet</p><p class="text-[7px] text-gray-400">Non-Custodial Cüzdan</p></div></div><i class="fas fa-arrow-up-right-from-square text-[8px] text-purple-400/70"></i></a>
+        <a href="https://analyticax.com.tr" target="_blank" class="eco-link-card"><div class="flex items-center gap-2"><i class="fas fa-brain text-green-400 text-sm"></i><div><p class="text-[10px] font-black text-white">AnalyticaX Intel</p><p class="text-[7px] text-gray-400">AI Piyasa Analitiği</p></div></div><i class="fas fa-arrow-up-right-from-square text-[8px] text-green-400/70"></i></a>
       </div>
 
-      <!-- Corporate & Legal Accordion -->
-      <div class="bg-black/50 rounded-xl p-3 border border-white/5 space-y-2 text-[8px]">
-        <div class="flex items-center justify-between cursor-pointer" onclick="document.getElementById('corp-legal-details').classList.toggle('hidden')">
-          <div class="flex items-center gap-1.5 text-cyan-400 font-bold uppercase text-[9px]">
-            <i class="fas fa-scale-balanced text-sm"></i>
-            <span>Kurumsal, 5549 Sayılı MASAK & Hukuki Bilgilendirme</span>
-          </div>
-          <i class="fas fa-chevron-down text-cyan-400 text-xs"></i>
-        </div>
-
-        <div id="corp-legal-details" class="space-y-2 pt-2 border-t border-white/5 text-gray-300 leading-relaxed">
-          <div class="p-2 rounded-lg bg-yellow-400/5 border border-yellow-400/20">
-            <p class="font-bold text-yellow-400 mb-0.5">⚖️ 5549 Sayılı MASAK & AML (Kara Para Önleme) Uyarısı:</p>
-            <p class="text-gray-300">Banka transferlerinde hesap sahibi ile CyberEx kullanıcı adı birebir eşleşmelidir. 3. şahıslar adına yapılan ödemeler tespit edildiğinde derhal dondurulur ve yasal mercilere bildirilir.</p>
-          </div>
-
-          <div class="p-2 rounded-lg bg-green-400/5 border border-green-400/20">
-            <p class="font-bold text-green-400 mb-0.5">🔒 Smart Escrow Fon Koruması & Multi-Sig Emanet:</p>
-            <p class="text-gray-300">Tüm kripto varlıklar işlem sonuçlanana dek CyberEx akıllı sözleşme emanet havuzunda kilit altında tutulur. Satıcı onayı ve dekont teyidi olmadan asla serbest bırakılmaz.</p>
-          </div>
-
-          <div class="grid grid-cols-2 gap-1.5 pt-1 text-[8px]">
-            <a href="terms.html" class="p-2 rounded bg-black/40 border border-white/5 text-gray-300 hover:text-cyan-400 flex items-center justify-between"><span class="font-bold">Kullanım Şartları</span><i class="fas fa-file-contract text-cyan-400/60"></i></a>
-            <a href="legal.html" class="p-2 rounded bg-black/40 border border-white/5 text-gray-300 hover:text-cyan-400 flex items-center justify-between"><span class="font-bold">Yasal Uyarı</span><i class="fas fa-gavel text-cyan-400/60"></i></a>
-            <a href="privacy.html" class="p-2 rounded bg-black/40 border border-white/5 text-gray-300 hover:text-cyan-400 flex items-center justify-between"><span class="font-bold">Gizlilik Politikası</span><i class="fas fa-shield-cat text-cyan-400/60"></i></a>
-            <a href="kvkk.html" class="p-2 rounded bg-black/40 border border-white/5 text-gray-300 hover:text-cyan-400 flex items-center justify-between"><span class="font-bold">KVKK Metni</span><i class="fas fa-id-card text-cyan-400/60"></i></a>
-            <a href="risk.html" class="p-2 rounded bg-black/40 border border-white/5 text-gray-300 hover:text-cyan-400 flex items-center justify-between"><span class="font-bold">Risk Bildirimi</span><i class="fas fa-triangle-exclamation text-yellow-400/60"></i></a>
-            <a href="cookie-policy.html" class="p-2 rounded bg-black/40 border border-white/5 text-gray-300 hover:text-cyan-400 flex items-center justify-between"><span class="font-bold">Çerez Politikası</span><i class="fas fa-cookie-bite text-cyan-400/60"></i></a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Official Support & Community Channels -->
       <div class="flex justify-between items-center pt-2 border-t border-white/5">
         <p class="text-[8px] font-bold text-gray-400 font-mono">RESMİ KANALLAR</p>
         <div class="flex gap-2">
-          <a href="https://t.me/cyberex" target="_blank" title="Official Telegram" class="w-7 h-7 rounded-lg bg-[#0088cc]/15 border border-[#0088cc]/30 text-[#0088cc] flex items-center justify-center text-xs hover:scale-110 transition-transform"><i class="fab fa-telegram"></i></a>
-          <a href="mailto:contact@cyberex.com.tr" title="Destek E-Posta" class="w-7 h-7 rounded-lg bg-cyan-400/15 border border-cyan-400/30 text-cyan-400 flex items-center justify-center text-xs hover:scale-110 transition-transform"><i class="fas fa-envelope"></i></a>
-          <a href="https://twitter.com/cyberex" target="_blank" class="w-7 h-7 rounded-lg bg-white/10 border border-white/20 text-white flex items-center justify-center text-xs hover:scale-110 transition-transform"><i class="fab fa-x-twitter"></i></a>
-          <a href="https://github.com/eticin60/CyberEx" target="_blank" class="w-7 h-7 rounded-lg bg-white/10 border border-white/20 text-white flex items-center justify-center text-xs hover:scale-110 transition-transform"><i class="fab fa-github"></i></a>
+          <a href="https://t.me/cyberex" target="_blank" class="w-7 h-7 rounded-lg bg-[#0088cc]/15 border border-[#0088cc]/30 text-[#0088cc] flex items-center justify-center text-xs"><i class="fab fa-telegram"></i></a>
+          <a href="mailto:contact@cyberex.com.tr" class="w-7 h-7 rounded-lg bg-cyan-400/15 border border-cyan-400/30 text-cyan-400 flex items-center justify-center text-xs"><i class="fas fa-envelope"></i></a>
+          <a href="https://twitter.com/cyberex" target="_blank" class="w-7 h-7 rounded-lg bg-white/10 border border-white/20 text-white flex items-center justify-center text-xs"><i class="fab fa-x-twitter"></i></a>
+          <a href="https://github.com/eticin60/CyberEx" target="_blank" class="w-7 h-7 rounded-lg bg-white/10 border border-white/20 text-white flex items-center justify-center text-xs"><i class="fab fa-github"></i></a>
         </div>
       </div>
 
@@ -500,14 +421,8 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
   <div class="sheet space-y-3">
     <div class="flex justify-between items-center"><div><h3 class="text-xs font-black text-white uppercase">Profil Ayarları</h3><p class="text-[9px] text-gray-400">Avatar, Rumuz ve Telegram</p></div><button onclick="closeM('modal-profile')" class="w-7 h-7 rounded-full bg-white/5 text-gray-400 hover:text-white flex items-center justify-center"><i class="fas fa-times text-xs"></i></button></div>
     <form onsubmit="saveProfile(event)" class="space-y-3 text-xs">
-      <div>
-        <label class="text-[8px] text-gray-400 uppercase block mb-1 font-bold">Kullanıcı Adı / Rumuz</label>
-        <input type="text" id="prof-name" class="font-bold text-xs" required>
-      </div>
-      <div>
-        <label class="text-[8px] text-gray-400 uppercase block mb-1 font-bold">Telegram Kullanıcı Adı (Opsiyonel)</label>
-        <input type="text" id="prof-tg" placeholder="@kullanici_adiniz" class="font-mono text-xs">
-      </div>
+      <div><label class="text-[8px] text-gray-400 uppercase block mb-1 font-bold">Kullanıcı Adı / Rumuz</label><input type="text" id="prof-name" class="font-bold text-xs" required></div>
+      <div><label class="text-[8px] text-gray-400 uppercase block mb-1 font-bold">Telegram Kullanıcı Adı (Opsiyonel)</label><input type="text" id="prof-tg" placeholder="@kullanici_adiniz" class="font-mono text-xs"></div>
       <div><label class="text-[8px] text-gray-400 uppercase block mb-1 font-bold">Avatar</label>
         <div class="grid grid-cols-5 gap-2" id="prof-avatars">
           <img src="assets/avatar/avatar_1.png" onclick="selAvatar('assets/avatar/avatar_1.png')" class="w-10 h-10 rounded-xl cursor-pointer border-2 border-cyan-400 object-cover">
@@ -536,7 +451,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
 </div>
 
 <!-- ====================================================== -->
-<!--  MODAL: ORDER SHEET WITH DETAILED SUMMARY & METADATA    -->
+<!--  MODAL: ORDER SHEET                                    -->
 <!-- ====================================================== -->
 <div id="modal-order" class="backdrop hidden">
   <div class="sheet space-y-3.5">
@@ -549,7 +464,8 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
       <div class="flex justify-between"><span class="text-gray-400" id="ord-cp-lbl">Satıcı:</span><span class="font-bold text-white" id="ord-seller">—</span></div>
       <div class="flex justify-between"><span class="text-gray-400">Birim Spot Fiyat:</span><span class="font-black text-green-400 font-mono" id="ord-price">—</span></div>
       <div class="flex justify-between"><span class="text-gray-400">İşlem Limiti:</span><span class="font-bold text-white font-mono" id="ord-limit">—</span></div>
-      <div class="flex justify-between items-center"><span class="text-gray-400">Kabul Edilen Banka:</span><div id="ord-pay" class="flex gap-1 flex-wrap justify-end">—</div></div>
+      <div class="flex justify-between items-start gap-2"><span class="text-gray-400 text-[10px] flex-shrink-0" id="ord-pay-lbl">Ödeme Yöntemi:</span><div id="ord-pay" class="flex gap-1 flex-wrap justify-end">—</div></div>
+      <div id="ord-networks-row" class="hidden flex justify-between items-center"><span class="text-gray-400">Desteklenen Ağlar:</span><div id="ord-nets-display" class="flex gap-1 flex-wrap justify-end"></div></div>
     </div>
 
     <div class="space-y-2.5 text-xs">
@@ -574,7 +490,6 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
         </div>
       </div>
 
-      <!-- Telegram Handle Field -->
       <div>
         <label class="text-[8px] text-gray-400 uppercase block mb-1 font-bold">Telegram Kullanıcı Adınız (Bildirimler İçin)</label>
         <div class="relative">
@@ -618,7 +533,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
 </div>
 
 <!-- ====================================================== -->
-<!--  MODAL: ESCROW TRACKER WITH CYBEREX DESTEK CHAT         -->
+<!--  MODAL: ESCROW TRACKER                                  -->
 <!-- ====================================================== -->
 <div id="modal-escrow" class="backdrop hidden">
   <div class="sheet space-y-3">
@@ -646,7 +561,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
       </div>
     </div>
 
-    <!-- Dynamic Admin Note Alert Box -->
+    <!-- Admin Note Box -->
     <div id="esc-admin-note-box" class="hidden p-2.5 rounded-xl bg-cyan-400/10 border border-cyan-400/30 text-xs space-y-0.5">
       <div class="flex items-center gap-1.5 text-cyan-400 font-bold text-[9px] uppercase">
         <img src="cyberex-logo.png" class="w-3.5 h-3.5 object-contain">
@@ -655,7 +570,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
       <p id="esc-admin-note-text" class="text-white text-[10px] font-mono leading-tight pl-4">—</p>
     </div>
 
-    <!-- Order Summary Grid with Unit Price & Details -->
+    <!-- Order Summary Grid -->
     <div class="bg-black/40 rounded-xl p-3 space-y-1 text-xs border border-white/5 font-mono">
       <div class="flex justify-between"><span class="text-gray-400" id="esc-am-lbl">Miktar:</span><span class="font-black text-cyan-400" id="esc-am">0 USDT</span></div>
       <div class="flex justify-between"><span class="text-gray-400">Transfer Ağı:</span><span class="font-bold text-white" id="esc-net">TRC20</span></div>
@@ -682,9 +597,6 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
         <div><p class="text-[7px] text-gray-400 font-bold uppercase">Hesap Sahibi</p><p class="text-white font-bold" id="esc-holder">Onurcan Demir</p></div>
         <div class="text-right"><p class="text-[7px] text-gray-400 font-bold uppercase">Yasal Açıklama</p><p class="text-orange-400 font-black font-mono cursor-pointer text-[10px]" id="esc-ref" onclick="copyText(this.innerText)">CYBEREX-USDT-000000 <i class="fas fa-copy ml-1"></i></p></div>
       </div>
-      <div class="bg-black/40 rounded-lg p-2 text-[8px] text-yellow-400 font-mono">
-        ⚠️ Açıklama kısmını birebir kopyalayınız. Eksik veya farklı açıklama işlem gecikmesine yol açabilir.
-      </div>
     </div>
 
     <!-- SELL CASE -->
@@ -705,12 +617,9 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
         <label class="text-[7px] text-gray-400 uppercase font-bold block mb-0.5">Kripto Transfer TXID / İşlem Kodu (Opsiyonel)</label>
         <input type="text" id="esc-sell-txid" placeholder="Transfer hash veya TXID girin..." class="text-xs font-mono py-1.5">
       </div>
-      <div class="bg-black/40 rounded-lg p-2 text-[8px] text-gray-300 font-mono">
-        💡 Kripto transferinizi yukarıdaki emanet adresine gönderiniz. Kripto onaylandığında paranız FAST ile IBAN'ınıza yatırılacaktır.
-      </div>
     </div>
 
-    <!-- LIVE P2P CHAT ENGINE WITH CYBEREX DESTEK BRANDING -->
+    <!-- LIVE P2P CHAT ENGINE -->
     <div class="glass p-3 space-y-2 border-cyan-400/25 bg-black/60">
       <div class="flex justify-between items-center">
         <p class="text-[9px] font-black text-cyan-400 uppercase flex items-center gap-1.5">
@@ -753,14 +662,14 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
       <p class="text-xs font-black text-green-400">İşlem Başarıyla Tamamlandı! 🎉</p>
     </div>
 
-    <!-- Cancelled Banner (with distinct Admin Cancellation details) -->
+    <!-- Cancelled Banner -->
     <div id="esc-cancel-box" class="hidden p-3.5 rounded-xl bg-red-400/15 border border-red-400/35 text-center space-y-1.5">
       <i class="fas fa-ban text-2xl text-red-400"></i>
       <p class="text-xs font-black text-red-400" id="esc-cancel-heading">Sipariş İptal Edildi</p>
       <p class="text-[9px] text-gray-300" id="esc-cancel-reason">Yönetici / Destek: Bu işlem sonlandırılmıştır.</p>
     </div>
 
-    <!-- Proof Upload with Resilient Fallback -->
+    <!-- Proof Upload -->
     <div id="proof-wrap">
       <p class="text-[8px] text-gray-400 uppercase mb-1 font-bold" id="proof-lbl">Ödeme / Transfer Kanıtı Yükle</p>
       <div onclick="document.getElementById('inp-file').click()" class="border-2 border-dashed border-cyan-400/40 rounded-xl p-3.5 text-center cursor-pointer hover:border-cyan-400 transition-colors bg-black/30">
@@ -793,7 +702,7 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
   </div>
 </div>
 
-<!-- ====== MODAL: CREATE LISTING WITH REAL BANK LOGOS ====== -->
+<!-- ====== MODAL: CREATE LISTING ====== -->
 <div id="modal-create" class="backdrop hidden">
   <div class="sheet space-y-3.5">
     <div class="flex justify-between items-center">
@@ -857,11 +766,9 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
       <div>
         <label class="text-[7px] text-gray-400 uppercase block mb-0.5 font-bold">Kripto Alacağınız Cüzdan Adresi</label>
         <input type="text" id="cl-wallet" placeholder="Ağa göre adresiniz..." class="font-mono text-xs">
-        <p class="text-[7px] text-gray-400 mt-0.5">TRC20 için T..., ERC20/BEP20 için 0x... ile başlayan adres giriniz.</p>
       </div>
     </div>
 
-    <!-- Real Bank Logos / Payment Selector in Create Listing -->
     <div><label class="text-[8px] text-gray-400 uppercase block mb-1 font-bold">Kabul Ettiğiniz Banka & Ödeme Yöntemleri</label>
       <div class="grid grid-cols-3 gap-1.5 text-[9px]" id="cl-pay-cbs">
         <label class="flex items-center gap-1 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="FAST Anında" checked class="w-3 h-3"><span class="bank-badge bank-fast"><i class="fas fa-bolt text-[10px]"></i> FAST</span></label>
@@ -876,9 +783,6 @@ input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0
         <label class="flex items-center gap-1 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="QNB Finansbank" class="w-3 h-3"><span class="bank-badge"><img src="assets/banks/qnb_finansbank.png"> QNB</span></label>
         <label class="flex items-center gap-1 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="TEB" class="w-3 h-3"><span class="bank-badge"><img src="assets/banks/teb.png"> TEB</span></label>
         <label class="flex items-center gap-1 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="Param / Papara" checked class="w-3 h-3"><span class="bank-badge"><img src="assets/banks/param.png"> Param</span></label>
-        <label class="flex items-center gap-1 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="Banxa" class="w-3 h-3"><span class="bank-badge"><img src="assets/banks/banxa.webp"> Banxa</span></label>
-        <label class="flex items-center gap-1 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="Simplex" class="w-3 h-3"><span class="bank-badge"><img src="assets/banks/simplex.webp"> Simplex</span></label>
-        <label class="flex items-center gap-1 bg-black/40 p-1.5 rounded-lg border border-white/5 cursor-pointer hover:border-cyan-400/40"><input type="checkbox" value="MoonPay" class="w-3 h-3"><span class="bank-badge"><img src="assets/banks/moonpay.jpeg"> MoonPay</span></label>
       </div>
     </div>
 
@@ -939,8 +843,9 @@ const RAW_MERCHANTS = [
     "methods": [
       "Ziraat Bankası (Onurcan Demir)",
       "FAST Anında",
-      "Papara",
-      "Garanti BBVA"
+      "Garanti BBVA",
+      "Akbank",
+      "Param / Papara"
     ],
     "iban": "TR34 0001 0002 3986 6558 3150 01",
     "holder": "Onurcan Demir",
@@ -963,10 +868,24 @@ const RAW_MERCHANTS = [
     "comp": 100.0,
     "resp": 1,
     "methods": [
-      "Tüm Bankalar",
-      "7/24 FAST Anında",
-      "Papara",
-      "SEPA / SWIFT"
+      "FAST Anında",
+      "Ziraat Bankası",
+      "Garanti BBVA",
+      "Akbank",
+      "İş Bankası",
+      "Yapı Kredi",
+      "VakıfBank",
+      "Halkbank",
+      "DenizBank",
+      "QNB Finansbank",
+      "TEB",
+      "Param / Papara",
+      "Kuveyt Türk",
+      "Banxa",
+      "Simplex",
+      "MoonPay",
+      "Wise / Revolut",
+      "SEPA Instant"
     ],
     "iban": "TR45 0006 2000 1234 0006 2999 72",
     "holder": "CyberEx P2P Finans A.Ş.",
@@ -7790,12 +7709,12 @@ const AVATARS = Array.from({length:15}, (_, i) => `assets/avatar/avatar_${i+1}.p
 const PROTECTED_NAMES = ['admin', 'cyberex', 'official', 'support', 'moderator', 'onurcan', 'onurcan_demir', 'root', 'system'];
 
 const VALID_PASS_HASHES = [
-  '9c9a90a0debe094046d3d3331082f01fd594955f09a2e45c84725f1cbf123f43', // admin1923
-  '16d9cdb6814b712c41f76fec2ebe331d7912201de37b9d53464997ed8f5817fc', // root_admin
-  '4b8ceb08fee8cb25dd9db1cd4012f1abc32239930fdf9f5776c127a5388d1a92', // cyberexadmin
-  'd42ed19c0d9c80706b6b1484a97cf8634285d753ac079717aee8c651d54caef3', // 1923
-  '6dd454fcd40cdadbb52a7e893ace6f79c7d4ce254ce87d77045562c052ae4d9a', // cyberex
-  '676dcc25a044b7c5f54b61fba9f3c62efa63758a7dab7fc82ca3aa3945d6995b'  // cyberex2026
+  '9c9a90a0debe094046d3d3331082f01fd594955f09a2e45c84725f1cbf123f43',
+  '16d9cdb6814b712c41f76fec2ebe331d7912201de37b9d53464997ed8f5817fc',
+  '4b8ceb08fee8cb25dd9db1cd4012f1abc32239930fdf9f5776c127a5388d1a92',
+  'd42ed19c0d9c80706b6b1484a97cf8634285d753ac079717aee8c651d54caef3',
+  '6dd454fcd40cdadbb52a7e893ace6f79c7d4ce254ce87d77045562c052ae4d9a',
+  '676dcc25a044b7c5f54b61fba9f3c62efa63758a7dab7fc82ca3aa3945d6995b'
 ];
 
 async function sha256(str) {
@@ -7822,18 +7741,17 @@ let create_type = 'sell';
 let act_events = [];
 
 // ============================================================================
-// DYNAMIC BREATHING MARKET ENGINE & LIVE STATE TRACKER
+// DYNAMIC BREATHING MARKET ENGINE & LIVE STATE TRACKER (FRACTIONAL REALISM)
 // ============================================================================
 const MERCHANT_LIVE_STATE = {};
 
-// Initialize state for each merchant
 function getMerchantState(m) {
   const key = m.name;
   if (!MERCHANT_LIVE_STATE[key]) {
     let initialPool = m.pool || 100000;
     let initialTrades = m.trades || 1000;
-    if (m.isOnurcanDemir) { initialPool = 495800; initialTrades = 8942; }
-    if (m.isCyberExOfficial) { initialPool = 2480000; initialTrades = 45892; }
+    if (m.isOnurcanDemir) { initialPool = 495840.50; initialTrades = 8942; }
+    if (m.isCyberExOfficial) { initialPool = 2487650.00; initialTrades = 45892; }
     MERCHANT_LIVE_STATE[key] = {
       pool: initialPool,
       trades: initialTrades,
@@ -7996,7 +7914,7 @@ function baseSpot(coin, fiat) {
   return usd * usdtFiat;
 }
 
-// REAL BANK BADGE GENERATOR WITH COPIED ASSETS
+// REAL BANK BADGES
 function getBankBadge(methodName) {
   const m = (methodName || '').toLowerCase();
   if (m.includes('ziraat')) return `<span class="bank-badge"><img src="assets/banks/ziraat_bankasi.png"> Ziraat</span>`;
@@ -8072,7 +7990,10 @@ function renderListings() {
     };
   });
 
-  if (pay !== 'ALL') list = list.filter(m => (m.methods || []).some(mt => mt.toLowerCase().includes(pay.toLowerCase())));
+  // CyberEx_Official is institutional and supports all methods
+  if (pay !== 'ALL') {
+    list = list.filter(m => m.isCyberExOfficial || (m.methods || []).some(mt => mt.toLowerCase().includes(pay.toLowerCase())));
+  }
   if (q) list = list.filter(m => m.name.toLowerCase().includes(q) || (m.methods || []).some(mt => mt.toLowerCase().includes(q)));
 
   list.sort((a, b) => {
@@ -8098,7 +8019,7 @@ function renderListings() {
 
     let tierBadge = '';
     if (item.isOnurcanDemir) tierBadge = '<span class="badge badge-gold text-[7px]">👑 RESMİ PREMIUM (EN UCUZ)</span>';
-    else if (item.isCyberExOfficial) tierBadge = '<span class="badge badge-g text-[7px]">🏢 CYBEREX RESMİ</span>';
+    else if (item.isCyberExOfficial) tierBadge = '<span class="badge badge-g text-[7px]">🏢 CYBEREX RESMİ (TÜM BANKALAR)</span>';
     else if (item.tier === 'vip') tierBadge = '<span class="badge badge-gold text-[7px]">💎 VIP OTC</span>';
 
     const btnLabel = isBuy ? 'SATIN AL' : 'KRİPTO SAT';
@@ -8134,20 +8055,24 @@ function renderListings() {
         </div>
         <div class="text-right">
           <p class="text-[7px] text-gray-500 uppercase font-bold">Havuz</p>
-          <p class="text-[11px] font-bold text-white font-mono" id="pool-val-${item.id || idx}">${(item.livePool || 10000).toLocaleString('tr-TR')} ${coin}</p>
+          <p class="text-[11px] font-bold text-white font-mono" id="pool-val-${item.id || idx}">${parseFloat(item.livePool || 10000).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${coin}</p>
           <p class="text-[7px] text-gray-400 font-mono">${item.min || 250} – ${(item.max || 10000).toLocaleString('tr-TR')} ${coin}</p>
         </div>
       </div>
       <div class="flex justify-between items-center pt-2">
         <div class="flex gap-1 flex-wrap items-center">${methodsHtml}</div>
-        <button onclick="openOrder(${dataStr})" class="${btnClass} px-3.5 py-1.5 text-[10px] uppercase tracking-wider font-black shadow">${btnLabel}</button>
+        <div class="flex items-center gap-1">
+          ${item.isMine ? `
+            <button onclick="editMyListing('${item.id}')" class="px-2 py-1.5 rounded-lg bg-cyan-400/10 border border-cyan-400/30 text-cyan-400 text-[9px] font-bold hover:bg-cyan-400/20" title="Düzenle"><i class="fas fa-pen"></i></button>
+            <button onclick="deleteMyListing('${item.id}')" class="px-2 py-1.5 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-[9px] font-bold hover:bg-red-500/20" title="Sil"><i class="fas fa-trash"></i></button>
+          ` : `<button onclick="openOrder(${dataStr})" class="${btnClass} px-3.5 py-1.5 text-[10px] uppercase tracking-wider font-black shadow">${btnLabel}</button>`}
+        </div>
       </div>
     `;
     box.appendChild(card);
   });
 }
 
-// ORDER MODAL & SUBMIT WITH STRUCTURED METADATA PACKING
 function openOrder(item) {
   app_active_listing = item;
   const isBuy = app_mode === 'buy';
@@ -8157,7 +8082,19 @@ function openOrder(item) {
   document.getElementById('ord-seller').innerText = `${item.flag || '🌐'} ${item.name}`;
   document.getElementById('ord-price').innerText = `1 ${item.coin} = ${item.finalPrice.toLocaleString('tr-TR', { minimumFractionDigits: 2 })} ${item.fiat}`;
   document.getElementById('ord-limit').innerText = `${item.min} – ${(item.max).toLocaleString('tr-TR')} ${item.coin}`;
-  document.getElementById('ord-pay').innerHTML = (item.methods || []).map(m => getBankBadge(m)).join(' ');
+  
+  if (isBuy) {
+    document.getElementById('ord-pay-lbl').innerText = 'Kabul Edilen Ödeme:';
+    document.getElementById('ord-pay').innerHTML = (item.methods || []).map(m => getBankBadge(m)).join(' ');
+    document.getElementById('ord-networks-row').classList.add('hidden');
+  } else {
+    document.getElementById('ord-pay-lbl').innerText = 'TL Ödenecek Banka:';
+    document.getElementById('ord-pay').innerHTML = (item.methods || []).slice(0, 2).map(m => getBankBadge(m)).join(' ');
+    document.getElementById('ord-networks-row').classList.remove('hidden');
+    const netBadges = ['TRC20','BEP20','ERC20','SOL'].map(n => `<span class="badge badge-c text-[7px] font-mono">${n}</span>`).join(' ');
+    document.getElementById('ord-nets-display').innerHTML = netBadges;
+  }
+
   document.getElementById('ord-crypto-lbl').innerText = isBuy ? `Almak İstediğiniz ${item.coin} Miktarı` : `Satmak İstediğiniz ${item.coin} Miktarı`;
   document.getElementById('ord-fiat-lbl').innerText = isBuy ? `Ödeyeceğiniz Toplam ${item.fiat}` : `Hesabınıza Geçecek Toplam ${item.fiat}`;
   document.getElementById('ord-sym').innerText = item.coin;
@@ -8166,7 +8103,6 @@ function openOrder(item) {
   document.getElementById('ord-submit-btn').innerHTML = `<i class="fas fa-shield-halved mr-1.5"></i>${isBuy ? 'Alım Escrowunu Başlat' : 'Satış Escrowunu Başlat'}`;
   document.getElementById('ord-submit-btn').className = isBuy ? 'btn-c w-full py-3.5 text-xs uppercase tracking-wider font-black' : 'btn-r w-full py-3.5 text-xs uppercase tracking-wider font-black';
 
-  // Telegram handle autofill
   document.getElementById('ord-tg').value = app_user.tg_username || (app_user.name.startsWith('@') ? app_user.name : '');
 
   document.getElementById('ord-buy-field').classList.toggle('hidden', !isBuy);
@@ -8250,7 +8186,7 @@ async function submitOrder() {
   const totalFiat = am * app_active_listing.finalPrice;
   const isOD = !!app_active_listing.isOnurcanDemir;
 
-  // Real-time pool deduction & trade increment for the chosen merchant
+  // Mutate merchant live state
   const mState = getMerchantState(app_active_listing);
   mState.trades += 1;
   mState.pool = Math.max(1000, mState.pool - am);
@@ -8278,7 +8214,6 @@ async function submitOrder() {
 
   const deadline = new Date(Date.now() + 30 * 60000).toISOString();
   
-  // Pack structured metadata into payment_method for 100% data fidelity
   const basePayMethod = (app_active_listing.methods || ['FAST Anında']).join(' • ');
   const packedMeta = {
     type: trade.type,
@@ -8293,20 +8228,33 @@ async function submitOrder() {
   };
   const fullPaymentString = `${basePayMethod} || META:::${JSON.stringify(packedMeta)}`;
 
-  // Save to Supabase (admin_notes starts completely CLEAN)
-  fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades`, {
-    method: 'POST',
-    headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
-    body: JSON.stringify({
-      trade_code: code, coin: trade.coin, network: net, amount_crypto: am,
-      unit_fiat_price: trade.unit_fiat_price, amount_fiat: totalFiat, fiat_currency: trade.fiat_currency,
-      buyer_wallet_address: trade.buyer_wallet_address,
-      payment_method: fullPaymentString,
-      payment_deadline: deadline,
-      admin_notes: '',
-      status: 'pending_payment'
-    })
-  }).catch(()=>{});
+  // Save to Supabase
+  (async () => {
+    try {
+      const postBody = {
+        trade_code: code,
+        coin: trade.coin,
+        network: net,
+        amount_crypto: parseFloat(am) || 0,
+        unit_fiat_price: parseFloat(trade.unit_fiat_price) || 1,
+        amount_fiat: parseFloat(totalFiat) || 0,
+        fiat_currency: trade.fiat_currency || 'TRY',
+        buyer_wallet_address: trade.buyer_wallet_address || '',
+        payment_method: fullPaymentString,
+        payment_deadline: deadline,
+        admin_notes: '',
+        status: 'pending_payment'
+      };
+      const res = await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades`, {
+        method: 'POST',
+        headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+        body: JSON.stringify(postBody)
+      });
+      if (res.ok) {
+        toast('☁️ Sipariş Supabase bulutuna aktarıldı.', 'g');
+      }
+    } catch (_) {}
+  })();
 
   const tgLink = app_user.tg_username ? `<a href="https://t.me/${app_user.tg_username.replace('@','')}">${app_user.tg_username}</a>` : app_user.name;
   const tgMsg = `🔔 <b>YENİ P2P ${isBuy ? 'ALIM' : 'SATIŞ'} SİPARİŞİ</b>\n\n📋 <code>${code}</code>\n👤 <b>Kullanıcı:</b> ${tgLink} (${uid})\n🏪 <b>Karşı Taraf:</b> ${trade.seller}\n🌐 <b>Ağ:</b> ${net}\n💰 <b>Miktar:</b> ${am} ${trade.coin} (1 ${trade.coin} = ${trade.unit_fiat_price} ${trade.fiat_currency})\n💵 <b>Toplam:</b> ${totalFiat.toLocaleString('tr-TR', { maximumFractionDigits: 2 })} ${trade.fiat_currency}\n` + (isBuy ? `👛 <b>Alıcı Cüzdan:</b> <code>${buyerWallet}</code>` : `🏦 <b>Kullanıcı IBAN:</b> <code>${sellerIban}</code> (${sellerHolder})`);
@@ -8350,7 +8298,7 @@ function encodeChatIntoNotes(cleanNote, messages) {
   return `${notePart} || CHAT_LOG:::${JSON.stringify(messages)}`;
 }
 
-// ESCROW MODAL TRACKER WITH CYBEREX DESTEK BRANDING
+// ESCROW MODAL TRACKER
 function openEscrow(t) {
   app_active = t;
   const isBuy = t.type === 'buy';
@@ -8366,7 +8314,6 @@ function openEscrow(t) {
   document.getElementById('esc-tg-lbl').innerText = isBuy ? 'Alıcı Cüzdanınız:' : 'Kullanıcı IBAN:';
   document.getElementById('esc-tg-val').innerText = isBuy ? (t.buyer_wallet_address || t.user_wallet_to_receive || '—') : (t.user_payout_iban ? `${t.user_payout_iban} (${t.user_payout_holder})` : '—');
 
-  // Clean Admin Note Display
   const cleanNote = parseAdminNoteOnly(t.admin_notes);
   const noteBox = document.getElementById('esc-admin-note-box');
   const noteText = document.getElementById('esc-admin-note-text');
@@ -8377,7 +8324,6 @@ function openEscrow(t) {
     noteBox.classList.add('hidden');
   }
 
-  // TXID Display
   const txidRow = document.getElementById('esc-txid-row');
   const txidLink = document.getElementById('esc-txid-link');
   if (t.tx_hash) {
@@ -8430,10 +8376,17 @@ function updateEscrowUI(t) {
   const sm = stMap[t.status] || stMap.pending_payment;
   document.getElementById('esc-status-badge').className = 'badge ' + sm.badge + ' mt-0.5 inline-block';
   document.getElementById('esc-status-badge').innerText = sm.label;
-  setSteps(t.step || (t.status === 'completed' ? 4 : t.status === 'proof_uploaded' ? 3 : 2));
+
+  // Step indicator logic: when cancelled -> 0 (all dimmed red X)
+  let stepNum;
+  if (t.status === 'completed') stepNum = 4;
+  else if (t.status === 'cancelled') stepNum = 0;
+  else if (t.status === 'proof_uploaded') stepNum = 3;
+  else stepNum = 2;
+  setSteps(stepNum);
 
   const isCompleted = t.status === 'completed', isCancelled = t.status === 'cancelled', hasProof = t.status === 'proof_uploaded';
-  document.getElementById('esc-review-box').classList.toggle('hidden', !hasProof && !isCompleted);
+  document.getElementById('esc-review-box').classList.toggle('hidden', !hasProof);
   document.getElementById('esc-done-box').classList.toggle('hidden', !isCompleted);
   document.getElementById('esc-cancel-box').classList.toggle('hidden', !isCancelled);
   document.getElementById('proof-wrap').classList.toggle('hidden', isCompleted || isCancelled || hasProof);
@@ -8443,7 +8396,7 @@ function updateEscrowUI(t) {
     const cancelReason = document.getElementById('esc-cancel-reason');
     if (isAdmCancelled) {
       cancelHeading.innerText = '🚫 İşlem Yönetici / Admin Tarafından İptal Edildi';
-      cancelReason.innerText = cleanNote || 'Yönetici Notu: Ödeme doğrulanamadı veya işlem zaman aşımına uğradı.';
+      cancelReason.innerText = cleanNote || 'Yönetici Notu: Ödeme doğrulanamadı veya işlem sonlandırıldı.';
     } else {
       cancelHeading.innerText = 'Sipariş İptal Edildi';
       cancelReason.innerText = cleanNote || 'İşlem iptal edilmiştir.';
@@ -8467,14 +8420,26 @@ function setSteps(n) {
   for (let i = 1; i <= 4; i++) {
     const d = document.getElementById('sd' + i);
     if (!d) continue;
-    if (n === 0) { d.className = 'step-c s-wait'; d.innerText = i; }
-    else if (i < n) { d.className = 'step-c s-done'; d.innerHTML = '<i class="fas fa-check"></i>'; }
-    else if (i === n) { d.className = 'step-c s-act'; d.innerText = i; }
-    else { d.className = 'step-c s-wait'; d.innerText = i; }
+    if (n === 0) {
+      d.className = 'step-c bg-red-500/15 border border-red-500/30 text-red-400';
+      d.innerHTML = '<i class="fas fa-times text-[10px]"></i>';
+    } else if (n === 4) {
+      d.className = 'step-c s-done';
+      d.innerHTML = '<i class="fas fa-check"></i>';
+    } else if (i < n) {
+      d.className = 'step-c s-done';
+      d.innerHTML = '<i class="fas fa-check"></i>';
+    } else if (i === n) {
+      d.className = 'step-c s-act';
+      d.innerText = i;
+    } else {
+      d.className = 'step-c s-wait';
+      d.innerText = i;
+    }
   }
 }
 
-// REAL-TIME CLOUD CHAT ENGINE WITH CYBEREX LOGO BRANDING
+// REAL-TIME CHAT
 function renderUserChat() {
   if (!app_active) return;
   const box = document.getElementById('escrow-chat-box');
@@ -8534,7 +8499,6 @@ async function sendUserChat() {
   const encoded = encodeChatIntoNotes(cleanNote, curMsgs);
   app_active.admin_notes = encoded;
 
-  // Save to Supabase
   try {
     await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=eq.${app_active.trade_code}`, {
       method: 'PATCH',
@@ -8543,7 +8507,6 @@ async function sendUserChat() {
     });
   } catch (_) {}
 
-  // Cache locally
   const localChats = JSON.parse(localStorage.getItem('cx_chat_messages') || '{}');
   localChats[app_active.trade_code] = curMsgs;
   localStorage.setItem('cx_chat_messages', JSON.stringify(localChats));
@@ -8564,7 +8527,6 @@ function quickSendChat(txt) {
   sendUserChat();
 }
 
-// EDIT & CANCEL
 function openEditOrder() {
   if (!app_active || app_active.status === 'completed' || app_active.status === 'cancelled') { toast('Bu işlem düzenlenemez.', 'r'); return; }
   const isBuy = app_active.type === 'buy';
@@ -8618,7 +8580,6 @@ function cancelOrder() {
   addAct(`❌ #${app_active.trade_code} iptal edildi`);
 }
 
-// RESILIENT PROOF UPLOAD (SUPABASE STORAGE + BASE64 FALLBACK)
 async function uploadProof(inp) {
   if (!inp.files || !inp.files[0]) return;
   const file = inp.files[0];
@@ -8626,7 +8587,6 @@ async function uploadProof(inp) {
   if (!app_active) return;
   app_active.status = 'proof_uploaded'; app_active.step = 3;
 
-  // Optional TXID from sell input
   const sellTxidInp = document.getElementById('esc-sell-txid');
   if (sellTxidInp && sellTxidInp.value.trim()) {
     app_active.tx_hash = sellTxidInp.value.trim();
@@ -8650,7 +8610,6 @@ async function uploadProof(inp) {
     }
   } catch (_) {}
 
-  // Update Supabase trade status & proof url
   fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=eq.${app_active.trade_code}`, {
     method: 'PATCH',
     headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
@@ -8673,7 +8632,6 @@ async function uploadProof(inp) {
   addAct(`📨 #${app_active.trade_code} kanıt yüklendi`);
 }
 
-// LIVE SUPABASE HISTORY SYNCHRONIZATION WITH METADATA UNPACKING
 async function syncHistoryWithSupabase(isManual = false) {
   const spinIcon = document.getElementById('hist-spin-icon');
   if (spinIcon && isManual) spinIcon.classList.add('fa-spin');
@@ -8741,12 +8699,8 @@ async function syncHistoryWithSupabase(isManual = false) {
   }
 }
 
-// 4S REAL-TIME AUTO SYNC (STATUS, TX_HASH, ADMIN_NOTES & CLOUD CHAT)
-setInterval(() => {
-  syncHistoryWithSupabase(false);
-}, 4000);
+setInterval(() => { syncHistoryWithSupabase(false); }, 4000);
 
-// ACTIVE TRADES RENDER
 function renderActiveTrades() {
   const box = document.getElementById('active-trades-box');
   const badge = document.getElementById('at-badge');
@@ -8785,7 +8739,6 @@ function renderHistory() {
   });
 }
 
-// CREATE LISTING
 function openCreateModal() {
   document.getElementById('modal-create').classList.remove('hidden');
   autoFillCLPrice();
@@ -8818,6 +8771,45 @@ function autoFillCLPrice() {
   const spot = baseSpot(coin, fiat);
   document.getElementById('cl-price').value = create_type === 'sell' ? (spot * 1.02).toFixed(2) : (spot * 0.98).toFixed(2);
 }
+
+function editMyListing(id) {
+  const idx = app_listings.findIndex(l => l.id === id);
+  if (idx === -1) { toast('İlan bulunamadı.', 'r'); return; }
+  const l = app_listings[idx];
+  create_type = l.type;
+  openCreateModal();
+  document.getElementById('cl-coin').value = l.coin || 'USDT';
+  document.getElementById('cl-net').value = l.network || 'TRC20';
+  document.getElementById('cl-price').value = l.price || '';
+  document.getElementById('cl-fiat').value = l.fiat || 'TRY';
+  document.getElementById('cl-pool').value = l.pool || '';
+  document.getElementById('cl-min').value = l.min || '';
+  document.getElementById('cl-max').value = l.max || '';
+  document.getElementById('cl-terms').value = l.terms || '';
+  if (l.type === 'sell') {
+    setCreateType('sell');
+    document.getElementById('cl-iban').value = l.iban || '';
+    document.getElementById('cl-holder').value = l.holder || '';
+  } else {
+    setCreateType('buy');
+    document.getElementById('cl-wallet').value = l.wallet || '';
+  }
+  document.querySelectorAll('#cl-pay-cbs input[type=checkbox]').forEach(cb => {
+    cb.checked = (l.methods || []).includes(cb.value);
+  });
+  document.getElementById('cl-submit').setAttribute('data-edit-id', id);
+  toast('İlan düzenleme moduna girildi.', 'c');
+}
+
+function deleteMyListing(id) {
+  if (!confirm('Bu ilanı silmek istediğinizden emin misiniz?')) return;
+  app_listings = app_listings.filter(l => l.id !== id);
+  localStorage.setItem('cx_listings', JSON.stringify(app_listings));
+  document.getElementById('u-lc').innerText = app_listings.length;
+  renderListings();
+  toast('🗑️ İlan silindi.', 'y');
+}
+
 function publishListing() {
   const coin = document.getElementById('cl-coin').value, net = document.getElementById('cl-net').value;
   const price = parseFloat(document.getElementById('cl-price').value);
@@ -8845,16 +8837,36 @@ function publishListing() {
     id: 'MY-' + Date.now(), type: create_type, coin, network: net, price, fiat, pool, min, max, methods, iban, holder, wallet, terms,
     name: app_user.name, flag: '🌟', trades: 0, comp: 100, rate: 5.0, resp: 2, status: 'active'
   };
-  app_listings.push(listing);
+
+  const editId = document.getElementById('cl-submit').getAttribute('data-edit-id');
+  if (editId) {
+    const idx = app_listings.findIndex(l => l.id === editId);
+    if (idx !== -1) { app_listings[idx] = { ...app_listings[idx], ...listing, id: editId }; }
+    document.getElementById('cl-submit').removeAttribute('data-edit-id');
+    toast('✅ İlan güncellendi!', 'g');
+  } else {
+    const spotNow = baseSpot(coin, document.getElementById('cl-fiat').value);
+    const deviation = Math.abs((price - spotNow) / spotNow);
+    if (deviation > 0.30) {
+      toast(`⛔ Fiyat spot kurdan %${Math.round(deviation*100)} sapıyor! Max ±%30 izin verilir.`, 'r');
+      return;
+    }
+    if (app_listings.filter(l => l.status === 'active').length >= 5) {
+      toast('⛔ Maksimum 5 aktif ilan oluşturabilirsiniz.', 'r');
+      return;
+    }
+    app_listings.push(listing);
+    toast('🎉 İlanınız yayınlandı!', 'g');
+  }
+
   localStorage.setItem('cx_listings', JSON.stringify(app_listings));
   document.getElementById('u-lc').innerText = app_listings.length;
   closeM('modal-create');
   renderListings();
-  toast('🎉 İlanınız yayınlandı!', 'g');
   addAct(`📢 Yeni ${create_type === 'sell' ? 'satış' : 'alım'} ilanı: ${pool} ${coin}`);
 }
 
-// WEB3 WALLET ENGINE & DISCONNECT REPAIR
+// WEB3 WALLET
 const eip6963 = {};
 window.addEventListener('eip6963:announceProvider', e => { eip6963[e.detail.info.rdns] = e.detail; });
 window.dispatchEvent(new Event('eip6963:requestProvider'));
@@ -8979,25 +8991,25 @@ function deepLink(type) {
 }
 
 // ============================================================================
-// DYNAMIC BREATHING ACTIVITY TICKER WITH LIVE STATE MUTATION
+// DYNAMIC BREATHING ACTIVITY TICKER (FRACTIONAL REALISM)
 // ============================================================================
 const DYNAMIC_EVENTS = [
-  { merchant:'Onurcan_Demir', action:'sell', delta:-12450, msg:'👑 Onurcan_Demir — 12,450 USDT Ziraat FAST teslimatı tamamlandı ⚡' },
-  { merchant:'CyberEx_Official', action:'liquidity', delta:75000, msg:'🏢 CyberEx_Official — 75,000 USDT kurumsal havuz likiditesi sağlandı 🏦' },
-  { merchant:'ahmet_kaya_06', action:'sell', delta:-1200, msg:'🇹🇷 ahmet_kaya_06 — 1,200 USDT Ziraat işlemi onaylandı ⚡' },
-  { merchant:'mehmet_trader_34', action:'sell', delta:-2400, msg:'🇹🇷 mehmet_trader_34 — 2,400 USDT Garanti BBVA teslim edildi ⚡' },
-  { merchant:'Onurcan_Demir', action:'sell', delta:-8600, msg:'👑 Onurcan_Demir — 8,600 USDT FAST işlemi teslim edildi ⚡' },
-  { merchant:'emre_usdt_fast', action:'sell', delta:-3500, msg:'🇹🇷 emre_usdt_fast — 3,500 USDT FAST anında tamamlandı ⚡' },
-  { merchant:'oguzhan_p2p', action:'sell', delta:-1800, msg:'🇹🇷 oguzhan_p2p — 1,800 USDT Papara aktarımı yapıldı ⚡' },
-  { merchant:'Onurcan_Demir', action:'liquidity', delta:50000, msg:'👑 Onurcan_Demir — 50,000 USDT likidite havuzu yenilendi 🏦' },
-  { merchant:'CyberEx_Official', action:'sell', delta:-35000, msg:'🏢 CyberEx_Official — 35,000 USDT anında teslim edildi ⚡' },
-  { merchant:'caner_fast_ziraat', action:'sell', delta:-4200, msg:'🇹🇷 caner_fast_ziraat — 4,200 USDT Ziraat FAST tamamlandı ⚡' },
-  { merchant:'tolga_garanti', action:'sell', delta:-2900, msg:'🇹🇷 tolga_garanti — 2,900 USDT Garanti transferi yapıldı ⚡' },
-  { merchant:'kerem_whale', action:'sell', delta:-15000, msg:'🇹🇷 kerem_whale — 15,000 USDT Garanti işlemi onaylandı ⚡' },
-  { merchant:'Onurcan_Demir', action:'sell', delta:-14200, msg:'👑 Onurcan_Demir — 14,200 USDT Akbank FAST çıkışı yapıldı ⚡' },
-  { merchant:'CyberEx_Official', action:'sell', delta:-50000, msg:'🏢 CyberEx_Official — 50,000 USDT kurumsal satış gerçekleşti ⚡' },
-  { merchant:'fatih_tr_trade', action:'sell', delta:-5100, msg:'🇹🇷 fatih_tr_trade — 5,100 USDT İş Bankası transferi onaylandı ⚡' },
-  { merchant:'CyberEx_Official', action:'liquidity', delta:100000, msg:'🏢 CyberEx_Official — 100,000 USDT sıcak cüzdan likidite takviyesi yapıldı 🏦' }
+  { merchant:'Onurcan_Demir', action:'sell', delta:-12450.75, msg:'👑 Onurcan_Demir — 12,450.75 USDT Ziraat FAST teslimatı tamamlandı ⚡' },
+  { merchant:'CyberEx_Official', action:'liquidity', delta:75000.00, msg:'🏢 CyberEx_Official — 75,000.00 USDT kurumsal havuz likiditesi sağlandı 🏦' },
+  { merchant:'ahmet_kaya_06', action:'sell', delta:-1240.50, msg:'🇹🇷 ahmet_kaya_06 — 1,240.50 USDT Ziraat işlemi onaylandı ⚡' },
+  { merchant:'mehmet_trader_34', action:'sell', delta:-2485.20, msg:'🇹🇷 mehmet_trader_34 — 2,485.20 USDT Garanti BBVA teslim edildi ⚡' },
+  { merchant:'Onurcan_Demir', action:'sell', delta:-8640.00, msg:'👑 Onurcan_Demir — 8,640.00 USDT FAST işlemi teslim edildi ⚡' },
+  { merchant:'emre_usdt_fast', action:'sell', delta:-3512.40, msg:'🇹🇷 emre_usdt_fast — 3,512.40 USDT FAST anında tamamlandı ⚡' },
+  { merchant:'oguzhan_p2p', action:'sell', delta:-1875.50, msg:'🇹🇷 oguzhan_p2p — 1,875.50 USDT Papara aktarımı yapıldı ⚡' },
+  { merchant:'Onurcan_Demir', action:'liquidity', delta:50000.00, msg:'👑 Onurcan_Demir — 50,000.00 USDT likidite havuzu yenilendi 🏦' },
+  { merchant:'CyberEx_Official', action:'sell', delta:-35200.80, msg:'🏢 CyberEx_Official — 35,200.80 USDT anında teslim edildi ⚡' },
+  { merchant:'caner_fast_ziraat', action:'sell', delta:-4215.00, msg:'🇹🇷 caner_fast_ziraat — 4,215.00 USDT Ziraat FAST tamamlandı ⚡' },
+  { merchant:'tolga_garanti', action:'sell', delta:-2940.65, msg:'🇹🇷 tolga_garanti — 2,940.65 USDT Garanti transferi yapıldı ⚡' },
+  { merchant:'kerem_whale', action:'sell', delta:-15800.00, msg:'🇹🇷 kerem_whale — 15,800.00 USDT Garanti işlemi onaylandı ⚡' },
+  { merchant:'Onurcan_Demir', action:'sell', delta:-14250.35, msg:'👑 Onurcan_Demir — 14,250.35 USDT Akbank FAST çıkışı yapıldı ⚡' },
+  { merchant:'CyberEx_Official', action:'sell', delta:-50450.00, msg:'🏢 CyberEx_Official — 50,450.00 USDT kurumsal satış gerçekleşti ⚡' },
+  { merchant:'fatih_tr_trade', action:'sell', delta:-5180.25, msg:'🇹🇷 fatih_tr_trade — 5,180.25 USDT İş Bankası transferi onaylandı ⚡' },
+  { merchant:'CyberEx_Official', action:'liquidity', delta:100000.00, msg:'🏢 CyberEx_Official — 100,000.00 USDT sıcak cüzdan likidite takviyesi yapıldı 🏦' }
 ];
 
 let eventIdx = 0;
@@ -9006,7 +9018,6 @@ function triggerLiveExecution() {
   const ev = DYNAMIC_EVENTS[eventIdx % DYNAMIC_EVENTS.length];
   eventIdx++;
 
-  // Mutate the live merchant state
   const targetM = RAW_MERCHANTS.find(m => m.name === ev.merchant);
   if (targetM) {
     const st = getMerchantState(targetM);
@@ -9018,10 +9029,8 @@ function triggerLiveExecution() {
     }
   }
 
-  // Push to activity feed
   addAct(ev.msg);
 
-  // If the user is currently viewing the trade tab, refresh market listings smoothly
   const tradePanel = document.getElementById('panel-trade');
   if (tradePanel && tradePanel.classList.contains('show')) {
     renderListings();
@@ -9046,7 +9055,6 @@ function renderFeed() {
 (function init() {
   updateProfileUI();
   
-  // Seed 5 initial realistic events
   for (let i = 0; i < 5; i++) {
     const ev = DYNAMIC_EVENTS[i % DYNAMIC_EVENTS.length];
     const t = new Date(Date.now() - (5 - i) * 2 * 60000).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
@@ -9058,8 +9066,6 @@ function renderFeed() {
   renderWalletUI();
 
   setInterval(fetchPrices, 10000);
-  
-  // Dynamic breathing market ticker runs every 4.5 seconds
   setInterval(triggerLiveExecution, 4500);
 })();
 </script>

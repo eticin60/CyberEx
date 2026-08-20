@@ -144,6 +144,7 @@ input:focus, select:focus, textarea:focus { border-color:#00f0ff; box-shadow:0 0
     <button onclick="switchTab('all')" id="tab-all" class="tab-btn whitespace-nowrap">📋 Tüm İşlemler <span id="c-all" class="badge badge-c ml-1">0</span></button>
     <button onclick="switchTab('completed')" id="tab-completed" class="tab-btn whitespace-nowrap">✅ Tamamlananlar <span id="c-completed" class="badge badge-g ml-1">0</span></button>
     <button onclick="switchTab('cancelled')" id="tab-cancelled" class="tab-btn whitespace-nowrap">❌ İptal Edilenler <span id="c-cancelled" class="badge badge-r ml-1">0</span></button>
+    <button onclick="switchTab('listings')" id="tab-listings" class="tab-btn whitespace-nowrap">📢 Kullanıcı İlanları <span id="c-listings" class="badge badge-o ml-1">0</span></button>
     <button onclick="switchTab('log')" id="tab-log" class="tab-btn whitespace-nowrap">📜 İşlem Logu <span id="c-log" class="badge badge-p ml-1">0</span></button>
   </div>
 
@@ -153,6 +154,17 @@ input:focus, select:focus, textarea:focus { border-color:#00f0ff; box-shadow:0 0
   <!-- ACTIVITY LOG TAB -->
   <div id="log-panel" class="hidden space-y-2 fade-in">
     <div class="glass p-3 text-[9px] text-gray-400 font-mono space-y-1.5" id="log-box"></div>
+  </div>
+
+  <!-- USER LISTINGS TAB -->
+  <div id="listings-panel" class="hidden space-y-2.5 fade-in">
+    <div class="glass p-3 flex justify-between items-center mb-1">
+      <p class="text-xs font-black text-white">Kullanıcıların Yayınladığı İlanlar</p>
+      <button onclick="loadUserListings()" class="btn btn-c btn-sm"><i class="fas fa-rotate"></i>Yenile</button>
+    </div>
+    <div id="user-listings-box" class="space-y-2">
+      <div class="glass py-8 text-center text-gray-500 text-xs">Kullanıcı ilanları yükleniyor...</div>
+    </div>
   </div>
 </div>
 
@@ -450,15 +462,18 @@ function switchTab(tab) {
   currentTab = tab;
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('act'));
   document.getElementById('tab-' + tab)?.classList.add('act');
-  document.getElementById('trade-table').classList.toggle('hidden', tab === 'log');
+  document.getElementById('trade-table').classList.toggle('hidden', tab === 'log' || tab === 'listings');
   document.getElementById('log-panel').classList.toggle('hidden', tab !== 'log');
+  document.getElementById('listings-panel').classList.toggle('hidden', tab !== 'listings');
   if (tab === 'log') renderLog();
+  else if (tab === 'listings') loadUserListings();
   else renderCurrentTab();
 }
 
 function renderCurrentTab() {
   updateStats();
   if (currentTab === 'log') { renderLog(); return; }
+  if (currentTab === 'listings') { loadUserListings(); return; }
   renderTable(filtered(currentTab));
 }
 
@@ -698,7 +713,7 @@ async function sendAdminChatMessage() {
 
   sendTGMsg(`💬 <b>CyberEx Destek MESAJ GÖNDERDİ (#${detailTrade.trade_code})</b>
 
-🛡️ <b>CyberEx Destek:</b> "${txt}"`);
+🛡️ <b>CyberEx Destek:</b> "${txt}"`, false);
 }
 
 function renderTimeline(t) {
@@ -874,7 +889,7 @@ async function bulkApproveSelected() {
   toast(`✅ ${selectedIds.size || 'Seçili'} işlem toplu onaylandı!`, 'g');
 }
 
-async function sendTGMsg(text) {
+async function sendTGMsg(text, isExplicit = false) {
   try {
     const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
       method: 'POST',
@@ -883,14 +898,14 @@ async function sendTGMsg(text) {
     });
     const data = await res.json();
     if (data.ok) {
-      toast('📢 Telegram bildirimi başarıyla iletildi!', 'g');
+      if (isExplicit) toast('📢 Telegram bildirimi başarıyla iletildi!', 'g');
       return true;
     } else {
-      toast('⚠️ Telegram API: ' + (data.description || 'İletilemedi'), 'r');
+      if (isExplicit) toast('⚠️ Telegram API: ' + (data.description || 'İletilemedi'), 'r');
       return false;
     }
   } catch (err) {
-    toast('⛔ Telegram bağlantı hatası!', 'r');
+    if (isExplicit) toast('⛔ Telegram bağlantı hatası!', 'r');
     return false;
   }
 }
@@ -945,7 +960,7 @@ function toast(msg, type='c') {
   setTimeout(() => el.remove(), 3500);
 }
 
-setInterval(loadAll, 15000);
+setInterval(loadAll, 5000);
 </script>
 </body>
 </html>
