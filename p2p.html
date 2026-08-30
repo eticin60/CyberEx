@@ -7803,18 +7803,21 @@ function switchAccountContext(newUsername, newTg) {
   const cleanTg = (newTg || '').trim();
   
   if (cleanName) app_user.name = cleanName;
-  if (cleanTg) app_user.tg_username = cleanTg.startsWith('@') ? cleanTg : ('@' + cleanTg);
-  else if (cleanName.startsWith('@')) app_user.tg_username = cleanName;
+  if (cleanTg) {
+    app_user.tg_username = cleanTg.startsWith('@') ? cleanTg : ('@' + cleanTg);
+  } else if (cleanName.startsWith('@')) {
+    app_user.tg_username = cleanName;
+  } else {
+    app_user.tg_username = ''; // Must purge previous telegram handle when switching accounts
+  }
 
   uid = getUserScopedUid(app_user);
   localStorage.setItem('cx_uid', uid);
   localStorage.setItem('cx_profile', JSON.stringify(app_user));
 
-  // Load clean account-scoped trades
-  app_trades = JSON.parse(localStorage.getItem('cx_trades_' + uid) || '[]');
-  localStorage.setItem('cx_trades', JSON.stringify(app_trades));
-
-  if (app_active && app_active.user_id !== uid && app_active.user_name !== app_user.name) {
+  // Flush memory and load clean scoped trades
+  app_trades = [];
+  if (app_active) {
     closeM('modal-escrow');
     app_active = null;
   }
@@ -7824,7 +7827,7 @@ function switchAccountContext(newUsername, newTg) {
   renderHistory();
   renderListings();
 
-  // Fresh pull from Supabase for this new account
+  // Fresh pull from Supabase strictly for this new account
   syncHistoryWithSupabase(false);
 }
 
@@ -7859,10 +7862,15 @@ function lockGate() {
   document.getElementById('p2p-gate').classList.remove('hidden');
   document.getElementById('gate-pass').value = '';
   document.getElementById('gate-user').value = '';
+  
+  // Wipe in-memory trades on lock
+  app_trades = [];
   if (app_active) {
     closeM('modal-escrow');
     app_active = null;
   }
+  renderActiveTrades();
+  renderHistory();
 }
 (() => { if (sessionStorage.getItem('cx_auth') === '1') document.getElementById('p2p-gate').classList.add('hidden'); })();
 
@@ -8766,7 +8774,7 @@ async function syncHistoryWithSupabase(isManual = false) {
     const curUserName = (app_user.name || '').trim().toLowerCase();
     const curTg = (app_user.tg_username || '').trim().toLowerCase().replace('@', '');
 
-    const r = await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=not.like.LIST-*&select=*&order=created_at.desc&limit=150`, {
+    const r = await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=not.like.LIST-*&select=*&order=created_at.desc&limit=200`, {
       headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY }
     });
     if (r.ok) {
@@ -8779,12 +8787,21 @@ async function syncHistoryWithSupabase(isManual = false) {
           const rowTg = (meta.telegram_user || '').trim().toLowerCase().replace('@', '');
           const rowUid = meta.user_id || '';
 
-          // Match strictly to current active user account
-          const isMatch = (rowUid && rowUid === uid) ||
-                          (curTg && rowTg && curTg === rowTg) ||
-                          (curUserName && curUserName !== 'kullanıcı' && rowUser === curUserName);
+          // STRICT FILTERING:
+          // Trade must belong to THIS SPECIFIC active user:
+          let isMatch = false;
+          if (rowUid && rowUid === uid) {
+            isMatch = true;
+          } else if (curTg && rowTg && curTg === rowTg) {
+            isMatch = true;
+          } else if (curUserName && curUserName !== 'kullanıcı' && curUserName !== '?' && rowUser === curUserName) {
+            // Only match by username if both rowTg and curTg agree or are absent
+            if (!curTg || !rowTg || curTg === rowTg) {
+              isMatch = true;
+            }
+          }
 
-          if (!isMatch) return;
+          if (!isMatch) return; // Strict privacy: do NOT show other users' trades
 
           matchedTrades.push({
             trade_code: row.trade_code,
@@ -8810,7 +8827,7 @@ async function syncHistoryWithSupabase(isManual = false) {
           });
         });
 
-        // Set and isolate clean user trades
+        // Set strictly matched trades
         app_trades = matchedTrades;
         localStorage.setItem('cx_trades_' + uid, JSON.stringify(app_trades));
         localStorage.setItem('cx_trades', JSON.stringify(app_trades));
