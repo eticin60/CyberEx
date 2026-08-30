@@ -7734,15 +7734,23 @@ const R = {
 let app_mode = 'buy';
 let app_user = JSON.parse(localStorage.getItem('cx_profile') || '{"name":"Kullanıcı","avatar":"assets/avatar/avatar_1.png","trades":0,"vol":0,"tg_username":""}');
 let app_wallet = { addr: null, provider: null, chain: null, eth: 0, usdt: 0, raw: null };
-let myTradeCodesInit = new Set(JSON.parse(localStorage.getItem('cx_my_codes') || '[]'));
-let app_trades = JSON.parse(localStorage.getItem('cx_trades') || '[]').filter(t => {
-  if (!t || !t.trade_code) return false;
-  if (myTradeCodesInit.has(t.trade_code)) return true;
-  if (t.user_id && t.user_id === uid) { myTradeCodesInit.add(t.trade_code); return true; }
-  return false;
-});
-localStorage.setItem('cx_my_codes', JSON.stringify([...myTradeCodesInit]));
-localStorage.setItem('cx_trades', JSON.stringify(app_trades));
+function getUserScopedUid(userObj) {
+  if (userObj.tg_username) {
+    return 'tg_' + userObj.tg_username.toLowerCase().replace(/[^a-z0-9_]/g, '');
+  }
+  if (userObj.name && userObj.name !== 'Kullanıcı') {
+    return 'usr_' + btoa(unescape(encodeURIComponent(userObj.name.toLowerCase()))).replace(/[^a-zA-Z0-9]/g, '').slice(0, 14);
+  }
+  let anon = localStorage.getItem('cx_anon_uid');
+  if (!anon) { anon = 'cx_' + Math.random().toString(36).substr(2, 9); localStorage.setItem('cx_anon_uid', anon); }
+  return anon;
+}
+
+let app_user = JSON.parse(localStorage.getItem('cx_profile') || '{"name":"Kullanıcı","avatar":"assets/avatar/avatar_1.png","trades":0,"vol":0,"tg_username":""}');
+let uid = getUserScopedUid(app_user);
+localStorage.setItem('cx_uid', uid);
+
+let app_trades = JSON.parse(localStorage.getItem('cx_trades_' + uid) || '[]');
 let app_listings = JSON.parse(localStorage.getItem('cx_listings') || '[]');
 let app_active = null;
 let app_active_listing = null;
@@ -7787,6 +7795,37 @@ if (window.Telegram?.WebApp) {
 }
 
 // GATEKEEPER
+
+function switchAccountContext(newUsername, newTg) {
+  const cleanName = (newUsername || '').trim();
+  const cleanTg = (newTg || '').trim();
+  
+  if (cleanName) app_user.name = cleanName;
+  if (cleanTg) app_user.tg_username = cleanTg.startsWith('@') ? cleanTg : ('@' + cleanTg);
+  else if (cleanName.startsWith('@')) app_user.tg_username = cleanName;
+
+  uid = getUserScopedUid(app_user);
+  localStorage.setItem('cx_uid', uid);
+  localStorage.setItem('cx_profile', JSON.stringify(app_user));
+
+  // Load clean account-scoped trades
+  app_trades = JSON.parse(localStorage.getItem('cx_trades_' + uid) || '[]');
+  localStorage.setItem('cx_trades', JSON.stringify(app_trades));
+
+  if (app_active && app_active.user_id !== uid && app_active.user_name !== app_user.name) {
+    closeM('modal-escrow');
+    app_active = null;
+  }
+
+  updateProfileUI();
+  renderActiveTrades();
+  renderHistory();
+  renderListings();
+
+  // Fresh pull from Supabase for this new account
+  syncHistoryWithSupabase(false);
+}
+
 async function verifyGateHash(e) {
   e.preventDefault();
   const u = (document.getElementById('gate-user').value || '').trim();
@@ -7798,9 +7837,9 @@ async function verifyGateHash(e) {
   if (VALID_PASS_HASHES.includes(hashed)) {
     sessionStorage.setItem('cx_auth', '1');
     if (u && !isProtectedName(u)) {
-      app_user.name = u;
-      if (u.startsWith('@')) app_user.tg_username = u;
-      localStorage.setItem('cx_profile', JSON.stringify(app_user));
+      switchAccountContext(u, u.startsWith('@') ? u : '');
+    } else {
+      syncHistoryWithSupabase(false);
     }
     document.getElementById('p2p-gate').style.transition = 'opacity .3s';
     document.getElementById('p2p-gate').style.opacity = '0';
@@ -7817,6 +7856,11 @@ function lockGate() {
   document.getElementById('p2p-gate').style.opacity = '1';
   document.getElementById('p2p-gate').classList.remove('hidden');
   document.getElementById('gate-pass').value = '';
+  document.getElementById('gate-user').value = '';
+  if (app_active) {
+    closeM('modal-escrow');
+    app_active = null;
+  }
 }
 (() => { if (sessionStorage.getItem('cx_auth') === '1') document.getElementById('p2p-gate').classList.add('hidden'); })();
 
@@ -7845,13 +7889,9 @@ function saveProfile(e) {
     toast('⛔ Bu kullanıcı adı korunmaktadır (Admin/Official/Onurcan).', 'r');
     return;
   }
-  app_user.name = name || app_user.name;
-  if (tg) app_user.tg_username = tg.startsWith('@') ? tg : ('@' + tg);
-  localStorage.setItem('cx_profile', JSON.stringify(app_user));
-  updateProfileUI();
+  switchAccountContext(name || app_user.name, tg);
   closeM('modal-profile');
-  renderListings();
-  toast('✅ Profil başarıyla güncellendi', 'g');
+  toast('✅ Profil ve hesap oturumu güncellendi', 'g');
 }
 function updateProfileUI() {
   document.getElementById('u-name').innerText = app_user.name;
@@ -8721,64 +8761,56 @@ async function syncHistoryWithSupabase(isManual = false) {
   const spinIcon = document.getElementById('hist-spin-icon');
   if (spinIcon && isManual) spinIcon.classList.add('fa-spin');
   try {
-    const myTradeCodes = new Set(JSON.parse(localStorage.getItem('cx_my_codes') || '[]'));
-    app_trades.forEach(t => { if (t.trade_code) myTradeCodes.add(t.trade_code); });
+    const curUserName = (app_user.name || '').trim().toLowerCase();
+    const curTg = (app_user.tg_username || '').trim().toLowerCase().replace('@', '');
 
-    const r = await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=not.like.LIST-*&select=*&order=created_at.desc&limit=100`, {
+    const r = await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=not.like.LIST-*&select=*&order=created_at.desc&limit=150`, {
       headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY }
     });
     if (r.ok) {
       const dbRows = await r.json();
       if (dbRows && dbRows.length) {
+        const matchedTrades = [];
         dbRows.forEach(row => {
           const meta = parseMetaFromNotes(row.admin_notes);
-          
-          // STRICT USER ISOLATION:
-          // A row belongs to this user ONLY if:
-          // 1. Its trade_code was created in this browser
-          // 2. OR meta.user_id matches this user's session uid
-          // 3. OR meta.telegram_user matches this user's telegram handle
-          const isMyTrade = myTradeCodes.has(row.trade_code) ||
-                            (meta.user_id && meta.user_id === uid) ||
-                            (meta.telegram_user && app_user.tg_username && meta.telegram_user.toLowerCase() === app_user.tg_username.toLowerCase());
+          const rowUser = (meta.user_name || row.user_name || '').trim().toLowerCase();
+          const rowTg = (meta.telegram_user || '').trim().toLowerCase().replace('@', '');
+          const rowUid = meta.user_id || '';
 
-          if (!isMyTrade) return; // Strict privacy: do NOT show other users' trades
+          // Match strictly to current active user account
+          const isMatch = (rowUid && rowUid === uid) ||
+                          (curTg && rowTg && curTg === rowTg) ||
+                          (curUserName && curUserName !== 'kullanıcı' && rowUser === curUserName);
 
-          const idx = app_trades.findIndex(t => t.trade_code === row.trade_code);
-          if (idx !== -1) {
-            app_trades[idx].status = row.status;
-            if (row.admin_notes) app_trades[idx].admin_notes = row.admin_notes;
-            if (row.tx_hash) app_trades[idx].tx_hash = row.tx_hash;
-            if (meta.user_payout_iban) app_trades[idx].user_payout_iban = meta.user_payout_iban;
-            if (meta.user_payout_holder) app_trades[idx].user_payout_holder = meta.user_payout_holder;
-            if (meta.user_wallet_to_receive) app_trades[idx].user_wallet_to_receive = meta.user_wallet_to_receive;
-            if (meta.type) app_trades[idx].type = meta.type;
-            if (meta.seller) app_trades[idx].seller = meta.seller;
-            if (meta.unit_fiat_price) app_trades[idx].unit_fiat_price = meta.unit_fiat_price;
-          } else if (row.trade_code) {
-            app_trades.push({
-              trade_code: row.trade_code,
-              user_id: meta.user_id || uid,
-              coin: row.coin || 'USDT',
-              network: row.network || 'TRC20',
-              amount_crypto: row.amount_crypto,
-              amount_fiat: row.amount_fiat,
-              unit_fiat_price: row.unit_fiat_price || meta.unit_fiat_price,
-              fiat_currency: row.fiat_currency || 'TRY',
-              status: row.status,
-              admin_notes: row.admin_notes,
-              tx_hash: row.tx_hash,
-              createdAt: row.created_at ? new Date(row.created_at).toLocaleTimeString('tr-TR', { hour:'2-digit', minute:'2-digit' }) : '—',
-              type: meta.type || (row.buyer_wallet_address ? 'buy' : 'sell'),
-              seller: meta.seller || 'CyberEx OTC',
-              user_payout_iban: meta.user_payout_iban || '',
-              user_payout_holder: meta.user_payout_holder || '',
-              user_wallet_to_receive: meta.user_wallet_to_receive || row.buyer_wallet_address
-            });
-            myTradeCodes.add(row.trade_code);
-            localStorage.setItem('cx_my_codes', JSON.stringify([...myTradeCodes]));
-          }
+          if (!isMatch) return;
+
+          matchedTrades.push({
+            trade_code: row.trade_code,
+            user_id: meta.user_id || uid,
+            user_name: meta.user_name || app_user.name,
+            telegram_user: meta.telegram_user || app_user.tg_username,
+            coin: row.coin || 'USDT',
+            network: row.network || 'TRC20',
+            amount_crypto: row.amount_crypto,
+            amount_fiat: row.amount_fiat,
+            unit_fiat_price: row.unit_fiat_price || meta.unit_fiat_price,
+            fiat_currency: row.fiat_currency || 'TRY',
+            status: row.status,
+            admin_notes: row.admin_notes,
+            tx_hash: row.tx_hash,
+            payment_proof_url: row.payment_proof_url,
+            createdAt: row.created_at ? new Date(row.created_at).toLocaleTimeString('tr-TR', { hour:'2-digit', minute:'2-digit' }) : '—',
+            type: meta.type || (row.buyer_wallet_address ? 'buy' : 'sell'),
+            seller: meta.seller || 'CyberEx OTC',
+            user_payout_iban: meta.user_payout_iban || '',
+            user_payout_holder: meta.user_payout_holder || '',
+            user_wallet_to_receive: meta.user_wallet_to_receive || row.buyer_wallet_address
+          });
         });
+
+        // Set and isolate clean user trades
+        app_trades = matchedTrades;
+        localStorage.setItem('cx_trades_' + uid, JSON.stringify(app_trades));
         localStorage.setItem('cx_trades', JSON.stringify(app_trades));
       }
     }
