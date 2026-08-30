@@ -330,6 +330,20 @@ const SUPA_KEY  = 'sb_publishable_eQK0Npo_3DnhQdZUAV5ZTw_SAj-zt_G';
 const BOT_TOKEN = '8078760711:AAFPhSfofYPeF3LSExVM7A9TinooXF3lH-o';
 const ADMIN_CID = 6453665842;
 
+const VALID_HASHES = [
+  '9c9a90a0debe094046d3d3331082f01fd594955f09a2e45c84725f1cbf123f43', // admin1923
+  'd42ed19c0d9c80706b6b1484a97cf8634285d753ac079717aee8c651d54caef3', // 1923
+  '4b8ceb08fee8cb25dd9db1cd4012f1abc32239930fdf9f5776c127a5388d1a92', // cyberexadmin
+  '708b468cc308cb4b57694aa89948ea9dfd14afa5fbdf21c9c01d6103864f1fe1', // root_admin
+  '16d9cdb6814b712c41f76fec2ebe331d7912201de37b9d53464997ed8f5817fc', // legacy
+  '6dd454fcd40cdadbb52a7e893ace6f79c7d4ce254ce87d77045562c052ae4d9a', // cyberex
+  '676dcc25a044b7c5f54b61fba9f3c62efa63758a7dab7fc82ca3aa3945d6995b', // cyberex2026
+  '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', // admin
+  '58b35fe1dc007e09ca21a834de24ed3097e2f685dad2744bfeefba2149f98ab4'  // cyberex1923
+];
+
+const PLAIN_PASSWORDS = ['admin1923', '1923', 'cyberexadmin', 'root_admin', 'cyberex', 'cyberex2026', 'admin', 'cyberex1923'];
+
 const STATUS_META = {
   pending_payment: { label:'Ödeme Bekleniyor', color:'#FFB300', badge:'badge-y', icon:'fa-clock' },
   proof_uploaded:  { label:'Kanıt Yüklendi', color:'#00f0ff', badge:'badge-c', icon:'fa-file-arrow-up' },
@@ -345,8 +359,12 @@ let currentTab   = 'pending';
 let detailTrade  = null;
 
 async function sha256(str) {
-  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
-  return Array.prototype.map.call(new Uint8Array(buf), x => (('00' + x.toString(16)).slice(-2))).join('');
+  try {
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+    return Array.prototype.map.call(new Uint8Array(buf), x => (('00' + x.toString(16)).slice(-2))).join('');
+  } catch (_) {
+    return '';
+  }
 }
 
 async function verifyAdminHash(e) {
@@ -354,7 +372,7 @@ async function verifyAdminHash(e) {
   const inputPass = (document.getElementById('adm-pass').value || '').trim().toLowerCase();
   const hashed = await sha256(inputPass);
 
-  if (VALID_HASHES.includes(hashed)) {
+  if (VALID_HASHES.includes(hashed) || PLAIN_PASSWORDS.includes(inputPass)) {
     sessionStorage.setItem('cx_admin_v9', '1');
     document.getElementById('adm-gate').classList.add('hidden');
     document.getElementById('admin-panel').classList.remove('hidden');
