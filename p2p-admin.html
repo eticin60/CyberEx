@@ -133,6 +133,7 @@ input:focus, select:focus, textarea:focus { border-color:#00f0ff; box-shadow:0 0
       <option value="SOL">SOL</option>
     </select>
     <button onclick="bulkApproveSelected()" class="btn btn-g btn-sm"><i class="fas fa-check-double"></i>Seçilenleri Onayla</button>
+    <button onclick="bulkDeleteSelected()" class="btn btn-r btn-sm"><i class="fas fa-trash-can"></i>Seçilenleri Sil</button>
     <button onclick="exportCSV()" class="btn btn-p btn-sm"><i class="fas fa-file-export"></i>CSV</button>
   </div>
 
@@ -307,7 +308,8 @@ input:focus, select:focus, textarea:focus { border-color:#00f0ff; box-shadow:0 0
     <div class="space-y-2 pt-2 border-t border-white/10">
       <button onclick="approveTradeModal()" class="btn btn-g w-full py-3 justify-center text-xs uppercase"><i class="fas fa-check-circle mr-1"></i>ONAYLA — İşlem Tamamlandı</button>
       <button onclick="rejectTradeModal()" class="btn btn-r w-full py-2.5 justify-center text-xs uppercase"><i class="fas fa-circle-xmark mr-1"></i>REDDET — Ödeme Geçersiz</button>
-      <button onclick="cancelTradeModal()" class="btn btn-sm w-full justify-center text-red-400 bg-red-500/10 border border-red-500/30 hover:bg-red-500/20"><i class="fas fa-ban mr-1"></i>İptal Et (Admin Kararı)</button>
+      <button onclick="cancelTradeModal()" class="btn btn-sm w-full justify-center text-yellow-400 bg-yellow-500/10 border border-yellow-500/30 hover:bg-yellow-500/20"><i class="fas fa-ban mr-1"></i>İptal Et (Admin Kararı)</button>
+      <button onclick="deleteTradePermanentlyModal()" class="btn btn-r w-full py-2.5 justify-center text-xs uppercase font-black tracking-wider bg-red-600 hover:bg-red-700 shadow-lg"><i class="fas fa-trash-can mr-1.5"></i>VERİTABANINDAN SİL (Supabase & Sistemden Kaldır)</button>
       
       <!-- EDIT & NOTIFY ACTION BAR -->
       <div class="flex gap-2 pt-1">
@@ -675,14 +677,18 @@ async function adminEditListing(code) {
 }
 
 async function adminDeleteListing(code) {
-  if (!confirm(`[${code}] nolu ilanı silmek istediğinizden emin misiniz?`)) return;
+  if (!confirm(`[${code}] nolu ilanı Supabase veritabanından kalıcı olarak silmek istediğinizden emin misiniz?`)) return;
   try {
     await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=eq.${code}`, {
-      method: 'PATCH',
-      headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status: 'cancelled' })
+      method: 'DELETE',
+      headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY }
     });
-    toast('🗑️ İlan yayından kaldırıldı.', 'y');
+    
+    const localListings = JSON.parse(localStorage.getItem('cx_listings') || '[]');
+    const filteredListings = localListings.filter(x => x.id !== code && x.trade_code !== code);
+    localStorage.setItem('cx_listings', JSON.stringify(filteredListings));
+
+    toast('🗑️ İlan Supabase veritabanından kalıcı olarak silindi.', 'y');
     addLog(`🗑️ İlan #${code} admin tarafından silindi.`);
     loadAll();
   } catch (_) {
@@ -1000,6 +1006,54 @@ async function updateTradeStatus(t, newStatus, logMsg) {
     });
   } catch (_) {}
   addLog(logMsg);
+}
+
+
+async function deleteTradePermanentlyModal() {
+  if (!detailTrade) return;
+  const code = detailTrade.trade_code;
+  if (!confirm(`⚠️ DİKKAT: #${code} numaralı işlem Supabase bulut veritabanından ve tüm sistemden KALICI olarak silinecektir.\n\nEmin misiniz?`)) return;
+  
+  try {
+    await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=eq.${code}`, {
+      method: 'DELETE',
+      headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY }
+    });
+    
+    const local = JSON.parse(localStorage.getItem('cx_trades') || '[]');
+    const filtered = local.filter(x => x.trade_code !== code);
+    localStorage.setItem('cx_trades', JSON.stringify(filtered));
+
+    addLog(`🗑️ İşlem #${code} veritabanından kalıcı olarak silindi.`);
+    toast(`🗑️ #${code} Supabase veritabanından kalıcı olarak silindi.`, 'g');
+    closeDetailModal();
+    loadAll();
+  } catch (err) {
+    toast('⛔ Silme hatası!', 'r');
+  }
+}
+
+async function bulkDeleteSelected() {
+  if (!selectedIds.size) { toast('Lütfen en az bir işlem seçin.', 'y'); return; }
+  if (!confirm(`⚠️ DİKKAT: Seçilen ${selectedIds.size} işlem Supabase bulut veritabanından KALICI olarak silinecektir.\n\nDevam etmek istiyor musunuz?`)) return;
+  
+  for (const code of selectedIds) {
+    try {
+      await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=eq.${code}`, {
+        method: 'DELETE',
+        headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY }
+      });
+      addLog(`🗑️ Toplu silindi: #${code}`);
+    } catch (_) {}
+  }
+  
+  const local = JSON.parse(localStorage.getItem('cx_trades') || '[]');
+  const filtered = local.filter(x => !selectedIds.has(x.trade_code));
+  localStorage.setItem('cx_trades', JSON.stringify(filtered));
+
+  selectedIds.clear();
+  loadAll();
+  toast('🗑️ Seçilen işlemler Supabase veritabanından kalıcı olarak silindi!', 'g');
 }
 
 async function approveTradeModal() {
