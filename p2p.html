@@ -7734,7 +7734,15 @@ const R = {
 let app_mode = 'buy';
 let app_user = JSON.parse(localStorage.getItem('cx_profile') || '{"name":"Kullanıcı","avatar":"assets/avatar/avatar_1.png","trades":0,"vol":0,"tg_username":""}');
 let app_wallet = { addr: null, provider: null, chain: null, eth: 0, usdt: 0, raw: null };
-let app_trades = JSON.parse(localStorage.getItem('cx_trades') || '[]');
+let myTradeCodesInit = new Set(JSON.parse(localStorage.getItem('cx_my_codes') || '[]'));
+let app_trades = JSON.parse(localStorage.getItem('cx_trades') || '[]').filter(t => {
+  if (!t || !t.trade_code) return false;
+  if (myTradeCodesInit.has(t.trade_code)) return true;
+  if (t.user_id && t.user_id === uid) { myTradeCodesInit.add(t.trade_code); return true; }
+  return false;
+});
+localStorage.setItem('cx_my_codes', JSON.stringify([...myTradeCodesInit]));
+localStorage.setItem('cx_trades', JSON.stringify(app_trades));
 let app_listings = JSON.parse(localStorage.getItem('cx_listings') || '[]');
 let app_active = null;
 let app_active_listing = null;
@@ -8260,6 +8268,11 @@ async function submitOrder() {
 
   app_trades.unshift(trade);
   app_active = trade;
+  let curCodes = JSON.parse(localStorage.getItem('cx_my_codes') || '[]');
+  if (!curCodes.includes(code)) {
+    curCodes.push(code);
+    localStorage.setItem('cx_my_codes', JSON.stringify(curCodes));
+  }
   localStorage.setItem('cx_trades', JSON.stringify(app_trades));
 
   const deadline = new Date(Date.now() + 30 * 60000).toISOString();
@@ -8269,6 +8282,7 @@ async function submitOrder() {
   
   // Full metadata encoded into text column admin_notes
   const metaObj = {
+    user_id: uid,
     type: trade.type,
     user_name: trade.user_name,
     telegram_user: trade.telegram_user,
@@ -8707,7 +8721,10 @@ async function syncHistoryWithSupabase(isManual = false) {
   const spinIcon = document.getElementById('hist-spin-icon');
   if (spinIcon && isManual) spinIcon.classList.add('fa-spin');
   try {
-    const r = await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=not.like.LIST-*&select=*&order=created_at.desc&limit=60`, {
+    const myTradeCodes = new Set(JSON.parse(localStorage.getItem('cx_my_codes') || '[]'));
+    app_trades.forEach(t => { if (t.trade_code) myTradeCodes.add(t.trade_code); });
+
+    const r = await fetch(`${SUPA_URL}/rest/v1/telegram_p2p_trades?trade_code=not.like.LIST-*&select=*&order=created_at.desc&limit=100`, {
       headers: { apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY }
     });
     if (r.ok) {
@@ -8715,6 +8732,18 @@ async function syncHistoryWithSupabase(isManual = false) {
       if (dbRows && dbRows.length) {
         dbRows.forEach(row => {
           const meta = parseMetaFromNotes(row.admin_notes);
+          
+          // STRICT USER ISOLATION:
+          // A row belongs to this user ONLY if:
+          // 1. Its trade_code was created in this browser
+          // 2. OR meta.user_id matches this user's session uid
+          // 3. OR meta.telegram_user matches this user's telegram handle
+          const isMyTrade = myTradeCodes.has(row.trade_code) ||
+                            (meta.user_id && meta.user_id === uid) ||
+                            (meta.telegram_user && app_user.tg_username && meta.telegram_user.toLowerCase() === app_user.tg_username.toLowerCase());
+
+          if (!isMyTrade) return; // Strict privacy: do NOT show other users' trades
+
           const idx = app_trades.findIndex(t => t.trade_code === row.trade_code);
           if (idx !== -1) {
             app_trades[idx].status = row.status;
@@ -8729,6 +8758,7 @@ async function syncHistoryWithSupabase(isManual = false) {
           } else if (row.trade_code) {
             app_trades.push({
               trade_code: row.trade_code,
+              user_id: meta.user_id || uid,
               coin: row.coin || 'USDT',
               network: row.network || 'TRC20',
               amount_crypto: row.amount_crypto,
@@ -8745,12 +8775,14 @@ async function syncHistoryWithSupabase(isManual = false) {
               user_payout_holder: meta.user_payout_holder || '',
               user_wallet_to_receive: meta.user_wallet_to_receive || row.buyer_wallet_address
             });
+            myTradeCodes.add(row.trade_code);
+            localStorage.setItem('cx_my_codes', JSON.stringify([...myTradeCodes]));
           }
         });
         localStorage.setItem('cx_trades', JSON.stringify(app_trades));
       }
     }
-    if (isManual) toast('🔄 İşlem geçmişi canlı senkronize edildi.', 'c');
+    if (isManual) toast('🔄 İşlem geçmişiniz senkronize edildi.', 'c');
   } catch (_) {
     if (isManual) toast('⚠️ Senkronizasyon hatası.', 'r');
   } finally {
