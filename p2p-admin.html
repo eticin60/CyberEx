@@ -770,7 +770,30 @@ function openDetail(t) {
   // Proof
   const proofVal = document.getElementById('md-proof-val');
   if (t.payment_proof_url) {
-    proofVal.innerHTML = `<a href="${t.payment_proof_url}" target="_blank" class="text-cyan-400 font-bold hover:underline flex items-center gap-1.5"><i class="fas fa-file-image"></i>Dekontu Yeni Sekmede Görüntüle / İndir</a>`;
+    const isImage = t.payment_proof_url.startsWith('data:image/') || t.payment_proof_url.match(/\.(jpeg|jpg|png|gif|webp)$/i);
+    const isPdf = t.payment_proof_url.startsWith('data:application/pdf') || t.payment_proof_url.endsWith('.pdf');
+    if (isImage) {
+      proofVal.innerHTML = `
+        <div class="mt-1 space-y-1.5">
+          <div class="relative group inline-block">
+            <img src="${t.payment_proof_url}" class="max-h-52 max-w-full rounded-xl border border-cyan-400/40 object-contain bg-black/60 shadow-lg cursor-pointer hover:border-cyan-400 transition" onclick="window.open('${t.payment_proof_url}', '_blank')">
+          </div>
+          <div class="flex items-center gap-2">
+            <a href="${t.payment_proof_url}" target="_blank" class="text-cyan-400 font-bold text-[10px] hover:underline flex items-center gap-1"><i class="fas fa-external-link-alt"></i>Tam Boyut Aç</a>
+            <a href="${t.payment_proof_url}" download="dekont_${t.trade_code}.jpg" class="text-green-400 font-bold text-[10px] hover:underline flex items-center gap-1"><i class="fas fa-download"></i>İndir</a>
+          </div>
+        </div>
+      `;
+    } else if (isPdf) {
+      proofVal.innerHTML = `
+        <div class="mt-1 space-y-1">
+          <a href="${t.payment_proof_url}" target="_blank" class="btn btn-c btn-sm inline-flex items-center gap-1.5"><i class="fas fa-file-pdf text-red-400"></i>PDF Dekontunu Aç</a>
+          <a href="${t.payment_proof_url}" download="dekont_${t.trade_code}.pdf" class="text-green-400 font-bold text-[10px] hover:underline ml-2"><i class="fas fa-download"></i>PDF İndir</a>
+        </div>
+      `;
+    } else {
+      proofVal.innerHTML = `<a href="${t.payment_proof_url}" target="_blank" class="text-cyan-400 font-bold hover:underline flex items-center gap-1.5"><i class="fas fa-file-image"></i>Dekontu Görüntüle / İndir</a>`;
+    }
   } else if (t.tx_hash) {
     proofVal.innerHTML = `<span class="text-green-400 font-mono">TXID: ${t.tx_hash}</span>`;
   } else {
