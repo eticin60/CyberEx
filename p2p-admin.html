@@ -333,18 +333,11 @@ const BOT_TOKEN = '8078760711:AAFPhSfofYPeF3LSExVM7A9TinooXF3lH-o';
 const ADMIN_CID = 6453665842;
 
 const VALID_HASHES = [
-  '9c9a90a0debe094046d3d3331082f01fd594955f09a2e45c84725f1cbf123f43', // admin1923
-  'd42ed19c0d9c80706b6b1484a97cf8634285d753ac079717aee8c651d54caef3', // 1923
-  '4b8ceb08fee8cb25dd9db1cd4012f1abc32239930fdf9f5776c127a5388d1a92', // cyberexadmin
-  '708b468cc308cb4b57694aa89948ea9dfd14afa5fbdf21c9c01d6103864f1fe1', // root_admin
-  '16d9cdb6814b712c41f76fec2ebe331d7912201de37b9d53464997ed8f5817fc', // legacy
-  '6dd454fcd40cdadbb52a7e893ace6f79c7d4ce254ce87d77045562c052ae4d9a', // cyberex
-  '676dcc25a044b7c5f54b61fba9f3c62efa63758a7dab7fc82ca3aa3945d6995b', // cyberex2026
-  '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', // admin
-  '58b35fe1dc007e09ca21a834de24ed3097e2f685dad2744bfeefba2149f98ab4'  // cyberex1923
+  '046060403e6010f432288890fcc2b619a43c0d640b665d785e888e75c8f9885f', // CX@Master#2026!Admin (case-sensitive)
+  'a080da80a901e714000ee07ab5df1a1ac1ad8b48222a7b9a11fa1d70c08458a5'  // cx@master#2026!admin (case-insensitive)
 ];
 
-const PLAIN_PASSWORDS = ['admin1923', '1923', 'cyberexadmin', 'root_admin', 'cyberex', 'cyberex2026', 'admin', 'cyberex1923'];
+const PLAIN_PASSWORDS = ['CX@Master#2026!Admin', 'cx@master#2026!admin'];
 
 const STATUS_META = {
   pending_payment: { label:'Ödeme Bekleniyor', color:'#FFB300', badge:'badge-y', icon:'fa-clock' },
@@ -371,10 +364,17 @@ async function sha256(str) {
 
 async function verifyAdminHash(e) {
   e.preventDefault();
-  const inputPass = (document.getElementById('adm-pass').value || '').trim().toLowerCase();
-  const hashed = await sha256(inputPass);
+  const rawPass = (document.getElementById('adm-pass').value || '').trim();
+  const lowerPass = rawPass.toLowerCase();
+  const hashedRaw = await sha256(rawPass);
+  const hashedLower = await sha256(lowerPass);
 
-  if (VALID_HASHES.includes(hashed) || PLAIN_PASSWORDS.includes(inputPass)) {
+  if (
+    VALID_HASHES.includes(hashedRaw) ||
+    VALID_HASHES.includes(hashedLower) ||
+    PLAIN_PASSWORDS.includes(rawPass) ||
+    PLAIN_PASSWORDS.includes(lowerPass)
+  ) {
     sessionStorage.setItem('cx_admin_v9', '1');
     document.getElementById('adm-gate').classList.add('hidden');
     document.getElementById('admin-panel').classList.remove('hidden');
