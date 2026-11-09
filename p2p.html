@@ -7710,12 +7710,8 @@ const AVATARS = Array.from({length:15}, (_, i) => `assets/avatar/avatar_${i+1}.p
 const PROTECTED_NAMES = ['admin', 'cyberex', 'official', 'support', 'moderator', 'onurcan', 'onurcan_demir', 'root', 'system'];
 
 const VALID_PASS_HASHES = [
-  '9c9a90a0debe094046d3d3331082f01fd594955f09a2e45c84725f1cbf123f43',
-  '16d9cdb6814b712c41f76fec2ebe331d7912201de37b9d53464997ed8f5817fc',
-  '4b8ceb08fee8cb25dd9db1cd4012f1abc32239930fdf9f5776c127a5388d1a92',
-  'd42ed19c0d9c80706b6b1484a97cf8634285d753ac079717aee8c651d54caef3',
-  '6dd454fcd40cdadbb52a7e893ace6f79c7d4ce254ce87d77045562c052ae4d9a',
-  '676dcc25a044b7c5f54b61fba9f3c62efa63758a7dab7fc82ca3aa3945d6995b'
+  '046060403e6010f432288890fcc2b619a43c0d640b665d785e888e75c8f9885f', // CX@Master#2026!Admin
+  'a080da80a901e714000ee07ab5df1a1ac1ad8b48222a7b9a11fa1d70c08458a5'  // cx@master#2026!admin
 ];
 
 async function sha256(str) {
@@ -7727,7 +7723,7 @@ async function sha256(str) {
   }
 }
 
-const PLAIN_PASSWORDS = ['admin1923', '1923', 'cyberexadmin', 'root_admin', 'cyberex', 'cyberex2026', 'admin', 'cyberex1923'];
+const PLAIN_PASSWORDS = ['CX@Master#2026!Admin', 'cx@master#2026!admin'];
 
 function getUserScopedUid(userObj) {
   if (userObj.tg_username) {
@@ -7834,13 +7830,20 @@ function switchAccountContext(newUsername, newTg) {
 async function verifyGateHash(e) {
   e.preventDefault();
   const u = (document.getElementById('gate-user').value || '').trim();
-  const p = (document.getElementById('gate-pass').value || '').trim().toLowerCase();
+  const rawP = (document.getElementById('gate-pass').value || '').trim();
+  const lowerP = rawP.toLowerCase();
   const box = document.getElementById('gate-box');
 
-  const hashed = await sha256(p);
+  const hashedRaw = await sha256(rawP);
+  const hashedLower = await sha256(lowerP);
 
-  if (VALID_PASS_HASHES.includes(hashed) || PLAIN_PASSWORDS.includes(p)) {
-    sessionStorage.setItem('cx_auth', '1');
+  if (
+    VALID_PASS_HASHES.includes(hashedRaw) ||
+    VALID_PASS_HASHES.includes(hashedLower) ||
+    PLAIN_PASSWORDS.includes(rawP) ||
+    PLAIN_PASSWORDS.includes(lowerP)
+  ) {
+    sessionStorage.setItem('cx_auth_v2026', '1');
     if (u && !isProtectedName(u)) {
       switchAccountContext(u, u.startsWith('@') ? u : '');
     } else {
@@ -7857,6 +7860,7 @@ async function verifyGateHash(e) {
 }
 
 function lockGate() {
+  sessionStorage.removeItem('cx_auth_v2026');
   sessionStorage.removeItem('cx_auth');
   document.getElementById('p2p-gate').style.opacity = '1';
   document.getElementById('p2p-gate').classList.remove('hidden');
@@ -7872,7 +7876,10 @@ function lockGate() {
   renderActiveTrades();
   renderHistory();
 }
-(() => { if (sessionStorage.getItem('cx_auth') === '1') document.getElementById('p2p-gate').classList.add('hidden'); })();
+(() => {
+  sessionStorage.removeItem('cx_auth'); // Invalidate old session
+  if (sessionStorage.getItem('cx_auth_v2026') === '1') document.getElementById('p2p-gate').classList.add('hidden');
+})();
 
 function isProtectedName(name) {
   const low = name.toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -7895,7 +7902,7 @@ function saveProfile(e) {
   e.preventDefault();
   const name = document.getElementById('prof-name').value.trim();
   const tg = document.getElementById('prof-tg').value.trim();
-  if (isProtectedName(name) && sessionStorage.getItem('cx_admin_v9') !== '1') {
+  if (isProtectedName(name) && sessionStorage.getItem('cx_admin_master_v2026') !== '1') {
     toast('⛔ Bu kullanıcı adı korunmaktadır (Admin/Official/Onurcan).', 'r');
     return;
   }

@@ -375,7 +375,7 @@ async function verifyAdminHash(e) {
     PLAIN_PASSWORDS.includes(rawPass) ||
     PLAIN_PASSWORDS.includes(lowerPass)
   ) {
-    sessionStorage.setItem('cx_admin_v9', '1');
+    sessionStorage.setItem('cx_admin_master_v2026', '1');
     document.getElementById('adm-gate').classList.add('hidden');
     document.getElementById('admin-panel').classList.remove('hidden');
     loadAll();
@@ -388,13 +388,15 @@ async function verifyAdminHash(e) {
 }
 
 function adminLock() {
+  sessionStorage.removeItem('cx_admin_master_v2026');
   sessionStorage.removeItem('cx_admin_v9');
   document.getElementById('adm-gate').classList.remove('hidden');
   document.getElementById('admin-panel').classList.add('hidden');
 }
 
 (() => {
-  if (sessionStorage.getItem('cx_admin_v9') === '1') {
+  sessionStorage.removeItem('cx_admin_v9'); // Invalidate old session
+  if (sessionStorage.getItem('cx_admin_master_v2026') === '1') {
     document.getElementById('adm-gate').classList.add('hidden');
     document.getElementById('admin-panel').classList.remove('hidden');
     loadAll();
