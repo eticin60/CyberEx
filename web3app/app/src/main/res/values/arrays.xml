@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="networks">
+        <item>Ethereum</item>
+        <item>Binance Smart Chain</item>
+        <item>Polygon</item>
+        <item>Avalanche</item>
+    </array>
+</resources>
+
+

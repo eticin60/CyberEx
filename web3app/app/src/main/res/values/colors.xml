@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- CyberEx Primary Colors -->
+    <color name="colorPrimary">#03A3EB</color>
+    <color name="colorPrimaryDark">#039EE6</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary2">#0B0F1D</color>
+    <color name="colorPrimaryDark2">#0B0F1D</color>
+    <color name="colorAccent2">#00FF99</color>
+    
+    <!-- Background Colors -->
+    <color name="background_dark">#212121</color>
+    <color name="card_background">#1E1E1E</color>
+    <color name="card_bg_dark">#21262D</color>
+    <color name="primary_dark">#0D1117</color>
+    <color name="secondary_dark">#161B26</color>
+    <color name="surface_dark">#1C2128</color>
+    
+    <!-- Status Colors -->
+    <color name="positive_change">#4CAF50</color>
+    <color name="negative_change">#F44336</color>
+    <color name="green_positive">#4CAF50</color>
+    <color name="red_negative">#F44336</color>
+    <color name="success_green">#00E676</color>
+    <color name="warning_yellow">#FFD600</color>
+    <color name="danger_red">#D32F2F</color>
+    
+    <!-- Neon Colors -->
+    <color name="neon_blue">#00D2FF</color>
+    <color name="neon_green">#00FF88</color>
+    <color name="cyan_accent">#00FF99</color>
+    <color name="cyber_cyan">#00FFFF</color>
+    
+    <!-- Text Colors -->
+    <color name="text_primary">#F0F6FC</color>
+    <color name="text_secondary">#B0BEC5</color>
+    <color name="text_tertiary">#6E7681</color>
+    <color name="primary_text">#FFFFFF</color>
+    <color name="secondary_text">#B0B0C0</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="gray">#888888</color>
+    
+    <!-- Button Colors -->
+    <color name="button_active_color">#03A9F4</color>
+    <color name="button_inactive_color">#7C0D0D</color>
+    <color name="blue">#03A9F4</color>
+    <color name="blue_accent">#2196F3</color>
+    
+    <!-- Transaction Colors -->
+    <color name="transaction_bg">#262C36</color>
+    <color name="transaction_border">#373E47</color>
+    
+    <!-- Glass Effect -->
+    <color name="glass_card_background">#E6252836</color>
+    <color name="glass_card_secondary">#E61E2139</color>
+    <color name="glass_stroke">#33FFFFFF</color>
+    
+    <!-- Transparent -->
+    <color name="transparent">#00000000</color>
+    <color name="black_overlay">#80000000</color>
+    <color name="white_overlay">#80FFFFFF</color>
+    
+    <!-- Gradient Colors -->
+    <color name="gradient_start">#6200EA</color>
+    <color name="gradient_end">#03DAC5</color>
+    <color name="gradient_start_primary">#00E5FF</color>
+    <color name="gradient_end_primary">#0091EA</color>
+</resources>
+
+

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CyberEx Web3</string>
+    <string name="wallet">Cüzdan</string>
+    <string name="send">Gönder</string>
+    <string name="receive">Al</string>
+    <string name="swap">Değiştir</string>
+    <string name="settings">Ayarlar</string>
+    <string name="balance">Bakiye</string>
+    <string name="address">Adres</string>
+    <string name="copy_address">Adresi Kopyala</string>
+    <string name="create_wallet">Cüzdan Oluştur</string>
+    <string name="import_wallet">Cüzdan İçe Aktar</string>
+    <string name="unlock_wallet">Cüzdanı Aç</string>
+    <string name="lock_wallet">Cüzdanı Kilitle</string>
+    <string name="transaction_history">İşlem Geçmişi</string>
+    <string name="network">Ağ</string>
+    <string name="select_network">Ağ Seç</string>
+    <string name="ethereum">Ethereum</string>
+    <string name="bsc">Binance Smart Chain</string>
+    <string name="polygon">Polygon</string>
+    <string name="avalanche">Avalanche</string>
+    <string name="send_amount">Gönderilecek Miktar</string>
+    <string name="recipient_address">Alıcı Adresi</string>
+    <string name="confirm_transaction">İşlemi Onayla</string>
+    <string name="transaction_success">İşlem Başarılı</string>
+    <string name="transaction_failed">İşlem Başarısız</string>
+    <string name="insufficient_balance">Yetersiz Bakiye</string>
+    <string name="invalid_address">Geçersiz Adres</string>
+    <string name="copied">Kopyalandı</string>
+    <string name="cancel">İptal</string>
+    <string name="confirm">Onayla</string>
+    <string name="backup_wallet">Cüzdanı Yedekle</string>
+    <string name="export_private_key">Özel Anahtarı Dışa Aktar</string>
+    <string name="security">Güvenlik</string>
+    <string name="biometric_auth">Biyometrik Kimlik Doğrulama</string>
+    <string name="about">Hakkında</string>
+    <string name="version">Versiyon</string>
+</resources>
+
+
