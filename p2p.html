@@ -7710,8 +7710,9 @@ const AVATARS = Array.from({length:15}, (_, i) => `assets/avatar/avatar_${i+1}.p
 const PROTECTED_NAMES = ['admin', 'cyberex', 'official', 'support', 'moderator', 'onurcan', 'onurcan_demir', 'root', 'system'];
 
 const VALID_PASS_HASHES = [
-  '046060403e6010f432288890fcc2b619a43c0d640b665d785e888e75c8f9885f', // CX@Master#2026!Admin
-  'a080da80a901e714000ee07ab5df1a1ac1ad8b48222a7b9a11fa1d70c08458a5'  // cx@master#2026!admin
+  'd42ed19c0d9c80706b6b1484a97cf8634285d753ac079717aee8c651d54caef3', // 1923
+  '6dd454fcd40cdadbb52a7e893ace6f79c7d4ce254ce87d77045562c052ae4d9a', // cyberex
+  '9c9a90a0debe094046d3d3331082f01fd594955f09a2e45c84725f1cbf123f43'  // admin1923
 ];
 
 async function sha256(str) {
@@ -7723,7 +7724,7 @@ async function sha256(str) {
   }
 }
 
-const PLAIN_PASSWORDS = ['CX@Master#2026!Admin', 'cx@master#2026!admin'];
+const PLAIN_PASSWORDS = ['1923', 'cyberex', 'admin1923'];
 
 function getUserScopedUid(userObj) {
   if (userObj.tg_username) {
